@@ -1,0 +1,84 @@
+<div class="auth-container">
+  <mat-card>
+    <mat-tab-group>
+      <mat-tab label="Sign In">
+        <div [formGroup]="signInForm"></div>
+        <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>UserName</mat-label>
+            <input matInput formControlName="userName" required />
+            @if (signUpForm.get("userName")?.invalid) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              required
+            />
+            @if (signInForm.get("password")?.invalid) {
+              <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="signInForm.invalid"
+          >
+            Sign In
+          </button>
+        </form>
+      </mat-tab>
+
+      <mat-tab label="Sign Up">
+        <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>UserName</mat-label>
+            <input matInput formControlName="userName" required />
+            @if (signUpForm.get("userName")?.invalid) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required />
+            @if (signUpForm.get("name")?.invalid) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+
+
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              required
+            />
+            @if (signUpForm.get("password")?.invalid) {
+              <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="signUpForm.invalid"
+          >
+            Sign Up
+          </button>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

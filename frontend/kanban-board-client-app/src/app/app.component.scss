@@ -1,0 +1,24 @@
+
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidenav-container {
+  display: flex;
+  flex-grow: 1;
+  background: #c2c2c2;
+}
+
+.sidenav {
+  width: 250px;
+}
+
+.content-container {
+  flex-grow: 1;
+  overflow: auto;
+
+  padding: 16px 0 ;
+}

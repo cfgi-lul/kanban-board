@@ -1,0 +1,24 @@
+.board {
+  display: flex;
+  overflow: auto;
+  gap: 16px;
+  height: 100%;
+  padding: 0 16px;
+}
+
+.column{
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task{
+  width: 100%;
+}
+
+.column-content{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

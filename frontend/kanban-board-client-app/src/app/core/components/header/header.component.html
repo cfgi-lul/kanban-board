@@ -1,0 +1,16 @@
+<mat-toolbar class="toolbar">
+  <button mat-icon-button (click)="openSideNav.emit()" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Kanban Board</span>
+  <span class="example-spacer"></span>
+
+  @if (themeControl) {
+  <mat-button-toggle-group name="fontStyle" [formControl]="themeControl" aria-label="Font Style">
+    <mat-button-toggle value="light">Light</mat-button-toggle>
+    <mat-button-toggle value="dark">Dark</mat-button-toggle>
+    <mat-button-toggle value="system">System</mat-button-toggle>
+  </mat-button-toggle-group>
+  }
+</mat-toolbar>

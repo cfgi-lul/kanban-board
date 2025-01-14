@@ -1,0 +1,22 @@
+<div class="layout-container">
+  <app-header (openSideNav)="toggleSidenav()" class="header" />
+  <!-- <div class="spacer"> -->
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #sidenav
+      mode="over"
+      [(opened)]="isSidenavOpen"
+      class="sidenav"
+    >
+      <mat-nav-list>
+        <a mat-list-item routerLink="/sign-in">Sign In</a>
+        <a mat-list-item routerLink="/boards-list">Boards List</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content-container">
+      <router-outlet />
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

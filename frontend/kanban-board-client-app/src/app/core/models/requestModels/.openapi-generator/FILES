@@ -1,0 +1,13 @@
+model/authenticationRequest.ts
+model/boardDTO.ts
+model/column.ts
+model/columnDTO.ts
+model/commentDTO.ts
+model/models.ts
+model/role.ts
+model/task.ts
+model/taskDTO.ts
+model/taskPreviewDTO.ts
+model/user.ts
+model/userDTO.ts
+model/userRegisterDTO.ts

@@ -1,0 +1,25 @@
+<div class="kanban-board-list">
+  <div class="kanban-board-list">
+    <div class="board-container">
+      @if (boards$ | async; as boards) {
+        @for (board of boards; track board.id) {
+          <mat-card class="board-card">
+            <mat-card-title>{{ board.name }}</mat-card-title>
+            <mat-card-subtitle>{{ board.id }}</mat-card-subtitle>
+            <mat-card-actions>
+              <button mat-button color="warn" (click)="openBoard(board.id)">
+                Edit Board
+              </button>
+              <button mat-button color="warn" (click)="deleteBoard(board.id)">
+                Delete Board
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+        <mat-card class="board-card btn" (click)="addBoard()">
+          <mat-card-title>Create New Board</mat-card-title>
+        </mat-card>
+      }
+    </div>
+  </div>
+</div>

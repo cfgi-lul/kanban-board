@@ -1,0 +1,124 @@
+<div class="edit-task-dialog">
+  <h2 mat-dialog-title class="edit-task-dialog__title">Edit Task</h2>
+  <mat-dialog-content class="edit-task-dialog__content">
+    <form [formGroup]="taskForm" class="edit-task-dialog__form">
+      <mat-form-field appearance="fill" class="edit-task-dialog__field">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" required />
+        @if (taskForm.get("title")?.value) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="onClearTitle()"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        }
+        @if (taskForm.get("title")?.hasError("required")) {
+          <mat-error>Title is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="edit-task-dialog__description">
+        @if (!isEditDescription) {
+          <div class="edit-task-dialog__description--preview">
+            <markdown [data]="taskForm.get('description')?.value" />
+          </div>
+          <button
+            mat-button
+            (click)="toggleEditDescription()"
+            class="edit-task-dialog__description__button"
+          >
+            Edit Description
+          </button>
+        } @else {
+          <div class="edit-task-dialog__description--edit">
+            <mat-form-field class="edit-task-dialog__field">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                [rows]="16"
+                formControlName="description"
+              ></textarea>
+            </mat-form-field>
+            <button
+              mat-button
+              (click)="toggleEditDescription()"
+              class="edit-task-dialog__description__button"
+            >
+              Preview Description
+            </button>
+          </div>
+        }
+      </div>
+
+      <!-- <mat-form-field appearance="fill" class="edit-task-dialog__field">
+      <mat-label>Column</mat-label>
+      <mat-select formControlName="column">
+        @for (column of comments$ | async; track $index) {}
+        <mat-option *ngFor="let column of data.columns" [value]="column.id">{{
+          column.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+      <!-- Comments Section -->
+      <div class="edit-task-dialog__comments">
+        <h3 class="edit-task-dialog__comments__title">Comments</h3>
+        <div class="edit-task-dialog__comments__list">
+          @for (comment of comments$ | async; track $index) {
+            <div class="edit-task-dialog__comments__item">
+              <div class="edit-task-dialog__comments__item-header">
+                <span class="edit-task-dialog__comments__item-author">{{
+                  comment.author.username
+                }}</span>
+                <span class="edit-task-dialog__comments__item-timestamp">{{
+                  comment.createdAt | date : 'YYYY.MM.dd, HH:mm'
+                }}</span>
+              </div>
+              <div class="edit-task-dialog__comments__item-text">
+                {{ comment.content }}
+              </div>
+            </div>
+          }
+        </div>
+        <div class="edit-task-dialog__comments__new">
+          <mat-form-field appearance="fill" class="edit-task-dialog__field">
+            <mat-label>Add a comment</mat-label>
+            <textarea
+              matInput
+              formControlName="newComment"
+              placeholder="Write a comment..."
+            ></textarea>
+          </mat-form-field>
+          <button
+            mat-button
+            (click)="addComment()"
+            [disabled]="!taskForm.get('newComment')?.value"
+            class="edit-task-dialog__comments__new-button"
+          >
+            Add Comment
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="edit-task-dialog__actions">
+    <button
+      mat-button
+      (click)="onCancel()"
+      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--cancel"
+    >
+      Cancel
+    </button>
+    <button
+      mat-button
+      (click)="onSave()"
+      [disabled]="taskForm.invalid"
+      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--save"
+    >
+      Save
+    </button>
+  </mat-dialog-actions>
+</div>
