@@ -126,4 +126,20 @@ export class BoardComponent implements OnInit, OnDestroy {
     console.log('deliteTask', id);
     this.taskService.deleteTask(id).pipe(take(1)).subscribe();
   }
+
+  createTask(boardId: string, columnId: string): void {
+    this.taskService
+      .createTask(
+        new Task({
+          // id?: number;
+          title: 'новая задача',
+          description: 'описание',
+          comments: [],
+        }),
+        boardId,
+        columnId
+      )
+      .pipe(take(1))
+      .subscribe();
+  }
 }

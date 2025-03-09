@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "generate-api": "openapi-generator-cli version && npx @openapitools/openapi-generator-cli generate -c ./swagger/openapi-gen-config.yaml --global-property models,supportingFiles=models.ts"
+    "generate-api": "openapi-generator-cli version && npx @openapitools/openapi-generator-cli generate -c ./swagger/openapi-gen-config.yaml --global-property models,supportingFiles=models.ts",
+    "compodoc:build": "compodoc -p tsconfig.doc.json",
+    "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s -r 8082",
+    "compodoc:serve": "compodoc -s -r 8082"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +37,7 @@
     "@angular-devkit/build-angular": "^19.0.7",
     "@angular/cli": "^19.0.7",
     "@angular/compiler-cli": "^19.0.0",
+    "@compodoc/compodoc": "^1.1.26",
     "@openapitools/openapi-generator-cli": "^2.16.3",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "19.0.2",
@@ -47,6 +51,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ngx-spec": "^2.1.6",
     "prettier": "^3.4.2",
     "prettier-eslint": "^16.3.0",
     "typescript": "~5.6.2",

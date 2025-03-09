@@ -13,4 +13,9 @@
     <mat-button-toggle value="system">System</mat-button-toggle>
   </mat-button-toggle-group>
   }
+  @if(isLoggedIn){
+    <app-user-badge [user]="user()"/>
+  }@else {
+    <div routerLink="/sign-in">Login</div>
+  }
 </mat-toolbar>

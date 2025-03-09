@@ -24,9 +24,9 @@ export class TaskService {
       .pipe(map((e) => new Task(e)));
   }
 
-  createTask(task: Task): Observable<Task> {
+  createTask(task: Task, boardId: string, columnId: string): Observable<Task> {
     return this.http
-      .post<TaskDTO>(this.baseUrl, task)
+      .post<TaskDTO>(this.baseUrl, task, { params: { boardId, columnId } })
       .pipe(map((e) => new Task(e)));
   }
 

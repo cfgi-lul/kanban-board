@@ -1,17 +1,17 @@
 <div class="layout-container">
-  <app-header (openSideNav)="toggleSidenav()" class="header" />
+  <!-- <app-header /> -->
+  <app-header (openSideNav)="toggleSidenav()"
+  [user]="currentUser | async" [isLoggedIn]="currentUser | async" class="header" />
   <!-- <div class="spacer"> -->
 
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav
-      #sidenav
-      mode="over"
-      [(opened)]="isSidenavOpen"
-      class="sidenav"
-    >
+    <mat-sidenav #sidenav mode="over" [(opened)]="isSidenavOpen" class="sidenav">
       <mat-nav-list>
         <a mat-list-item routerLink="/sign-in">Sign In</a>
         <a mat-list-item routerLink="/boards-list">Boards List</a>
+        @if (isAdmin) {
+        <a mat-list-item routerLink="/admin">Admin Panel</a>
+        }
       </mat-nav-list>
     </mat-sidenav>
 

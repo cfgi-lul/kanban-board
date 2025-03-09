@@ -1,0 +1,24 @@
+@if(user()){
+  <button
+    mat-button
+    [matMenuTriggerFor]="userMenu"
+    aria-label="User menu"
+    class="user-badge"
+  >
+    <span class="user-name">{{ user().name }}</span>
+    <span class="username">({{ user().username }})</span>
+  </button>
+
+  <!-- User menu with logout option -->
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+}@else {
+  <button mat-raised-button color="primary" (click)="onLogin()">
+    <mat-icon>login</mat-icon>
+    <span>Login</span>
+  </button>
+}

@@ -1,4 +1,4 @@
-import { BehaviorSubject, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, take, tap } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthService } from '../core/api/auth.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,7 +49,17 @@ export class BoardsListComponent {
   );
   loading = signal(true);
 
-  constructor(private router: Router) {}
+
+  constructor(
+    private router: Router,
+    public authService: AuthService,
+  ) { }
+
+  canDelete(boardId: number): Observable<boolean> {
+    return this.authService
+      .getBoardRoles(boardId)
+      .pipe(map((e) => e.includes('ADMIN')));
+  }
 
   addBoard(): void {
     this.boardService

@@ -7,11 +7,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { User } from './user';
 
 
 export interface Task { 
     id?: number;
     title?: string;
     description?: string;
+    createdBy?: User;
+    assignee?: User;
 }
 

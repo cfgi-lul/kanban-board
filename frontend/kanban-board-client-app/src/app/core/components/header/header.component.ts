@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  input,
   OnInit,
   output,
 } from '@angular/core';
@@ -13,6 +14,8 @@ import { ThemeService, themeType } from '../../services/theme.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { User } from '../../models/classes/User';
+import { UserBadgeComponent } from '../user-badge/user-badge.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,12 +26,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatButtonToggleModule,
     ReactiveFormsModule,
+    UserBadgeComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   themeControl = new FormControl<themeType>('light');
+  isLoggedIn = input.required<boolean>();
+  user = input<User>();
 
   constructor(private theme: ThemeService) {}
 
@@ -38,7 +44,6 @@ export class HeaderComponent implements OnInit {
   }
 
   themeChange(event: MatButtonToggleChange): void {
-    console.log('themeChange');
     this.theme.toggleTheme(event.value);
   }
 

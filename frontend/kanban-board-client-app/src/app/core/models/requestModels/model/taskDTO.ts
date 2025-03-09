@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { UserDTO } from './userDTO';
 import { CommentDTO } from './commentDTO';
 
 
@@ -15,5 +16,7 @@ export interface TaskDTO {
     title?: string;
     description?: string;
     comments?: Array<CommentDTO>;
+    createdBy?: UserDTO;
+    assignee?: UserDTO;
 }
 

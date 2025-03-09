@@ -1,0 +1,2172 @@
+===== File: ./index.html =====
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>KanbanBoardClientApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+
+===== File: ./app/app.component.html =====
+<div class="layout-container">
+  <app-header (openSideNav)="toggleSidenav()" class="header" />
+  <!-- <div class="spacer"> -->
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #sidenav
+      mode="over"
+      [(opened)]="isSidenavOpen"
+      class="sidenav"
+    >
+      <mat-nav-list>
+        <a mat-list-item routerLink="/sign-in">Sign In</a>
+        <a mat-list-item routerLink="/boards-list">Boards List</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content-container">
+      <router-outlet />
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+
+===== File: ./app/boards-list/boards-list.component.scss =====
+.kanban-board-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  top: 0 ;
+  left: 0;
+  right: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.board-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 80px 16px 16px; /* Adjust padding for toolbar height */
+  overflow-y: auto;
+}
+
+.board-card {
+  height: 150px;
+  padding: 16px;
+}
+
+.board-card.btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.board-card.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+===== File: ./app/boards-list/boards-list.component.html =====
+<div class="kanban-board-list">
+  <div class="kanban-board-list">
+    <div class="board-container">
+      @if (boards$ | async; as boards) {
+        @for (board of boards; track board.id) {
+          <mat-card class="board-card">
+            <mat-card-title>{{ board.name }}</mat-card-title>
+            <mat-card-subtitle>{{ board.id }}</mat-card-subtitle>
+            <mat-card-actions>
+              <button mat-button color="warn" (click)="openBoard(board.id)">
+                Edit Board
+              </button>
+              <button mat-button color="warn" (click)="deleteBoard(board.id)">
+                Delete Board
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+        <mat-card class="board-card btn" (click)="addBoard()">
+          <mat-card-title>Create New Board</mat-card-title>
+        </mat-card>
+      }
+    </div>
+  </div>
+</div>
+
+
+===== File: ./app/boards-list/boards-list.component.ts =====
+import { BehaviorSubject, switchMap, take, tap } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { BoardService } from '../core/api/board.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-boards-list',
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatIconModule,
+    AsyncPipe,
+    RouterModule,
+  ],
+  templateUrl: './boards-list.component.html',
+  styleUrl: './boards-list.component.scss',
+})
+export class BoardsListComponent {
+  private refreshBoards$ = new BehaviorSubject<void>(null);
+  private boardService = inject(BoardService);
+  boards$ = this.refreshBoards$.pipe(
+    tap(() => this.loading.set(true)),
+    switchMap(() => this.boardService.getAllBoards()),
+    tap(() => this.loading.set(false)),
+  );
+  loading = signal(true);
+
+  constructor(private router: Router) {}
+
+  addBoard(): void {
+    this.boardService
+      // .createBoard({
+      //   name: 'string',
+      //   columns: [],JsonManagedReference
+      //   users: [],
+      // })
+      .createRandomBoard()
+      .pipe(take(1))
+      .subscribe(() => this.refreshBoards$.next());
+  }
+
+  openBoard(boardId: number): void {
+    this.router.navigate(['/board', boardId]);
+  }
+
+  deleteBoard(boardId: number): void {
+    this.boardService
+      .deleteBoard(boardId)
+      .pipe(take(1))
+      .subscribe(() => this.refreshBoards$.next());
+  }
+}
+
+
+===== File: ./app/core/intersceptors/auth.interceptor.ts =====
+import { AuthService } from './../api/auth.service';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
+  const token = authService.token;
+  if (token) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  return next(req);
+};
+
+
+===== File: ./app/core/models/classes/Column.ts =====
+import { ColumnDTO } from '../requestModels/model/columnDTO';
+import { TaskPreview } from './TaskPreview';
+
+export class Column implements ColumnDTO {
+  id?: number;
+  name?: string;
+  tasks?: TaskPreview[];
+  constructor(data: ColumnDTO) {
+    this.id = data.id;
+    this.name = data.name;
+    this.tasks = data.tasks;
+  }
+}
+
+
+===== File: ./app/core/models/classes/TaskPreview.ts =====
+import { TaskPreviewDTO } from '../requestModels/model/taskPreviewDTO';
+
+export class TaskPreview implements TaskPreviewDTO {
+  id?: number;
+  title?: string;
+  constructor(data: TaskPreviewDTO) {
+    this.id = data.id;
+    this.title = data.title;
+  }
+}
+
+
+===== File: ./app/core/models/classes/Role.ts =====
+export class Role {}
+
+
+===== File: ./app/core/models/classes/Comment.ts =====
+import { CommentDTO } from '../requestModels/model/commentDTO';
+import { User } from './User';
+
+export class Comment implements CommentDTO {
+  id?: number;
+  content?: string;
+  createdAt?: Date;
+  author?: User;
+  taskId?: number;
+
+  constructor(data: CommentDTO) {
+    this.id = data.id;
+    this.content = data.content;
+    this.createdAt = data.createdAt;
+    this.author = new User(data.author);
+    this.taskId = data.taskId;
+  }
+}
+
+
+===== File: ./app/core/models/classes/Board.ts =====
+import { BoardDTO } from '../requestModels/model/boardDTO';
+import { Column } from './Column';
+
+export class Board implements BoardDTO {
+  id: number;
+  name: string;
+  columns: Column[];
+  constructor(data: BoardDTO) {
+    this.id = data.id;
+    this.name = data.name;
+    this.columns = data.columns;
+  }
+}
+
+
+===== File: ./app/core/models/classes/User.ts =====
+import { UserDTO } from '../requestModels/model/userDTO';
+
+export class User implements UserDTO {
+  id?: number;
+  username?: string;
+  name?: string;
+
+  constructor(data: UserDTO) {
+    this.id = data.id;
+    this.username = data.username;
+    this.name = data.name;
+  }
+}
+
+
+===== File: ./app/core/models/classes/Task.ts =====
+import { CommentDTO } from '../requestModels/model/commentDTO';
+import { TaskDTO } from '../requestModels/model/taskDTO';
+
+export class Task implements TaskDTO {
+  id?: number;
+  title?: string;
+  description?: string;
+  comments?: CommentDTO[];
+  constructor(data: TaskDTO) {
+    this.id = data.id;
+    this.title = data.title;
+    this.description = data.description;
+    this.comments = data.comments;
+  }
+}
+
+
+===== File: ./app/core/models/requestModels/model/authenticationRequest.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface AuthenticationRequest { 
+    username?: string;
+    password?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/column.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface Column { 
+    id?: number;
+    name?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/userRegisterDTO.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface UserRegisterDTO { 
+    username?: string;
+    password?: string;
+    name?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/userDTO.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface UserDTO { 
+    id?: number;
+    username?: string;
+    name?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/boardDTO.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+import { ColumnDTO } from './columnDTO';
+
+
+export interface BoardDTO { 
+    id?: number;
+    name?: string;
+    columns?: Array<ColumnDTO>;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/taskPreviewDTO.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface TaskPreviewDTO { 
+    id?: number;
+    title?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/commentDTO.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+import { UserDTO } from './userDTO';
+
+
+export interface CommentDTO { 
+    id?: number;
+    content?: string;
+    createdAt?: Date;
+    author?: UserDTO;
+    taskId?: number;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/role.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface Role { 
+    id?: number;
+    name?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/taskDTO.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+import { CommentDTO } from './commentDTO';
+
+
+export interface TaskDTO { 
+    id?: number;
+    title?: string;
+    description?: string;
+    comments?: Array<CommentDTO>;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/columnDTO.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+import { TaskPreviewDTO } from './taskPreviewDTO';
+
+
+export interface ColumnDTO { 
+    id?: number;
+    name?: string;
+    tasks?: Array<TaskPreviewDTO>;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/models.ts =====
+export * from './authenticationRequest';
+export * from './boardDTO';
+export * from './column';
+export * from './columnDTO';
+export * from './commentDTO';
+export * from './role';
+export * from './task';
+export * from './taskDTO';
+export * from './taskPreviewDTO';
+export * from './user';
+export * from './userDTO';
+export * from './userRegisterDTO';
+
+
+===== File: ./app/core/models/requestModels/model/comment.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+import { Task } from './task';
+
+
+export interface Comment { 
+    id?: number;
+    content?: string;
+    task?: Task;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/board.ts =====
+/**
+ * OpenAPI definition
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface Board { 
+    id?: number;
+    name?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/user.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+import { Role } from './role';
+
+
+export interface User { 
+    id?: number;
+    name?: string;
+    password?: string;
+    username?: string;
+    roles?: Array<Role>;
+}
+
+
+
+===== File: ./app/core/models/requestModels/model/task.ts =====
+/**
+ * Kanban API
+ *
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+
+export interface Task { 
+    id?: number;
+    title?: string;
+    description?: string;
+}
+
+
+
+===== File: ./app/core/models/requestModels/.openapi-generator/VERSION =====
+7.11.0
+
+
+===== File: ./app/core/models/requestModels/.openapi-generator/FILES =====
+model/authenticationRequest.ts
+model/boardDTO.ts
+model/column.ts
+model/columnDTO.ts
+model/commentDTO.ts
+model/models.ts
+model/role.ts
+model/task.ts
+model/taskDTO.ts
+model/taskPreviewDTO.ts
+model/user.ts
+model/userDTO.ts
+model/userRegisterDTO.ts
+
+
+===== File: ./app/core/components/error-display/error-display.component.ts =====
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-error-display',
+  template: `
+    @if (errorMessage) {
+      <mat-card class="error-card">
+        <mat-card-title>Error</mat-card-title>
+        <mat-card-content>
+          <p>{{ errorMessage() }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="warn" (click)="clearError()">
+            Dismiss
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  `,
+  styles: [
+    `
+      .error-card {
+        background-color: #ffebee;
+        color: #d32f2f;
+        margin: 16px;
+        padding: 16px;
+      }
+    `,
+  ],
+  imports: [MatCardModule],
+})
+export class ErrorDisplayComponent {
+  errorMessage = input<string>('Error with request');
+
+  clearError() {
+    this.errorMessage = null;
+  }
+}
+
+
+===== File: ./app/core/components/header/header.component.html =====
+<mat-toolbar class="toolbar">
+  <button mat-icon-button (click)="openSideNav.emit()" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Kanban Board</span>
+  <span class="example-spacer"></span>
+
+  @if (themeControl) {
+  <mat-button-toggle-group name="fontStyle" [formControl]="themeControl" aria-label="Font Style">
+    <mat-button-toggle value="light">Light</mat-button-toggle>
+    <mat-button-toggle value="dark">Dark</mat-button-toggle>
+    <mat-button-toggle value="system">System</mat-button-toggle>
+  </mat-button-toggle-group>
+  }
+</mat-toolbar>
+
+
+===== File: ./app/core/components/header/header.component.ts =====
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  output,
+} from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatButtonToggleChange,
+  MatButtonToggleModule,
+} from '@angular/material/button-toggle';
+import { ThemeService, themeType } from '../../services/theme.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-header',
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatButtonToggleModule,
+    ReactiveFormsModule,
+  ],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
+})
+export class HeaderComponent implements OnInit {
+  themeControl = new FormControl<themeType>('light');
+
+  constructor(private theme: ThemeService) {}
+
+  ngOnInit(): void {
+    this.themeControl.valueChanges.subscribe((e) => this.theme.toggleTheme(e));
+    this.themeControl.setValue(this.theme.currentTheme);
+  }
+
+  themeChange(event: MatButtonToggleChange): void {
+    console.log('themeChange');
+    this.theme.toggleTheme(event.value);
+  }
+
+  openSideNav = output<void>();
+}
+
+
+===== File: ./app/core/components/header/header.component.scss =====
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar{
+  background: var(--mat-sys-primary-container);
+}
+
+
+===== File: ./app/core/api/comment.service.ts =====
+import { map, Observable } from 'rxjs';
+import { Comment } from '../models/classes/Comment';
+import { CommentDTO } from '../models/requestModels/model/commentDTO';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CommentService {
+  apiUrl = '/api/comments';
+  constructor(private http: HttpClient) {}
+
+  getComments(taskId: number): Observable<Comment[]> {
+    return this.http
+      .get<CommentDTO[]>(`${this.apiUrl}/task/${taskId}`)
+      .pipe(map((e) => e.map((el) => new Comment(el))));
+  }
+
+  createComment(comment: {
+    content: string;
+    taskId: number;
+  }): Observable<Comment> {
+    console.log('createComment', comment);
+    return this.http
+      .post<CommentDTO>(this.apiUrl, comment)
+      .pipe(map((e) => new Comment(e)));
+  }
+
+  deleteComment(id: number): Observable<void> {
+    return this.http.delete<void>(this.apiUrl, {
+      params: { id: id.toString() },
+    });
+  }
+}
+
+
+===== File: ./app/core/api/board-socket.service.ts =====
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { filter, map, Observable, take } from 'rxjs';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { AuthService } from './auth.service';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class BoardSocketService {
+  private socket$: WebSocketSubject<any>;
+  private readonly stompHeaders = {
+    'accept-version': '1.2',
+    host: 'localhost',
+  };
+
+  constructor(private authService: AuthService) {}
+
+  connect(boardId: string): void {
+    this.socket$ = webSocket({
+      url: `ws://localhost:8080/ws/websocket`,
+      protocol: 'v12.stomp',
+      serializer: (msg) => msg,
+      deserializer: (e) => e.data,
+    });
+
+    // Send CONNECT frame
+    this.socket$.next(
+      `CONNECT\n${this.objectToStompHeaders(this.stompHeaders)}\n\n\0`,
+    );
+
+    // Subscribe to board-specific updates
+    this.waitForConnection().subscribe(() => {
+      const subscribeFrame = `SUBSCRIBE\nid:sub-${boardId}\ndestination:/topic/board/${boardId}\n\n\0`;
+      this.socket$.next(subscribeFrame);
+    });
+  }
+
+  disconnect(): void {
+    if (this.socket$) {
+      this.socket$.complete();
+    }
+  }
+
+  listenForUpdates(): Observable<any> {
+    return this.socket$.pipe(
+      filter((message: string) => message.startsWith('MESSAGE')),
+      map((message: string) => {
+        const [command, headers, body] = this.parseStompFrame(message);
+        return JSON.parse(body);
+      }),
+    );
+  }
+
+  sendUpdate(boardId: string, update: any): void {
+    const updateFrame = `SEND\ndestination:/app/board/${boardId}/update\ncontent-type:application/json\n\n${JSON.stringify(update)}\0`;
+    this.socket$.next(updateFrame);
+  }
+
+  private waitForConnection(): Observable<void> {
+    return this.socket$.pipe(
+      filter((message: string) => message.startsWith('CONNECTED')),
+      take(1),
+      map(() => void 0),
+    );
+  }
+
+  private parseStompFrame(
+    rawFrame: string,
+  ): [string, Record<string, string>, string] {
+    const divider = rawFrame.indexOf('\n\n');
+    const headerSection = rawFrame.substring(0, divider);
+    const body = rawFrame.substring(divider + 2).replace(/\0$/, '');
+
+    const headers = headerSection.split('\n');
+    const command = headers.shift() || '';
+    const headerObj = headers.reduce(
+      (acc, line) => {
+        const [key, value] = line.split(':');
+        if (key && value) acc[key.trim()] = value.trim();
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
+
+    return [command, headerObj, body];
+  }
+
+  private objectToStompHeaders(obj: Record<string, string>): string {
+    return Object.entries(obj)
+      .map(([key, value]) => `${key}:${value}`)
+      .join('\n');
+  }
+}
+
+
+===== File: ./app/core/api/auth.service.ts =====
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  private apiUrl = `/api/api/auth`;
+
+  private currentUserSubject: BehaviorSubject<any>;
+  public currentUser: Observable<any>;
+  private helper = new JwtHelperService();
+
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<any>(
+      JSON.parse(localStorage.getItem('currentUser') || 'null'),
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public get currentUserValue(): any {
+    return this.currentUserSubject.value;
+  }
+
+  public get token(): string | null {
+    return localStorage.getItem('access_token');
+  }
+
+  login(user: { username: string; password: string }): Observable<any> {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('currentUser');
+    return this.http
+      .post<any>(`${this.apiUrl}/login`, {
+        username: user.username,
+        password: user.password,
+      })
+      .pipe(
+        tap((response) => {
+          console.log('response', response);
+          if (response.token) {
+            localStorage.setItem('access_token', response.token);
+            const user = this.helper.decodeToken(response.token);
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+            console.log(user);
+          }
+        }),
+      );
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.token;
+    return !!(token && !this.helper.isTokenExpired(token));
+  }
+
+  getRoles(): string[] {
+    const user = this.currentUserValue;
+    return user?.roles || [];
+  }
+
+  register(user: {
+    username: string;
+    password: string;
+    name: string;
+  }): Observable<object> {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('currentUser');
+    return this.http.post(`${this.apiUrl}/register`, user);
+  }
+
+  hasRole(role: string): boolean {
+    return this.getRoles().includes(role);
+  }
+}
+
+
+===== File: ./app/core/api/task.service.ts =====
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { Task } from '../models/classes/Task';
+import { TaskDTO } from '../models/requestModels/model/models';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class TaskService {
+  private readonly baseUrl = '/api/tasks';
+
+  constructor(private http: HttpClient) {}
+
+  getAllTasks(): Observable<Task[]> {
+    return this.http
+      .get<TaskDTO[]>(this.baseUrl)
+      .pipe(map((e) => e.map((el) => new Task(el))));
+  }
+
+  getTasksByID(id: string | number): Observable<Task> {
+    return this.http
+      .get<TaskDTO>(`${this.baseUrl}/${id}`)
+      .pipe(map((e) => new Task(e)));
+  }
+
+  createTask(task: Task): Observable<Task> {
+    return this.http
+      .post<TaskDTO>(this.baseUrl, task)
+      .pipe(map((e) => new Task(e)));
+  }
+
+  updateTask(updatedTask: Task): Observable<Task> {
+    return this.http
+      .put<TaskDTO>(`${this.baseUrl}/${updatedTask.id.toString()}`, updatedTask)
+      .pipe(map((e) => new Task(e)));
+  }
+
+  deleteTask(id: string | number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+}
+
+
+===== File: ./app/core/api/column.service.ts =====
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+import { Column } from '../models/classes/Column';
+import { ColumnDTO } from '../models/requestModels/model/columnDTO';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ColumnService {
+  private readonly baseUrl = '/api/columns';
+  constructor(private http: HttpClient) {}
+
+  getAllColumns(id: number): Observable<Column[]> {
+    let params = new HttpParams();
+    params = params.set('id', id.toString());
+    return this.http
+      .get<ColumnDTO[]>(this.baseUrl, { params })
+      .pipe(map((e) => e.map((el) => new Column(el))));
+  }
+
+  createColumn(column: Column): Observable<Column> {
+    return this.http
+      .post<ColumnDTO>(this.baseUrl, column)
+      .pipe(map((e) => new Column(e)));
+  }
+
+  deleteColumn(id: number): Observable<void> {
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete<void>(this.baseUrl, { params });
+  }
+}
+
+
+===== File: ./app/core/api/user.service.ts =====
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  constructor() {}
+}
+
+
+===== File: ./app/core/api/board.service.ts =====
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Board } from '../models/classes/Board';
+import { BoardDTO } from '../models/requestModels/model/boardDTO';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import type { Observable } from 'rxjs/internal/Observable';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class BoardService {
+  private readonly baseUrl = '/api/boards';
+
+  constructor(private httpClient: HttpClient) {}
+
+  getAllBoards(): Observable<Board[]> {
+    return this.httpClient
+      .get<BoardDTO[]>(this.baseUrl)
+      .pipe(map((e) => e.map((el) => new Board(el))));
+  }
+
+  getBoardById(id: string): Observable<Board> {
+    let params = new HttpParams();
+    params = params.set('id', id);
+    return this.httpClient
+      .get<BoardDTO[]>(this.baseUrl, { params })
+      .pipe(map((e) => new Board(e[0])));
+  }
+
+  createBoard(board: Partial<BoardDTO>): Observable<Board> {
+    return this.httpClient
+      .post<BoardDTO>(this.baseUrl, board)
+      .pipe(map((e) => new Board(e)));
+  }
+
+  createRandomBoard(): Observable<Board> {
+    return this.httpClient
+      .post<BoardDTO>(`${this.baseUrl}/random`, null)
+      .pipe(map((e) => new Board(e)));
+  }
+
+  deleteBoard(id: number): Observable<void> {
+    const params = new HttpParams().set('id', id.toString());
+    return this.httpClient.delete<void>(this.baseUrl, { params });
+  }
+}
+
+
+===== File: ./app/core/services/theme.service.ts =====
+import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
+export type themeType = 'light' | 'dark' | 'system';
+@Injectable({
+  providedIn: 'root',
+})
+export class ThemeService {
+  private renderer: Renderer2;
+
+  private _currentTheme: themeType = 'light';
+
+  public get currentTheme(): themeType {
+    return this._currentTheme;
+  }
+
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private rendererFactory: RendererFactory2,
+  ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+    this._currentTheme = (localStorage.getItem('theme') ||
+      'system') as themeType;
+  }
+
+  toggleTheme(val: themeType): void {
+    localStorage.setItem('theme', val);
+    this.renderer.removeClass(this.document.body, this.currentTheme);
+    this._currentTheme = val;
+    this.renderer.addClass(this.document.body, this.currentTheme);
+  }
+}
+
+
+===== File: ./app/core/guards/auth.guard.ts =====
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../api/auth.service';
+import { inject } from '@angular/core';
+
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  if (authService.isAuthenticated()) {
+    return true;
+  }
+  router.navigate(['/sign-in']);
+  return false;
+};
+
+
+===== File: ./app/board/board.component.ts =====
+import {
+  CdkDrag,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  firstValueFrom,
+  map,
+  merge,
+  Subject,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { Board } from '../core/models/classes/Board';
+import { BoardService } from '../core/api/board.service';
+import { BoardSocketService } from '../core/api/board-socket.service';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import type { Observable } from 'rxjs';
+import { TaksPreviewComponent } from './components/taks-preview/taks-preview.component';
+import { Task } from '../core/models/classes/Task';
+import { TaskEditorComponent } from './components/task-editor/task-editor.component';
+import { TaskService } from './../core/api/task.service';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-board',
+  imports: [
+    TaksPreviewComponent,
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
+    AsyncPipe,
+    MatCardModule,
+    MatButtonModule,
+    MatButtonModule,
+    MatDialogModule,
+  ],
+  templateUrl: './board.component.html',
+  styleUrl: './board.component.scss',
+})
+export class BoardComponent implements OnInit, OnDestroy {
+  board$: Observable<Board>;
+  boardId$: Observable<string>;
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private boardService: BoardService,
+    private activatedRoute: ActivatedRoute,
+    private matDialog: MatDialog,
+    private taskService: TaskService,
+    private boardSocketService: BoardSocketService,
+  ) {
+    this.boardId$ = this.activatedRoute.params.pipe(
+      map((params) => params['id']),
+    );
+  }
+
+  ngOnInit(): void {
+    const initialBoard$ = this.boardId$.pipe(
+      switchMap((boardId) => this.boardService.getBoardById(boardId)),
+    );
+
+    const socketUpdates$ = this.boardId$.pipe(
+      switchMap((boardId) => {
+        this.boardSocketService.connect(boardId);
+        return this.boardSocketService.listenForUpdates();
+      }),
+    );
+
+    this.board$ = merge(
+      initialBoard$,
+      socketUpdates$.pipe(tap((e) => console.log(e))),
+    ).pipe(takeUntil(this.destroy$));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.boardSocketService.disconnect();
+  }
+
+  async drop(event: CdkDragDrop<Task[]>, currentBoard: Board): Promise<void> {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+
+    this.boardSocketService.sendUpdate(
+      currentBoard.id.toString(),
+      currentBoard,
+    );
+  }
+
+  async editTask(id: number): Promise<void> {
+    const task = await firstValueFrom(this.taskService.getTasksByID(id));
+
+    this.matDialog.open(TaskEditorComponent, {
+      data: { task },
+      width: '800px',
+    });
+  }
+
+  deliteTask(id: number): void {
+    console.log('deliteTask', id);
+    this.taskService.deleteTask(id).pipe(take(1)).subscribe();
+  }
+}
+
+
+===== File: ./app/board/board.component.scss =====
+.board {
+  display: flex;
+  overflow: auto;
+  gap: 16px;
+  height: 100%;
+  padding: 0 16px;
+}
+
+.column{
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task{
+  width: 100%;
+}
+
+.column-content{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+===== File: ./app/board/board.component.html =====
+<div class="board" cdkDropListGroup>
+  @if (board$ | async; as board) {
+    @for (column of board.columns; track $index) {
+      <mat-card
+        class="column"
+        cdkDropList
+        [cdkDropListData]="column.tasks"
+        (cdkDropListDropped)="drop($event, board)"
+        appearance="outlined"
+      >
+        <mat-card-header>
+          <mat-card-title>{{ column.name }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="column-content">
+          @for (task of column.tasks; track $index) {
+            <app-taks-preview
+              [taks]="task"
+              (editTask)="editTask(task.id)"
+              [name]="task.title"
+              (deleteTask)="deliteTask(task.id)"
+              class="task"
+              cdkDrag
+            />
+          }
+          <!-- <app-taks-preview
+              [taks]="{}"
+              (editTask)="editTask('' + task.id)"
+              [name]="task.title"
+              class="task"
+              cdkDrag
+            /> -->
+        </mat-card-content>
+      </mat-card>
+    }
+  }
+</div>
+
+
+===== File: ./app/board/components/task-editor/task-editor.component.html =====
+<div class="edit-task-dialog">
+  <h2 mat-dialog-title class="edit-task-dialog__title">Edit Task</h2>
+  <mat-dialog-content class="edit-task-dialog__content">
+    <form [formGroup]="taskForm" class="edit-task-dialog__form">
+      <mat-form-field appearance="fill" class="edit-task-dialog__field">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" required />
+        @if (taskForm.get("title")?.value) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="onClearTitle()"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        }
+        @if (taskForm.get("title")?.hasError("required")) {
+          <mat-error>Title is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="edit-task-dialog__description">
+        @if (!isEditDescription) {
+          <div class="edit-task-dialog__description--preview">
+            <markdown [data]="taskForm.get('description')?.value" />
+          </div>
+          <button
+            mat-button
+            (click)="toggleEditDescription()"
+            class="edit-task-dialog__description__button"
+          >
+            Edit Description
+          </button>
+        } @else {
+          <div class="edit-task-dialog__description--edit">
+            <mat-form-field class="edit-task-dialog__field">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                [rows]="16"
+                formControlName="description"
+              ></textarea>
+            </mat-form-field>
+            <button
+              mat-button
+              (click)="toggleEditDescription()"
+              class="edit-task-dialog__description__button"
+            >
+              Preview Description
+            </button>
+          </div>
+        }
+      </div>
+
+      <!-- <mat-form-field appearance="fill" class="edit-task-dialog__field">
+      <mat-label>Column</mat-label>
+      <mat-select formControlName="column">
+        @for (column of comments$ | async; track $index) {}
+        <mat-option *ngFor="let column of data.columns" [value]="column.id">{{
+          column.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+      <!-- Comments Section -->
+      <div class="edit-task-dialog__comments">
+        <h3 class="edit-task-dialog__comments__title">Comments</h3>
+        <div class="edit-task-dialog__comments__list">
+          @for (comment of comments$ | async; track $index) {
+            <div class="edit-task-dialog__comments__item">
+              <div class="edit-task-dialog__comments__item-header">
+                <span class="edit-task-dialog__comments__item-author">{{
+                  comment.author.username
+                }}</span>
+                <span class="edit-task-dialog__comments__item-timestamp">{{
+                  comment.createdAt | date : 'YYYY.MM.dd, HH:mm'
+                }}</span>
+              </div>
+              <div class="edit-task-dialog__comments__item-text">
+                {{ comment.content }}
+              </div>
+            </div>
+          }
+        </div>
+        <div class="edit-task-dialog__comments__new">
+          <mat-form-field appearance="fill" class="edit-task-dialog__field">
+            <mat-label>Add a comment</mat-label>
+            <textarea
+              matInput
+              formControlName="newComment"
+              placeholder="Write a comment..."
+            ></textarea>
+          </mat-form-field>
+          <button
+            mat-button
+            (click)="addComment()"
+            [disabled]="!taskForm.get('newComment')?.value"
+            class="edit-task-dialog__comments__new-button"
+          >
+            Add Comment
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="edit-task-dialog__actions">
+    <button
+      mat-button
+      (click)="onCancel()"
+      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--cancel"
+    >
+      Cancel
+    </button>
+    <button
+      mat-button
+      (click)="onSave()"
+      [disabled]="taskForm.invalid"
+      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--save"
+    >
+      Save
+    </button>
+  </mat-dialog-actions>
+</div>
+
+
+===== File: ./app/board/components/task-editor/task-editor.component.ts =====
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { firstValueFrom, Observable, repeat, take } from 'rxjs';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MarkdownComponent, MarkdownModule } from 'ngx-markdown';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { Comment } from './../../../core/models/classes/Comment';
+import { CommentService } from '../../../core/api/comment.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Task } from '../../../core/models/classes/Task';
+import { TaskService } from '../../../core/api/task.service';
+import { TextFieldModule } from '@angular/cdk/text-field';
+
+const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-task-editor',
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonToggleModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    DatePipe,
+    AsyncPipe,
+    MatChipsModule,
+    MatAutocompleteModule,
+    FormsModule,
+    MarkdownComponent,
+    MarkdownModule,
+    TextFieldModule,
+  ],
+  templateUrl: './task-editor.component.html',
+  styleUrl: './task-editor.component.scss',
+})
+export class TaskEditorComponent {
+  taskForm: FormGroup;
+  isEditDescription = false;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  comments$: Observable<Comment[]>;
+
+  constructor(
+    private fb: FormBuilder,
+    private taskService: TaskService,
+    private commentService: CommentService,
+    public dialogRef: MatDialogRef<TaskEditorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { task: Task },
+  ) {
+    this.taskForm = this.fb.group({
+      title: [data.task.title, Validators.required],
+      description: [data.task.description],
+      newComment: [''],
+    });
+
+    this.comments$ = this.commentService
+      .getComments(data.task.id)
+      .pipe(repeat({ delay: COMMENTS_UPDATE_TIMEOUT_S }));
+  }
+
+  onClearTitle(): void {
+    this.taskForm.get('title')?.setValue('');
+  }
+
+  toggleEditDescription(): void {
+    this.isEditDescription = !this.isEditDescription;
+  }
+
+  addComment(): void {
+    const value = this.taskForm.value.newComment.trim();
+    console.log('value', value);
+    if (value) {
+      this.commentService
+        .createComment({
+          content: value,
+          taskId: this.data.task.id,
+        })
+        .pipe(take(1))
+        .subscribe();
+    }
+    this.taskForm.controls['newComment'].setValue('');
+  }
+
+  removeComment(comment: Comment): void {
+    this.data.task.comments = this.data.task.comments.filter(
+      (c) => c.id !== comment.id,
+    );
+  }
+
+  async onSave(): Promise<void> {
+    if (this.taskForm.valid) {
+      const updatedTask: Task = {
+        ...this.data.task,
+        title: this.taskForm.value.title,
+        description: this.taskForm.value.description,
+      };
+      await firstValueFrom(this.taskService.updateTask(updatedTask));
+      this.dialogRef.close(updatedTask);
+    }
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+}
+
+
+===== File: ./app/board/components/task-editor/task-editor.component.scss =====
+
+.edit-task-dialog {
+  padding: 24px;
+  // width: ;
+  &__title {
+    text-align: center;
+    margin: 0 0 24px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  &__content {
+    padding: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  &__description {
+    &--preview {
+      height: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 16px;
+      min-height: 100px;
+      height: 400px;
+      margin: 16px 0;
+      overflow: auto;
+    }
+
+    &--edit {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &__button {
+      margin-top: 8px;
+    }
+  }
+
+  &__comments {
+    margin-top: 32px;
+
+    &__title {
+      font-size: 19px;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    &__item {
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      padding: 16px;
+
+      &-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+
+      &-timestamp {
+        color: #666;
+        font-size: 14px;
+      }
+
+      &-text {
+        white-space: pre-wrap;
+      }
+    }
+
+    &__new {
+      margin-top: 24px;
+
+      &-button {
+        margin-top: 16px;
+        float: right;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    padding: 24px 0;
+    margin-top: 32px;
+    border-top: 1px solid #eee;
+  }
+}
+
+@media (max-width: 600px) {
+  .edit-task-dialog {
+    &__content {
+      padding: 8px;
+    }
+  }
+}
+
+
+===== File: ./app/board/components/taks-preview/taks-preview.component.ts =====
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { Task } from '../../../core/models/classes/Task';
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-taks-preview',
+  imports: [MatCardModule, MatButtonModule],
+  templateUrl: './taks-preview.component.html',
+  styleUrl: './taks-preview.component.scss',
+})
+export class TaksPreviewComponent {
+  taks = input.required<Task>();
+  name = input.required<string>();
+  editTask = output<string>();
+  deleteTask = output<string>();
+}
+
+
+===== File: ./app/board/components/taks-preview/taks-preview.component.html =====
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ taks().title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content />
+  <mat-card-actions>
+    <button mat-button (click)="editTask.emit('' + taks().id)">Edit</button>
+    <button mat-button (click)="deleteTask.emit('' + taks().id)">Delete</button>
+  </mat-card-actions>
+</mat-card>
+
+
+===== File: ./app/app.component.scss =====
+
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidenav-container {
+  display: flex;
+  flex-grow: 1;
+  background: #c2c2c2;
+}
+
+.sidenav {
+  width: 250px;
+}
+
+.content-container {
+  flex-grow: 1;
+  overflow: auto;
+
+  padding: 16px 0 ;
+}
+
+
+===== File: ./app/not-found/not-found.component.html =====
+<p>not-found works!</p>
+
+
+===== File: ./app/not-found/not-found.component.ts =====
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-not-found',
+  imports: [],
+  templateUrl: './not-found.component.html',
+  styleUrl: './not-found.component.scss',
+})
+export class NotFoundComponent {}
+
+
+===== File: ./app/app.routes.ts =====
+import { authGuard } from './core/guards/auth.guard';
+import { BoardComponent } from './board/board.component';
+import { BoardsListComponent } from './boards-list/boards-list.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { Routes } from '@angular/router';
+import { SignInComponent } from './sign-in/sign-in.component';
+
+export const routes: Routes = [
+  { path: 'sign-in', title: 'signIn', loadComponent: () => SignInComponent },
+  {
+    path: 'board/:id',
+    title: 'board',
+    loadComponent: () => BoardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'boards-list',
+    title: 'list',
+    loadComponent: () => BoardsListComponent,
+    canActivate: [authGuard],
+  },
+  { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
+  { path: '**', loadComponent: () => NotFoundComponent },
+];
+
+
+===== File: ./app/app.component.ts =====
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './core/components/header/header.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-root',
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    MatGridListModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatListModule,
+    RouterModule,
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  title = 'kanban-board-client-app';
+  isSidenavOpen = false;
+
+  toggleSidenav(): void {
+    this.isSidenavOpen = !this.isSidenavOpen;
+  }
+}
+
+
+===== File: ./app/app.config.ts =====
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  inject,
+  provideZoneChangeDetection,
+} from '@angular/core';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideMarkdown } from 'ngx-markdown';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    importProvidersFrom(
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: () => {
+            return localStorage.getItem('access_token');
+          },
+          allowedDomains: ['example.com'],
+          disallowedRoutes: ['http://example.com/examplebadroute/'],
+        },
+      }),
+    ),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideMarkdown(),
+  ],
+};
+
+
+===== File: ./app/sign-in/sign-in.component.ts =====
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { AuthService } from './../core/api/auth.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { take } from 'rxjs';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-sign-in',
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatIconModule,
+  ],
+  templateUrl: './sign-in.component.html',
+  styleUrl: './sign-in.component.scss',
+})
+export class SignInComponent {
+  signInForm: FormGroup;
+  signUpForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+  ) {
+    this.signInForm = this.fb.group({
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+
+    this.signUpForm = this.fb.group({
+      userName: ['', Validators.required],
+      name: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
+  onSignIn(): void {
+
+    if (this.signInForm.valid) {
+      console.log('onSignIn', this.signInForm.valid);
+      this.authService
+        .login({
+          username: this.signInForm.value.userName,
+          password: this.signInForm.value.password,
+        })
+        .pipe(take(1))
+        .subscribe();
+    }
+  }
+
+  onSignUp(): void {
+    if (this.signUpForm.valid) {
+      this.authService
+        .register({
+          username: this.signUpForm.value.userName,
+          name: this.signUpForm.value.name,
+          password: this.signUpForm.value.password,
+        })
+        .pipe(take(1))
+        .subscribe();
+    }
+  }
+}
+
+
+===== File: ./app/sign-in/sign-in.component.scss =====
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+mat-card {
+  width: 400px;
+  height: 500px;
+  padding: 16px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+
+===== File: ./app/sign-in/sign-in.component.html =====
+<div class="auth-container">
+  <mat-card>
+    <mat-tab-group>
+      <mat-tab label="Sign In">
+        <div [formGroup]="signInForm"></div>
+        <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>UserName</mat-label>
+            <input matInput formControlName="userName" required />
+            @if (signUpForm.get("userName")?.invalid) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              required
+            />
+            @if (signInForm.get("password")?.invalid) {
+              <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="signInForm.invalid"
+          >
+            Sign In
+          </button>
+        </form>
+      </mat-tab>
+
+      <mat-tab label="Sign Up">
+        <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>UserName</mat-label>
+            <input matInput formControlName="userName" required />
+            @if (signUpForm.get("userName")?.invalid) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required />
+            @if (signUpForm.get("name")?.invalid) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+
+
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              required
+            />
+            @if (signUpForm.get("password")?.invalid) {
+              <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="signUpForm.invalid"
+          >
+            Sign Up
+          </button>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
+
+
+===== File: ./main.ts =====
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
+import { bootstrapApplication } from '@angular/platform-browser';
+
+bootstrapApplication(AppComponent, appConfig).catch((err) =>
+  console.error(err),
+);
+
+
+===== File: ./styles.scss =====
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light dark;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body.light {
+  color-scheme: light;
+}
+
+body.dark {
+  color-scheme: dark;
+}
+
+body.system {
+  color-scheme: light dark;
+}
+
+
+===== File: ./proxy.conf.json =====
+{
+  "/api/**": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
+
+

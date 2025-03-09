@@ -199,6 +199,37 @@
         }
       }
     },
+    "/users/{userId}/promote-to-admin": {
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "promoteToAdmin",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tasks": {
       "post": {
         "tags": [
@@ -464,6 +495,112 @@
         ]
       }
     },
+    "/boards/{boardId}/users/{userId}/role": {
+      "get": {
+        "tags": [
+          "board-controller"
+        ],
+        "operationId": "getUserBoardRole",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "ADMIN",
+                    "WRITER",
+                    "READER"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "board-controller"
+        ],
+        "operationId": "assignUserRoleToBoard",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ADMIN",
+                "WRITER",
+                "READER"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/boards/random": {
       "post": {
         "tags": [
@@ -549,6 +686,26 @@
         }
       }
     },
+    "/users/current": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/comments/task/{taskId}": {
       "get": {
         "tags": [
@@ -586,6 +743,18 @@
   },
   "components": {
     "schemas": {
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "Task": {
         "type": "object",
         "properties": {
@@ -598,18 +767,12 @@
           },
           "description": {
             "type": "string"
-          }
-        }
-      },
-      "Role": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
           },
-          "name": {
-            "type": "string"
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "assignee": {
+            "$ref": "#/components/schemas/User"
           }
         }
       },
@@ -778,6 +941,12 @@
             "items": {
               "$ref": "#/components/schemas/CommentDTO"
             }
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "assignee": {
+            "$ref": "#/components/schemas/UserDTO"
           }
         }
       }

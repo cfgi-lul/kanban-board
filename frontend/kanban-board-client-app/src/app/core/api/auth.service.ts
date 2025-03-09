@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '../models/classes/User';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class AuthService {
   private apiUrl = `/api/api/auth`;
 
   private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  public currentUser: Observable<User>;
   private helper = new JwtHelperService();
 
   constructor(private http: HttpClient) {
@@ -58,13 +59,23 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.token;
-    return !!(token && !this.helper.isTokenExpired(token));
+    // const token = this.token;
+    return !!this.currentUserSubject.value;
   }
 
   getRoles(): string[] {
     const user = this.currentUserValue;
     return user?.roles || [];
+  }
+
+  public isAdmin(): boolean {
+    return this.hasRole('ADMIN');
+  }
+
+  public getBoardRoles(boardId: number): Observable<string[]> {
+    return this.http.get<string[]>(
+      `/api/boards/${boardId}/users/${this.currentUserValue.id}/role`,
+    );
   }
 
   register(user: {
@@ -79,5 +90,19 @@ export class AuthService {
 
   hasRole(role: string): boolean {
     return this.getRoles().includes(role);
+  }
+
+  current(): Observable<any> {
+    return this.http.get<any>('/api/users/current').pipe(
+      tap((user) => {
+        if (user) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        } else {
+          localStorage.setItem('currentUser', '');
+          this.currentUserSubject.next(null);
+        }
+      }),
+    );
   }
 }
