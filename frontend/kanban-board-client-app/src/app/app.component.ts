@@ -1,26 +1,30 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  NgDocNavbarComponent,
+  NgDocRootComponent,
+  NgDocSidebarComponent,
+} from '@ng-doc/app';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/api/auth.service';
-import { HeaderComponent } from './core/components/header/header.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { take, tap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { tap } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    HeaderComponent,
     MatGridListModule,
     MatSidenavModule,
     MatButtonModule,
     MatListModule,
     RouterModule,
-    AsyncPipe,
+    NgDocRootComponent,
+    NgDocNavbarComponent,
+    NgDocSidebarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

@@ -1,19 +1,19 @@
 <div class="auth-container">
   <mat-card>
     <mat-tab-group>
-      <mat-tab label="Sign In">
+      <mat-tab label="Вход">
         <div [formGroup]="signInForm"></div>
         <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>UserName</mat-label>
+            <mat-label>Логин</mat-label>
             <input matInput formControlName="userName" required />
             @if (signUpForm.get("userName")?.invalid) {
-              <mat-error>Name is required</mat-error>
+              <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Password</mat-label>
+            <mat-label>Пароль</mat-label>
             <input
               matInput
               formControlName="password"
@@ -21,7 +21,7 @@
               required
             />
             @if (signInForm.get("password")?.invalid) {
-              <mat-error>Password is required</mat-error>
+              <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
 
@@ -31,33 +31,33 @@
             type="submit"
             [disabled]="signInForm.invalid"
           >
-            Sign In
+            Вход
           </button>
         </form>
       </mat-tab>
 
-      <mat-tab label="Sign Up">
+      <mat-tab label="Регистрация">
         <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>UserName</mat-label>
+            <mat-label>Логин</mat-label>
             <input matInput formControlName="userName" required />
             @if (signUpForm.get("userName")?.invalid) {
-              <mat-error>Name is required</mat-error>
+              <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Name</mat-label>
+            <mat-label>Имя</mat-label>
             <input matInput formControlName="name" required />
             @if (signUpForm.get("name")?.invalid) {
-              <mat-error>Name is required</mat-error>
+              <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
 
 
 
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Password</mat-label>
+            <mat-label>Пароль</mat-label>
             <input
               matInput
               formControlName="password"
@@ -65,7 +65,7 @@
               required
             />
             @if (signUpForm.get("password")?.invalid) {
-              <mat-error>Password is required</mat-error>
+              <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
 
@@ -75,7 +75,7 @@
             type="submit"
             [disabled]="signUpForm.invalid"
           >
-            Sign Up
+            Регистрация
           </button>
         </form>
       </mat-tab>

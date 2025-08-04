@@ -32,7 +32,6 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 
 const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-task-editor',
   imports: [
     MatDialogModule,

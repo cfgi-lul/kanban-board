@@ -5,7 +5,6 @@ import {
   input,
 } from '@angular/core';
 import { AuthService } from './../../api/auth.service';
-import { JsonPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -15,7 +14,7 @@ import { User } from '../../models/classes/User';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user-badge',
-  imports: [JsonPipe, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [MatButtonModule, MatMenuModule, MatIconModule],
   templateUrl: './user-badge.component.html',
   styleUrl: './user-badge.component.scss',
 })

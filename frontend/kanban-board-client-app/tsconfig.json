@@ -3,6 +3,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@ng-doc/generated": [
+        "./ng-doc/kanban-board-client-app/index.ts"
+      ],
+      "@ng-doc/generated/*": [
+        "./ng-doc/kanban-board-client-app/*"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "strict": false,
     "noImplicitOverride": true,

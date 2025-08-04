@@ -1,10 +1,27 @@
-<div class="layout-container">
+<ng-doc-root>
+	<ng-doc-navbar>
+			<h3 style="margin: 0" ngDocNavbarLeft>MyAwesomeDoc</h3>
+	</ng-doc-navbar>
+	<ng-doc-sidebar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/sign-in">Sign In</a>
+      <a mat-list-item routerLink="/boards-list">Boards List</a>
+      @if (isAdmin) {
+      <a mat-list-item routerLink="/admin">Admin Panel</a>
+      }
+    </mat-nav-list>
+
+  </ng-doc-sidebar>
+<router-outlet></router-outlet>
+</ng-doc-root>
+
+<!-- <div class="layout-container"> -->
   <!-- <app-header /> -->
-  <app-header (openSideNav)="toggleSidenav()"
-  [user]="currentUser | async" [isLoggedIn]="currentUser | async" class="header" />
+  <!-- <app-header (openSideNav)="toggleSidenav()"
+  [user]="currentUser | async" [isLoggedIn]="currentUser | async" class="header" /> -->
   <!-- <div class="spacer"> -->
 
-  <mat-sidenav-container class="sidenav-container">
+  <!-- <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="over" [(opened)]="isSidenavOpen" class="sidenav">
       <mat-nav-list>
         <a mat-list-item routerLink="/sign-in">Sign In</a>
@@ -19,4 +36,4 @@
       <router-outlet />
     </mat-sidenav-content>
   </mat-sidenav-container>
-</div>
+</div> -->

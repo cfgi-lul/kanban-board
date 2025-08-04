@@ -1,5 +1,5 @@
 <div class="edit-task-dialog">
-  <h2 mat-dialog-title class="edit-task-dialog__title">Edit Task</h2>
+  <h2 mat-dialog-title class="edit-task-dialog__title">Редактирование задачи</h2>
   <mat-dialog-content class="edit-task-dialog__content">
     <form [formGroup]="taskForm" class="edit-task-dialog__form">
       <mat-form-field appearance="fill" class="edit-task-dialog__field">
@@ -30,7 +30,7 @@
             (click)="toggleEditDescription()"
             class="edit-task-dialog__description__button"
           >
-            Edit Description
+            Редактирование
           </button>
         } @else {
           <div class="edit-task-dialog__description--edit">
@@ -47,7 +47,7 @@
               (click)="toggleEditDescription()"
               class="edit-task-dialog__description__button"
             >
-              Preview Description
+              Предпросмотр описание
             </button>
           </div>
         }
@@ -65,7 +65,7 @@
 
       <!-- Comments Section -->
       <div class="edit-task-dialog__comments">
-        <h3 class="edit-task-dialog__comments__title">Comments</h3>
+        <h3 class="edit-task-dialog__comments__title">Комментарии</h3>
         <div class="edit-task-dialog__comments__list">
           @for (comment of comments$ | async; track $index) {
             <div class="edit-task-dialog__comments__item">
@@ -85,7 +85,7 @@
         </div>
         <div class="edit-task-dialog__comments__new">
           <mat-form-field appearance="fill" class="edit-task-dialog__field">
-            <mat-label>Add a comment</mat-label>
+            <mat-label>Комментировать</mat-label>
             <textarea
               matInput
               formControlName="newComment"
@@ -98,7 +98,7 @@
             [disabled]="!taskForm.get('newComment')?.value"
             class="edit-task-dialog__comments__new-button"
           >
-            Add Comment
+          Комментировать
           </button>
         </div>
       </div>
@@ -110,7 +110,7 @@
       (click)="onCancel()"
       class="edit-task-dialog__actions__button edit-task-dialog__actions__button--cancel"
     >
-      Cancel
+      Отменить
     </button>
     <button
       mat-button
@@ -118,7 +118,7 @@
       [disabled]="taskForm.invalid"
       class="edit-task-dialog__actions__button edit-task-dialog__actions__button--save"
     >
-      Save
+      Сохранить
     </button>
   </mat-dialog-actions>
 </div>
