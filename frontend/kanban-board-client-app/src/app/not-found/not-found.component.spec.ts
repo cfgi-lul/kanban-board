@@ -21,7 +21,9 @@ describe('NotFoundComponent', () => {
   beforeEach(async () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const locationSpy = jasmine.createSpyObj('Location', ['back']);
-    const themeServiceSpy = jasmine.createSpyObj('ThemeService', ['getCurrentColorScheme']);
+    const themeServiceSpy = jasmine.createSpyObj('ThemeService', [
+      'getCurrentColorScheme',
+    ]);
 
     await TestBed.configureTestingModule({
       imports: [

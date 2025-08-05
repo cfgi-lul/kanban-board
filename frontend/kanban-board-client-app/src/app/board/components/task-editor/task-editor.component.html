@@ -67,7 +67,9 @@
 
       <!-- Comments Section -->
       <div class="edit-task-dialog__comments">
-        <h3 class="edit-task-dialog__comments__title">{{ 'board.taskComments' | translate }}</h3>
+        <h3 class="edit-task-dialog__comments__title">
+          {{ 'board.taskComments' | translate }}
+        </h3>
         <div class="edit-task-dialog__comments__list">
           @for (comment of comments$ | async; track $index) {
             <div class="edit-task-dialog__comments__item">

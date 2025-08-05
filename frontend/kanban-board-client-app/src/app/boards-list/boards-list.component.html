@@ -41,11 +41,7 @@
             <mat-icon color="warn" class="error-icon">error</mat-icon>
             <h3>{{ 'board.failedToLoadBoards' | translate }}</h3>
             <p>{{ 'board.errorLoadingBoards' | translate }}</p>
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="retryLoad()"
-            >
+            <button mat-raised-button color="primary" (click)="retryLoad()">
               <mat-icon>refresh</mat-icon>
               {{ 'common.retry' | translate }}
             </button>
@@ -67,11 +63,7 @@
                 <mat-icon class="no-results-icon">search_off</mat-icon>
                 <h3>{{ 'board.noBoardsFound' | translate }}</h3>
                 <p>{{ 'board.noBoardsMatchSearch' | translate }}</p>
-                <button
-                  mat-button
-                  color="primary"
-                  (click)="clearSearch()"
-                >
+                <button mat-button color="primary" (click)="clearSearch()">
                   {{ 'common.clearSearch' | translate }}
                 </button>
               </div>
@@ -87,10 +79,16 @@
             <mat-card class="board-card">
               <mat-card-header>
                 <mat-card-title>{{ board.name }}</mat-card-title>
-                <mat-card-subtitle>{{ 'board.boardId' | translate }}: {{ board.id }}</mat-card-subtitle>
+                <mat-card-subtitle
+                  >{{ 'board.boardId' | translate }}:
+                  {{ board.id }}</mat-card-subtitle
+                >
               </mat-card-header>
               <mat-card-content>
-                <p>{{ 'board.columns' | translate }}: {{ board.columns?.length || 0 }}</p>
+                <p>
+                  {{ 'board.columns' | translate }}:
+                  {{ board.columns?.length || 0 }}
+                </p>
               </mat-card-content>
               <mat-card-actions align="end">
                 @if (

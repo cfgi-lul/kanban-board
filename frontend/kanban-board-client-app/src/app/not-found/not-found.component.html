@@ -3,35 +3,51 @@
     <mat-card-content class="not-found-content">
       <!-- Error Code -->
       <div class="error-code">
-        <span class="error-number">{{ 'common.notFound.errorCode' | translate }}</span>
+        <span class="error-number">{{
+          'common.notFound.errorCode' | translate
+        }}</span>
       </div>
 
       <!-- Main Content -->
       <div class="main-content">
         <h1 class="error-title">{{ 'common.notFound.title' | translate }}</h1>
-        <p class="error-subtitle">{{ 'common.notFound.subtitle' | translate }}</p>
-        <p class="error-description">{{ 'common.notFound.description' | translate }}</p>
+        <p class="error-subtitle">
+          {{ 'common.notFound.subtitle' | translate }}
+        </p>
+        <p class="error-description">
+          {{ 'common.notFound.description' | translate }}
+        </p>
       </div>
 
       <!-- Suggestions List -->
       <div class="suggestions-section">
-        <h3 class="suggestions-title">{{ 'common.notFound.suggestions' | translate }}</h3>
+        <h3 class="suggestions-title">
+          {{ 'common.notFound.suggestions' | translate }}
+        </h3>
         <mat-list class="suggestions-list">
           <mat-list-item>
             <mat-icon matListItemIcon>search</mat-icon>
-            <span matListItemTitle>{{ 'common.notFound.suggestion1' | translate }}</span>
+            <span matListItemTitle>{{
+              'common.notFound.suggestion1' | translate
+            }}</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListItemIcon>arrow_back</mat-icon>
-            <span matListItemTitle>{{ 'common.notFound.suggestion2' | translate }}</span>
+            <span matListItemTitle>{{
+              'common.notFound.suggestion2' | translate
+            }}</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListItemIcon>home</mat-icon>
-            <span matListItemTitle>{{ 'common.notFound.suggestion3' | translate }}</span>
+            <span matListItemTitle>{{
+              'common.notFound.suggestion3' | translate
+            }}</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListItemIcon>support_agent</mat-icon>
-            <span matListItemTitle>{{ 'common.notFound.suggestion4' | translate }}</span>
+            <span matListItemTitle>{{
+              'common.notFound.suggestion4' | translate
+            }}</span>
           </mat-list-item>
         </mat-list>
       </div>
@@ -44,7 +60,8 @@
           (click)="goHome()"
           class="home-button"
           type="button"
-          [attr.aria-label]="'common.backHome' | translate">
+          [attr.aria-label]="'common.backHome' | translate"
+        >
           <mat-icon aria-hidden="true">home</mat-icon>
           <span>{{ 'common.backHome' | translate }}</span>
         </button>
@@ -54,7 +71,8 @@
           (click)="goBack()"
           class="back-button"
           type="button"
-          [attr.aria-label]="'common.goBack' | translate">
+          [attr.aria-label]="'common.goBack' | translate"
+        >
           <mat-icon aria-hidden="true">arrow_back</mat-icon>
           <span>{{ 'common.goBack' | translate }}</span>
         </button>

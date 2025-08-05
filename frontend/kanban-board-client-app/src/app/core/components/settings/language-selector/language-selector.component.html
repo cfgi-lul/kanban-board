@@ -7,11 +7,13 @@
     <mat-select
       [value]="i18nService.getCurrentLanguage()"
       (selectionChange)="onLanguageChange($event.value)"
-      class="language-select">
+      class="language-select"
+    >
       <mat-option
         *ngFor="let language of i18nService.getLanguages()"
         [value]="language.code"
-        class="language-option">
+        class="language-option"
+      >
         <div class="language-option-content">
           <span class="language-name">{{ language.nativeName }}</span>
           <span class="language-code">({{ language.code }})</span>

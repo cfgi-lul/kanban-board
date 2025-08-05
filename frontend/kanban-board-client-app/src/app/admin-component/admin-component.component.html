@@ -13,19 +13,25 @@
 
       <!-- Username Column -->
       <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef>{{ 'auth.username' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'auth.username' | translate }}
+        </th>
         <td mat-cell *matCellDef="let user">{{ user.username }}</td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>{{ 'auth.fullName' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'auth.fullName' | translate }}
+        </th>
         <td mat-cell *matCellDef="let user">{{ user.name }}</td>
       </ng-container>
 
       <!-- Roles Column -->
       <ng-container matColumnDef="roles">
-        <th mat-header-cell *matHeaderCellDef>{{ 'admin.roles' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'admin.roles' | translate }}
+        </th>
         <td mat-cell *matCellDef="let user">
           {{ user.roles?.join(', ') || ('common.user' | translate) }}
         </td>
@@ -33,9 +39,15 @@
 
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>{{ 'common.actions' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'common.actions' | translate }}
+        </th>
         <td mat-cell *matCellDef="let user">
-          <button mat-icon-button (click)="promoteToAdmin(user.id!)" [matTooltip]="'admin.promoteToAdmin' | translate">
+          <button
+            mat-icon-button
+            (click)="promoteToAdmin(user.id!)"
+            [matTooltip]="'admin.promoteToAdmin' | translate"
+          >
             <mat-icon>admin_panel_settings</mat-icon>
           </button>
         </td>

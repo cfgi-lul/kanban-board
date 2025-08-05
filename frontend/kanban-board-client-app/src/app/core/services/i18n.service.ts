@@ -36,7 +36,7 @@ export class I18nService {
     const languageToUse =
       savedLanguage ||
       (browserLanguage &&
-        this.languages.some(lang => lang.code === browserLanguage)
+      this.languages.some(lang => lang.code === browserLanguage)
         ? browserLanguage
         : 'en');
 
@@ -47,11 +47,14 @@ export class I18nService {
     // Use the language and ensure it's loaded
     this.translateService.use(languageToUse).subscribe({
       next: () => {
-        console.log('I18nService: Language loaded successfully:', languageToUse);
+        console.log(
+          'I18nService: Language loaded successfully:',
+          languageToUse
+        );
         this.currentLanguageSubject.next(languageToUse);
         localStorage.setItem('language', languageToUse);
       },
-      error: (error) => {
+      error: error => {
         console.error('I18nService: Failed to load language:', error);
         // Fallback to English
         this.translateService.use('en').subscribe(() => {
@@ -59,7 +62,7 @@ export class I18nService {
           this.currentLanguageSubject.next('en');
           localStorage.setItem('language', 'en');
         });
-      }
+      },
     });
   }
 
@@ -68,13 +71,16 @@ export class I18nService {
     if (this.languages.some(lang => lang.code === languageCode)) {
       this.translateService.use(languageCode).subscribe({
         next: () => {
-          console.log('I18nService: Language changed successfully:', languageCode);
+          console.log(
+            'I18nService: Language changed successfully:',
+            languageCode
+          );
           this.currentLanguageSubject.next(languageCode);
           localStorage.setItem('language', languageCode);
         },
-        error: (error) => {
+        error: error => {
           console.error('I18nService: Failed to change language:', error);
-        }
+        },
       });
     }
   }
@@ -94,14 +100,14 @@ export class I18nService {
 
   public translate(
     key: string,
-    params?: Record<string, unknown>,
+    params?: Record<string, unknown>
   ): Observable<string> {
     return this.translateService.get(key, params);
   }
 
   public translateInstant(
     key: string,
-    params?: Record<string, unknown>,
+    params?: Record<string, unknown>
   ): string {
     return this.translateService.instant(key, params);
   }

@@ -5,9 +5,9 @@
         <mat-icon class="logo-icon">dashboard</mat-icon>
         <h1 class="logo-text">{{ 'header.brandTitle' | translate }}</h1>
       </div>
-      <mat-card-subtitle class="auth-subtitle"
-        >{{ 'auth.createAccount' | translate }}</mat-card-subtitle
-      >
+      <mat-card-subtitle class="auth-subtitle">{{
+        'auth.createAccount' | translate
+      }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="auth-content">
@@ -81,11 +81,16 @@
             signUpForm.get('confirmPassword')?.invalid &&
             signUpForm.get('confirmPassword')?.touched
           ) {
-            <mat-error>{{ getErrorMessage('confirmPassword', signUpForm) }}</mat-error>
+            <mat-error>{{
+              getErrorMessage('confirmPassword', signUpForm)
+            }}</mat-error>
           }
         </mat-form-field>
 
-        @if (signUpForm.errors?.['passwordMismatch'] && signUpForm.get('confirmPassword')?.touched) {
+        @if (
+          signUpForm.errors?.['passwordMismatch'] &&
+          signUpForm.get('confirmPassword')?.touched
+        ) {
           <mat-error>{{ 'validation.passwordMismatch' | translate }}</mat-error>
         }
 
@@ -111,7 +116,9 @@
       <div class="auth-footer">
         <p class="footer-text">
           {{ 'auth.alreadyHaveAccount' | translate }}
-          <a routerLink="/sign-in" class="footer-link">{{ 'auth.signInHere' | translate }}</a>
+          <a routerLink="/sign-in" class="footer-link">{{
+            'auth.signInHere' | translate
+          }}</a>
         </p>
       </div>
     </mat-card-content>

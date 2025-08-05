@@ -15,11 +15,13 @@
     <!-- Side Menu -->
     <div class="settings-sidebar">
       <mat-nav-list>
-        <a mat-list-item
-           *ngFor="let tab of settingsTabs"
-           [class.active]="selectedTab === tab.id"
-           (click)="onTabChange(tab.id)"
-           class="settings-nav-item">
+        <a
+          mat-list-item
+          *ngFor="let tab of settingsTabs"
+          [class.active]="selectedTab === tab.id"
+          (click)="onTabChange(tab.id)"
+          class="settings-nav-item"
+        >
           <mat-icon matListItemIcon>{{ tab.icon }}</mat-icon>
           <span matListItemTitle>{{ tab.label | translate }}</span>
         </a>
@@ -75,7 +77,9 @@
             <!-- Add notification settings content here -->
             <mat-card>
               <mat-card-content>
-                <p>{{ 'settings.notificationSettingsPlaceholder' | translate }}</p>
+                <p>
+                  {{ 'settings.notificationSettingsPlaceholder' | translate }}
+                </p>
               </mat-card-content>
             </mat-card>
           </div>

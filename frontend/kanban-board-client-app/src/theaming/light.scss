@@ -1,98 +1,104 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 /* Pleasant Light Theme - Ocean Breeze */
-:root, :host {
-  @include mat.theme-overrides((
-    // Primary - Ocean Blue
-    primary: #2563eb,
-    on-primary: #ffffff,
-    primary-container: #dbeafe,
-    on-primary-container: #1e40af,
-    inverse-primary: #93c5fd,
-    primary-fixed: #dbeafe,
-    primary-fixed-dim: #93c5fd,
-    on-primary-fixed: #1e40af,
-    on-primary-fixed-variant: #1d4ed8,
+:root,
+:host {
+  @include mat.theme-overrides(
+    (
+      // Primary - Ocean Blue
+      primary: #2563eb,
+      on-primary: #ffffff,
+      primary-container: #dbeafe,
+      on-primary-container: #1e40af,
+      inverse-primary: #93c5fd,
+      primary-fixed: #dbeafe,
+      primary-fixed-dim: #93c5fd,
+      on-primary-fixed: #1e40af,
+      on-primary-fixed-variant: #1d4ed8,
 
-    // Secondary - Soft Teal
-    secondary: #0891b2,
-    on-secondary: #ffffff,
-    secondary-container: #cffafe,
-    on-secondary-container: #0e7490,
-    secondary-fixed: #cffafe,
-    secondary-fixed-dim: #a5f3fc,
-    on-secondary-fixed: #0e7490,
-    on-secondary-fixed-variant: #0c4a6e,
+      // Secondary - Soft Teal
+      secondary: #0891b2,
+      on-secondary: #ffffff,
+      secondary-container: #cffafe,
+      on-secondary-container: #0e7490,
+      secondary-fixed: #cffafe,
+      secondary-fixed-dim: #a5f3fc,
+      on-secondary-fixed: #0e7490,
+      on-secondary-fixed-variant: #0c4a6e,
 
-    // Tertiary - Warm Coral
-    tertiary: #f97316,
-    on-tertiary: #ffffff,
-    tertiary-container: #fed7aa,
-    on-tertiary-container: #c2410c,
-    tertiary-fixed: #fed7aa,
-    tertiary-fixed-dim: #fdba74,
-    on-tertiary-fixed: #c2410c,
-    on-tertiary-fixed-variant: #9a3412,
+      // Tertiary - Warm Coral
+      tertiary: #f97316,
+      on-tertiary: #ffffff,
+      tertiary-container: #fed7aa,
+      on-tertiary-container: #c2410c,
+      tertiary-fixed: #fed7aa,
+      tertiary-fixed-dim: #fdba74,
+      on-tertiary-fixed: #c2410c,
+      on-tertiary-fixed-variant: #9a3412,
 
-    // Surface Colors - Clean Whites
-    background: #fafafa,
-    on-background: #1f2937,
-    surface: #ffffff,
-    surface-dim: #f3f4f6,
-    surface-bright: #ffffff,
-    surface-container-lowest: #ffffff,
-    surface-container-low: #f9fafb,
-    surface-container: #f3f4f6,
-    surface-container-high: #e5e7eb,
-    surface-container-highest: #d1d5db,
-    on-surface: #1f2937,
+      // Surface Colors - Clean Whites
+      background: #fafafa,
+      on-background: #1f2937,
+      surface: #ffffff,
+      surface-dim: #f3f4f6,
+      surface-bright: #ffffff,
+      surface-container-lowest: #ffffff,
+      surface-container-low: #f9fafb,
+      surface-container: #f3f4f6,
+      surface-container-high: #e5e7eb,
+      surface-container-highest: #d1d5db,
+      on-surface: #1f2937,
 
-    // Shadows and Effects
-    shadow: #000000,
-    scrim: #000000,
-    surface-tint: #2563eb,
-    inverse-surface: #1f2937,
-    inverse-on-surface: #f9fafb,
+      // Shadows and Effects
+      shadow: #000000,
+      scrim: #000000,
+      surface-tint: #2563eb,
+      inverse-surface: #1f2937,
+      inverse-on-surface: #f9fafb,
 
-    // Outlines
-    outline: #6b7280,
-    outline-variant: #d1d5db,
+      // Outlines
+      outline: #6b7280,
+      outline-variant: #d1d5db,
 
-    // Neutral Colors
-    neutral: #6b7280,
-    neutral10: #1f2937,
-    neutral-variant: #6b7280,
-    neutral-variant20: #374151,
+      // Neutral Colors
+      neutral: #6b7280,
+      neutral10: #1f2937,
+      neutral-variant: #6b7280,
+      neutral-variant20: #374151,
 
-    // Error Colors
-    error: #dc2626,
-    error-container: #fef2f2,
-    on-error: #ffffff,
-    on-error-container: #7f1d1d,
+      // Error Colors
+      error: #dc2626,
+      error-container: #fef2f2,
+      on-error: #ffffff,
+      on-error-container: #7f1d1d,
 
-    // Surface Variants
-    surface-variant: #f3f4f6,
-    on-surface-variant: #4b5563,
+      // Surface Variants
+      surface-variant: #f3f4f6,
+      on-surface-variant: #4b5563,
 
-    // Inverse Colors
-    inverse-secondary: #a5f3fc,
-    inverse-tertiary: #fdba74,
-  ));
+      // Inverse Colors
+      inverse-secondary: #a5f3fc,
+      inverse-tertiary: #fdba74
+    )
+  );
 }
 
 /* Typography */
-:root, :host {
+:root,
+:host {
   --mat-sys-brand-font-family: Roboto;
   --mat-sys-plain-font-family: Roboto;
   --mat-sys-bold-font-weight: 700;
   --mat-sys-medium-font-weight: 500;
   --mat-sys-regular-font-weight: 400;
 
-  @include mat.theme-overrides((
-    brand-family: Roboto,
-    plain-family: Roboto,
-    bold-weight: 700,
-    medium-weight: 500,
-    regular-weight: 400,
-  ));
+  @include mat.theme-overrides(
+    (
+      brand-family: Roboto,
+      plain-family: Roboto,
+      bold-weight: 700,
+      medium-weight: 500,
+      regular-weight: 400,
+    )
+  );
 }

@@ -113,7 +113,8 @@
 @media (max-width: 600px) {
   .user-badge {
     .user-badge-content {
-      .name, .username {
+      .name,
+      .username {
         display: none;
       }
     }

@@ -3,13 +3,13 @@
   <div class="theme-options">
     <mat-button-toggle-group
       [formControl]="colorSchemeControl"
-      class="theme-toggle-group">
-
+      class="theme-toggle-group"
+    >
       <mat-button-toggle
         *ngFor="let scheme of availableColorSchemes"
         [value]="scheme.value"
-        class="theme-option">
-
+        class="theme-option"
+      >
         <mat-icon>{{ getThemeIcon(scheme.value) }}</mat-icon>
         <span>{{ scheme.label }}</span>
       </mat-button-toggle>

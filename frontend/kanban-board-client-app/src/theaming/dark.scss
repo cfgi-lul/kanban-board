@@ -1,98 +1,103 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 /* WebStorm Darcula Theme */
 .dark {
-  @include mat.theme-overrides((
-    // Primary - Darcula Blue
-    primary: #3c78dc,
-    on-primary: #ffffff,
-    primary-container: #2b579a,
-    on-primary-container: #ffffff,
-    inverse-primary: #2b579a,
-    primary-fixed: #2b579a,
-    primary-fixed-dim: #3c78dc,
-    on-primary-fixed: #ffffff,
-    on-primary-fixed-variant: #1e4b8a,
+  @include mat.theme-overrides(
+    (
+      // Primary - Darcula Blue
+      primary: #3c78dc,
+      on-primary: #ffffff,
+      primary-container: #2b579a,
+      on-primary-container: #ffffff,
+      inverse-primary: #2b579a,
+      primary-fixed: #2b579a,
+      primary-fixed-dim: #3c78dc,
+      on-primary-fixed: #ffffff,
+      on-primary-fixed-variant: #1e4b8a,
 
-    // Secondary - Darcula Green
-    secondary: #6a8759,
-    on-secondary: #ffffff,
-    secondary-container: #4a5d3e,
-    on-secondary-container: #ffffff,
-    secondary-fixed: #4a5d3e,
-    secondary-fixed-dim: #6a8759,
-    on-secondary-fixed: #ffffff,
-    on-secondary-fixed-variant: #3d4a2e,
+      // Secondary - Darcula Green
+      secondary: #6a8759,
+      on-secondary: #ffffff,
+      secondary-container: #4a5d3e,
+      on-secondary-container: #ffffff,
+      secondary-fixed: #4a5d3e,
+      secondary-fixed-dim: #6a8759,
+      on-secondary-fixed: #ffffff,
+      on-secondary-fixed-variant: #3d4a2e,
 
-    // Tertiary - Darcula Orange
-    tertiary: #ffc66d,
-    on-tertiary: #2d2d2d,
-    tertiary-container: #cc8f3d,
-    on-tertiary-container: #ffffff,
-    tertiary-fixed: #cc8f3d,
-    tertiary-fixed-dim: #ffc66d,
-    on-tertiary-fixed: #2d2d2d,
-    on-tertiary-fixed-variant: #a67a2e,
+      // Tertiary - Darcula Orange
+      tertiary: #ffc66d,
+      on-tertiary: #2d2d2d,
+      tertiary-container: #cc8f3d,
+      on-tertiary-container: #ffffff,
+      tertiary-fixed: #cc8f3d,
+      tertiary-fixed-dim: #ffc66d,
+      on-tertiary-fixed: #2d2d2d,
+      on-tertiary-fixed-variant: #a67a2e,
 
-    // Surface Colors - Darcula Grays
-    background: #2b2b2b,
-    on-background: #a9b7c6,
-    surface: #2b2b2b,
-    surface-dim: #2b2b2b,
-    surface-bright: #3c3f41,
-    surface-container-lowest: #1e1e1e,
-    surface-container-low: #3c3f41,
-    surface-container: #4c5052,
-    surface-container-high: #5c6164,
-    surface-container-highest: #6c7174,
-    on-surface: #a9b7c6,
+      // Surface Colors - Darcula Grays
+      background: #2b2b2b,
+      on-background: #a9b7c6,
+      surface: #2b2b2b,
+      surface-dim: #2b2b2b,
+      surface-bright: #3c3f41,
+      surface-container-lowest: #1e1e1e,
+      surface-container-low: #3c3f41,
+      surface-container: #4c5052,
+      surface-container-high: #5c6164,
+      surface-container-highest: #6c7174,
+      on-surface: #a9b7c6,
 
-    // Shadows and Effects
-    shadow: #000000,
-    scrim: #000000,
-    surface-tint: #3c78dc,
-    inverse-surface: #a9b7c6,
-    inverse-on-surface: #2b2b2b,
+      // Shadows and Effects
+      shadow: #000000,
+      scrim: #000000,
+      surface-tint: #3c78dc,
+      inverse-surface: #a9b7c6,
+      inverse-on-surface: #2b2b2b,
 
-    // Outlines
-    outline: #6c7174,
-    outline-variant: #4c5052,
+      // Outlines
+      outline: #6c7174,
+      outline-variant: #4c5052,
 
-    // Neutral Colors
-    neutral: #6c7174,
-    neutral10: #2b2b2b,
-    neutral-variant: #6c7174,
-    neutral-variant20: #4c5052,
+      // Neutral Colors
+      neutral: #6c7174,
+      neutral10: #2b2b2b,
+      neutral-variant: #6c7174,
+      neutral-variant20: #4c5052,
 
-    // Error Colors - Darcula Red
-    error: #ff6b68,
-    error-container: #8b0000,
-    on-error: #ffffff,
-    on-error-container: #ffffff,
+      // Error Colors - Darcula Red
+      error: #ff6b68,
+      error-container: #8b0000,
+      on-error: #ffffff,
+      on-error-container: #ffffff,
 
-    // Surface Variants
-    surface-variant: #4c5052,
-    on-surface-variant: #a9b7c6,
+      // Surface Variants
+      surface-variant: #4c5052,
+      on-surface-variant: #a9b7c6,
 
-    // Inverse Colors
-    inverse-secondary: #6a8759,
-    inverse-tertiary: #ffc66d,
-  ));
+      // Inverse Colors
+      inverse-secondary: #6a8759,
+      inverse-tertiary: #ffc66d
+    )
+  );
 }
 
 /* Typography */
-:root, :host {
+:root,
+:host {
   --mat-sys-brand-font-family: Roboto;
   --mat-sys-plain-font-family: Roboto;
   --mat-sys-bold-font-weight: 700;
   --mat-sys-medium-font-weight: 500;
   --mat-sys-regular-font-weight: 400;
 
-  @include mat.theme-overrides((
-    brand-family: Roboto,
-    plain-family: Roboto,
-    bold-weight: 700,
-    medium-weight: 500,
-    regular-weight: 400,
-  ));
+  @include mat.theme-overrides(
+    (
+      brand-family: Roboto,
+      plain-family: Roboto,
+      bold-weight: 700,
+      medium-weight: 500,
+      regular-weight: 400,
+    )
+  );
 }
