@@ -1,82 +1,82 @@
 @use "@angular/material" as mat;
 
-/* Pleasant Dark Theme - Midnight Ocean */
+/* WebStorm Darcula Theme */
 .dark {
   @include mat.theme-overrides((
-    // Primary - Deep Ocean Blue
-    primary: #60a5fa,
-    on-primary: #1e3a8a,
-    primary-container: #1e40af,
-    on-primary-container: #dbeafe,
-    inverse-primary: #1e40af,
-    primary-fixed: #dbeafe,
-    primary-fixed-dim: #93c5fd,
-    on-primary-fixed: #1e40af,
-    on-primary-fixed-variant: #1d4ed8,
+    // Primary - Darcula Blue
+    primary: #3c78dc,
+    on-primary: #ffffff,
+    primary-container: #2b579a,
+    on-primary-container: #ffffff,
+    inverse-primary: #2b579a,
+    primary-fixed: #2b579a,
+    primary-fixed-dim: #3c78dc,
+    on-primary-fixed: #ffffff,
+    on-primary-fixed-variant: #1e4b8a,
 
-    // Secondary - Soft Teal
-    secondary: #22d3ee,
-    on-secondary: #0e7490,
-    secondary-container: #0c4a6e,
-    on-secondary-container: #cffafe,
-    secondary-fixed: #cffafe,
-    secondary-fixed-dim: #a5f3fc,
-    on-secondary-fixed: #0e7490,
-    on-secondary-fixed-variant: #0c4a6e,
+    // Secondary - Darcula Green
+    secondary: #6a8759,
+    on-secondary: #ffffff,
+    secondary-container: #4a5d3e,
+    on-secondary-container: #ffffff,
+    secondary-fixed: #4a5d3e,
+    secondary-fixed-dim: #6a8759,
+    on-secondary-fixed: #ffffff,
+    on-secondary-fixed-variant: #3d4a2e,
 
-    // Tertiary - Warm Amber
-    tertiary: #fbbf24,
-    on-tertiary: #92400e,
-    tertiary-container: #a16207,
-    on-tertiary-container: #fef3c7,
-    tertiary-fixed: #fef3c7,
-    tertiary-fixed-dim: #fde68a,
-    on-tertiary-fixed: #92400e,
-    on-tertiary-fixed-variant: #78350f,
+    // Tertiary - Darcula Orange
+    tertiary: #ffc66d,
+    on-tertiary: #2d2d2d,
+    tertiary-container: #cc8f3d,
+    on-tertiary-container: #ffffff,
+    tertiary-fixed: #cc8f3d,
+    tertiary-fixed-dim: #ffc66d,
+    on-tertiary-fixed: #2d2d2d,
+    on-tertiary-fixed-variant: #a67a2e,
 
-    // Surface Colors - Deep Grays
-    background: #0f172a,
-    on-background: #f1f5f9,
-    surface: #0f172a,
-    surface-dim: #0f172a,
-    surface-bright: #1e293b,
-    surface-container-lowest: #020617,
-    surface-container-low: #1e293b,
-    surface-container: #334155,
-    surface-container-high: #475569,
-    surface-container-highest: #64748b,
-    on-surface: #f1f5f9,
+    // Surface Colors - Darcula Grays
+    background: #2b2b2b,
+    on-background: #a9b7c6,
+    surface: #2b2b2b,
+    surface-dim: #2b2b2b,
+    surface-bright: #3c3f41,
+    surface-container-lowest: #1e1e1e,
+    surface-container-low: #3c3f41,
+    surface-container: #4c5052,
+    surface-container-high: #5c6164,
+    surface-container-highest: #6c7174,
+    on-surface: #a9b7c6,
 
     // Shadows and Effects
     shadow: #000000,
     scrim: #000000,
-    surface-tint: #60a5fa,
-    inverse-surface: #f1f5f9,
-    inverse-on-surface: #0f172a,
+    surface-tint: #3c78dc,
+    inverse-surface: #a9b7c6,
+    inverse-on-surface: #2b2b2b,
 
     // Outlines
-    outline: #94a3b8,
-    outline-variant: #475569,
+    outline: #6c7174,
+    outline-variant: #4c5052,
 
     // Neutral Colors
-    neutral: #94a3b8,
-    neutral10: #0f172a,
-    neutral-variant: #94a3b8,
-    neutral-variant20: #475569,
+    neutral: #6c7174,
+    neutral10: #2b2b2b,
+    neutral-variant: #6c7174,
+    neutral-variant20: #4c5052,
 
-    // Error Colors
-    error: #f87171,
-    error-container: #7f1d1d,
-    on-error: #450a0a,
-    on-error-container: #fef2f2,
+    // Error Colors - Darcula Red
+    error: #ff6b68,
+    error-container: #8b0000,
+    on-error: #ffffff,
+    on-error-container: #ffffff,
 
     // Surface Variants
-    surface-variant: #334155,
-    on-surface-variant: #cbd5e1,
+    surface-variant: #4c5052,
+    on-surface-variant: #a9b7c6,
 
     // Inverse Colors
-    inverse-secondary: #a5f3fc,
-    inverse-tertiary: #fde68a,
+    inverse-secondary: #6a8759,
+    inverse-tertiary: #ffc66d,
   ));
 }
 

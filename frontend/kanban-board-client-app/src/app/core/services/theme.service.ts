@@ -82,7 +82,7 @@ export class ThemeService {
       {
         value: 'dark',
         label: 'Dark',
-        description: 'Midnight Ocean - Sophisticated and easy on the eyes',
+        description: 'WebStorm Darcula - Classic IDE dark theme',
       },
       {
         value: 'system',
