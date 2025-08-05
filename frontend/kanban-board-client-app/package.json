@@ -13,7 +13,10 @@
     "lint:fix": "eslint . --ext .ts,.html --fix",
     "format": "prettier --write \"src/**/*.{ts,html,scss,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,json}\"",
-    "generate-api": "openapi-generator-cli version && npx @openapitools/openapi-generator-cli generate -c ./swagger/openapi-gen-config.yaml --global-property models,supportingFiles=models.ts"
+    "generate-api": "openapi-generator-cli version && npx @openapitools/openapi-generator-cli generate -c ./swagger/openapi-gen-config.yaml --global-property models,supportingFiles=models.ts",
+    "analyze": "ng build --stats-json && webpack-bundle-analyzer dist/kanban-board-client-app/stats.json",
+    "analyze:build": "ng build --stats-json",
+    "analyze:start": "webpack-bundle-analyzer dist/kanban-board-client-app/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +40,7 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
+    "webpack-bundle-analyzer": "^4.10.2",
     "@angular-builders/jest": "^20.0.0",
     "@angular-devkit/build-angular": "^20.1.4",
     "@angular/cli": "^20.1.4",

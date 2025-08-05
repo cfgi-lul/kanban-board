@@ -1,14 +1,105 @@
-.app-sidenav-container{
+.app-sidenav-container {
   height: calc(100vh - 64px);
 }
-.content-wrapper{
+
+.app-sidenav {
+  background: var(--mat-sys-surface-container) !important;
+  border-right: 1px solid var(--mat-sys-outline-variant) !important;
+  width: 280px;
+}
+
+.sidenav-content {
   display: flex;
-    height: 100%;
+  flex-direction: column;
+  height: 100%;
+
+  mat-nav-list {
+    flex: 1;
+  }
+}
+
+/* Sidenav Footer Styles */
+.sidenav-footer {
+  padding: 16px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container);
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--mat-sys-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+      flex-shrink: 0;
+
+      .avatar-initials {
+        color: var(--mat-sys-on-primary);
+        font-weight: 600;
+        font-size: 16px;
+      }
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+
+      .user-name {
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+        font-size: 14px;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .user-role {
+        color: var(--mat-sys-on-surface-variant);
+        font-size: 12px;
+        line-height: 1.2;
+      }
+    }
+
+    .guest-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--mat-sys-on-surface-variant);
+      flex: 1;
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.content-wrapper {
+  display: flex;
+  height: 100%;
 }
 
 @media (max-width: 768px) {
   .app-sidenav {
-
     width: 260px;
   }
 

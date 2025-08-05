@@ -21,23 +21,6 @@
 
     <!-- Right Section -->
     <div class="header-right">
-      <!-- Theme Toggle -->
-      <mat-button-toggle-group
-        class="theme-toggle"
-        [value]="themeControl.value"
-        (change)="themeControl.setValue($event.value)"
-        aria-label="Theme selection"
-      >
-        <mat-button-toggle value="light" aria-label="Light theme">
-          <mat-icon>light_mode</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="dark" aria-label="Dark theme">
-          <mat-icon>dark_mode</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="system" aria-label="System theme">
-          <mat-icon>desktop_windows</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
 
       <!-- User Section -->
       @if (isLoggedIn) {
