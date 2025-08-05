@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 16px;
 }
 
 .header {
@@ -18,26 +19,216 @@
   flex: 1;
 }
 
-.board-container {
+// Search Section
+.search-section {
+  margin-bottom: 24px;
+
+  .search-field {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  text-align: center;
+
+  p {
+    margin-top: 16px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 16px;
+  }
+}
+
+// Error State
+.error-container {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+
+  .error-card {
+    max-width: 400px;
+    width: 100%;
+
+    .error-content {
+      text-align: center;
+      padding: 16px;
+
+      .error-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 16px;
+      }
+
+      h3 {
+        margin: 16px 0 8px 0;
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      p {
+        margin: 0 0 24px 0;
+        color: rgba(0, 0, 0, 0.6);
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+// Boards Container
+.boards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+// No Results State
+.no-results {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+
+  .no-results-card {
+    max-width: 400px;
+    width: 100%;
+
+    .no-results-content {
+      text-align: center;
+      padding: 16px;
+
+      .no-results-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 16px;
+        color: rgba(0, 0, 0, 0.4);
+      }
+
+      h3 {
+        margin: 16px 0 8px 0;
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      p {
+        margin: 0 0 24px 0;
+        color: rgba(0, 0, 0, 0.6);
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+// Boards Grid
+.boards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
-  padding: 80px 16px 16px; /* Adjust padding for toolbar height */
-  overflow-y: auto;
 }
 
+// Board Cards
 .board-card {
-  height: 150px;
-  padding: 16px;
+  height: auto;
+  min-height: 200px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  mat-card-header {
+    margin-bottom: 16px;
+
+    mat-card-title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    mat-card-subtitle {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  mat-card-content {
+    p {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+    }
+  }
+
+  mat-card-actions {
+    padding: 16px;
+    margin: 0;
+
+    button {
+      margin-left: 8px;
+    }
+  }
 }
 
-.board-card.btn {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+// Add Board Card
+.add-board-card {
+  border: 2px dashed rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.02);
+
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .add-board-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 16px;
+    height: 100%;
+
+    .add-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    h3 {
+      margin: 0 0 8px 0;
+      color: rgba(0, 0, 0, 0.87);
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
 }
 
-.board-card.btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+// Responsive Design
+@media (max-width: 768px) {
+  .kanban-board-list {
+    padding: 8px;
+  }
+
+  .boards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-field {
+    max-width: 100%;
+  }
 }

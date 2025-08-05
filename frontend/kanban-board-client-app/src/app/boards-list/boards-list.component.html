@@ -1,29 +1,134 @@
 <div class="kanban-board-list">
-  <div class="kanban-board-list">
-    <div class="board-container">
-      @if (boards$ | async; as boards) {
-        @for (board of boards; track board.id) {
-          <mat-card class="board-card">
-            <mat-card-title>{{ board.name }}</mat-card-title>
-            <mat-card-subtitle>{{ board.id }}</mat-card-subtitle>
-            <mat-card-actions>
-              @if (
-                authService.hasRole('ADMIN') || (canDelete(board.id) | async)
-              ) {
-                <button mat-button color="warn" (click)="deleteBoard(board.id)">
-                  Delete Board
-                </button>
-              }
-              <button mat-button color="primary" (click)="openBoard(board.id)">
-                Open Board
-              </button>
-            </mat-card-actions>
-          </mat-card>
-        }
-        <mat-card class="board-card btn" (click)="addBoard()">
-          <mat-card-title>Создать новую доску</mat-card-title>
-        </mat-card>
+  <!-- Search Section -->
+  <div class="search-section">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search boards</mat-label>
+      <input
+        matInput
+        [value]="searchTerm()"
+        (input)="onSearchChange($event)"
+        placeholder="Enter board name..."
+        type="text"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+      @if (searchTerm()) {
+        <button
+          matSuffix
+          mat-icon-button
+          (click)="clearSearch()"
+          aria-label="Clear search"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
       }
-    </div>
+    </mat-form-field>
   </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading boards...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (hasError()) {
+    <div class="error-container">
+      <mat-card class="error-card">
+        <mat-card-content>
+          <div class="error-content">
+            <mat-icon color="warn" class="error-icon">error</mat-icon>
+            <h3>Failed to load boards</h3>
+            <p>There was an error loading your boards. Please try again.</p>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="retryLoad()"
+            >
+              <mat-icon>refresh</mat-icon>
+              Retry
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+
+  <!-- Fulfilled State -->
+  @if (isFulfilled()) {
+    <div class="boards-container">
+      <!-- No Results Message -->
+      @if (filteredBoards().length === 0 && searchTerm()) {
+        <div class="no-results">
+          <mat-card class="no-results-card">
+            <mat-card-content>
+              <div class="no-results-content">
+                <mat-icon class="no-results-icon">search_off</mat-icon>
+                <h3>No boards found</h3>
+                <p>No boards match your search criteria.</p>
+                <button
+                  mat-button
+                  color="primary"
+                  (click)="clearSearch()"
+                >
+                  Clear search
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      }
+
+      <!-- Boards Grid -->
+      @if (filteredBoards().length > 0) {
+        <div class="boards-grid">
+          @for (board of filteredBoards(); track board.id) {
+            <mat-card class="board-card">
+              <mat-card-header>
+                <mat-card-title>{{ board.name }}</mat-card-title>
+                <mat-card-subtitle>Board ID: {{ board.id }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>Columns: {{ board.columns?.length || 0 }}</p>
+              </mat-card-content>
+              <mat-card-actions align="end">
+                @if (
+                  authService.hasRole('ADMIN') || (canDelete(board.id) | async)
+                ) {
+                  <button
+                    mat-button
+                    color="warn"
+                    (click)="deleteBoard(board.id)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                    Delete
+                  </button>
+                }
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="openBoard(board.id)"
+                >
+                  <mat-icon>open_in_new</mat-icon>
+                  Open Board
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      }
+
+      <!-- Add New Board Card -->
+      <mat-card class="board-card add-board-card" (click)="addBoard()">
+        <mat-card-content>
+          <div class="add-board-content">
+            <mat-icon class="add-icon">add</mat-icon>
+            <h3>Create New Board</h3>
+            <p>Click to create a new kanban board</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
 </div>
