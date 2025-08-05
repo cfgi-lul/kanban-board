@@ -1,5 +1,14 @@
+.app-sidenav-container{
+  height: calc(100vh - 64px);
+}
+.content-wrapper{
+  display: flex;
+    height: 100%;
+}
+
 @media (max-width: 768px) {
   .app-sidenav {
+
     width: 260px;
   }
 
