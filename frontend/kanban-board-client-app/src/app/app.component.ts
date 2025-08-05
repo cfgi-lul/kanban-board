@@ -31,13 +31,16 @@ export class AppComponent {
   isSidenavOpen = false;
   currentUser = inject(AuthService)
     .current()
-    .pipe(tap((e) => console.log(123)));
+    .pipe(tap(_e => console.log(123)));
   isAdmin = inject(AuthService).isAdmin();
   themeService = inject(ThemeService);
 
   constructor() {
     // Initialize theme on app startup
-    const savedTheme = (localStorage.getItem('theme') || 'light') as 'light' | 'dark' | 'system';
+    const savedTheme = (localStorage.getItem('theme') || 'light') as
+      | 'light'
+      | 'dark'
+      | 'system';
     this.themeService.toggleTheme(savedTheme);
   }
 
@@ -52,6 +55,12 @@ export class AppComponent {
   }
 
   getThemeIcon(): string {
-    return this.themeService.currentTheme === 'light' ? 'dark_mode' : 'light_mode';
+    return this.themeService.currentTheme === 'light'
+      ? 'dark_mode'
+      : 'light_mode';
+  }
+
+  onThemeChange(_e: any): void {
+    console.log('Theme changed');
   }
 }

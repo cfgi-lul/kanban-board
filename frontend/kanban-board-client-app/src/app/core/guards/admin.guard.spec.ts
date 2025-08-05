@@ -30,7 +30,7 @@ describe('AdminGuard', () => {
     authService.isAdmin.mockReturnValue(true);
 
     const result = TestBed.runInInjectionContext(() =>
-      adminGuard({} as any, {} as any),
+      adminGuard({} as any, {} as any)
     );
     expect(result).toBe(true);
   });
@@ -40,7 +40,7 @@ describe('AdminGuard', () => {
     authService.isAdmin.mockReturnValue(false);
 
     const result = TestBed.runInInjectionContext(() =>
-      adminGuard({} as any, {} as any),
+      adminGuard({} as any, {} as any)
     );
     expect(result).toBe(false);
     expect(router.navigate).toHaveBeenCalledWith(['/sign-in']);

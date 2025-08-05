@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   constructor(private theme: ThemeService) {}
 
   ngOnInit(): void {
-    this.themeControl.valueChanges.subscribe((e) => this.theme.toggleTheme(e));
+    this.themeControl.valueChanges.subscribe(e => this.theme.toggleTheme(e));
     this.themeControl.setValue(this.theme.currentTheme);
   }
 

@@ -7,7 +7,7 @@
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Логин</mat-label>
             <input matInput formControlName="userName" required />
-            @if (signUpForm.get("userName")?.invalid) {
+            @if (signUpForm.get('userName')?.invalid) {
               <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
@@ -20,7 +20,7 @@
               type="password"
               required
             />
-            @if (signInForm.get("password")?.invalid) {
+            @if (signInForm.get('password')?.invalid) {
               <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
@@ -41,7 +41,7 @@
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Логин</mat-label>
             <input matInput formControlName="userName" required />
-            @if (signUpForm.get("userName")?.invalid) {
+            @if (signUpForm.get('userName')?.invalid) {
               <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
@@ -49,12 +49,10 @@
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Имя</mat-label>
             <input matInput formControlName="name" required />
-            @if (signUpForm.get("name")?.invalid) {
+            @if (signUpForm.get('name')?.invalid) {
               <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>
-
-
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Пароль</mat-label>
@@ -64,7 +62,7 @@
               type="password"
               required
             />
-            @if (signUpForm.get("password")?.invalid) {
+            @if (signUpForm.get('password')?.invalid) {
               <mat-error>Обязательно</mat-error>
             }
           </mat-form-field>

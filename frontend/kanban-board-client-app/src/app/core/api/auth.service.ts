@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('currentUser') || 'null'),
+      JSON.parse(localStorage.getItem('currentUser') || 'null')
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -39,7 +39,7 @@ export class AuthService {
         password: user.password,
       })
       .pipe(
-        tap((response) => {
+        tap(response => {
           console.log('response', response);
           if (response.token) {
             localStorage.setItem('access_token', response.token);
@@ -48,7 +48,7 @@ export class AuthService {
             this.currentUserSubject.next(user);
             console.log(user);
           }
-        }),
+        })
       );
   }
 
@@ -74,7 +74,7 @@ export class AuthService {
 
   public getBoardRoles(boardId: number): Observable<string[]> {
     return this.http.get<string[]>(
-      `/api/boards/${boardId}/users/${this.currentUserValue.id}/role`,
+      `/api/boards/${boardId}/users/${this.currentUserValue.id}/role`
     );
   }
 
@@ -94,7 +94,7 @@ export class AuthService {
 
   current(): Observable<any> {
     return this.http.get<any>('/api/users/current').pipe(
-      tap((user) => {
+      tap(user => {
         if (user) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
@@ -102,7 +102,7 @@ export class AuthService {
           localStorage.setItem('currentUser', '');
           this.currentUserSubject.next(null);
         }
-      }),
+      })
     );
   }
 }

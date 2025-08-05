@@ -2,15 +2,15 @@
   flex: 1 1 auto;
 }
 
-.toolbar{
+.toolbar {
   background: var(--mat-sys-primary-container);
 }
-.page-title{
+.page-title {
   display: none;
 }
 
 @media screen and (min-width: 900px) {
-  .page-title{
+  .page-title {
     display: block;
   }
 }

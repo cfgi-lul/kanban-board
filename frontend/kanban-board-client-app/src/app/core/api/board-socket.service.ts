@@ -20,13 +20,13 @@ export class BoardSocketService {
     this.socket$ = webSocket({
       url: `ws://localhost:8080/ws/websocket`,
       protocol: 'v12.stomp',
-      serializer: (msg) => msg,
-      deserializer: (e) => e.data,
+      serializer: msg => msg,
+      deserializer: e => e.data,
     });
 
     // Send CONNECT frame
     this.socket$.next(
-      `CONNECT\n${this.objectToStompHeaders(this.stompHeaders)}\n\n\0`,
+      `CONNECT\n${this.objectToStompHeaders(this.stompHeaders)}\n\n\0`
     );
 
     // Subscribe to board-specific updates
@@ -46,9 +46,9 @@ export class BoardSocketService {
     return this.socket$.pipe(
       filter((message: string) => message.startsWith('MESSAGE')),
       map((message: string) => {
-        const [command, headers, body] = this.parseStompFrame(message);
+        const [, , body] = this.parseStompFrame(message);
         return JSON.parse(body);
-      }),
+      })
     );
   }
 
@@ -61,12 +61,12 @@ export class BoardSocketService {
     return this.socket$.pipe(
       filter((message: string) => message.startsWith('CONNECTED')),
       take(1),
-      map(() => void 0),
+      map(() => void 0)
     );
   }
 
   private parseStompFrame(
-    rawFrame: string,
+    rawFrame: string
   ): [string, Record<string, string>, string] {
     const divider = rawFrame.indexOf('\n\n');
     const headerSection = rawFrame.substring(0, divider);
@@ -80,7 +80,7 @@ export class BoardSocketService {
         if (key && value) acc[key.trim()] = value.trim();
         return acc;
       },
-      {} as Record<string, string>,
+      {} as Record<string, string>
     );
 
     return [command, headerObj, body];

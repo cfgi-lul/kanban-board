@@ -1,15 +1,17 @@
-import { provideAnimations } from "@angular/platform-browser/animations";
+import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   ApplicationConfig,
   importProvidersFrom,
-  inject,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideMarkdown } from 'ngx-markdown';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -23,13 +25,13 @@ export const appConfig: ApplicationConfig = {
           allowedDomains: ['example.com'],
           disallowedRoutes: ['http://example.com/examplebadroute/'],
         },
-      }),
+      })
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
     provideMarkdown(),
-    provideAnimations()
-    ],
+    provideAnimations(),
+  ],
 };

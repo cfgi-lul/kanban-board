@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { CommentService } from '../../../core/api/comment.service';
 import { TaskService } from '../../../core/api/task.service';
 import { of } from 'rxjs';
@@ -38,7 +37,9 @@ describe('TaskEditorComponent Services', () => {
     mockCommentService.createComment.mockReturnValue(of({}));
 
     mockCommentService.createComment(testComment).subscribe(() => {
-      expect(mockCommentService.createComment).toHaveBeenCalledWith(testComment);
+      expect(mockCommentService.createComment).toHaveBeenCalledWith(
+        testComment
+      );
     });
   });
 });

@@ -23,7 +23,11 @@
               cdkDrag
             />
           }
-          <mat-card class="example-card" appearance="outlined" (click)="createTask('' + board.id, '' + column.id)">
+          <mat-card
+            class="example-card"
+            appearance="outlined"
+            (click)="createTask('' + board.id, '' + column.id)"
+          >
             <mat-card-header>
               <mat-card-title>Добавить задачу</mat-card-title>
             </mat-card-header>

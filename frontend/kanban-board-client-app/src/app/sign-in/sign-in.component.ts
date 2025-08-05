@@ -37,7 +37,7 @@ export class SignInComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     this.signInForm = this.fb.group({
       userName: ['', Validators.required],
@@ -52,7 +52,6 @@ export class SignInComponent {
   }
 
   onSignIn(): void {
-
     if (this.signInForm.valid) {
       console.log('onSignIn', this.signInForm.valid);
       this.authService

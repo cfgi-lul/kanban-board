@@ -16,7 +16,7 @@ export class BoardService {
   getAllBoards(): Observable<Board[]> {
     return this.httpClient
       .get<BoardDTO[]>(this.baseUrl)
-      .pipe(map((e) => e.map((el) => new Board(el))));
+      .pipe(map(e => e.map(el => new Board(el))));
   }
 
   getBoardById(id: string): Observable<Board> {
@@ -24,19 +24,19 @@ export class BoardService {
     params = params.set('id', id);
     return this.httpClient
       .get<BoardDTO[]>(this.baseUrl, { params })
-      .pipe(map((e) => new Board(e[0])));
+      .pipe(map(e => new Board(e[0])));
   }
 
   createBoard(board: Partial<BoardDTO>): Observable<Board> {
     return this.httpClient
       .post<BoardDTO>(this.baseUrl, board)
-      .pipe(map((e) => new Board(e)));
+      .pipe(map(e => new Board(e)));
   }
 
   createRandomBoard(): Observable<Board> {
     return this.httpClient
       .post<BoardDTO>(`${this.baseUrl}/random`, null)
-      .pipe(map((e) => new Board(e)));
+      .pipe(map(e => new Board(e)));
   }
 
   deleteBoard(id: number): Observable<void> {

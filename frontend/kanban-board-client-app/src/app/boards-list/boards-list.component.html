@@ -7,7 +7,9 @@
             <mat-card-title>{{ board.name }}</mat-card-title>
             <mat-card-subtitle>{{ board.id }}</mat-card-subtitle>
             <mat-card-actions>
-              @if (authService.hasRole('ADMIN') || (canDelete(board.id) | async)) {
+              @if (
+                authService.hasRole('ADMIN') || (canDelete(board.id) | async)
+              ) {
                 <button mat-button color="warn" (click)="deleteBoard(board.id)">
                   Delete Board
                 </button>

@@ -45,20 +45,19 @@ export class BoardsListComponent {
   boards$ = this.refreshBoards$.pipe(
     tap(() => this.loading.set(true)),
     switchMap(() => this.boardService.getAllBoards()),
-    tap(() => this.loading.set(false)),
+    tap(() => this.loading.set(false))
   );
   loading = signal(true);
 
-
   constructor(
     private router: Router,
-    public authService: AuthService,
-  ) { }
+    public authService: AuthService
+  ) {}
 
   canDelete(boardId: number): Observable<boolean> {
     return this.authService
       .getBoardRoles(boardId)
-      .pipe(map((e) => e.includes('ADMIN')));
+      .pipe(map(e => e.includes('ADMIN')));
   }
 
   addBoard(): void {

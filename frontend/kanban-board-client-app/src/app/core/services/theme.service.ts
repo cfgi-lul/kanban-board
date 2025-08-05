@@ -16,7 +16,7 @@ export class ThemeService {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private rendererFactory: RendererFactory2,
+    private rendererFactory: RendererFactory2
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
     this._currentTheme = (localStorage.getItem('theme') ||

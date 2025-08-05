@@ -2,21 +2,38 @@
   <mat-toolbar color="primary">
     <span>Kanban Board</span>
     <span class="spacer"></span>
-    <button mat-icon-button (click)="toggleTheme()" [attr.aria-label]="'Toggle ' + (themeService.currentTheme === 'light' ? 'dark' : 'light') + ' theme'">
+    <button
+      mat-icon-button
+      (click)="toggleTheme()"
+      [attr.aria-label]="
+        'Toggle ' +
+        (themeService.currentTheme === 'light' ? 'dark' : 'light') +
+        ' theme'
+      "
+    >
       <mat-icon>{{ getThemeIcon() }}</mat-icon>
     </button>
-    <button mat-icon-button (click)="toggleSidenav()" aria-label="Toggle navigation menu">
+    <button
+      mat-icon-button
+      (click)="toggleSidenav()"
+      aria-label="Toggle navigation menu"
+    >
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="over" [(opened)]="isSidenavOpen" class="sidenav">
+    <mat-sidenav
+      #sidenav
+      mode="over"
+      [(opened)]="isSidenavOpen"
+      class="sidenav"
+    >
       <mat-nav-list>
         <a mat-list-item routerLink="/sign-in">Sign In</a>
         <a mat-list-item routerLink="/boards-list">Boards List</a>
         @if (isAdmin) {
-        <a mat-list-item routerLink="/admin">Admin Panel</a>
+          <a mat-list-item routerLink="/admin">Admin Panel</a>
         }
       </mat-nav-list>
     </mat-sidenav>
@@ -28,12 +45,12 @@
 </div>
 
 <!-- <div class="layout-container"> -->
-  <!-- <app-header /> -->
-  <!-- <app-header (openSideNav)="toggleSidenav()"
+<!-- <app-header /> -->
+<!-- <app-header (openSideNav)="toggleSidenav()"
   [user]="currentUser | async" [isLoggedIn]="currentUser | async" class="header" /> -->
-  <!-- <div class="spacer"> -->
+<!-- <div class="spacer"> -->
 
-  <!-- <mat-sidenav-container class="sidenav-container">
+<!-- <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="over" [(opened)]="isSidenavOpen" class="sidenav">
       <mat-nav-list>
         <a mat-list-item routerLink="/sign-in">Sign In</a>

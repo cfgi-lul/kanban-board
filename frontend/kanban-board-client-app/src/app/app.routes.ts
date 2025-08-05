@@ -19,7 +19,7 @@ export const routes: Routes = [
     path: 'admin',
     title: 'Admin Panel',
     loadComponent: () => AdminComponentComponent,
-    canActivate: [adminGuard]
+    canActivate: [adminGuard],
   },
   {
     path: 'boards-list',

@@ -60,28 +60,28 @@ export class BoardComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private matDialog: MatDialog,
     private taskService: TaskService,
-    private boardSocketService: BoardSocketService,
+    private boardSocketService: BoardSocketService
   ) {
     this.boardId$ = this.activatedRoute.params.pipe(
-      map((params) => params['id']),
+      map(params => params['id'])
     );
   }
 
   ngOnInit(): void {
     const initialBoard$ = this.boardId$.pipe(
-      switchMap((boardId) => this.boardService.getBoardById(boardId)),
+      switchMap(boardId => this.boardService.getBoardById(boardId))
     );
 
     const socketUpdates$ = this.boardId$.pipe(
-      switchMap((boardId) => {
+      switchMap(boardId => {
         this.boardSocketService.connect(boardId);
         return this.boardSocketService.listenForUpdates();
-      }),
+      })
     );
 
     this.board$ = merge(
       initialBoard$,
-      socketUpdates$.pipe(tap((e) => console.log(e))),
+      socketUpdates$.pipe(tap(e => console.log(e)))
     ).pipe(takeUntil(this.destroy$));
   }
 
@@ -96,20 +96,20 @@ export class BoardComponent implements OnInit, OnDestroy {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
     } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
     }
 
     this.boardSocketService.sendUpdate(
       currentBoard.id.toString(),
-      currentBoard,
+      currentBoard
     );
   }
 

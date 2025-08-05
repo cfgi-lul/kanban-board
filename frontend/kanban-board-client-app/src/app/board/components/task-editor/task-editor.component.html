@@ -1,11 +1,13 @@
 <div class="edit-task-dialog">
-  <h2 mat-dialog-title class="edit-task-dialog__title">Редактирование задачи</h2>
+  <h2 mat-dialog-title class="edit-task-dialog__title">
+    Редактирование задачи
+  </h2>
   <mat-dialog-content class="edit-task-dialog__content">
     <form [formGroup]="taskForm" class="edit-task-dialog__form">
       <mat-form-field appearance="fill" class="edit-task-dialog__field">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" required />
-        @if (taskForm.get("title")?.value) {
+        @if (taskForm.get('title')?.value) {
           <button
             matSuffix
             mat-icon-button
@@ -15,7 +17,7 @@
             <mat-icon>clear</mat-icon>
           </button>
         }
-        @if (taskForm.get("title")?.hasError("required")) {
+        @if (taskForm.get('title')?.hasError('required')) {
           <mat-error>Title is required</mat-error>
         }
       </mat-form-field>
@@ -74,7 +76,7 @@
                   comment.author.username
                 }}</span>
                 <span class="edit-task-dialog__comments__item-timestamp">{{
-                  comment.createdAt | date : 'YYYY.MM.dd, HH:mm'
+                  comment.createdAt | date: 'YYYY.MM.dd, HH:mm'
                 }}</span>
               </div>
               <div class="edit-task-dialog__comments__item-text">
@@ -98,7 +100,7 @@
             [disabled]="!taskForm.get('newComment')?.value"
             class="edit-task-dialog__comments__new-button"
           >
-          Комментировать
+            Комментировать
           </button>
         </div>
       </div>

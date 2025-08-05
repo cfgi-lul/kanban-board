@@ -14,7 +14,7 @@ export class CommentService {
   getComments(taskId: number): Observable<Comment[]> {
     return this.http
       .get<CommentDTO[]>(`${this.apiUrl}/task/${taskId}`)
-      .pipe(map((e) => e.map((el) => new Comment(el))));
+      .pipe(map(e => e.map(el => new Comment(el))));
   }
 
   createComment(comment: {
@@ -24,7 +24,7 @@ export class CommentService {
     console.log('createComment', comment);
     return this.http
       .post<CommentDTO>(this.apiUrl, comment)
-      .pipe(map((e) => new Comment(e)));
+      .pipe(map(e => new Comment(e)));
   }
 
   deleteComment(id: number): Observable<void> {

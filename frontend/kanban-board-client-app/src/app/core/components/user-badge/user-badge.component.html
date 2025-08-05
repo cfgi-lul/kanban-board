@@ -1,4 +1,4 @@
-@if(user()){
+@if (user()) {
   <button
     mat-button
     [matMenuTriggerFor]="userMenu"
@@ -16,7 +16,7 @@
       <span>Logout</span>
     </button>
   </mat-menu>
-}@else {
+} @else {
   <button mat-raised-button color="primary" (click)="onLogin()">
     <mat-icon>login</mat-icon>
     <span>Login</span>

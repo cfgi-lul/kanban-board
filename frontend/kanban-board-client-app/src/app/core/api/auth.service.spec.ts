@@ -10,7 +10,6 @@ import { TestBed } from '@angular/core/testing';
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
-  let jwtHelper: JwtHelperService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,7 +22,6 @@ describe('AuthService', () => {
     });
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
-    jwtHelper = TestBed.inject(JwtHelperService);
   });
 
   it('should be created', () => {
@@ -37,7 +35,7 @@ describe('AuthService', () => {
 
     service
       .login({ username: 'test', password: 'test' })
-      .subscribe((response) => {
+      .subscribe(response => {
         expect(response).toEqual(mockResponse);
         expect(localStorage.getItem('access_token')).toBe(mockToken);
       });

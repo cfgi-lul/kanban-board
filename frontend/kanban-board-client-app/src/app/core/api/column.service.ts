@@ -16,13 +16,13 @@ export class ColumnService {
     params = params.set('id', id.toString());
     return this.http
       .get<ColumnDTO[]>(this.baseUrl, { params })
-      .pipe(map((e) => e.map((el) => new Column(el))));
+      .pipe(map(e => e.map(el => new Column(el))));
   }
 
   createColumn(column: Column): Observable<Column> {
     return this.http
       .post<ColumnDTO>(this.baseUrl, column)
-      .pipe(map((e) => new Column(e)));
+      .pipe(map(e => new Column(e)));
   }
 
   deleteColumn(id: number): Observable<void> {

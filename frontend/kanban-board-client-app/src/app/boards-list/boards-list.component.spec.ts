@@ -55,7 +55,7 @@ describe('BoardsListComponent', () => {
 
     // Mock initial board data
     mockBoardService.getAllBoards.mockReturnValue(
-      of([{ id: 1, name: 'Test Board', columns: [] }]),
+      of([{ id: 1, name: 'Test Board', columns: [] }])
     );
 
     fixture.detectChanges();

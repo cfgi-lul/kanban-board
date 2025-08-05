@@ -18,7 +18,7 @@ export class UserService {
   promoteToAdmin(userId: number): Observable<void> {
     return this.http.post<void>(
       `${this.baseUrl}/${userId}/promote-to-admin`,
-      {},
+      {}
     );
   }
 }

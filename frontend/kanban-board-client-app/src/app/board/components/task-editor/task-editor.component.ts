@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { firstValueFrom, Observable, repeat, take } from 'rxjs';
 import {
@@ -66,7 +66,7 @@ export class TaskEditorComponent {
     private taskService: TaskService,
     private commentService: CommentService,
     public dialogRef: MatDialogRef<TaskEditorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { task: Task },
+    @Inject(MAT_DIALOG_DATA) public data: { task: Task }
   ) {
     this.taskForm = this.fb.group({
       title: [data.task.title, Validators.required],
@@ -104,7 +104,7 @@ export class TaskEditorComponent {
 
   removeComment(comment: Comment): void {
     this.data.task.comments = this.data.task.comments.filter(
-      (c) => c.id !== comment.id,
+      c => c.id !== comment.id
     );
   }
 

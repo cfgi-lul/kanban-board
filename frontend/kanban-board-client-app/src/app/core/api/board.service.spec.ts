@@ -5,7 +5,6 @@ import {
 } from '@angular/common/http/testing';
 import { BoardService } from './board.service';
 import { TestBed } from '@angular/core/testing';
-import { Board } from '../models/classes/Board';
 
 describe('BoardService', () => {
   let service: BoardService;
@@ -26,9 +25,8 @@ describe('BoardService', () => {
 
   it('should fetch all boards', () => {
     const mockBoardDTO = { id: 1, name: 'Test Board', columns: [] };
-    const mockBoards = [new Board(mockBoardDTO)];
 
-    service.getAllBoards().subscribe((boards) => {
+    service.getAllBoards().subscribe(boards => {
       expect(boards.length).toBe(1);
       expect(boards[0].id).toBe(1);
       expect(boards[0].name).toBe('Test Board');
@@ -41,9 +39,8 @@ describe('BoardService', () => {
 
   it('should create a random board', () => {
     const mockBoardDTO = { id: 1, name: 'Random Board', columns: [] };
-    const mockBoard = new Board(mockBoardDTO);
 
-    service.createRandomBoard().subscribe((board) => {
+    service.createRandomBoard().subscribe(board => {
       expect(board.id).toBe(1);
       expect(board.name).toBe('Random Board');
     });
