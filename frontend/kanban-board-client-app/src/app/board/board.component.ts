@@ -25,7 +25,7 @@ import {
   filter,
 } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Board } from '../core/models/classes/Board';
 import { BoardService } from '../core/api/board.service';
 import { BoardSocketService } from '../core/api/board-socket.service';
@@ -59,7 +59,6 @@ interface BoardState {
     CdkDropList,
     CdkDrag,
     AsyncPipe,
-    NgIf,
     MatCardModule,
     MatButtonModule,
     MatDialogModule,
@@ -141,7 +140,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async onDrop(event: CdkDragDrop<Task[]>, currentBoard: Board): Promise<void> {
     try {
-      const { previousContainer, container, previousIndex, currentIndex } = event;
+      const { previousContainer, container, previousIndex, currentIndex } =
+        event;
 
       if (previousContainer === container) {
         moveItemInArray(container.data, previousIndex, currentIndex);

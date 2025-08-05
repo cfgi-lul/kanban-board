@@ -8,7 +8,7 @@ export type ColorScheme = 'light' | 'dark' | 'system';
 })
 export class ThemeService {
   private currentColorSchemeSubject = new BehaviorSubject<ColorScheme>(
-    'system',
+    'system'
   );
 
   public currentColorScheme$ = this.currentColorSchemeSubject.asObservable();
@@ -51,7 +51,7 @@ export class ThemeService {
    */
   private loadSavedColorScheme(): void {
     const savedScheme = localStorage.getItem(
-      'kanban-color-scheme',
+      'kanban-color-scheme'
     ) as ColorScheme;
     if (savedScheme && ['light', 'dark', 'system'].includes(savedScheme)) {
       this.setColorScheme(savedScheme);

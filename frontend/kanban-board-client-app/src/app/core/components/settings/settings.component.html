@@ -31,13 +31,19 @@
       <div class="settings-panel">
         <!-- General Settings -->
         <div *ngIf="selectedTab === 0" class="general-settings">
-          <h3>General Settings</h3>
+          <h3>{{ 'settings.generalSettings' | translate }}</h3>
           <mat-divider></mat-divider>
 
           <div class="setting-section">
-            <h4>Theme</h4>
-            <p>Choose your preferred theme for the application.</p>
+            <h4>{{ 'settings.theme' | translate }}</h4>
+            <p>{{ 'settings.themeDescription' | translate }}</p>
             <app-theme-selector></app-theme-selector>
+          </div>
+
+          <div class="setting-section">
+            <h4>{{ 'settings.language' | translate }}</h4>
+            <p>{{ 'settings.languageDescription' | translate }}</p>
+            <app-language-selector></app-language-selector>
           </div>
         </div>
 

@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { User } from '../../models/classes/User';
 import { UserBadgeComponent } from '../user-badge/user-badge.component';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,6 +30,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     UserBadgeComponent,
     RouterModule,
+    TranslateModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

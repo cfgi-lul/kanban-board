@@ -18,10 +18,10 @@ import { ThemeService } from '../../../services/theme.service';
     MatIconModule,
     MatFormFieldModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './theme-selector.component.html',
-  styleUrls: ['./theme-selector.component.scss']
+  styleUrls: ['./theme-selector.component.scss'],
 })
 export class ThemeSelectorComponent {
   colorSchemeControl = new FormControl('system');

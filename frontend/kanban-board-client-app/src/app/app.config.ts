@@ -15,6 +15,7 @@ import { provideMarkdown } from 'ngx-markdown';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/intersceptors/auth.interceptor';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
+    importProvidersFrom(TranslateModule.forRoot()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),

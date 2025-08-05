@@ -1,34 +1,25 @@
-@if (user()) {
-  <button mat-button [matMenuTriggerFor]="userMenu" class="user-badge">
-    <div class="user-badge-content">
-      <div class="avatar">{{ getUserInitials() }}</div>
-      <div class="name">{{ user().name }}</div>
-      <div class="username">{{ user().username }}</div>
-    </div>
-    <mat-icon>expand_more</mat-icon>
-  </button>
+<div class="user-badge" [matMenuTriggerFor]="userMenu">
+  <div class="avatar" *ngIf="user().avatarUrl; else defaultAvatar">
+    <img [src]="user().avatarUrl" alt="avatar" />
+  </div>
+  <ng-template #defaultAvatar>
+    <mat-icon class="avatar-icon">person</mat-icon>
+  </ng-template>
+  <div class="username">{{ user().username }}</div>
+</div>
 
-  <mat-menu #userMenu="matMenu">
-    <div class="menu-header">
-      <div class="avatar">{{ getUserInitials() }}</div>
-      <div class="info">
-        <div class="name">{{ user().name }}</div>
-        <div class="username">{{ user().username }}</div>
-      </div>
-    </div>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="onSettings()">
-      <mat-icon>settings</mat-icon>
-      <span>Settings</span>
-    </button>
-    <button mat-menu-item (click)="onLogout()">
-      <mat-icon>logout</mat-icon>
-      <span>Sign Out</span>
-    </button>
-  </mat-menu>
-} @else {
-  <button mat-raised-button color="primary" (click)="onLogin()">
-    <mat-icon>login</mat-icon>
-    <span>Sign In</span>
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item (click)="onSettings()">
+    <mat-icon>settings</mat-icon>
+    <span>{{ 'settings.title' | translate }}</span>
   </button>
-}
+  <button mat-menu-item (click)="onLogout()">
+    <mat-icon>logout</mat-icon>
+    <span>{{ 'auth.signOut' | translate }}</span>
+  </button>
+</mat-menu>
+
+<button mat-raised-button color="primary" (click)="onLogin()" *ngIf="!user()">
+  <mat-icon>login</mat-icon>
+  <span>{{ 'auth.signIn' | translate }}</span>
+</button>

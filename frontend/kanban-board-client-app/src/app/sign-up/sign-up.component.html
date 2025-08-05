@@ -3,21 +3,21 @@
     <mat-card-header class="auth-header">
       <div class="auth-logo">
         <mat-icon class="logo-icon">dashboard</mat-icon>
-        <h1 class="logo-text">Kanban</h1>
+        <h1 class="logo-text">{{ 'header.brandTitle' | translate }}</h1>
       </div>
       <mat-card-subtitle class="auth-subtitle"
-        >Create your account to get started</mat-card-subtitle
+        >{{ 'auth.createAccount' | translate }}</mat-card-subtitle
       >
     </mat-card-header>
 
     <mat-card-content class="auth-content">
       <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="auth-form">
         <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Username</mat-label>
+          <mat-label>{{ 'auth.username' | translate }}</mat-label>
           <input
             matInput
             formControlName="userName"
-            placeholder="Choose a username"
+            [placeholder]="'auth.enterUsername' | translate"
             [errorStateMatcher]="matcher"
             autocomplete="username"
           />
@@ -31,7 +31,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Full Name</mat-label>
+          <mat-label>{{ 'auth.fullName' | translate }}</mat-label>
           <input
             matInput
             formControlName="name"
@@ -48,12 +48,12 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Password</mat-label>
+          <mat-label>{{ 'auth.password' | translate }}</mat-label>
           <input
             matInput
             formControlName="password"
             type="password"
-            placeholder="Choose a password"
+            [placeholder]="'auth.enterPassword' | translate"
             [errorStateMatcher]="matcher"
             autocomplete="new-password"
           />
@@ -67,12 +67,12 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Confirm Password</mat-label>
+          <mat-label>{{ 'auth.confirmPassword' | translate }}</mat-label>
           <input
             matInput
             formControlName="confirmPassword"
             type="password"
-            placeholder="Confirm your password"
+            [placeholder]="'auth.enterConfirmPassword' | translate"
             [errorStateMatcher]="matcher"
             autocomplete="new-password"
           />
@@ -81,32 +81,28 @@
             signUpForm.get('confirmPassword')?.invalid &&
             signUpForm.get('confirmPassword')?.touched
           ) {
-            <mat-error>{{
-              getErrorMessage('confirmPassword', signUpForm)
-            }}</mat-error>
-          }
-          @if (
-            signUpForm.errors?.['passwordMismatch'] &&
-            signUpForm.get('confirmPassword')?.touched
-          ) {
-            <mat-error>Passwords do not match</mat-error>
+            <mat-error>{{ getErrorMessage('confirmPassword', signUpForm) }}</mat-error>
           }
         </mat-form-field>
+
+        @if (signUpForm.errors?.['passwordMismatch'] && signUpForm.get('confirmPassword')?.touched) {
+          <mat-error>{{ 'validation.passwordMismatch' | translate }}</mat-error>
+        }
 
         <button
           mat-raised-button
           color="primary"
           type="submit"
-          [disabled]="signUpForm.invalid || isLoading"
+          [disabled]="signUpForm.invalid || isSignUpLoading"
           class="submit-button"
         >
-          @if (isLoading) {
+          @if (isSignUpLoading) {
             <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
-            <span>Creating Account...</span>
+            <span>{{ 'auth.signingUp' | translate }}</span>
           } @else {
             <ng-container>
-              <mat-icon>person_add</mat-icon>
-              <span>Create Account</span>
+              <mat-icon>login</mat-icon>
+              <span>{{ 'auth.signUp' | translate }}</span>
             </ng-container>
           }
         </button>
@@ -114,8 +110,8 @@
 
       <div class="auth-footer">
         <p class="footer-text">
-          Already have an account?
-          <a routerLink="/sign-in" class="footer-link">Sign in</a>
+          {{ 'auth.alreadyHaveAccount' | translate }}
+          <a routerLink="/sign-in" class="footer-link">{{ 'auth.signInHere' | translate }}</a>
         </p>
       </div>
     </mat-card-content>

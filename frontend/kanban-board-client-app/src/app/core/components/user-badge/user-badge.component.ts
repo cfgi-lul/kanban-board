@@ -13,11 +13,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { User } from '../../models/classes/User';
 import { SettingsComponent } from '../settings/settings.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user-badge',
-  imports: [MatButtonModule, MatMenuModule, MatIconModule, MatDividerModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatDividerModule,
+  ],
   templateUrl: './user-badge.component.html',
   styleUrl: './user-badge.component.scss',
 })

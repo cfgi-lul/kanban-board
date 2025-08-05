@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -9,9 +13,19 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ThemeService } from '../../services/theme.service';
 import { ThemeSelectorComponent } from './theme-selector/theme-selector.component';
+import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import { TranslateModule } from '@ngx-translate/core';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SettingsData {
   // Add any data you want to pass to the settings dialog
+}
+
+interface SettingsTab {
+  id: number;
+  label: string;
+  icon: string;
+  component: string;
 }
 
 @Component({
@@ -26,10 +40,12 @@ export interface SettingsData {
     MatDividerModule,
     MatCardModule,
     MatTabsModule,
-    ThemeSelectorComponent
+    ThemeSelectorComponent,
+    LanguageSelectorComponent,
+    TranslateModule,
   ],
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent {
   selectedTab = 0;
@@ -39,26 +55,26 @@ export class SettingsComponent {
       id: 0,
       label: 'General',
       icon: 'settings',
-      component: 'general'
+      component: 'general',
     },
     {
       id: 1,
       label: 'Account',
       icon: 'account_circle',
-      component: 'account'
+      component: 'account',
     },
     {
       id: 2,
       label: 'Notifications',
       icon: 'notifications',
-      component: 'notifications'
+      component: 'notifications',
     },
     {
       id: 3,
       label: 'Privacy',
       icon: 'security',
-      component: 'privacy'
-    }
+      component: 'privacy',
+    },
   ];
 
   constructor(
@@ -75,7 +91,7 @@ export class SettingsComponent {
     this.dialogRef.close();
   }
 
-  getCurrentTab(): any {
+  getCurrentTab(): SettingsTab | undefined {
     return this.settingsTabs.find(tab => tab.id === this.selectedTab);
   }
 }

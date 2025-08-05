@@ -6,7 +6,7 @@
         mat-icon-button
         class="menu-button"
         (click)="openSideNav.emit()"
-        aria-label="Toggle navigation menu"
+        [attr.aria-label]="'header.toggleNavigation' | translate"
       >
         <mat-icon>menu</mat-icon>
       </button>
@@ -15,13 +15,12 @@
         <div class="brand-logo">
           <mat-icon class="brand-icon">dashboard</mat-icon>
         </div>
-        <h1 class="brand-title">Kanban</h1>
+        <h1 class="brand-title">{{ 'header.brandTitle' | translate }}</h1>
       </div>
     </div>
 
     <!-- Right Section -->
     <div class="header-right">
-
       <!-- User Section -->
       @if (isLoggedIn) {
         <app-user-badge [user]="user()" />
@@ -33,7 +32,7 @@
           routerLink="/sign-in"
         >
           <mat-icon>login</mat-icon>
-          <span>Sign In</span>
+          <span>{{ 'auth.signIn' | translate }}</span>
         </button>
       }
     </div>

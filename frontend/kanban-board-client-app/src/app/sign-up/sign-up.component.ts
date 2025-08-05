@@ -17,6 +17,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { take, finalize } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +33,7 @@ import { take, finalize } from 'rxjs';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     RouterModule,
+    TranslateModule,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -39,6 +41,7 @@ import { take, finalize } from 'rxjs';
 export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   isLoading = false;
+  isSignUpLoading = false;
   returnUrl: string = '/boards-list';
   matcher = new ErrorStateMatcher();
 

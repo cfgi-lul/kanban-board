@@ -5,11 +5,13 @@ export class User implements UserDTO {
   username?: string;
   name?: string;
   roles?: string[];
+  avatarUrl?: string;
 
   constructor(data: UserDTO) {
     this.id = data.id;
     this.username = data.username;
     this.name = data.name;
     this.roles = data.roles;
+    this.avatarUrl = (data as UserDTO & { avatarUrl?: string }).avatarUrl;
   }
 }

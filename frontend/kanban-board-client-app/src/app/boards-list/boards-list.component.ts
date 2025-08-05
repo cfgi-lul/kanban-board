@@ -7,6 +7,7 @@ import {
   tap,
   catchError,
   of,
+  shareReplay,
 } from 'rxjs';
 import {
   ChangeDetectionStrategy,
@@ -57,6 +58,7 @@ export type LoadingState = 'loading' | 'error' | 'fulfilled';
 export class BoardsListComponent implements OnInit, OnDestroy {
   private refreshBoards$ = new BehaviorSubject<void>(null);
   private boardService = inject(BoardService);
+  private boardRolesCache = new Map<number, Observable<boolean>>();
 
   // State management
   loadingState = signal<LoadingState>('loading');
@@ -91,29 +93,39 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.refreshBoards$.complete();
+    this.boardRolesCache.clear();
   }
 
   private loadBoards(): void {
     this.loadingState.set('loading');
+    // Clear the cache when loading new boards
+    this.boardRolesCache.clear();
 
-    this.refreshBoards$.pipe(
-      switchMap(() => this.boardService.getAllBoards()),
-      tap(boards => {
-        this.allBoards.set(boards);
-        this.loadingState.set('fulfilled');
-      }),
-      catchError(error => {
-        console.error('Error loading boards:', error);
-        this.loadingState.set('error');
-        return of([]);
-      })
-    ).subscribe();
+    this.refreshBoards$
+      .pipe(
+        switchMap(() => this.boardService.getAllBoards()),
+        tap(boards => {
+          this.allBoards.set(boards);
+          this.loadingState.set('fulfilled');
+        }),
+        catchError(error => {
+          console.error('Error loading boards:', error);
+          this.loadingState.set('error');
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   canDelete(boardId: number): Observable<boolean> {
-    return this.authService
-      .getBoardRoles(boardId)
-      .pipe(map(e => e.includes('ADMIN')));
+    if (!this.boardRolesCache.has(boardId)) {
+      const canDelete$ = this.authService.getBoardRoles(boardId).pipe(
+        map(e => e?.includes('ADMIN') || false),
+        shareReplay(1)
+      );
+      this.boardRolesCache.set(boardId, canDelete$);
+    }
+    return this.boardRolesCache.get(boardId)!;
   }
 
   addBoard(): void {

@@ -1,0 +1,22 @@
+<div class="language-selector">
+  <mat-form-field appearance="outline" class="language-field">
+    <mat-label>
+      <mat-icon>language</mat-icon>
+      {{ 'settings.language' | translate }}
+    </mat-label>
+    <mat-select
+      [value]="i18nService.getCurrentLanguage()"
+      (selectionChange)="onLanguageChange($event.value)"
+      class="language-select">
+      <mat-option
+        *ngFor="let language of i18nService.getLanguages()"
+        [value]="language.code"
+        class="language-option">
+        <div class="language-option-content">
+          <span class="language-name">{{ language.nativeName }}</span>
+          <span class="language-code">({{ language.code }})</span>
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
