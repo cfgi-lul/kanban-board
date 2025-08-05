@@ -9,10 +9,18 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Task } from '../../../core/models/classes/Task';
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-taks-preview',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
+  ],
   templateUrl: './taks-preview.component.html',
   styleUrl: './taks-preview.component.scss',
 })

@@ -43,6 +43,7 @@ import { TaksPreviewComponent } from './components/taks-preview/taks-preview.com
 import { Task } from '../core/models/classes/Task';
 import { TaskEditorComponent } from './components/task-editor/task-editor.component';
 import { TaskService } from './../core/api/task.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface BoardState {
   board: Board;
@@ -65,6 +66,7 @@ interface BoardState {
     MatIconModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    TranslateModule,
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',

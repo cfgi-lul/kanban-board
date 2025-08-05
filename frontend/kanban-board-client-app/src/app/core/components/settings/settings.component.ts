@@ -53,25 +53,25 @@ export class SettingsComponent {
   settingsTabs = [
     {
       id: 0,
-      label: 'General',
+      label: 'settings.general',
       icon: 'settings',
       component: 'general',
     },
     {
       id: 1,
-      label: 'Account',
+      label: 'settings.account',
       icon: 'account_circle',
       component: 'account',
     },
     {
       id: 2,
-      label: 'Notifications',
+      label: 'settings.notifications',
       icon: 'notifications',
       component: 'notifications',
     },
     {
       id: 3,
-      label: 'Privacy',
+      label: 'settings.privacy',
       icon: 'security',
       component: 'privacy',
     },

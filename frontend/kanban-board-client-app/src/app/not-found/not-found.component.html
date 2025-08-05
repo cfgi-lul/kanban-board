@@ -1,1 +1,14 @@
-<p>not-found works!</p>
+<div class="not-found-container">
+  <mat-card class="not-found-card">
+    <mat-card-content>
+      <div class="not-found-content">
+        <mat-icon class="not-found-icon">error</mat-icon>
+        <h1>{{ 'errors.notFound' | translate }}</h1>
+        <p>{{ 'errors.pageNotFound' | translate }}</p>
+        <button mat-raised-button color="primary" routerLink="/">
+          {{ 'common.back' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

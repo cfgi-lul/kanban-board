@@ -4,7 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserService } from '../core/api/user.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-component',
@@ -13,7 +15,9 @@ import { UserService } from '../core/api/user.service';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
+    MatTooltipModule,
     AsyncPipe,
+    TranslateModule,
   ],
   templateUrl: './admin-component.component.html',
   styleUrl: './admin-component.component.scss',

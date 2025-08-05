@@ -33,6 +33,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../core/api/auth.service';
 import { Board } from '../core/models/classes/Board';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type LoadingState = 'loading' | 'error' | 'fulfilled';
 
@@ -51,6 +52,7 @@ export type LoadingState = 'loading' | 'error' | 'fulfilled';
     MatSnackBarModule,
     AsyncPipe,
     RouterModule,
+    TranslateModule,
   ],
   templateUrl: './boards-list.component.html',
   styleUrl: './boards-list.component.scss',

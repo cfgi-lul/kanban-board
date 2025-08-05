@@ -1,24 +1,24 @@
 <div class="edit-task-dialog">
   <h2 mat-dialog-title class="edit-task-dialog__title">
-    Редактирование задачи
+    {{ 'board.editTask' | translate }}
   </h2>
   <mat-dialog-content class="edit-task-dialog__content">
     <form [formGroup]="taskForm" class="edit-task-dialog__form">
       <mat-form-field appearance="fill" class="edit-task-dialog__field">
-        <mat-label>Title</mat-label>
+        <mat-label>{{ 'board.taskTitle' | translate }}</mat-label>
         <input matInput formControlName="title" required />
         @if (taskForm.get('title')?.value) {
           <button
             matSuffix
             mat-icon-button
-            aria-label="Clear"
+            [attr.aria-label]="'common.clear' | translate"
             (click)="onClearTitle()"
           >
             <mat-icon>clear</mat-icon>
           </button>
         }
         @if (taskForm.get('title')?.hasError('required')) {
-          <mat-error>Title is required</mat-error>
+          <mat-error>{{ 'validation.required' | translate }}</mat-error>
         }
       </mat-form-field>
 
@@ -32,12 +32,12 @@
             (click)="toggleEditDescription()"
             class="edit-task-dialog__description__button"
           >
-            Редактирование
+            {{ 'board.editDescription' | translate }}
           </button>
         } @else {
           <div class="edit-task-dialog__description--edit">
             <mat-form-field class="edit-task-dialog__field">
-              <mat-label>Description</mat-label>
+              <mat-label>{{ 'board.taskDescription' | translate }}</mat-label>
               <textarea
                 matInput
                 [rows]="16"
@@ -49,14 +49,14 @@
               (click)="toggleEditDescription()"
               class="edit-task-dialog__description__button"
             >
-              Предпросмотр описание
+              {{ 'board.previewDescription' | translate }}
             </button>
           </div>
         }
       </div>
 
       <!-- <mat-form-field appearance="fill" class="edit-task-dialog__field">
-      <mat-label>Column</mat-label>
+      <mat-label>{{ 'board.columnName' | translate }}</mat-label>
       <mat-select formControlName="column">
         @for (column of comments$ | async; track $index) {}
         <mat-option *ngFor="let column of data.columns" [value]="column.id">{{
@@ -67,7 +67,7 @@
 
       <!-- Comments Section -->
       <div class="edit-task-dialog__comments">
-        <h3 class="edit-task-dialog__comments__title">Комментарии</h3>
+        <h3 class="edit-task-dialog__comments__title">{{ 'board.taskComments' | translate }}</h3>
         <div class="edit-task-dialog__comments__list">
           @for (comment of comments$ | async; track $index) {
             <div class="edit-task-dialog__comments__item">
@@ -87,11 +87,11 @@
         </div>
         <div class="edit-task-dialog__comments__new">
           <mat-form-field appearance="fill" class="edit-task-dialog__field">
-            <mat-label>Комментировать</mat-label>
+            <mat-label>{{ 'board.addComment' | translate }}</mat-label>
             <textarea
               matInput
               formControlName="newComment"
-              placeholder="Write a comment..."
+              [placeholder]="'board.writeComment' | translate"
             ></textarea>
           </mat-form-field>
           <button
@@ -100,7 +100,7 @@
             [disabled]="!taskForm.get('newComment')?.value"
             class="edit-task-dialog__comments__new-button"
           >
-            Комментировать
+            {{ 'board.addComment' | translate }}
           </button>
         </div>
       </div>
@@ -112,7 +112,7 @@
       (click)="onCancel()"
       class="edit-task-dialog__actions__button edit-task-dialog__actions__button--cancel"
     >
-      Отменить
+      {{ 'common.cancel' | translate }}
     </button>
     <button
       mat-button
@@ -120,7 +120,7 @@
       [disabled]="taskForm.invalid"
       class="edit-task-dialog__actions__button edit-task-dialog__actions__button--save"
     >
-      Сохранить
+      {{ 'common.save' | translate }}
     </button>
   </mat-dialog-actions>
 </div>

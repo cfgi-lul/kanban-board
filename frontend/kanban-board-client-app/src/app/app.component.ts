@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/api/auth.service';
 import { ThemeService } from './core/services/theme.service';
+import { I18nService } from './core/services/i18n.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './core/components/header/header.component';
 import { AsyncPipe } from '@angular/common';
 import { User } from './core/models/classes/User';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,20 +35,43 @@ import { User } from './core/models/classes/User';
     RouterModule,
     HeaderComponent,
     AsyncPipe,
+    TranslateModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'kanban-board-client-app';
   isSidenavOpen = false;
   currentUser = inject(AuthService).currentUser;
   isAdmin = inject(AuthService).isAdmin();
   themeService = inject(ThemeService);
+  i18nService = inject(I18nService);
+  translateService = inject(TranslateService);
 
   constructor() {
     // Theme is now initialized automatically by the ThemeService
+    // i18n is now initialized automatically by the I18nService
     // No need to manually initialize here
+  }
+
+  ngOnInit(): void {
+    // Test translation loading
+    window.setTimeout(() => {
+      console.log('AppComponent: Testing translation...');
+      console.log(
+        'AppComponent: Current language:',
+        this.translateService.currentLang
+      );
+      console.log(
+        'AppComponent: Default language:',
+        this.translateService.getDefaultLang()
+      );
+      console.log(
+        'AppComponent: Test translation:',
+        this.translateService.instant('header.brandTitle')
+      );
+    }, 1000);
   }
 
   toggleSidenav(): void {

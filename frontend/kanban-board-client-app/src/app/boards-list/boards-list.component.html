@@ -2,12 +2,12 @@
   <!-- Search Section -->
   <div class="search-section">
     <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Search boards</mat-label>
+      <mat-label>{{ 'board.searchBoards' | translate }}</mat-label>
       <input
         matInput
         [value]="searchTerm()"
         (input)="onSearchChange($event)"
-        placeholder="Enter board name..."
+        [placeholder]="'board.enterBoardName' | translate"
         type="text"
       />
       <mat-icon matSuffix>search</mat-icon>
@@ -16,7 +16,7 @@
           matSuffix
           mat-icon-button
           (click)="clearSearch()"
-          aria-label="Clear search"
+          [attr.aria-label]="'common.clearSearch' | translate"
         >
           <mat-icon>close</mat-icon>
         </button>
@@ -28,7 +28,7 @@
   @if (isLoading()) {
     <div class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
-      <p>Loading boards...</p>
+      <p>{{ 'board.loadingBoards' | translate }}</p>
     </div>
   }
 
@@ -39,15 +39,15 @@
         <mat-card-content>
           <div class="error-content">
             <mat-icon color="warn" class="error-icon">error</mat-icon>
-            <h3>Failed to load boards</h3>
-            <p>There was an error loading your boards. Please try again.</p>
+            <h3>{{ 'board.failedToLoadBoards' | translate }}</h3>
+            <p>{{ 'board.errorLoadingBoards' | translate }}</p>
             <button
               mat-raised-button
               color="primary"
               (click)="retryLoad()"
             >
               <mat-icon>refresh</mat-icon>
-              Retry
+              {{ 'common.retry' | translate }}
             </button>
           </div>
         </mat-card-content>
@@ -65,14 +65,14 @@
             <mat-card-content>
               <div class="no-results-content">
                 <mat-icon class="no-results-icon">search_off</mat-icon>
-                <h3>No boards found</h3>
-                <p>No boards match your search criteria.</p>
+                <h3>{{ 'board.noBoardsFound' | translate }}</h3>
+                <p>{{ 'board.noBoardsMatchSearch' | translate }}</p>
                 <button
                   mat-button
                   color="primary"
                   (click)="clearSearch()"
                 >
-                  Clear search
+                  {{ 'common.clearSearch' | translate }}
                 </button>
               </div>
             </mat-card-content>
@@ -87,10 +87,10 @@
             <mat-card class="board-card">
               <mat-card-header>
                 <mat-card-title>{{ board.name }}</mat-card-title>
-                <mat-card-subtitle>Board ID: {{ board.id }}</mat-card-subtitle>
+                <mat-card-subtitle>{{ 'board.boardId' | translate }}: {{ board.id }}</mat-card-subtitle>
               </mat-card-header>
               <mat-card-content>
-                <p>Columns: {{ board.columns?.length || 0 }}</p>
+                <p>{{ 'board.columns' | translate }}: {{ board.columns?.length || 0 }}</p>
               </mat-card-content>
               <mat-card-actions align="end">
                 @if (
@@ -102,7 +102,7 @@
                     (click)="deleteBoard(board.id)"
                   >
                     <mat-icon>delete</mat-icon>
-                    Delete
+                    {{ 'common.delete' | translate }}
                   </button>
                 }
                 <button
@@ -111,7 +111,7 @@
                   (click)="openBoard(board.id)"
                 >
                   <mat-icon>open_in_new</mat-icon>
-                  Open Board
+                  {{ 'board.openBoard' | translate }}
                 </button>
               </mat-card-actions>
             </mat-card>
@@ -124,8 +124,8 @@
         <mat-card-content>
           <div class="add-board-content">
             <mat-icon class="add-icon">add</mat-icon>
-            <h3>Create New Board</h3>
-            <p>Click to create a new kanban board</p>
+            <h3>{{ 'board.createNewBoard' | translate }}</h3>
+            <p>{{ 'board.clickToCreateBoard' | translate }}</p>
           </div>
         </mat-card-content>
       </mat-card>

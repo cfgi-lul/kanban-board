@@ -23,7 +23,7 @@
       mat-icon-button
       color="primary"
       (click)="editTask.emit('' + taks().id)"
-      matTooltip="Edit task"
+      [matTooltip]="'board.editTask' | translate"
       class="action-button"
     >
       <mat-icon>edit</mat-icon>
@@ -32,7 +32,7 @@
       mat-icon-button
       color="warn"
       (click)="deleteTask.emit('' + taks().id)"
-      matTooltip="Delete task"
+      [matTooltip]="'board.deleteTask' | translate"
       class="action-button"
     >
       <mat-icon>delete</mat-icon>

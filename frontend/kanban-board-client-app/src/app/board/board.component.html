@@ -3,15 +3,15 @@
     @if (boardState.loading) {
       <div class="loading-container">
         <mat-spinner diameter="50"></mat-spinner>
-        <p>Loading board...</p>
+        <p>{{ 'board.loadingBoard' | translate }}</p>
       </div>
     } @else if (boardState.error) {
       <div class="error-container">
         <mat-icon class="error-icon">error</mat-icon>
-        <h3>Error Loading Board</h3>
+        <h3>{{ 'board.errorLoadingBoard' | translate }}</h3>
         <p>{{ boardState.error }}</p>
         <button mat-raised-button color="primary" (click)="initializeBoard()">
-          Try Again
+          {{ 'common.tryAgain' | translate }}
         </button>
       </div>
     } @else if (boardState.board) {
@@ -55,7 +55,7 @@
             >
               <mat-card-content class="add-task-content">
                 <mat-icon class="add-icon">add</mat-icon>
-                <span class="add-text">Add Task</span>
+                <span class="add-text">{{ 'board.addTask' | translate }}</span>
               </mat-card-content>
             </mat-card>
           </div>
@@ -64,14 +64,14 @@
     } @else {
       <div class="empty-container">
         <mat-icon class="empty-icon">dashboard</mat-icon>
-        <h3>No Board Found</h3>
-        <p>The requested board could not be loaded.</p>
+        <h3>{{ 'board.noBoardFound' | translate }}</h3>
+        <p>{{ 'board.boardCouldNotBeLoaded' | translate }}</p>
       </div>
     }
   } @else {
     <div class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
-      <p>Initializing...</p>
+      <p>{{ 'common.initializing' | translate }}</p>
     </div>
   }
 </div>

@@ -29,6 +29,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Task } from '../../../core/models/classes/Task';
 import { TaskService } from '../../../core/api/task.service';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { TranslateModule } from '@ngx-translate/core';
 
 const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
 @Component({
@@ -51,6 +52,7 @@ const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
     MarkdownComponent,
     MarkdownModule,
     TextFieldModule,
+    TranslateModule,
   ],
   templateUrl: './task-editor.component.html',
   styleUrl: './task-editor.component.scss',

@@ -23,7 +23,16 @@
     "error": "Error",
     "success": "Success",
     "warning": "Warning",
-    "info": "Information"
+    "info": "Information",
+    "user": "User",
+    "guestUser": "Guest User",
+    "clearSearch": "Clear search",
+    "retry": "Retry",
+    "tryAgain": "Try Again",
+    "initializing": "Initializing...",
+    "clear": "Clear",
+    "id": "ID",
+    "actions": "Actions"
   },
   "auth": {
     "signIn": "Sign In",
@@ -37,6 +46,7 @@
     "email": "Email",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "fullName": "Full Name",
     "confirmPassword": "Confirm Password",
     "forgotPassword": "Forgot Password?",
     "rememberMe": "Remember Me",
@@ -52,11 +62,18 @@
     "enterEmail": "Enter your email",
     "enterFirstName": "Enter your first name",
     "enterLastName": "Enter your last name",
+    "enterFullName": "Enter your full name",
     "enterConfirmPassword": "Confirm your password"
   },
   "header": {
     "toggleNavigation": "Toggle navigation menu",
     "brandTitle": "Kanban"
+  },
+  "admin": {
+    "panel": "Admin Panel",
+    "userManagement": "User Management",
+    "roles": "Roles",
+    "promoteToAdmin": "Promote to Admin"
   },
   "settings": {
     "title": "Settings",
@@ -87,6 +104,23 @@
     }
   },
   "board": {
+    "boardsList": "Boards List",
+    "searchBoards": "Search boards",
+    "enterBoardName": "Enter board name...",
+    "loadingBoards": "Loading boards...",
+    "failedToLoadBoards": "Failed to load boards",
+    "errorLoadingBoards": "There was an error loading your boards. Please try again.",
+    "noBoardsFound": "No boards found",
+    "noBoardsMatchSearch": "No boards match your search criteria.",
+    "boardId": "Board ID",
+    "columns": "Columns",
+    "openBoard": "Open Board",
+    "createNewBoard": "Create New Board",
+    "clickToCreateBoard": "Click to create a new kanban board",
+    "loadingBoard": "Loading board...",
+    "errorLoadingBoard": "Error Loading Board",
+    "noBoardFound": "No Board Found",
+    "boardCouldNotBeLoaded": "The requested board could not be loaded.",
     "addTask": "Add Task",
     "addColumn": "Add Column",
     "deleteColumn": "Delete Column",
@@ -113,7 +147,10 @@
     "todo": "To Do",
     "inProgress": "In Progress",
     "done": "Done",
-    "backlog": "Backlog"
+    "backlog": "Backlog",
+    "editDescription": "Edit Description",
+    "previewDescription": "Preview Description",
+    "writeComment": "Write a comment..."
   },
   "validation": {
     "required": "This field is required",
@@ -128,6 +165,7 @@
     "serverError": "Server error occurred. Please try again later.",
     "unauthorized": "You are not authorized to perform this action.",
     "notFound": "The requested resource was not found.",
+    "pageNotFound": "The page you are looking for could not be found.",
     "timeout": "Request timed out. Please try again.",
     "unknownError": "An unknown error occurred."
   }
