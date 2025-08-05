@@ -46,3 +46,21 @@ body.dark {
 body.system {
   color-scheme: light dark;
 }
+
+// ============================================================================
+// DIALOG STYLES
+// ============================================================================
+
+.settings-dialog-container {
+  .mat-mdc-dialog-container {
+    padding: 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+
+  .mat-mdc-dialog-surface {
+    padding: 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+}

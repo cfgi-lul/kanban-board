@@ -9,8 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { User } from '../../models/classes/User';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,6 +25,7 @@ export class UserBadgeComponent {
   user = input.required<User>();
   authService = inject(AuthService);
   router = inject(Router);
+  dialog = inject(MatDialog);
 
   getUserInitials(): string {
     const user = this.user();
@@ -44,5 +47,15 @@ export class UserBadgeComponent {
 
   onLogin(): void {
     this.router.navigate(['/sign-in']);
+  }
+
+  onSettings(): void {
+    this.dialog.open(SettingsComponent, {
+      width: '900px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      panelClass: 'settings-dialog-container',
+      data: {},
+    });
   }
 }

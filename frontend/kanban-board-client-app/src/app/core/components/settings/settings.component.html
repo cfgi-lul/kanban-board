@@ -1,0 +1,97 @@
+<div class="settings-dialog">
+  <!-- Header -->
+  <div class="settings-header">
+    <h2 mat-dialog-title>
+      <mat-icon>settings</mat-icon>
+      Settings
+    </h2>
+    <button mat-icon-button (click)="onClose()" class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="settings-content">
+    <!-- Side Menu -->
+    <div class="settings-sidebar">
+      <mat-nav-list>
+        <a mat-list-item
+           *ngFor="let tab of settingsTabs"
+           [class.active]="selectedTab === tab.id"
+           (click)="onTabChange(tab.id)"
+           class="settings-nav-item">
+          <mat-icon matListItemIcon>{{ tab.icon }}</mat-icon>
+          <span matListItemTitle>{{ tab.label }}</span>
+        </a>
+      </mat-nav-list>
+    </div>
+
+    <!-- Main Content -->
+    <div class="settings-main">
+      <div class="settings-panel">
+        <!-- General Settings -->
+        <div *ngIf="selectedTab === 0" class="general-settings">
+          <h3>General Settings</h3>
+          <mat-divider></mat-divider>
+
+          <div class="setting-section">
+            <h4>Theme</h4>
+            <p>Choose your preferred theme for the application.</p>
+            <app-theme-selector></app-theme-selector>
+          </div>
+        </div>
+
+        <!-- Account Settings -->
+        <div *ngIf="selectedTab === 1" class="account-settings">
+          <h3>Account Settings</h3>
+          <mat-divider></mat-divider>
+
+          <div class="setting-section">
+            <h4>Profile Information</h4>
+            <p>Manage your account details and preferences.</p>
+            <!-- Add account settings content here -->
+            <mat-card>
+              <mat-card-content>
+                <p>Account settings will be implemented here.</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+
+        <!-- Notifications Settings -->
+        <div *ngIf="selectedTab === 2" class="notifications-settings">
+          <h3>Notification Settings</h3>
+          <mat-divider></mat-divider>
+
+          <div class="setting-section">
+            <h4>Notification Preferences</h4>
+            <p>Configure how you receive notifications.</p>
+            <!-- Add notification settings content here -->
+            <mat-card>
+              <mat-card-content>
+                <p>Notification settings will be implemented here.</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+
+        <!-- Privacy Settings -->
+        <div *ngIf="selectedTab === 3" class="privacy-settings">
+          <h3>Privacy Settings</h3>
+          <mat-divider></mat-divider>
+
+          <div class="setting-section">
+            <h4>Privacy & Security</h4>
+            <p>Manage your privacy and security preferences.</p>
+            <!-- Add privacy settings content here -->
+            <mat-card>
+              <mat-card-content>
+                <p>Privacy settings will be implemented here.</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
