@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { tap } from 'rxjs';
+import { HeaderComponent } from './core/components/header/header.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,6 +24,8 @@ import { tap } from 'rxjs';
     MatListModule,
     MatToolbarModule,
     RouterModule,
+    HeaderComponent,
+    AsyncPipe,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

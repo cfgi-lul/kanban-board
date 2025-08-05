@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { User } from '../../models/classes/User';
 import { UserBadgeComponent } from '../user-badge/user-badge.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +28,7 @@ import { UserBadgeComponent } from '../user-badge/user-badge.component';
     MatButtonToggleModule,
     ReactiveFormsModule,
     UserBadgeComponent,
+    RouterModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -34,7 +36,7 @@ import { UserBadgeComponent } from '../user-badge/user-badge.component';
 export class HeaderComponent implements OnInit {
   themeControl = new FormControl<themeType>('light');
   isLoggedIn = input.required<boolean>();
-  user = input<User>();
+  user = input.required<User>();
 
   constructor(private theme: ThemeService) {}
 

@@ -1,14 +1,38 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { AuthService } from '../api/auth.service';
 import { inject } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-export const authGuard: CanActivateFn = (_route, _state) => {
+export const authGuard: CanActivateFn = (route, state): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
-    return true;
+  // Check if user is authenticated
+  if (!authService.isAuthenticated()) {
+    // Store the attempted URL for redirect after login
+    const returnUrl = state.url;
+    router.navigate(['/sign-in'], { queryParams: { returnUrl } });
+    return of(false);
   }
-  router.navigate(['/sign-in']);
-  return false;
+
+  // Validate token and get current user
+  return authService.current().pipe(
+    map(user => {
+      if (user) {
+        return true;
+      } else {
+        // User not found, redirect to login
+        const returnUrl = state.url;
+        router.navigate(['/sign-in'], { queryParams: { returnUrl } });
+        return false;
+      }
+    }),
+    catchError(() => {
+      // Error occurred, redirect to login
+      const returnUrl = state.url;
+      router.navigate(['/sign-in'], { queryParams: { returnUrl } });
+      return of(false);
+    })
+  );
 };
