@@ -40,13 +40,11 @@ export class AuthService {
       })
       .pipe(
         tap(response => {
-          console.log('response', response);
           if (response.token) {
             localStorage.setItem('access_token', response.token);
             const user = this.helper.decodeToken(response.token);
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
-            console.log(user);
           }
         })
       );

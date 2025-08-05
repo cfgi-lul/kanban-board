@@ -89,7 +89,6 @@ export class TaskEditorComponent {
 
   addComment(): void {
     const value = this.taskForm.value.newComment.trim();
-    console.log('value', value);
     if (value) {
       this.commentService
         .createComment({
@@ -98,8 +97,8 @@ export class TaskEditorComponent {
         })
         .pipe(take(1))
         .subscribe();
+      this.taskForm.get('newComment')?.setValue('');
     }
-    this.taskForm.controls['newComment'].setValue('');
   }
 
   removeComment(comment: Comment): void {

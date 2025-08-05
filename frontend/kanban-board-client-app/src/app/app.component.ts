@@ -31,7 +31,11 @@ export class AppComponent {
   isSidenavOpen = false;
   currentUser = inject(AuthService)
     .current()
-    .pipe(tap(_e => console.log(123)));
+    .pipe(
+      tap(_e => {
+        // User loaded
+      })
+    );
   isAdmin = inject(AuthService).isAdmin();
   themeService = inject(ThemeService);
 
@@ -60,7 +64,7 @@ export class AppComponent {
       : 'light_mode';
   }
 
-  onThemeChange(_e: any): void {
-    console.log('Theme changed');
+  onThemeChange(_e: Event): void {
+    // Theme changed
   }
 }

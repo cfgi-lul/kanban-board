@@ -53,7 +53,6 @@ export class SignInComponent {
 
   onSignIn(): void {
     if (this.signInForm.valid) {
-      console.log('onSignIn', this.signInForm.valid);
       this.authService
         .login({
           username: this.signInForm.value.userName,

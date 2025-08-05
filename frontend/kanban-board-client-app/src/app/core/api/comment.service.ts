@@ -17,13 +17,9 @@ export class CommentService {
       .pipe(map(e => e.map(el => new Comment(el))));
   }
 
-  createComment(comment: {
-    content: string;
-    taskId: number;
-  }): Observable<Comment> {
-    console.log('createComment', comment);
+  createComment(comment: Comment): Observable<Comment> {
     return this.http
-      .post<CommentDTO>(this.apiUrl, comment)
+      .post<CommentDTO>(`${this.apiUrl}`, comment)
       .pipe(map(e => new Comment(e)));
   }
 

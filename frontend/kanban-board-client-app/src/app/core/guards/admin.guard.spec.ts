@@ -1,7 +1,11 @@
 // admin.guard.spec.ts
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import {
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService } from '../api/auth.service';
 import { adminGuard } from './admin.guard';
 
@@ -30,7 +34,7 @@ describe('AdminGuard', () => {
     authService.isAdmin.mockReturnValue(true);
 
     const result = TestBed.runInInjectionContext(() =>
-      adminGuard({} as any, {} as any)
+      adminGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot)
     );
     expect(result).toBe(true);
   });
@@ -40,7 +44,7 @@ describe('AdminGuard', () => {
     authService.isAdmin.mockReturnValue(false);
 
     const result = TestBed.runInInjectionContext(() =>
-      adminGuard({} as any, {} as any)
+      adminGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot)
     );
     expect(result).toBe(false);
     expect(router.navigate).toHaveBeenCalledWith(['/sign-in']);

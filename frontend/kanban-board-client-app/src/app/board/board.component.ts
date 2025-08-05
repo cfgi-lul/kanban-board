@@ -81,7 +81,11 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.board$ = merge(
       initialBoard$,
-      socketUpdates$.pipe(tap(e => console.log(e)))
+      socketUpdates$.pipe(
+        tap(_e => {
+          // Board updated
+        })
+      )
     ).pipe(takeUntil(this.destroy$));
   }
 
@@ -123,7 +127,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   deliteTask(id: number): void {
-    console.log('deliteTask', id);
     this.taskService.deleteTask(id).pipe(take(1)).subscribe();
   }
 
