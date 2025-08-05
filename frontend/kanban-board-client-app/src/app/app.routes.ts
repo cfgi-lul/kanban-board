@@ -6,9 +6,11 @@ import { BoardsListComponent } from './boards-list/boards-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { Routes } from '@angular/router';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 export const routes: Routes = [
-  { path: 'sign-in', title: 'signIn', loadComponent: () => SignInComponent },
+  { path: 'sign-in', title: 'Sign In', loadComponent: () => SignInComponent },
+  { path: 'sign-up', title: 'Sign Up', loadComponent: () => SignUpComponent },
   {
     path: 'board/:id',
     title: 'board',

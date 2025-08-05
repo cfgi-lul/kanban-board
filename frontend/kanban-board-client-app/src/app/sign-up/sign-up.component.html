@@ -1,0 +1,103 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header class="auth-header">
+      <div class="auth-logo">
+        <mat-icon class="logo-icon">dashboard</mat-icon>
+        <h1 class="logo-text">Kanban</h1>
+      </div>
+      <mat-card-subtitle class="auth-subtitle">Create your account to get started</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="auth-content">
+      <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="auth-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="userName"
+            placeholder="Choose a username"
+            [errorStateMatcher]="matcher"
+            autocomplete="username"
+          />
+          <mat-icon matSuffix>person</mat-icon>
+          @if (signUpForm.get('userName')?.invalid && signUpForm.get('userName')?.touched) {
+            <mat-error>{{ getErrorMessage('userName', signUpForm) }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Full Name</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            placeholder="Enter your full name"
+            [errorStateMatcher]="matcher"
+            autocomplete="name"
+          />
+          <mat-icon matSuffix>badge</mat-icon>
+          @if (signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched) {
+            <mat-error>{{ getErrorMessage('name', signUpForm) }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            type="password"
+            placeholder="Choose a password"
+            [errorStateMatcher]="matcher"
+            autocomplete="new-password"
+          />
+          <mat-icon matSuffix>lock</mat-icon>
+          @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
+            <mat-error>{{ getErrorMessage('password', signUpForm) }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            type="password"
+            placeholder="Confirm your password"
+            [errorStateMatcher]="matcher"
+            autocomplete="new-password"
+          />
+          <mat-icon matSuffix>lock</mat-icon>
+          @if (signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched) {
+            <mat-error>{{ getErrorMessage('confirmPassword', signUpForm) }}</mat-error>
+          }
+          @if (signUpForm.errors?.['passwordMismatch'] && signUpForm.get('confirmPassword')?.touched) {
+            <mat-error>Passwords do not match</mat-error>
+          }
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="signUpForm.invalid || isLoading"
+          class="submit-button"
+        >
+          @if (isLoading) {
+            <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+            <span>Creating Account...</span>
+          } @else {
+            <mat-icon>person_add</mat-icon>
+            <span>Create Account</span>
+          }
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p class="footer-text">
+          Already have an account?
+          <a routerLink="/sign-in" class="footer-link">Sign in</a>
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

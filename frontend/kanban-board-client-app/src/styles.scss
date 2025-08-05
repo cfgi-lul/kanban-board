@@ -506,3 +506,50 @@ body.system {
 .pr-16 {
   padding-right: 16px;
 }
+
+// Sign-in form theme improvements
+.mat-mdc-button-toggle-group {
+  border-radius: 8px;
+  overflow: hidden;
+
+  .mat-button-toggle {
+    border: none;
+
+    &.mat-button-toggle-checked {
+      background-color: var(--mat-sys-primary-container);
+      color: var(--mat-sys-on-primary-container);
+
+      .mat-button-toggle-label-content {
+        color: var(--mat-sys-on-primary-container);
+      }
+    }
+  }
+}
+
+// Card improvements for auth form
+.auth-card {
+  .mat-mdc-card-header {
+    padding: 0;
+  }
+
+  .mat-mdc-card-content {
+    padding: 0;
+  }
+}
+
+// Form field improvements
+.mat-mdc-form-field {
+  &.mat-form-field-appearance-outline {
+    .mat-mdc-text-field-wrapper {
+      border-radius: 8px;
+    }
+  }
+}
+
+// Button improvements
+.mat-mdc-raised-button {
+  border-radius: 8px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.25px;
+}

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import {
   AuthService,
-  LoginRequest,
+  RegisterRequest,
 } from './../core/api/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,7 +23,7 @@ import { take, finalize } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-sign-in',
+  selector: 'app-sign-up',
   imports: [
     MatCardModule,
     MatButtonModule,
@@ -36,12 +36,12 @@ import { take, finalize } from 'rxjs';
     MatProgressSpinnerModule,
     RouterModule,
   ],
-  templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss',
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.scss',
 })
-export class SignInComponent implements OnInit {
-  signInForm: FormGroup;
-  isSignInLoading = false;
+export class SignUpComponent implements OnInit {
+  signUpForm: FormGroup;
+  isLoading = false;
   returnUrl: string = '/boards-list';
   matcher = new ErrorStateMatcher();
 
@@ -52,10 +52,15 @@ export class SignInComponent implements OnInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {
-    this.signInForm = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
+    this.signUpForm = this.fb.group(
+      {
+        userName: ['', [Validators.required, Validators.minLength(3)]],
+        name: ['', [Validators.required, Validators.minLength(2)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: this.passwordMatchValidator }
+    );
   }
 
   ngOnInit(): void {
@@ -64,35 +69,50 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  onSignIn(): void {
-    if (this.signInForm.valid) {
-      this.isSignInLoading = true;
-      const credentials: LoginRequest = {
-        username: this.signInForm.value.userName,
-        password: this.signInForm.value.password,
+  passwordMatchValidator(group: FormGroup): { [key: string]: any } | null {
+    const password = group.get('password');
+    const confirmPassword = group.get('confirmPassword');
+
+    if (
+      password &&
+      confirmPassword &&
+      password.value !== confirmPassword.value
+    ) {
+      return { passwordMismatch: true };
+    }
+    return null;
+  }
+
+  onSignUp(): void {
+    if (this.signUpForm.valid) {
+      this.isLoading = true;
+      const userData: RegisterRequest = {
+        username: this.signUpForm.value.userName,
+        name: this.signUpForm.value.name,
+        password: this.signUpForm.value.password,
       };
 
       this.authService
-        .login(credentials)
+        .register(userData)
         .pipe(
           take(1),
           finalize(() => {
-            this.isSignInLoading = false;
+            this.isLoading = false;
           })
         )
         .subscribe({
           next: () => {
-            this.showSuccessMessage('Successfully signed in!');
+            this.showSuccessMessage('Account created successfully! Welcome!');
             this.router.navigate([this.returnUrl]);
           },
           error: error => {
             this.showErrorMessage(
-              error.message || 'Sign in failed. Please try again.'
+              error.message || 'Registration failed. Please try again.'
             );
           },
         });
     } else {
-      this.markFormGroupTouched(this.signInForm);
+      this.markFormGroupTouched(this.signUpForm);
     }
   }
 
@@ -129,6 +149,9 @@ export class SignInComponent implements OnInit {
       }
       if (control.errors['minlength']) {
         return `${controlName} must be at least ${control.errors['minlength'].requiredLength} characters`;
+      }
+      if (control.errors['passwordMismatch']) {
+        return 'Passwords do not match';
       }
     }
     return '';
