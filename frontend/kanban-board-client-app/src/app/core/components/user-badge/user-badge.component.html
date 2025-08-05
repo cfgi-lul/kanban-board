@@ -1,41 +1,44 @@
 @if (user()) {
-  <button
-    mat-button
-    [matMenuTriggerFor]="userMenu"
-    aria-label="User menu"
-    class="user-badge"
-  >
-    <div class="user-avatar">
-      <span class="avatar-initials">{{ getUserInitials() }}</span>
-    </div>
-    <div class="user-info">
-      <span class="user-name">{{ user().name }}</span>
-      <span class="username">({{ user().username }})</span>
-    </div>
-    <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
-  </button>
-
-  <!-- User menu with logout option -->
-  <mat-menu #userMenu="matMenu">
-    <div class="user-menu-header">
-      <div class="menu-avatar">
+  <div class="user-badge-container">
+    <button
+      mat-button
+      [matMenuTriggerFor]="userMenu"
+      aria-label="User menu"
+      class="user-badge"
+    >
+      <div class="user-avatar">
         <span class="avatar-initials">{{ getUserInitials() }}</span>
+        <div class="status-indicator"></div>
       </div>
-      <div class="menu-user-info">
-        <span class="session-status">Signed in as</span>
-        <span class="menu-user-name">{{ user().name }}</span>
-        <span class="menu-username">{{ user().username }}</span>
+      <div class="user-info">
+        <span class="user-name">{{ user().name }}</span>
+        <span class="user-role">User</span>
       </div>
-    </div>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="onLogout()">
-      <mat-icon>logout</mat-icon>
-      <span>Logout</span>
+      <mat-icon class="dropdown-icon">expand_more</mat-icon>
     </button>
-  </mat-menu>
+
+    <!-- User menu -->
+    <mat-menu #userMenu="matMenu" class="user-menu">
+      <div class="menu-header">
+        <div class="menu-avatar">
+          <span class="avatar-initials">{{ getUserInitials() }}</span>
+          <div class="status-indicator"></div>
+        </div>
+        <div class="menu-user-info">
+          <span class="menu-user-name">{{ user().name }}</span>
+          <span class="menu-username">{{ user().username }}</span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item class="menu-item" (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </mat-menu>
+  </div>
 } @else {
-  <button mat-raised-button color="primary" (click)="onLogin()">
+  <button mat-raised-button color="primary" class="login-fallback" (click)="onLogin()">
     <mat-icon>login</mat-icon>
-    <span>Login</span>
+    <span>Sign In</span>
   </button>
 }

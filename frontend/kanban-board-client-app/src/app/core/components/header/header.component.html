@@ -1,32 +1,58 @@
-<mat-toolbar class="toolbar">
-  <button
-    mat-icon-button
-    (click)="openSideNav.emit()"
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="page-title">Канбан доска</span>
-  <span class="example-spacer"></span>
+<mat-toolbar class="header-toolbar">
+  <div class="header-container">
+    <!-- Left Section -->
+    <div class="header-left">
+      <button
+        mat-icon-button
+        class="menu-button"
+        (click)="openSideNav.emit()"
+        aria-label="Toggle navigation menu"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
 
-  @if (themeControl) {
-    <mat-button-toggle-group
-      name="fontStyle"
-      [formControl]="themeControl"
-      aria-label="Font Style"
-    >
-      <mat-button-toggle value="light">св.</mat-button-toggle>
-      <mat-button-toggle value="dark">тм.</mat-button-toggle>
-      <mat-button-toggle value="system">сис.</mat-button-toggle>
-    </mat-button-toggle-group>
-  }
-  @if (isLoggedIn) {
-    <app-user-badge [user]="user()" />
-  } @else {
-    <button mat-raised-button color="primary" routerLink="/sign-in" class="login-button">
-      <mat-icon>login</mat-icon>
-      <span>Login</span>
-    </button>
-  }
+      <div class="brand">
+        <div class="brand-logo">
+          <mat-icon class="brand-icon">dashboard</mat-icon>
+        </div>
+        <h1 class="brand-title">Kanban</h1>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="header-right">
+      <!-- Theme Toggle -->
+      <mat-button-toggle-group
+        class="theme-toggle"
+        [value]="themeControl.value"
+        (change)="themeControl.setValue($event.value)"
+        aria-label="Theme selection"
+      >
+        <mat-button-toggle value="light" aria-label="Light theme">
+          <mat-icon>light_mode</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="dark" aria-label="Dark theme">
+          <mat-icon>dark_mode</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="system" aria-label="System theme">
+          <mat-icon>desktop_windows</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <!-- User Section -->
+      @if (isLoggedIn) {
+        <app-user-badge [user]="user()" />
+      } @else {
+        <button
+          mat-raised-button
+          color="primary"
+          class="login-button"
+          routerLink="/sign-in"
+        >
+          <mat-icon>login</mat-icon>
+          <span>Sign In</span>
+        </button>
+      }
+    </div>
+  </div>
 </mat-toolbar>

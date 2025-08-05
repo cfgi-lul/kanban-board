@@ -1,29 +1,83 @@
-<div class="layout-container">
+<div class="app-container">
+  <!-- Header -->
   <app-header
     (openSideNav)="toggleSidenav()"
     [user]="currentUser | async"
     [isLoggedIn]="(currentUser | async) !== null"
-    class="header"
+    class="app-header"
   />
 
-  <mat-sidenav-container class="sidenav-container">
+  <!-- Main Layout -->
+  <mat-sidenav-container class="app-sidenav-container">
+    <!-- Side Navigation -->
     <mat-sidenav
       #sidenav
-      mode="over"
+      mode="side"
       [(opened)]="isSidenavOpen"
-      class="sidenav"
+      class="app-sidenav"
     >
-      <mat-nav-list>
-        <a mat-list-item routerLink="/sign-in">Sign In</a>
-        <a mat-list-item routerLink="/boards-list">Boards List</a>
-        @if (isAdmin) {
-          <a mat-list-item routerLink="/admin">Admin Panel</a>
-        }
-      </mat-nav-list>
+      <div class="sidenav-content">
+        <mat-nav-list class="sidenav-menu">
+          <a
+            mat-list-item
+            routerLink="/sign-in"
+            routerLinkActive="active"
+            class="sidenav-item"
+          >
+            <mat-icon matListItemIcon>login</mat-icon>
+            <span matListItemTitle>Sign In</span>
+          </a>
+
+          <a
+            mat-list-item
+            routerLink="/boards-list"
+            routerLinkActive="active"
+            class="sidenav-item"
+          >
+            <mat-icon matListItemIcon>view_list</mat-icon>
+            <span matListItemTitle>Boards List</span>
+          </a>
+
+          @if (isAdmin) {
+            <a
+              mat-list-item
+              routerLink="/admin"
+              routerLinkActive="active"
+              class="sidenav-item"
+            >
+              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+              <span matListItemTitle>Admin Panel</span>
+            </a>
+          }
+        </mat-nav-list>
+
+        <div class="sidenav-footer">
+          <mat-divider></mat-divider>
+          <div class="user-info">
+            @if (currentUser | async; as user) {
+              <div class="user-avatar">
+                <span class="avatar-initials">{{ getUserInitials(user) }}</span>
+              </div>
+              <div class="user-details">
+                <span class="user-name">{{ user.name }}</span>
+                <span class="user-role">User</span>
+              </div>
+            } @else {
+              <div class="guest-info">
+                <mat-icon>person_off</mat-icon>
+                <span>Guest User</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
     </mat-sidenav>
 
-    <mat-sidenav-content class="content-container">
-      <router-outlet />
+    <!-- Main Content -->
+    <mat-sidenav-content class="app-content">
+      <div class="content-wrapper">
+        <router-outlet />
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

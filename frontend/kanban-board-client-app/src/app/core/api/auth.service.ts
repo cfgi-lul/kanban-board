@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BehaviorSubject, Observable, tap, catchError, throwError, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  tap,
+  catchError,
+  throwError,
+  of,
+  shareReplay,
+} from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -32,6 +40,9 @@ export class AuthService {
   public currentUser: Observable<User | null>;
   private helper = new JwtHelperService();
   private tokenRefreshTimeout?: any;
+
+  // Add cached current user observable
+  private currentUserRequest$?: Observable<User | null>;
 
   constructor(
     private http: HttpClient,
@@ -86,7 +97,7 @@ export class AuthService {
         const timeUntilExpiry = expirationDate.getTime() - Date.now();
         const refreshTime = Math.max(timeUntilExpiry - 60000, 0); // Refresh 1 minute before expiry
 
-        this.tokenRefreshTimeout = setTimeout(() => {
+        this.tokenRefreshTimeout = window.setTimeout(() => {
           this.refreshToken();
         }, refreshTime);
       }
@@ -109,30 +120,38 @@ export class AuthService {
     );
   }
 
-  private setToken(token: string): void {
+  private setToken(token: string, user?: User): void {
     localStorage.setItem('access_token', token);
-    const user = this.helper.decodeToken(token);
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    this.currentUserSubject.next(user);
+
+    // Use the provided user data if available, otherwise decode from token
+    const userData = user || this.helper.decodeToken(token);
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+    this.currentUserSubject.next(userData);
   }
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
-    // Clear any existing tokens
+    // Clear any existing tokens and cache
     this.clearAuthData();
+    this.currentUserRequest$ = undefined; // Clear cache
 
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response => {
-        if (response.token) {
-          this.setToken(response.token);
-          this.setupTokenRefresh();
-        }
-      }),
-      catchError(this.handleAuthError.bind(this))
-    );
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+        tap(response => {
+          if (response.token) {
+            this.setToken(response.token, response.user);
+            this.setupTokenRefresh();
+            // Clear the cached request so next call to current() will fetch fresh data
+            this.currentUserRequest$ = undefined;
+          }
+        }),
+        catchError(this.handleAuthError.bind(this))
+      );
   }
 
   logout(): void {
     this.clearAuthData();
+    this.currentUserRequest$ = undefined; // Clear cache
     this.router.navigate(['/sign-in']);
   }
 
@@ -142,23 +161,28 @@ export class AuthService {
     this.currentUserSubject.next(null);
 
     if (this.tokenRefreshTimeout) {
-      clearTimeout(this.tokenRefreshTimeout);
+      window.clearTimeout(this.tokenRefreshTimeout);
       this.tokenRefreshTimeout = undefined;
     }
   }
 
   register(userData: RegisterRequest): Observable<AuthResponse> {
     this.clearAuthData();
+    this.currentUserRequest$ = undefined; // Clear cache
 
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData).pipe(
-      tap(response => {
-        if (response.token) {
-          this.setToken(response.token);
-          this.setupTokenRefresh();
-        }
-      }),
-      catchError(this.handleAuthError.bind(this))
-    );
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/register`, userData)
+      .pipe(
+        tap(response => {
+          if (response.token) {
+            this.setToken(response.token, response.user);
+            this.setupTokenRefresh();
+            // Clear the cached request so next call to current() will fetch fresh data
+            this.currentUserRequest$ = undefined;
+          }
+        }),
+        catchError(this.handleAuthError.bind(this))
+      );
   }
 
   isAuthenticated(): boolean {
@@ -207,21 +231,33 @@ export class AuthService {
   }
 
   current(): Observable<User | null> {
-    return this.http.get<User>('/api/users/current').pipe(
-      tap(user => {
-        if (user) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        } else {
+    // If we don't have a cached request or the user is not authenticated, create a new request
+    if (!this.currentUserRequest$ || !this.isAuthenticated()) {
+      this.currentUserRequest$ = this.http.get<User>('/api/users/current').pipe(
+        tap(user => {
+          if (user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+          } else {
+            this.clearAuthData();
+          }
+        }),
+        catchError(error => {
+          console.error('Error fetching current user:', error);
           this.clearAuthData();
-        }
-      }),
-      catchError(error => {
-        console.error('Error fetching current user:', error);
-        this.clearAuthData();
-        return of(null);
-      })
-    );
+          return of(null);
+        }),
+        shareReplay(1) // Cache the result and share it with all subscribers
+      );
+    }
+
+    return this.currentUserRequest$;
+  }
+
+  // Add method to refresh current user (clears cache and makes new request)
+  refreshCurrentUser(): Observable<User | null> {
+    this.currentUserRequest$ = undefined; // Clear cache
+    return this.current();
   }
 
   private handleAuthError(error: HttpErrorResponse): Observable<never> {

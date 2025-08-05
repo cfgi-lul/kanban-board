@@ -80,7 +80,7 @@ export class SessionTimeoutService {
 
   private extendSession(): void {
     // Try to refresh the token
-    this.authService.current().subscribe({
+    this.authService.refreshCurrentUser().subscribe({
       next: () => {
         this.snackBar.open('Session extended successfully!', 'Close', {
           duration: 3000,

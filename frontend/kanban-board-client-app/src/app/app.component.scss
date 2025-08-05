@@ -1,32 +1,147 @@
-.layout-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+@media (max-width: 768px) {
+  .app-sidenav {
+    width: 260px;
+  }
+
+  .sidenav-header {
+    padding: 20px 16px 16px !important;
+
+    .sidenav-brand {
+      .brand-icon {
+        font-size: 24px !important;
+        width: 24px !important;
+        height: 24px !important;
+      }
+
+      .brand-text {
+        font-size: 18px !important;
+      }
+    }
+  }
+
+  .sidenav-menu {
+    padding: 12px 6px !important;
+
+    .sidenav-item {
+      margin: 2px 6px !important;
+      border-radius: 10px !important;
+
+      mat-icon {
+        font-size: 18px !important;
+        width: 18px !important;
+        height: 18px !important;
+      }
+
+      span {
+        font-size: 13px !important;
+      }
+    }
+  }
+
+  .sidenav-footer {
+    padding: 12px 16px !important;
+
+    .user-info {
+      padding: 8px 0 !important;
+
+      .user-avatar {
+        width: 36px !important;
+        height: 36px !important;
+
+        .avatar-initials {
+          font-size: 14px !important;
+        }
+      }
+
+      .user-details {
+        .user-name {
+          font-size: 13px !important;
+        }
+
+        .user-role {
+          font-size: 11px !important;
+        }
+      }
+
+      .guest-info {
+        span {
+          font-size: 13px !important;
+        }
+      }
+    }
+  }
 }
 
-.spacer {
-  flex: 1 1 auto;
-}
+@media (max-width: 480px) {
+  .app-sidenav {
+    width: 240px;
+  }
 
-mat-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  .sidenav-header {
+    padding: 16px 12px 12px !important;
 
-.sidenav-container {
-  display: flex;
-  flex-grow: 1;
-  background: #c2c2c2;
-}
+    .sidenav-brand {
+      .brand-icon {
+        font-size: 20px !important;
+        width: 20px !important;
+        height: 20px !important;
+      }
 
-.sidenav {
-  width: 250px;
-}
+      .brand-text {
+        font-size: 16px !important;
+      }
+    }
+  }
 
-.content-container {
-  flex-grow: 1;
-  overflow: auto;
+  .sidenav-menu {
+    padding: 8px 4px !important;
 
-  padding: 16px 0;
+    .sidenav-item {
+      margin: 1px 4px !important;
+      border-radius: 8px !important;
+
+      mat-icon {
+        font-size: 16px !important;
+        width: 16px !important;
+        height: 16px !important;
+      }
+
+      span {
+        font-size: 12px !important;
+      }
+    }
+  }
+
+  .sidenav-footer {
+    padding: 8px 12px !important;
+
+    .user-info {
+      padding: 6px 0 !important;
+
+      .user-avatar {
+        width: 32px !important;
+        height: 32px !important;
+
+        .avatar-initials {
+          font-size: 12px !important;
+        }
+      }
+
+      .user-details {
+        .user-name {
+          font-size: 12px !important;
+        }
+
+        .user-role {
+          font-size: 10px !important;
+        }
+      }
+
+      .guest-info {
+        span {
+          font-size: 12px !important;
+        }
+      }
+    }
+  }
 }

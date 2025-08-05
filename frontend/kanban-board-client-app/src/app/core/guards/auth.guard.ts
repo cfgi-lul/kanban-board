@@ -8,7 +8,7 @@ export const authGuard: CanActivateFn = (route, state): Observable<boolean | Url
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // Check if user is authenticated
+  // Check if user is authenticated first (synchronous check)
   if (!authService.isAuthenticated()) {
     // Store the attempted URL for redirect after login
     const returnUrl = state.url;
@@ -16,7 +16,7 @@ export const authGuard: CanActivateFn = (route, state): Observable<boolean | Url
     return of(false);
   }
 
-  // Validate token and get current user
+  // If authenticated, validate token and get current user (this will use cached request)
   return authService.current().pipe(
     map(user => {
       if (user) {
