@@ -40,12 +40,8 @@ export class AppComponent {
   themeService = inject(ThemeService);
 
   constructor() {
-    // Initialize theme on app startup
-    const savedTheme = (localStorage.getItem('theme') || 'light') as
-      | 'light'
-      | 'dark'
-      | 'system';
-    this.themeService.toggleTheme(savedTheme);
+    // Theme is now initialized automatically by the ThemeService
+    // No need to manually initialize here
   }
 
   toggleSidenav(): void {
@@ -53,15 +49,12 @@ export class AppComponent {
   }
 
   toggleTheme(): void {
-    const currentTheme = this.themeService.currentTheme;
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    this.themeService.toggleTheme(newTheme);
+    this.themeService.toggleTheme();
   }
 
   getThemeIcon(): string {
-    return this.themeService.currentTheme === 'light'
-      ? 'dark_mode'
-      : 'light_mode';
+    const currentScheme = this.themeService.getCurrentColorScheme();
+    return currentScheme === 'light' ? 'dark_mode' : 'light_mode';
   }
 
   onThemeChange(_e: Event): void {

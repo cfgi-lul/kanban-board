@@ -1,0 +1,98 @@
+@use "@angular/material" as mat;
+
+/* Pleasant Dark Theme - Midnight Ocean */
+.dark {
+  @include mat.theme-overrides((
+    // Primary - Deep Ocean Blue
+    primary: #60a5fa,
+    on-primary: #1e3a8a,
+    primary-container: #1e40af,
+    on-primary-container: #dbeafe,
+    inverse-primary: #1e40af,
+    primary-fixed: #dbeafe,
+    primary-fixed-dim: #93c5fd,
+    on-primary-fixed: #1e40af,
+    on-primary-fixed-variant: #1d4ed8,
+
+    // Secondary - Soft Teal
+    secondary: #22d3ee,
+    on-secondary: #0e7490,
+    secondary-container: #0c4a6e,
+    on-secondary-container: #cffafe,
+    secondary-fixed: #cffafe,
+    secondary-fixed-dim: #a5f3fc,
+    on-secondary-fixed: #0e7490,
+    on-secondary-fixed-variant: #0c4a6e,
+
+    // Tertiary - Warm Amber
+    tertiary: #fbbf24,
+    on-tertiary: #92400e,
+    tertiary-container: #a16207,
+    on-tertiary-container: #fef3c7,
+    tertiary-fixed: #fef3c7,
+    tertiary-fixed-dim: #fde68a,
+    on-tertiary-fixed: #92400e,
+    on-tertiary-fixed-variant: #78350f,
+
+    // Surface Colors - Deep Grays
+    background: #0f172a,
+    on-background: #f1f5f9,
+    surface: #0f172a,
+    surface-dim: #0f172a,
+    surface-bright: #1e293b,
+    surface-container-lowest: #020617,
+    surface-container-low: #1e293b,
+    surface-container: #334155,
+    surface-container-high: #475569,
+    surface-container-highest: #64748b,
+    on-surface: #f1f5f9,
+
+    // Shadows and Effects
+    shadow: #000000,
+    scrim: #000000,
+    surface-tint: #60a5fa,
+    inverse-surface: #f1f5f9,
+    inverse-on-surface: #0f172a,
+
+    // Outlines
+    outline: #94a3b8,
+    outline-variant: #475569,
+
+    // Neutral Colors
+    neutral: #94a3b8,
+    neutral10: #0f172a,
+    neutral-variant: #94a3b8,
+    neutral-variant20: #475569,
+
+    // Error Colors
+    error: #f87171,
+    error-container: #7f1d1d,
+    on-error: #450a0a,
+    on-error-container: #fef2f2,
+
+    // Surface Variants
+    surface-variant: #334155,
+    on-surface-variant: #cbd5e1,
+
+    // Inverse Colors
+    inverse-secondary: #a5f3fc,
+    inverse-tertiary: #fde68a,
+  ));
+}
+
+/* Typography */
+:root, :host {
+  --mat-sys-brand-font-family: Roboto;
+  --mat-sys-plain-font-family: Roboto;
+  --mat-sys-bold-font-weight: 700;
+  --mat-sys-medium-font-weight: 500;
+  --mat-sys-regular-font-weight: 400;
+
+  @include mat.theme-overrides((
+    brand-family: Roboto,
+    plain-family: Roboto,
+    bold-weight: 700,
+    medium-weight: 500,
+    regular-weight: 400,
+  ));
+}

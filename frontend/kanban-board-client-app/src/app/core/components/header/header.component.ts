@@ -10,7 +10,7 @@ import {
   MatButtonToggleChange,
   MatButtonToggleModule,
 } from '@angular/material/button-toggle';
-import { ThemeService, themeType } from '../../services/theme.service';
+import { ThemeService, ColorScheme } from '../../services/theme.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -34,19 +34,21 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  themeControl = new FormControl<themeType>('light');
+  themeControl = new FormControl<ColorScheme>('system');
   isLoggedIn = input.required<boolean>();
   user = input.required<User>();
 
   constructor(private theme: ThemeService) {}
 
   ngOnInit(): void {
-    this.themeControl.valueChanges.subscribe(e => this.theme.toggleTheme(e));
-    this.themeControl.setValue(this.theme.currentTheme);
+    this.themeControl.valueChanges.subscribe(e => {
+      if (e) this.theme.setColorScheme(e);
+    });
+    this.themeControl.setValue(this.theme.getCurrentColorScheme());
   }
 
   themeChange(event: MatButtonToggleChange): void {
-    this.theme.toggleTheme(event.value);
+    this.theme.setColorScheme(event.value as ColorScheme);
   }
 
   openSideNav = output<void>();
