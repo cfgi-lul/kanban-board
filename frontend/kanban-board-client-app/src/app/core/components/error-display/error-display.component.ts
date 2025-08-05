@@ -22,8 +22,8 @@ import { MatCardModule } from '@angular/material/card';
   styles: [
     `
       .error-card {
-        background-color: #ffebee;
-        color: #d32f2f;
+        background-color: var(--color-error-light);
+        color: var(--color-error);
         margin: 16px;
         padding: 16px;
       }

@@ -1,53 +1,121 @@
-.user-badge-container {
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 24px;
+  transition: background-color 0.2s ease;
   position: relative;
+
+  &:hover {
+    background-color: var(--color-user-badge-hover);
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gradient-avatar);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+
+    .avatar-initials {
+      color: var(--color-white);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    // Online indicator
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      background-color: var(--color-success);
+      border: 2px solid var(--color-white);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px var(--color-shadow-medium);
+    }
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+
+    .user-name {
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
+
+    .username {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
+  }
+
+  .dropdown-icon {
+    font-size: 20px;
+    color: var(--color-text-secondary);
+    margin-left: 4px;
+  }
 }
 
-::ng-deep .user-menu.mat-mdc-menu-panel {
-  min-width: 280px !important;
-  border-radius: 12px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
-  border: 1px solid var(--menu-border) !important;
-  overflow: hidden !important;
-  background: var(--menu-bg) !important;
-
-  .menu-header {
+// User menu styling
+::ng-deep .mat-mdc-menu-panel {
+  .user-menu-header {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 16px;
-    background-color: var(--menu-header-bg);
-    border-bottom: 1px solid var(--menu-border);
+    background-color: var(--color-menu-header-bg);
 
     .menu-avatar {
-      position: relative;
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: var(--brand-gradient);
+      background: var(--gradient-avatar);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+      position: relative;
 
       .avatar-initials {
-        color: white;
+        color: var(--color-white);
         font-weight: 600;
         font-size: 16px;
         line-height: 1;
-        text-transform: uppercase;
       }
 
-      .status-indicator {
+      // Online indicator for menu avatar
+      &::after {
+        content: '';
         position: absolute;
         bottom: -2px;
         right: -2px;
         width: 14px;
         height: 14px;
-        background-color: #10b981;
-        border: 2px solid var(--menu-bg);
+        background-color: var(--color-success);
+        border: 2px solid var(--color-white);
         border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px var(--color-shadow-medium);
       }
     }
 
@@ -56,110 +124,45 @@
       flex-direction: column;
       min-width: 0;
 
+      .session-status {
+        font-size: 11px;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+      }
+
       .menu-user-name {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 14px;
-        color: var(--header-text);
+        color: var(--color-text-primary);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 150px;
-        line-height: 1.2;
       }
 
       .menu-username {
         font-size: 12px;
-        color: var(--header-text-secondary);
+        color: var(--color-text-secondary);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 150px;
-        line-height: 1.2;
       }
-    }
-  }
-
-  .menu-item {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    padding: 12px 16px !important;
-    color: var(--header-text) !important;
-    transition: all 0.2s ease !important;
-
-    &:hover {
-      background-color: var(--menu-item-hover) !important;
-    }
-
-    mat-icon {
-      color: var(--header-text-secondary) !important;
-      flex-shrink: 0 !important;
-      font-size: 18px !important;
-      width: 18px !important;
-      height: 18px !important;
-    }
-
-    span {
-      font-weight: 500 !important;
-      font-size: 14px !important;
     }
   }
 }
 
-@media (max-width: 768px) {
+// Responsive design
+@media (max-width: 600px) {
   .user-badge {
-    padding: 6px 10px !important;
-    gap: 10px !important;
-
     .user-info {
       display: none;
     }
 
     .dropdown-icon {
-      display: none !important;
-    }
-
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-
-      .avatar-initials {
-        font-size: 12px;
-      }
-
-      .status-indicator {
-        width: 10px;
-        height: 10px;
-      }
-    }
-  }
-
-  .login-fallback {
-    padding: 0 12px !important;
-    height: 36px !important;
-
-    span {
-      display: none !important;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .user-badge {
-    padding: 4px 8px !important;
-
-    .user-avatar {
-      width: 28px;
-      height: 28px;
-
-      .avatar-initials {
-        font-size: 11px;
-      }
-
-      .status-indicator {
-        width: 8px;
-        height: 8px;
-      }
+      display: none;
     }
   }
 }
