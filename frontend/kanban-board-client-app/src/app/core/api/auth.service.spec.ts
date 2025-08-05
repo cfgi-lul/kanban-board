@@ -34,16 +34,12 @@ describe('AuthService', () => {
     const mockToken =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
     const mockResponse = { token: mockToken };
-    spyOn(localStorage, 'setItem');
 
     service
       .login({ username: 'test', password: 'test' })
       .subscribe((response) => {
         expect(response).toEqual(mockResponse);
-        expect(localStorage.setItem).toHaveBeenCalledWith(
-          'access_token',
-          mockToken,
-        );
+        expect(localStorage.getItem('access_token')).toBe(mockToken);
       });
 
     const req = httpMock.expectOne('/api/api/auth/login');
@@ -52,15 +48,18 @@ describe('AuthService', () => {
   });
 
   it('should clear storage on logout', () => {
-    spyOn(localStorage, 'removeItem');
+    // Set some initial data
+    localStorage.setItem('access_token', 'test-token');
+    localStorage.setItem('currentUser', 'test-user');
 
     service.logout();
 
-    expect(localStorage.removeItem).toHaveBeenCalledWith('access_token');
-    expect(localStorage.removeItem).toHaveBeenCalledWith('currentUser');
+    expect(localStorage.getItem('access_token')).toBeNull();
+    expect(localStorage.getItem('currentUser')).toBeNull();
   });
 
   afterEach(() => {
     httpMock.verify();
+    localStorage.clear();
   });
 });

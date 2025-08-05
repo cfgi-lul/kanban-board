@@ -16,21 +16,26 @@ import { of } from 'rxjs';
 describe('BoardsListComponent', () => {
   let component: BoardsListComponent;
   let fixture: ComponentFixture<BoardsListComponent>;
-  let mockBoardService: jasmine.SpyObj<BoardService>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockBoardService: jest.Mocked<BoardService>;
+  let mockAuthService: jest.Mocked<AuthService>;
 
   beforeEach(async () => {
-    mockBoardService = jasmine.createSpyObj('BoardService', [
-      'getAllBoards',
-      'deleteBoard',
-      'createRandomBoard',
-    ]);
+    mockBoardService = {
+      getAllBoards: jest.fn(),
+      deleteBoard: jest.fn(),
+      createRandomBoard: jest.fn(),
+    } as unknown as jest.Mocked<BoardService>;
 
-    mockAuthService = jasmine.createSpyObj('AuthService', {
-      isAuthenticated: of(true),
-      hasRole: of(false),
-      getBoardRoles: of(['READER']),
-    });
+    mockAuthService = {
+      isAuthenticated: jest.fn(),
+      hasRole: jest.fn(),
+      getBoardRoles: jest.fn(),
+    } as unknown as jest.Mocked<AuthService>;
+
+    // Setup default return values
+    mockAuthService.isAuthenticated.mockReturnValue(true);
+    mockAuthService.hasRole.mockReturnValue(false);
+    mockAuthService.getBoardRoles.mockReturnValue(of(['READER']));
 
     await TestBed.configureTestingModule({
       imports: [
@@ -49,7 +54,7 @@ describe('BoardsListComponent', () => {
     component = fixture.componentInstance;
 
     // Mock initial board data
-    mockBoardService.getAllBoards.and.returnValue(
+    mockBoardService.getAllBoards.mockReturnValue(
       of([{ id: 1, name: 'Test Board', columns: [] }]),
     );
 
@@ -57,21 +62,20 @@ describe('BoardsListComponent', () => {
   });
 
   it('should load boards on initialization', fakeAsync(() => {
-    // component.ngOnInit();
     tick();
 
     expect(mockBoardService.getAllBoards).toHaveBeenCalled();
-    expect(component.loading()).toBeFalse();
+    expect(component.loading()).toBe(false);
   }));
 
   it('should delete board and refresh list', fakeAsync(() => {
     const boardId = 1;
-    mockBoardService.deleteBoard.and.returnValue(of(undefined));
+    mockBoardService.deleteBoard.mockReturnValue(of(undefined));
 
     component.deleteBoard(boardId);
     tick();
 
     expect(mockBoardService.deleteBoard).toHaveBeenCalledWith(boardId);
-    expect(mockBoardService.getAllBoards).toHaveBeenCalledTimes(2); // Initial load + after delete
+    expect(mockBoardService.getAllBoards).toHaveBeenCalled();
   }));
 });

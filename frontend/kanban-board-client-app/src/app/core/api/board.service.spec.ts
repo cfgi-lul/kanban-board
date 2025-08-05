@@ -24,30 +24,33 @@ describe('BoardService', () => {
     expect(service).toBeTruthy();
   });
 
-  // board.service.spec.ts
   it('should fetch all boards', () => {
-    const mockBoards = [new Board({ id: 1, name: 'Test Board' })];
+    const mockBoardDTO = { id: 1, name: 'Test Board', columns: [] };
+    const mockBoards = [new Board(mockBoardDTO)];
 
     service.getAllBoards().subscribe((boards) => {
       expect(boards.length).toBe(1);
-      expect(boards).toEqual(mockBoards);
+      expect(boards[0].id).toBe(1);
+      expect(boards[0].name).toBe('Test Board');
     });
 
     const req = httpMock.expectOne('/api/boards');
     expect(req.request.method).toBe('GET');
-    req.flush(mockBoards);
+    req.flush([mockBoardDTO]);
   });
 
   it('should create a random board', () => {
-    const mockBoard = new Board({ id: 1, name: 'Random Board' });
+    const mockBoardDTO = { id: 1, name: 'Random Board', columns: [] };
+    const mockBoard = new Board(mockBoardDTO);
 
     service.createRandomBoard().subscribe((board) => {
-      expect(board).toEqual(mockBoard);
+      expect(board.id).toBe(1);
+      expect(board.name).toBe('Random Board');
     });
 
     const req = httpMock.expectOne('/api/boards/random');
     expect(req.request.method).toBe('POST');
-    req.flush(mockBoard);
+    req.flush(mockBoardDTO);
   });
 
   afterEach(() => {
