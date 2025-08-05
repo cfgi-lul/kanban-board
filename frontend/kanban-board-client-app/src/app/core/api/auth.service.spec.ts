@@ -1,6 +1,9 @@
 // auth.service.spec.ts
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { User } from '../models/classes/User';
@@ -14,7 +17,7 @@ describe('AuthService', () => {
     id: 1,
     username: 'testuser',
     name: 'Test User',
-    roles: ['USER']
+    roles: ['USER'],
   };
 
   beforeEach(() => {
@@ -22,10 +25,7 @@ describe('AuthService', () => {
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        AuthService,
-        { provide: Router, useValue: routerSpy }
-      ]
+      providers: [AuthService, { provide: Router, useValue: routerSpy }],
     });
 
     service = TestBed.inject(AuthService);

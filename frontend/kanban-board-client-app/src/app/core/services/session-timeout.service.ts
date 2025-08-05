@@ -4,15 +4,15 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SessionTimeoutService {
   private authService = inject(AuthService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
-  private warningTimeout?: any;
-  private logoutTimeout?: any;
+  private warningTimeout?: number;
+  private logoutTimeout?: number;
   private readonly WARNING_TIME = 5 * 60 * 1000; // 5 minutes before expiry
   private readonly CHECK_INTERVAL = 60 * 1000; // Check every minute
 
@@ -22,7 +22,7 @@ export class SessionTimeoutService {
 
   startSessionMonitoring(): void {
     // Check session status every minute
-    setInterval(() => {
+    window.setInterval(() => {
       this.checkSessionStatus();
     }, this.CHECK_INTERVAL);
   }
@@ -39,7 +39,8 @@ export class SessionTimeoutService {
     }
 
     // Check if token is about to expire
-    const expirationDate = this.authService['helper'].getTokenExpirationDate(token);
+    const expirationDate =
+      this.authService['helper'].getTokenExpirationDate(token);
     if (!expirationDate) {
       this.handleSessionExpiry();
       return;
@@ -59,21 +60,24 @@ export class SessionTimeoutService {
   private showSessionWarning(timeUntilExpiry: number): void {
     const minutesLeft = Math.ceil(timeUntilExpiry / (60 * 1000));
 
-    this.snackBar.open(
-      `Your session will expire in ${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}. Click to extend.`,
-      'Extend Session',
-      {
-        duration: 0, // Don't auto-dismiss
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        panelClass: ['warning-snackbar']
-      }
-    ).onAction().subscribe(() => {
-      this.extendSession();
-    });
+    this.snackBar
+      .open(
+        `Your session will expire in ${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}. Click to extend.`,
+        'Extend Session',
+        {
+          duration: 0, // Don't auto-dismiss
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['warning-snackbar'],
+        }
+      )
+      .onAction()
+      .subscribe(() => {
+        this.extendSession();
+      });
 
     // Set timeout to logout when session expires
-    this.logoutTimeout = setTimeout(() => {
+    this.logoutTimeout = window.setTimeout(() => {
       this.handleSessionExpiry();
     }, timeUntilExpiry);
   }
@@ -86,33 +90,37 @@ export class SessionTimeoutService {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
-          panelClass: ['success-snackbar']
+          panelClass: ['success-snackbar'],
         });
 
         // Clear warning timeout
         if (this.warningTimeout) {
-          clearTimeout(this.warningTimeout);
+          window.clearTimeout(this.warningTimeout);
           this.warningTimeout = undefined;
         }
         if (this.logoutTimeout) {
-          clearTimeout(this.logoutTimeout);
+          window.clearTimeout(this.logoutTimeout);
           this.logoutTimeout = undefined;
         }
       },
       error: () => {
         this.handleSessionExpiry();
-      }
+      },
     });
   }
 
   private handleSessionExpiry(): void {
     this.authService.logout();
-    this.snackBar.open('Your session has expired. Please sign in again.', 'Close', {
-      duration: 5000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: ['error-snackbar']
-    });
+    this.snackBar.open(
+      'Your session has expired. Please sign in again.',
+      'Close',
+      {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar'],
+      }
+    );
   }
 
   // Public method to manually extend session
@@ -123,10 +131,10 @@ export class SessionTimeoutService {
   // Clean up timeouts
   ngOnDestroy(): void {
     if (this.warningTimeout) {
-      clearTimeout(this.warningTimeout);
+      window.clearTimeout(this.warningTimeout);
     }
     if (this.logoutTimeout) {
-      clearTimeout(this.logoutTimeout);
+      window.clearTimeout(this.logoutTimeout);
     }
   }
 }

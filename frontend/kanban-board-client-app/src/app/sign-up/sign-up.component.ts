@@ -6,10 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  AuthService,
-  RegisterRequest,
-} from './../core/api/auth.service';
+import { AuthService, RegisterRequest } from './../core/api/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -69,7 +66,7 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  passwordMatchValidator(group: FormGroup): { [key: string]: any } | null {
+  passwordMatchValidator(group: FormGroup): { [key: string]: unknown } | null {
     const password = group.get('password');
     const confirmPassword = group.get('confirmPassword');
 

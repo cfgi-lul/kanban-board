@@ -17,25 +17,23 @@ describe('AppComponent', () => {
     id: 1,
     username: 'testuser',
     name: 'Test User',
-    roles: ['USER']
+    roles: ['USER'],
   };
 
   beforeEach(async () => {
     const authServiceSpy = jasmine.createSpyObj('AuthService', ['isAdmin'], {
-      currentUser: new BehaviorSubject(mockUser)
+      currentUser: new BehaviorSubject(mockUser),
     });
-    const themeServiceSpy = jasmine.createSpyObj('ThemeService', ['toggleTheme']);
+    const themeServiceSpy = jasmine.createSpyObj('ThemeService', [
+      'toggleTheme',
+    ]);
 
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        AppComponent
-      ],
+      imports: [RouterTestingModule, HttpClientTestingModule, AppComponent],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: ThemeService, useValue: themeServiceSpy }
-      ]
+        { provide: ThemeService, useValue: themeServiceSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);

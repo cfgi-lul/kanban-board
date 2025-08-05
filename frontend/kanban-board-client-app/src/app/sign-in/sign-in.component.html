@@ -5,7 +5,9 @@
         <mat-icon class="logo-icon">dashboard</mat-icon>
         <h1 class="logo-text">Kanban</h1>
       </div>
-      <mat-card-subtitle class="auth-subtitle">Welcome back! Please sign in to your account.</mat-card-subtitle>
+      <mat-card-subtitle class="auth-subtitle"
+        >Welcome back! Please sign in to your account.</mat-card-subtitle
+      >
     </mat-card-header>
 
     <mat-card-content class="auth-content">
@@ -20,7 +22,10 @@
             autocomplete="username"
           />
           <mat-icon matSuffix>person</mat-icon>
-          @if (signInForm.get('userName')?.invalid && signInForm.get('userName')?.touched) {
+          @if (
+            signInForm.get('userName')?.invalid &&
+            signInForm.get('userName')?.touched
+          ) {
             <mat-error>{{ getErrorMessage('userName', signInForm) }}</mat-error>
           }
         </mat-form-field>
@@ -36,7 +41,10 @@
             autocomplete="current-password"
           />
           <mat-icon matSuffix>lock</mat-icon>
-          @if (signInForm.get('password')?.invalid && signInForm.get('password')?.touched) {
+          @if (
+            signInForm.get('password')?.invalid &&
+            signInForm.get('password')?.touched
+          ) {
             <mat-error>{{ getErrorMessage('password', signInForm) }}</mat-error>
           }
         </mat-form-field>
@@ -52,8 +60,10 @@
             <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
             <span>Signing In...</span>
           } @else {
-            <mat-icon>login</mat-icon>
-            <span>Sign In</span>
+            <ng-container>
+              <mat-icon>login</mat-icon>
+              <span>Sign In</span>
+            </ng-container>
           }
         </button>
       </form>

@@ -75,6 +75,7 @@ export class AuthService {
       const userStr = localStorage.getItem('currentUser');
       return userStr ? JSON.parse(userStr) : null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error parsing user from storage:', error);
       return null;
     }
@@ -113,6 +114,7 @@ export class AuthService {
         }
       }),
       catchError(error => {
+        // eslint-disable-next-line no-console
         console.error('Token refresh failed:', error);
         this.logout();
         return throwError(() => error);
@@ -203,14 +205,17 @@ export class AuthService {
   }
 
   public getBoardRoles(boardId: number): Observable<string[]> {
-    return this.http.get<string[]>(
-      `/api/boards/${boardId}/users/${this.currentUserValue?.id}/role`
-    ).pipe(
-      catchError(error => {
-        console.error('Error fetching board roles:', error);
-        return of([]);
-      })
-    );
+    return this.http
+      .get<
+        string[]
+      >(`/api/boards/${boardId}/users/${this.currentUserValue?.id}/role`)
+      .pipe(
+        catchError(error => {
+          // eslint-disable-next-line no-console
+          console.error('Error fetching board roles:', error);
+          return of([]);
+        })
+      );
   }
 
   public getDisplayName(): string {
@@ -227,7 +232,9 @@ export class AuthService {
     if (names.length === 1) {
       return names[0].charAt(0).toUpperCase();
     }
-    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+    return (
+      names[0].charAt(0) + names[names.length - 1].charAt(0)
+    ).toUpperCase();
   }
 
   current(): Observable<User | null> {
@@ -243,6 +250,7 @@ export class AuthService {
           }
         }),
         catchError(error => {
+          // eslint-disable-next-line no-console
           console.error('Error fetching current user:', error);
           this.clearAuthData();
           return of(null);
@@ -273,6 +281,7 @@ export class AuthService {
       errorMessage = 'Network error - please check your connection';
     }
 
+    // eslint-disable-next-line no-console
     console.error('Auth error:', error);
     return throwError(() => new Error(errorMessage));
   }

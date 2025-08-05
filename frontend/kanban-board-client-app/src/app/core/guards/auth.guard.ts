@@ -4,7 +4,10 @@ import { inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-export const authGuard: CanActivateFn = (route, state): Observable<boolean | UrlTree> => {
+export const authGuard: CanActivateFn = (
+  route,
+  state
+): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 

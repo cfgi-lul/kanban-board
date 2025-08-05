@@ -37,7 +37,12 @@
     </mat-menu>
   </div>
 } @else {
-  <button mat-raised-button color="primary" class="login-fallback" (click)="onLogin()">
+  <button
+    mat-raised-button
+    color="primary"
+    class="login-fallback"
+    (click)="onLogin()"
+  >
     <mat-icon>login</mat-icon>
     <span>Sign In</span>
   </button>
