@@ -1,10 +1,41 @@
-<mat-card class="example-card" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title>{{ taks().title }}</mat-card-title>
+<mat-card class="task-card" appearance="outlined" cdkDrag>
+  <mat-card-header class="task-header">
+    <mat-card-title class="task-title">
+      <mat-icon class="task-icon">assignment</mat-icon>
+      {{ taks().title }}
+    </mat-card-title>
   </mat-card-header>
-  <mat-card-content />
-  <mat-card-actions>
-    <button mat-button (click)="editTask.emit('' + taks().id)">Edit</button>
-    <button mat-button (click)="deleteTask.emit('' + taks().id)">Delete</button>
+
+  <mat-card-content class="task-content">
+    @if (taks().description) {
+      <p class="task-description">{{ taks().description }}</p>
+    }
+    @if (taks().comments && taks().comments.length > 0) {
+      <div class="task-meta">
+        <mat-icon class="comment-icon">comment</mat-icon>
+        <span class="comment-count">{{ taks().comments.length }}</span>
+      </div>
+    }
+  </mat-card-content>
+
+  <mat-card-actions class="task-actions">
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="editTask.emit('' + taks().id)"
+      matTooltip="Edit task"
+      class="action-button"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="warn"
+      (click)="deleteTask.emit('' + taks().id)"
+      matTooltip="Delete task"
+      class="action-button"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>

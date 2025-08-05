@@ -1,0 +1,147 @@
+.task-card {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  box-shadow: var(--mat-elevation-z1);
+  margin-bottom: 8px;
+
+  &:hover {
+    box-shadow: var(--mat-elevation-z4);
+    transform: translateY(-2px);
+  }
+
+  &.cdk-drag-preview {
+    box-shadow: var(--mat-elevation-z8);
+    transform: rotate(5deg);
+  }
+
+  &.cdk-drag-placeholder {
+    opacity: 0.3;
+  }
+}
+
+.task-header {
+  padding: 12px 16px 8px;
+
+  .task-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+
+    .task-icon {
+      color: var(--mat-primary-color);
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.task-content {
+  padding: 0 16px 8px;
+
+  .task-description {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    color: var(--mat-secondary-text-color);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .task-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--mat-secondary-text-color);
+
+    .comment-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+    }
+
+    .comment-count {
+      font-weight: 500;
+    }
+  }
+}
+
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 8px 12px 12px;
+  margin: 0;
+
+  .action-button {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .task-header {
+    padding: 8px 12px 6px;
+
+    .task-title {
+      font-size: 13px;
+
+      .task-icon {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  .task-content {
+    padding: 0 12px 6px;
+
+    .task-description {
+      font-size: 11px;
+    }
+
+    .task-meta {
+      font-size: 10px;
+
+      .comment-icon {
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+
+  .task-actions {
+    padding: 6px 8px 8px;
+
+    .action-button {
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+
+      mat-icon {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+}

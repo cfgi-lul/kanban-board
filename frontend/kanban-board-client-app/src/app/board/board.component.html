@@ -1,46 +1,77 @@
-<div class="board" cdkDropListGroup>
-  @if (board$ | async; as board) {
-    @for (column of board.columns; track $index) {
-      <mat-card
-        class="column"
-        cdkDropList
-        [cdkDropListData]="column.tasks"
-        (cdkDropListDropped)="drop($event, board)"
-        appearance="outlined"
-      >
-        <mat-card-header>
-          <mat-card-title>{{ column.name }}</mat-card-title>
-        </mat-card-header>
+<div class="board-container">
+  @if (boardState$ | async; as boardState) {
+    @if (boardState.loading) {
+      <div class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading board...</p>
+      </div>
+    } @else if (boardState.error) {
+      <div class="error-container">
+        <mat-icon class="error-icon">error</mat-icon>
+        <h3>Error Loading Board</h3>
+        <p>{{ boardState.error }}</p>
+        <button mat-raised-button color="primary" (click)="initializeBoard()">
+          Try Again
+        </button>
+      </div>
+    } @else if (boardState.board) {
+      <div class="board" cdkDropListGroup>
+        @for (column of boardState.board.columns; track column.id) {
+          <div class="column-wrapper">
+            <mat-card
+              class="column"
+              cdkDropList
+              [cdkDropListData]="column.tasks"
+              [id]="column.id.toString()"
+              (cdkDropListDropped)="onDrop($event, boardState.board)"
+              appearance="outlined"
+            >
+              <mat-card-header>
+                <mat-card-title class="column-title">
+                  <mat-icon class="column-icon">view_column</mat-icon>
+                  {{ column.name }}
+                  <span class="task-count">({{ column.tasks?.length || 0 }})</span>
+                </mat-card-title>
+              </mat-card-header>
 
-        <mat-card-content class="column-content">
-          @for (task of column.tasks; track $index) {
-            <app-taks-preview
-              [taks]="task"
-              (editTask)="editTask(task.id)"
-              [name]="task.title"
-              (deleteTask)="deliteTask(task.id)"
-              class="task"
-              cdkDrag
-            />
-          }
-          <mat-card
-            class="example-card"
-            appearance="outlined"
-            (click)="createTask('' + board.id, '' + column.id)"
-          >
-            <mat-card-header>
-              <mat-card-title>Добавить задачу</mat-card-title>
-            </mat-card-header>
-          </mat-card>
-          <!-- <app-taks-preview
-              [taks]="{}"
-              (editTask)="editTask('' + task.id)"
-              [name]="task.title"
-              class="task"
-              cdkDrag
-            /> -->
-        </mat-card-content>
-      </mat-card>
+              <mat-card-content class="column-content">
+                @for (task of column.tasks; track task.id) {
+                  <app-taks-preview
+                    [taks]="task"
+                    (editTask)="editTask(task.id)"
+                    [name]="task.title"
+                    (deleteTask)="deleteTask(task.id)"
+                    class="task"
+                    cdkDrag
+                  />
+                }
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card
+              class="add-task-card"
+              appearance="outlined"
+              (click)="createTask('' + boardState.board.id, '' + column.id)"
+            >
+              <mat-card-content class="add-task-content">
+                <mat-icon class="add-icon">add</mat-icon>
+                <span class="add-text">Add Task</span>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="empty-container">
+        <mat-icon class="empty-icon">dashboard</mat-icon>
+        <h3>No Board Found</h3>
+        <p>The requested board could not be loaded.</p>
+      </div>
     }
+  } @else {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Initializing...</p>
+    </div>
   }
 </div>

@@ -6,11 +6,13 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Task } from '../../../core/models/classes/Task';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-taks-preview',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, MatTooltipModule],
   templateUrl: './taks-preview.component.html',
   styleUrl: './taks-preview.component.scss',
 })

@@ -1,24 +1,230 @@
+.board-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--mat-card-background-color);
+}
+
 .board {
   display: flex;
-  overflow: auto;
+  overflow-x: auto;
   gap: 16px;
   height: 100%;
-  padding: 0 16px;
+  padding: 16px;
+  min-height: calc(100vh - 64px); // Account for header height
 }
 
 .column {
-  width: 200px;
+  min-width: 280px;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
+  background-color: var(--mat-card-background-color);
+  border-radius: 8px;
+  box-shadow: var(--mat-elevation-z2);
+  transition: box-shadow 0.2s ease;
 
-.task {
-  width: 100%;
+  &:hover {
+    box-shadow: var(--mat-elevation-z4);
+  }
+
+  mat-card-header {
+    padding: 16px 16px 8px;
+    border-bottom: 1px solid var(--mat-divider-color);
+  }
+
+  .column-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+
+    .column-icon {
+      color: var(--mat-primary-color);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .task-count {
+      color: var(--mat-secondary-text-color);
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
 }
 
 .column-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+  padding: 16px;
+  flex: 1;
+  min-height: 200px;
+}
+
+.task {
+  width: 100%;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.add-task-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px dashed var(--mat-divider-color);
+  background-color: transparent;
+
+  &:hover {
+    border-color: var(--mat-primary-color);
+    background-color: var(--mat-primary-color, #1976d2);
+    background-color: rgba(25, 118, 210, 0.04);
+  }
+
+  .add-task-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    color: var(--mat-secondary-text-color);
+
+    .add-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .add-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  &:hover .add-task-content {
+    color: var(--mat-primary-color);
+  }
+}
+
+// Loading and error states
+.loading-container,
+.error-container,
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 32px;
+  text-align: center;
+
+  mat-spinner {
+    margin-bottom: 16px;
+  }
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    color: var(--mat-secondary-text-color);
+  }
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--mat-text-color);
+  }
+
+  p {
+    margin: 0 0 16px 0;
+    color: var(--mat-secondary-text-color);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  button {
+    margin-top: 8px;
+  }
+}
+
+.error-container {
+  mat-icon.error-icon {
+    color: var(--mat-warn-color, #f44336);
+  }
+}
+
+.empty-container {
+  mat-icon.empty-icon {
+    color: var(--mat-secondary-text-color);
+  }
+}
+
+// Drag and drop styles
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: var(--mat-elevation-z8);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.column.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .board {
+    padding: 8px;
+    gap: 12px;
+  }
+
+  .column {
+    min-width: 240px;
+    max-width: 280px;
+  }
+
+  .column-content {
+    padding: 12px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .board {
+    padding: 4px;
+    gap: 8px;
+  }
+
+  .column {
+    min-width: 200px;
+    max-width: 240px;
+  }
+
+  .column-title {
+    font-size: 14px;
+
+    .column-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .task-count {
+      font-size: 12px;
+    }
+  }
 }
