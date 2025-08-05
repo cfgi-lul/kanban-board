@@ -1,6 +1,6 @@
 .header-toolbar {
-  background: var(--header-bg) !important;
-  border-bottom: 1px solid var(--header-border) !important;
+  background: var(--mat-sys-surface-container) !important;
+  border-bottom: 1px solid var(--mat-sys-outline-variant) !important;
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
@@ -30,10 +30,10 @@
 }
 
 .menu-button {
-  color: var(--header-text-secondary) !important;
+  color: var(--mat-sys-on-surface-variant) !important;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.04) !important;
+    background-color: var(--mat-sys-state-hover-surface) !important;
   }
 }
 
@@ -46,7 +46,7 @@
 .brand-logo {
   width: 36px;
   height: 36px;
-  background: var(--brand-gradient);
+  background: var(--mat-sys-primary);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -54,7 +54,7 @@
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 
   .brand-icon {
-    color: white !important;
+    color: var(--mat-sys-on-primary) !important;
     font-size: 20px !important;
     width: 20px !important;
     height: 20px !important;
@@ -64,7 +64,7 @@
 .brand-title {
   font-size: 22px;
   font-weight: 700;
-  color: var(--header-text);
+  color: var(--mat-sys-on-surface);
   margin: 0;
   letter-spacing: -0.5px;
 }
@@ -78,8 +78,8 @@
 
 /* Theme Toggle */
 .theme-toggle {
-  background: var(--header-bg) !important;
-  border: 1px solid var(--header-border) !important;
+  background: var(--mat-sys-surface-container) !important;
+  border: 1px solid var(--mat-sys-outline-variant) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
@@ -87,17 +87,17 @@
   .mat-button-toggle {
     border: none !important;
     background: transparent !important;
-    color: var(--header-text-secondary) !important;
+    color: var(--mat-sys-on-surface-variant) !important;
     min-width: 36px !important;
     height: 36px !important;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.04) !important;
+      background-color: var(--mat-sys-state-hover-surface) !important;
     }
 
     &.mat-button-toggle-checked {
       background-color: var(--mat-sys-primary) !important;
-      color: white !important;
+      color: var(--mat-sys-on-primary) !important;
     }
 
     .mat-button-toggle-label-content {
