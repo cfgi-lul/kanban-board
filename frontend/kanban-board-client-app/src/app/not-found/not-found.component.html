@@ -1,12 +1,58 @@
 <div class="not-found-container">
   <mat-card class="not-found-card">
-    <mat-card-content>
-      <div class="not-found-content">
-        <mat-icon class="not-found-icon">error</mat-icon>
-        <h1>{{ 'errors.notFound' | translate }}</h1>
-        <p>{{ 'errors.pageNotFound' | translate }}</p>
-        <button mat-raised-button color="primary" routerLink="/">
-          {{ 'common.back' | translate }}
+    <mat-card-content class="not-found-content">
+      <!-- Error Code -->
+      <div class="error-code">
+        <span class="error-number">{{ 'common.notFound.errorCode' | translate }}</span>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <h1 class="error-title">{{ 'common.notFound.title' | translate }}</h1>
+        <p class="error-subtitle">{{ 'common.notFound.subtitle' | translate }}</p>
+        <p class="error-description">{{ 'common.notFound.description' | translate }}</p>
+      </div>
+
+      <!-- Suggestions List -->
+      <div class="suggestions-section">
+        <h3 class="suggestions-title">{{ 'common.notFound.suggestions' | translate }}</h3>
+        <mat-list class="suggestions-list">
+          <mat-list-item>
+            <mat-icon matListItemIcon>search</mat-icon>
+            <span matListItemTitle>{{ 'common.notFound.suggestion1' | translate }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>arrow_back</mat-icon>
+            <span matListItemTitle>{{ 'common.notFound.suggestion2' | translate }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>home</mat-icon>
+            <span matListItemTitle>{{ 'common.notFound.suggestion3' | translate }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>support_agent</mat-icon>
+            <span matListItemTitle>{{ 'common.notFound.suggestion4' | translate }}</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="goHome()"
+          class="home-button">
+          <mat-icon>home</mat-icon>
+          {{ 'common.backHome' | translate }}
+        </button>
+
+        <button
+          mat-stroked-button
+          (click)="goBack()"
+          class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'common.goBack' | translate }}
         </button>
       </div>
     </mat-card-content>

@@ -1,0 +1,231 @@
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1rem;
+  background-color: var(--mat-sys-surface);
+}
+
+:host {
+  flex: 1;
+}
+
+.not-found-card {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background-color: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+}
+
+.not-found-content {
+  padding: 3rem 2rem;
+}
+
+// Error Code Section
+.error-code {
+  margin-bottom: 2rem;
+
+  .error-number {
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--mat-sys-primary);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    display: block;
+    line-height: 1;
+  }
+}
+
+// Main Content Section
+.main-content {
+  margin-bottom: 2rem;
+
+  .error-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--mat-sys-on-surface);
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+
+  .error-subtitle {
+    font-size: 1.25rem;
+    color: var(--mat-sys-on-surface);
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  .error-description {
+    font-size: 1rem;
+    color: var(--mat-sys-on-surface);
+    opacity: 0.7;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+}
+
+// Suggestions Section
+.suggestions-section {
+  margin-bottom: 2rem;
+
+  .suggestions-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--mat-sys-on-surface);
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+
+  .suggestions-list {
+    text-align: left;
+    background: transparent;
+
+    mat-list-item {
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--mat-sys-state-hover-surface);
+      }
+
+      mat-icon {
+        color: var(--mat-sys-primary);
+      }
+
+      span {
+        color: var(--mat-sys-on-surface);
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+// Action Buttons Section
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .home-button {
+    min-width: 160px;
+    height: 48px;
+    font-weight: 500;
+
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .back-button {
+    min-width: 160px;
+    height: 48px;
+    font-weight: 500;
+    border-color: var(--mat-sys-outline);
+    color: var(--mat-sys-on-surface);
+
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      background-color: var(--mat-sys-state-hover-surface);
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .not-found-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .error-code .error-number {
+    font-size: 4rem;
+  }
+
+  .main-content .error-title {
+    font-size: 1.75rem;
+  }
+
+  .main-content .error-subtitle {
+    font-size: 1.125rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+
+    .home-button,
+    .back-button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .error-code .error-number {
+    font-size: 3rem;
+  }
+
+  .main-content .error-title {
+    font-size: 1.5rem;
+  }
+
+  .suggestions-list mat-list-item span {
+    font-size: 0.9rem;
+  }
+}
+
+// Dark mode specific adjustments
+@media (prefers-color-scheme: dark) {
+  .not-found-card {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .error-code .error-number {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Animation for better UX
+.not-found-card {
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Focus styles for accessibility
+.action-buttons button:focus {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .not-found-card {
+    border: 2px solid var(--mat-sys-outline);
+  }
+
+  .action-buttons .back-button {
+    border-width: 2px;
+  }
+}

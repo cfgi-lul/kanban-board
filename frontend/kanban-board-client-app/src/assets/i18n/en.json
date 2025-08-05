@@ -32,7 +32,20 @@
     "initializing": "Initializing...",
     "clear": "Clear",
     "id": "ID",
-    "actions": "Actions"
+    "actions": "Actions",
+    "backHome": "Back to Home",
+    "goBack": "Go Back",
+    "notFound": {
+      "title": "Page Not Found",
+      "subtitle": "Oops! The page you're looking for doesn't exist.",
+      "description": "The page you requested might have been moved, deleted, or you entered the wrong URL.",
+      "errorCode": "404",
+      "suggestions": "Here are some things you can try:",
+      "suggestion1": "Check the URL for typos",
+      "suggestion2": "Go back to the previous page",
+      "suggestion3": "Return to the home page",
+      "suggestion4": "Contact support if the problem persists"
+    }
   },
   "auth": {
     "signIn": "Sign In",
@@ -166,6 +179,10 @@
     "unauthorized": "You are not authorized to perform this action.",
     "notFound": "The requested resource was not found.",
     "pageNotFound": "The page you are looking for could not be found.",
+    "oops": "Oops!",
+    "pageGone": "This page seems to have wandered off to another board.",
+    "maybeMoved": "Maybe it got moved to a different column or deleted entirely.",
+    "funFact": "Did you know? The first Kanban board was created by Toyota in the 1940s to improve manufacturing efficiency!",
     "timeout": "Request timed out. Please try again.",
     "unknownError": "An unknown error occurred."
   }
