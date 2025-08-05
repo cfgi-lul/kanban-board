@@ -1,5 +1,3 @@
-import { provideNgDocApp, provideSearchEngine, NgDocDefaultSearchEngine, providePageSkeleton, NG_DOC_DEFAULT_PAGE_SKELETON, provideMainPageProcessor, NG_DOC_DEFAULT_PAGE_PROCESSORS } from "@ng-doc/app";
-import { NG_DOC_ROUTING, provideNgDocContext } from "@ng-doc/generated";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import {
   ApplicationConfig,
@@ -32,13 +30,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
     provideMarkdown(),
-        provideAnimations(),
-        provideRouter(NG_DOC_ROUTING, withInMemoryScrolling({scrollPositionRestoration: "enabled", anchorScrolling: "enabled"})),
-        provideHttpClient(withInterceptorsFromDi(), withFetch()),
-        provideNgDocContext(),
-        provideNgDocApp(),
-        provideSearchEngine(NgDocDefaultSearchEngine),
-        providePageSkeleton(NG_DOC_DEFAULT_PAGE_SKELETON),
-        provideMainPageProcessor(NG_DOC_DEFAULT_PAGE_PROCESSORS)
+    provideAnimations()
     ],
 };

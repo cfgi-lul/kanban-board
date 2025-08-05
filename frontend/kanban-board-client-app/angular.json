@@ -15,44 +15,23 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ng-doc/builder:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/kanban-board-client-app",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/@ng-doc/app/assets",
-                "output": "assets/ng-doc/app"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/@ng-doc/ui-kit/assets",
-                "output": "assets/ng-doc/ui-kit"
-              },
-              {
-                "glob": "**/*",
-                "input": "ng-doc/kanban-board-client-app/assets",
-                "output": "assets/ng-doc"
-              },
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
-              "node_modules/@ng-doc/app/styles/global.css",
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": [],
-            "allowedCommonJsDependencies": [
-              "@ng-doc/core"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -79,7 +58,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@ng-doc/builder:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "proxyConfig": "src/proxy.conf.json"
           },
