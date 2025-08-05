@@ -42,17 +42,21 @@
           mat-raised-button
           color="primary"
           (click)="goHome()"
-          class="home-button">
-          <mat-icon>home</mat-icon>
-          {{ 'common.backHome' | translate }}
+          class="home-button"
+          type="button"
+          [attr.aria-label]="'common.backHome' | translate">
+          <mat-icon aria-hidden="true">home</mat-icon>
+          <span>{{ 'common.backHome' | translate }}</span>
         </button>
 
         <button
           mat-stroked-button
           (click)="goBack()"
-          class="back-button">
-          <mat-icon>arrow_back</mat-icon>
-          {{ 'common.goBack' | translate }}
+          class="back-button"
+          type="button"
+          [attr.aria-label]="'common.goBack' | translate">
+          <mat-icon aria-hidden="true">arrow_back</mat-icon>
+          <span>{{ 'common.goBack' | translate }}</span>
         </button>
       </div>
     </mat-card-content>
