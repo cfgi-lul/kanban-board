@@ -14,15 +14,23 @@
   min-height: calc(100vh - 64px); // Account for header height
 }
 
-.column {
+.column-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   min-width: 280px;
   max-width: 320px;
+}
+
+.column {
   display: flex;
   flex-direction: column;
   background-color: var(--mat-card-background-color);
   border-radius: 8px;
   box-shadow: var(--mat-elevation-z2);
   transition: box-shadow 0.2s ease;
+  flex: 1;
+  min-height: 200px;
 
   &:hover {
     box-shadow: var(--mat-elevation-z4);
@@ -62,7 +70,7 @@
   gap: 12px;
   padding: 16px;
   flex: 1;
-  min-height: 200px;
+  min-height: 100px;
 }
 
 .task {
@@ -79,6 +87,7 @@
   transition: all 0.2s ease;
   border: 2px dashed var(--mat-divider-color);
   background-color: transparent;
+  margin-top: auto;
 
   &:hover {
     border-color: var(--mat-primary-color);
@@ -192,7 +201,7 @@
     gap: 12px;
   }
 
-  .column {
+  .column-wrapper {
     min-width: 240px;
     max-width: 280px;
   }
@@ -209,7 +218,7 @@
     gap: 8px;
   }
 
-  .column {
+  .column-wrapper {
     min-width: 200px;
     max-width: 240px;
   }
