@@ -95,7 +95,11 @@ export class AppComponent implements OnInit {
   getUserInitials(user: User): string {
     if (!user?.name) return '?';
 
-    const names = user.name.split(' ');
+    const names = user.name
+      .trim()
+      .split(' ')
+      .filter(name => name.length > 0);
+    if (names.length === 0) return '?';
     if (names.length === 1) {
       return names[0].charAt(0).toUpperCase();
     }
