@@ -200,5 +200,59 @@
     "funFact": "Did you know? The first Kanban board was created by Toyota in the 1940s to improve manufacturing efficiency!",
     "timeout": "Request timed out. Please try again.",
     "unknownError": "An unknown error occurred."
+  },
+  "main": {
+    "welcome": {
+      "title": "Welcome to Kanban Board",
+      "subtitle": "Organize your work and boost productivity with our intuitive kanban board system"
+    },
+    "sections": {
+      "title": "Main Sections"
+    },
+    "tile": {
+      "open": "Open"
+    },
+    "boards": {
+      "title": "Kanban Boards",
+      "description": "Create and manage your kanban boards. Organize tasks, track progress, and collaborate with your team."
+    },
+    "news": {
+      "title": "News & Updates",
+      "description": "Stay updated with the latest features, announcements, and improvements to the platform.",
+      "badge": "New"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "View detailed analytics and insights about your boards, tasks, and team performance."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Customize your account settings, preferences, and application configuration."
+    },
+    "admin": {
+      "title": "Admin Panel",
+      "description": "Manage users, roles, and system administration tasks. Access restricted to administrators only."
+    },
+    "help": {
+      "title": "Help & Support",
+      "description": "Get help, view documentation, and access support resources for using the platform."
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "createBoard": "Create New Board",
+      "settings": "Open Settings"
+    }
+  },
+  "news": {
+    "title": "News & Updates",
+    "comingSoon": "News section is coming soon. Stay tuned for updates!"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "comingSoon": "Analytics section is coming soon. You'll be able to view detailed insights about your boards and tasks."
+  },
+  "help": {
+    "title": "Help & Support",
+    "comingSoon": "Help section is coming soon. You'll find documentation and support resources here."
   }
 }
