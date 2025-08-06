@@ -1,10 +1,11 @@
 import { BoardDTO } from '../requestModels/model/boardDTO';
-import { Column } from './Column';
+import { ColumnDTO } from '../requestModels/model/columnDTO';
 
 export class Board implements BoardDTO {
-  id: number;
+  id?: number;
   name: string;
-  columns: Column[];
+  columns?: Array<ColumnDTO>;
+
   constructor(data: BoardDTO) {
     this.id = data.id;
     this.name = data.name;

@@ -1,14 +1,14 @@
-import { CommentDTO } from '../requestModels/model/commentDTO';
-import { UserDTO } from '../requestModels/model/userDTO';
+import { CommentDTO as CommentDTOInterface } from '../requestModels/model/commentDTO';
+import { UserDTO } from './UserDTO';
 
-export class Comment implements CommentDTO {
+export class CommentDTO implements CommentDTOInterface {
   id?: number;
   content: string;
   createdAt?: Date;
   author?: UserDTO;
   taskId?: number;
 
-  constructor(data: CommentDTO) {
+  constructor(data: CommentDTOInterface) {
     this.id = data.id;
     this.content = data.content;
     this.createdAt = data.createdAt;

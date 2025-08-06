@@ -29,10 +29,10 @@ interface MainPageTile {
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
-    MatChipsModule
+    MatChipsModule,
   ],
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.scss']
+  styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit {
   tiles: MainPageTile[] = [];
@@ -54,7 +54,7 @@ export class MainPageComponent implements OnInit {
         description: 'main.boards.description',
         icon: 'dashboard',
         route: '/boards-list',
-        color: 'primary'
+        color: 'primary',
       },
       {
         id: 'news',
@@ -63,7 +63,7 @@ export class MainPageComponent implements OnInit {
         icon: 'newspaper',
         route: '/news',
         color: 'accent',
-        badge: 'main.news.badge'
+        badge: 'main.news.badge',
       },
       {
         id: 'analytics',
@@ -71,7 +71,7 @@ export class MainPageComponent implements OnInit {
         description: 'main.analytics.description',
         icon: 'analytics',
         route: '/analytics',
-        color: 'primary'
+        color: 'primary',
       },
       {
         id: 'settings',
@@ -79,7 +79,7 @@ export class MainPageComponent implements OnInit {
         description: 'main.settings.description',
         icon: 'settings',
         route: '/settings',
-        color: 'accent'
+        color: 'accent',
       },
       {
         id: 'admin',
@@ -87,7 +87,7 @@ export class MainPageComponent implements OnInit {
         description: 'main.admin.description',
         icon: 'admin_panel_settings',
         route: '/admin',
-        color: 'warn'
+        color: 'warn',
       },
       {
         id: 'help',
@@ -95,8 +95,8 @@ export class MainPageComponent implements OnInit {
         description: 'main.help.description',
         icon: 'help',
         route: '/help',
-        color: 'primary'
-      }
+        color: 'primary',
+      },
     ];
   }
 

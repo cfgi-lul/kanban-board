@@ -12,7 +12,7 @@ import { ColumnDTO } from './columnDTO';
 
 export interface BoardDTO { 
     id?: number;
-    name?: string;
+    name: string;
     columns?: Array<ColumnDTO>;
 }
 

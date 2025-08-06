@@ -13,7 +13,7 @@ import { CommentDTO } from './commentDTO';
 
 export interface TaskDTO { 
     id?: number;
-    title?: string;
+    title: string;
     description?: string;
     comments?: Array<CommentDTO>;
     createdBy?: UserDTO;

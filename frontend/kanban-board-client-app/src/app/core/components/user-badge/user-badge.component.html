@@ -1,10 +1,7 @@
 <div class="user-badge" [matMenuTriggerFor]="userMenu" *ngIf="user()">
-  <div class="avatar" *ngIf="user()?.avatarUrl; else defaultAvatar">
-    <img [src]="user()?.avatarUrl" alt="avatar" />
-  </div>
-  <ng-template #defaultAvatar>
+  <div class="avatar">
     <mat-icon class="avatar-icon">person</mat-icon>
-  </ng-template>
+  </div>
   <div class="username">{{ getUserDisplayName() }}</div>
 </div>
 

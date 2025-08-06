@@ -1,16 +1,16 @@
-import { CommentDTO } from '../requestModels/model/commentDTO';
-import { TaskDTO } from '../requestModels/model/taskDTO';
-import { UserDTO } from '../requestModels/model/userDTO';
+import { TaskDTO as TaskDTOInterface } from '../requestModels/model/taskDTO';
+import { UserDTO } from './UserDTO';
+import { CommentDTO } from './CommentDTO';
 
-export class Task implements TaskDTO {
+export class TaskDTO implements TaskDTOInterface {
   id?: number;
   title: string;
   description?: string;
-  comments?: CommentDTO[];
+  comments?: Array<CommentDTO>;
   createdBy?: UserDTO;
   assignee?: UserDTO;
 
-  constructor(data: TaskDTO) {
+  constructor(data: TaskDTOInterface) {
     this.id = data.id;
     this.title = data.title;
     this.description = data.description;

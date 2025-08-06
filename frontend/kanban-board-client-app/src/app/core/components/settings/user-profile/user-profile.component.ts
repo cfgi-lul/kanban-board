@@ -98,7 +98,8 @@ export class UserProfileComponent implements OnInit {
   private showMessage(messageKey: string, type: 'success' | 'error'): void {
     this.snackBar.open(messageKey, 'settings.close', {
       duration: 3000,
-      panelClass: type === 'success' ? ['success-snackbar'] : ['error-snackbar'],
+      panelClass:
+        type === 'success' ? ['success-snackbar'] : ['error-snackbar'],
     });
   }
 

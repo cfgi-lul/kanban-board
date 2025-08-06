@@ -1,4 +1,5 @@
 model/authenticationRequest.ts
+model/authenticationResponse.ts
 model/boardDTO.ts
 model/column.ts
 model/columnDTO.ts
@@ -11,3 +12,4 @@ model/taskPreviewDTO.ts
 model/user.ts
 model/userDTO.ts
 model/userRegisterDTO.ts
+model/userUpdateRequest.ts

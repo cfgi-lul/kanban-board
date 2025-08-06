@@ -12,7 +12,7 @@ import { UserDTO } from './userDTO';
 
 export interface CommentDTO { 
     id?: number;
-    content?: string;
+    content: string;
     createdAt?: Date;
     author?: UserDTO;
     taskId?: number;

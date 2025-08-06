@@ -7,15 +7,7 @@
   </mat-card-header>
 
   <mat-card-content class="task-content">
-    @if (taks().description) {
-      <p class="task-description">{{ taks().description }}</p>
-    }
-    @if (taks().comments && taks().comments.length > 0) {
-      <div class="task-meta">
-        <mat-icon class="comment-icon">comment</mat-icon>
-        <span class="comment-count">{{ taks().comments.length }}</span>
-      </div>
-    }
+    <!-- TaskPreviewDTO only contains id and title, so we show just the title -->
   </mat-card-content>
 
   <mat-card-actions class="task-actions">

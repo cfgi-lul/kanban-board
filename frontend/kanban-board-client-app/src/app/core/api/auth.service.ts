@@ -193,7 +193,7 @@ export class AuthService {
 
   getRoles(): string[] {
     const user = this.currentUserValue;
-    return user?.roles || [];
+    return user?.roles?.map(role => role.name) || [];
   }
 
   public isAdmin(): boolean {

@@ -41,6 +41,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Observable } from 'rxjs';
 import { TaksPreviewComponent } from './components/taks-preview/taks-preview.component';
 import { Task } from '../core/models/classes/Task';
+import { TaskPreviewDTO } from '../core/models/classes/TaskPreviewDTO';
 import { TaskEditorComponent } from './components/task-editor/task-editor.component';
 import { TaskService } from './../core/api/task.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -140,7 +141,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     ).pipe(takeUntil(this.destroy$));
   }
 
-  async onDrop(event: CdkDragDrop<Task[]>, currentBoard: Board): Promise<void> {
+  async onDrop(
+    event: CdkDragDrop<TaskPreviewDTO[]>,
+    currentBoard: Board
+  ): Promise<void> {
     try {
       const { previousContainer, container, previousIndex, currentIndex } =
         event;
@@ -157,9 +161,15 @@ export class BoardComponent implements OnInit, OnDestroy {
       }
 
       // Update task position in backend
-      const movedTask = container.data[currentIndex];
-      if (movedTask) {
-        await firstValueFrom(this.taskService.updateTask(movedTask));
+      const movedTaskPreview = container.data[currentIndex];
+      if (movedTaskPreview?.id) {
+        // Get the full task first, then update it
+        const fullTask = await firstValueFrom(
+          this.taskService.getTasksByID(movedTaskPreview.id)
+        );
+        if (fullTask) {
+          await firstValueFrom(this.taskService.updateTask(fullTask));
+        }
       }
 
       // Send update via WebSocket

@@ -9,8 +9,7 @@
  */
 
 
-export interface AuthenticationRequest { 
-    username: string;
-    password: string;
+export interface UserUpdateRequest { 
+    displayName?: string;
 }
 

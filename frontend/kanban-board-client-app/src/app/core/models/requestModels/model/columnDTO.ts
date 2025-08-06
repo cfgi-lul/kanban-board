@@ -12,7 +12,7 @@ import { TaskPreviewDTO } from './taskPreviewDTO';
 
 export interface ColumnDTO { 
     id?: number;
-    name?: string;
+    name: string;
     tasks?: Array<TaskPreviewDTO>;
 }
 

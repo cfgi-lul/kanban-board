@@ -11,17 +11,12 @@ describe('MainPageComponent', () => {
 
   beforeEach(async () => {
     const routerSpy = {
-      navigate: jest.fn()
+      navigate: jest.fn(),
     } as jest.Mocked<Router>;
 
     await TestBed.configureTestingModule({
-      imports: [
-        MainPageComponent,
-        TranslateModule.forRoot()
-      ],
-      providers: [
-        { provide: Router, useValue: routerSpy }
-      ]
+      imports: [MainPageComponent, TranslateModule.forRoot()],
+      providers: [{ provide: Router, useValue: routerSpy }],
     }).compileComponents();
 
     mockRouter = TestBed.inject(Router) as jest.Mocked<Router>;

@@ -1,4 +1,5 @@
 export * from './authenticationRequest';
+export * from './authenticationResponse';
 export * from './boardDTO';
 export * from './column';
 export * from './columnDTO';
@@ -10,3 +11,4 @@ export * from './taskPreviewDTO';
 export * from './user';
 export * from './userDTO';
 export * from './userRegisterDTO';
+export * from './userUpdateRequest';
