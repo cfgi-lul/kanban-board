@@ -104,10 +104,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       switchMap(boardId =>
         this.boardService.getBoardById(boardId).pipe(
           map(board => ({ board, loading: false, error: null })),
-          catchError(error => {
-            console.error('Error loading board:', error);
+          catchError(_error => {
+            // console.error('Error loading board:', _error);
             return of({
-              board: null as any,
+              board: null as unknown,
               loading: false,
               error: 'Failed to load board. Please try again.',
             });
@@ -121,8 +121,8 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.boardSocketService.connect(boardId);
         return this.boardSocketService.listenForUpdates().pipe(
           map(board => ({ board, loading: false, error: null })),
-          catchError(error => {
-            console.error('WebSocket error:', error);
+          catchError(_error => {
+            // console.error('WebSocket error:', _error);
             return of(null);
           })
         );
@@ -169,8 +169,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       );
 
       this.showSuccessMessage('Task moved successfully');
-    } catch (error) {
-      console.error('Error moving task:', error);
+    } catch {
+      // console.error('Error moving task:', error);
       this.showErrorMessage('Failed to move task. Please try again.');
     }
   }
@@ -180,7 +180,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       const task = await firstValueFrom(
         this.taskService.getTasksByID(taskId).pipe(
           catchError(error => {
-            console.error('Error loading task:', error);
+            // console.error('Error loading task:', error);
             this.showErrorMessage('Failed to load task details.');
             throw error;
           })
@@ -202,8 +202,8 @@ export class BoardComponent implements OnInit, OnDestroy {
             this.showSuccessMessage('Task updated successfully');
           }
         });
-    } catch (error) {
-      console.error('Error opening task editor:', error);
+    } catch {
+      // console.error('Error opening task editor:', error);
     }
   }
 
@@ -212,7 +212,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       await firstValueFrom(
         this.taskService.deleteTask(taskId).pipe(
           catchError(error => {
-            console.error('Error deleting task:', error);
+            // console.error('Error deleting task:', error);
             this.showErrorMessage('Failed to delete task.');
             throw error;
           })
@@ -220,8 +220,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       );
 
       this.showSuccessMessage('Task deleted successfully');
-    } catch (error) {
-      console.error('Error deleting task:', error);
+    } catch {
+      // console.error('Error deleting task:', error);
     }
   }
 
@@ -236,7 +236,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       await firstValueFrom(
         this.taskService.createTask(newTask, boardId, columnId).pipe(
           catchError(error => {
-            console.error('Error creating task:', error);
+            // console.error('Error creating task:', error);
             this.showErrorMessage('Failed to create task.');
             throw error;
           })
@@ -244,8 +244,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       );
 
       this.showSuccessMessage('Task created successfully');
-    } catch (error) {
-      console.error('Error creating task:', error);
+    } catch {
+      // console.error('Error creating task:', error);
     }
   }
 

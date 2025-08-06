@@ -4,14 +4,12 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { User } from '../models/classes/User';
 
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
-  let router: Router;
 
   const mockUser: User = {
     id: 1,
@@ -21,16 +19,17 @@ describe('AuthService', () => {
   };
 
   beforeEach(() => {
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    const routerSpy = {
+      navigate: jest.fn(),
+    };
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthService, { provide: Router, useValue: routerSpy }],
+      providers: [AuthService, { provide: 'Router', useValue: routerSpy }],
     });
 
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
-    router = TestBed.inject(Router);
   });
 
   afterEach(() => {

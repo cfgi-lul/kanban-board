@@ -110,8 +110,8 @@ export class BoardsListComponent implements OnInit, OnDestroy {
           this.allBoards.set(boards);
           this.loadingState.set('fulfilled');
         }),
-        catchError(error => {
-          console.error('Error loading boards:', error);
+        catchError(_error => {
+          // console.error('Error loading boards:', _error);
           this.loadingState.set('error');
           return of([]);
         })

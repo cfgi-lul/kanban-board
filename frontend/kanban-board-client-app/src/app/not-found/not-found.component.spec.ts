@@ -14,16 +14,22 @@ import { ThemeService } from '../core/services/theme.service';
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
   let fixture: ComponentFixture<NotFoundComponent>;
-  let router: jasmine.SpyObj<Router>;
-  let location: jasmine.SpyObj<Location>;
-  let themeService: jasmine.SpyObj<ThemeService>;
+  let router: jest.Mocked<Router>;
+  let location: jest.Mocked<Location>;
+  let themeService: jest.Mocked<ThemeService>;
 
   beforeEach(async () => {
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    const locationSpy = jasmine.createSpyObj('Location', ['back']);
-    const themeServiceSpy = jasmine.createSpyObj('ThemeService', [
-      'getCurrentColorScheme',
-    ]);
+    const routerSpy = {
+      navigate: jest.fn(),
+    } as jest.Mocked<Router>;
+
+    const locationSpy = {
+      back: jest.fn(),
+    } as jest.Mocked<Location>;
+
+    const themeServiceSpy = {
+      getCurrentColorScheme: jest.fn(),
+    } as jest.Mocked<ThemeService>;
 
     await TestBed.configureTestingModule({
       imports: [
@@ -43,9 +49,9 @@ describe('NotFoundComponent', () => {
       ],
     }).compileComponents();
 
-    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    location = TestBed.inject(Location) as jasmine.SpyObj<Location>;
-    themeService = TestBed.inject(ThemeService) as jasmine.SpyObj<ThemeService>;
+    router = TestBed.inject(Router) as jest.Mocked<Router>;
+    location = TestBed.inject(Location) as jest.Mocked<Location>;
+    themeService = TestBed.inject(ThemeService) as jest.Mocked<ThemeService>;
   });
 
   beforeEach(() => {
@@ -74,7 +80,7 @@ describe('NotFoundComponent', () => {
   });
 
   it('should have getCurrentTheme method that calls themeService', () => {
-    themeService.getCurrentColorScheme.and.returnValue('light');
+    themeService.getCurrentColorScheme.mockReturnValue('light');
     const theme = component.getCurrentTheme();
     expect(themeService.getCurrentColorScheme).toHaveBeenCalled();
     expect(theme).toBe('light');

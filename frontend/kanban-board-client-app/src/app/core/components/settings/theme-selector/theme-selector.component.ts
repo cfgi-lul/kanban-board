@@ -25,7 +25,11 @@ import { ThemeService } from '../../../services/theme.service';
 })
 export class ThemeSelectorComponent {
   colorSchemeControl = new FormControl('system');
-  availableColorSchemes: any[] = [];
+  availableColorSchemes: Array<{
+    value: 'light' | 'dark' | 'system';
+    label: string;
+    description: string;
+  }> = [];
 
   constructor(public themeService: ThemeService) {
     // Initialize available color schemes
@@ -37,7 +41,7 @@ export class ThemeSelectorComponent {
     // Listen for changes
     this.colorSchemeControl.valueChanges.subscribe(scheme => {
       if (scheme) {
-        this.themeService.setColorScheme(scheme as any);
+        this.themeService.setColorScheme(scheme as 'light' | 'dark' | 'system');
       }
     });
   }

@@ -58,19 +58,20 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // Test translation loading
     window.setTimeout(() => {
-      console.log('AppComponent: Testing translation...');
-      console.log(
-        'AppComponent: Current language:',
-        this.translateService.currentLang
-      );
-      console.log(
-        'AppComponent: Default language:',
-        this.translateService.getDefaultLang()
-      );
-      console.log(
-        'AppComponent: Test translation:',
-        this.translateService.instant('header.brandTitle')
-      );
+      // Translation testing removed for production
+      // console.log('AppComponent: Testing translation...');
+      // console.log(
+      //   'AppComponent: Current language:',
+      //   this.translateService.currentLang
+      // );
+      // console.log(
+      //   'AppComponent: Default language:',
+      //   this.translateService.getDefaultLang()
+      // );
+      // console.log(
+      //   'AppComponent: Test translation:',
+      //   this.translateService.instant('header.brandTitle')
+      // );
     }, 1000);
   }
 
