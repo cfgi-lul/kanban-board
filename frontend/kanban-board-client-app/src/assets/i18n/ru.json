@@ -193,7 +193,22 @@
     "backlog": "Бэклог",
     "editDescription": "Редактировать описание",
     "previewDescription": "Предварительный просмотр описания",
-    "writeComment": "Написать комментарий..."
+    "writeComment": "Написать комментарий...",
+    "boardName": "Название доски",
+    "boardDescription": "Описание доски",
+    "boardColumns": "Колонки доски",
+    "enterBoardDescription": "Введите описание доски...",
+    "enterColumnName": "Введите название колонки...",
+    "columnNameRequired": "Название колонки обязательно",
+    "boardNameRequired": "Название доски обязательно",
+    "boardNameMinLength": "Название доски должно содержать не менее 3 символов",
+    "boardNameMaxLength": "Название доски не может превышать 100 символов",
+    "boardDescriptionMaxLength": "Описание доски не может превышать 500 символов",
+    "addColumn": "Добавить колонку",
+    "removeColumn": "Удалить колонку",
+    "createBoard": "Создать доску",
+    "errorCreatingBoard": "Ошибка создания доски. Пожалуйста, попробуйте снова.",
+    "authenticationRequired": "Требуется аутентификация. Пожалуйста, войдите в систему для создания доски."
   },
   "validation": {
     "required": "Это поле обязательно для заполнения",

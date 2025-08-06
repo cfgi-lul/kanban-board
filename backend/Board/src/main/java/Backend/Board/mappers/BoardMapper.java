@@ -72,7 +72,11 @@ public class BoardMapper {
         
         if (boardDTO.getColumns() != null) {
             List<BoardColumn> columns = boardDTO.getColumns().stream()
-                    .map(ColumnMapper::toEntity)
+                    .map(columnDTO -> {
+                        BoardColumn column = ColumnMapper.toEntity(columnDTO);
+                        column.setBoard(board);
+                        return column;
+                    })
                     .collect(Collectors.toList());
             board.setColumns(columns);
         }

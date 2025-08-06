@@ -31,9 +31,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../core/api/auth.service';
 import { BoardInstance } from '../core/models/classes/BoardInstance';
 import { TranslateModule } from '@ngx-translate/core';
+import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
 
 export type LoadingState = 'loading' | 'error' | 'fulfilled';
 
@@ -50,6 +52,7 @@ export type LoadingState = 'loading' | 'error' | 'fulfilled';
     MatIconModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatDialogModule,
     AsyncPipe,
     RouterModule,
     TranslateModule,
@@ -86,6 +89,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private dialog: MatDialog,
     public authService: AuthService
   ) {}
 
@@ -131,10 +135,25 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   }
 
   addBoard(): void {
-    this.boardService
-      .createRandomBoard()
-      .pipe(take(1))
-      .subscribe(() => this.refreshBoards$.next());
+    // Check if user is authenticated
+    if (!this.authService.isAuthenticated()) {
+      // Redirect to login page
+      this.router.navigate(['/sign-in']);
+      return;
+    }
+
+    const dialogRef = this.dialog.open(CreateBoardModalComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      disableClose: true,
+      data: null,
+    });
+
+    dialogRef.afterClosed().subscribe((result: BoardInstance | undefined) => {
+      if (result) {
+        this.refreshBoards$.next();
+      }
+    });
   }
 
   openBoard(boardId: number): void {

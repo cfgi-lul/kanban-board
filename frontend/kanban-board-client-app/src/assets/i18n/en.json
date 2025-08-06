@@ -193,7 +193,22 @@
     "backlog": "Backlog",
     "editDescription": "Edit Description",
     "previewDescription": "Preview Description",
-    "writeComment": "Write a comment..."
+    "writeComment": "Write a comment...",
+    "boardName": "Board Name",
+    "boardDescription": "Board Description",
+    "boardColumns": "Board Columns",
+    "enterBoardDescription": "Enter board description...",
+    "enterColumnName": "Enter column name...",
+    "columnNameRequired": "Column name is required",
+    "boardNameRequired": "Board name is required",
+    "boardNameMinLength": "Board name must be at least 3 characters",
+    "boardNameMaxLength": "Board name cannot exceed 100 characters",
+    "boardDescriptionMaxLength": "Board description cannot exceed 500 characters",
+    "addColumn": "Add Column",
+    "removeColumn": "Remove Column",
+    "createBoard": "Create Board",
+    "errorCreatingBoard": "Error creating board. Please try again.",
+    "authenticationRequired": "Authentication required. Please log in to create a board."
   },
   "validation": {
     "required": "This field is required",

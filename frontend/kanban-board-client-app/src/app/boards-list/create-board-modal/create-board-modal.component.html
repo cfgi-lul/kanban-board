@@ -1,0 +1,121 @@
+<div class="create-board-modal">
+  <h2 mat-dialog-title>
+    <mat-icon>add</mat-icon>
+    {{ 'board.createNewBoard' | translate }}
+  </h2>
+
+  <form [formGroup]="createBoardForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <div class="form-content">
+        <!-- Board Name -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'board.boardName' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            [placeholder]="'board.enterBoardName' | translate"
+            required
+          />
+          <mat-error *ngIf="createBoardForm.get('name')?.hasError('required')">
+            {{ 'board.boardNameRequired' | translate }}
+          </mat-error>
+          <mat-error *ngIf="createBoardForm.get('name')?.hasError('minlength')">
+            {{ 'board.boardNameMinLength' | translate }}
+          </mat-error>
+          <mat-error *ngIf="createBoardForm.get('name')?.hasError('maxlength')">
+            {{ 'board.boardNameMaxLength' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Board Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'board.boardDescription' | translate }}</mat-label>
+          <textarea
+            matInput
+            formControlName="description"
+            [placeholder]="'board.enterBoardDescription' | translate"
+            rows="3"
+          ></textarea>
+          <mat-error *ngIf="createBoardForm.get('description')?.hasError('maxlength')">
+            {{ 'board.boardDescriptionMaxLength' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Columns Section -->
+        <div class="columns-section">
+          <div class="columns-header">
+            <h3>{{ 'board.boardColumns' | translate }}</h3>
+            <button
+              type="button"
+              mat-icon-button
+              color="primary"
+              (click)="addColumn()"
+              [disabled]="columns?.value?.length >= 10"
+              matTooltip="{{ 'board.addColumn' | translate }}"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+
+          <div class="columns-list">
+            <div
+              *ngFor="let column of columns.controls; let i = index"
+              class="column-item"
+            >
+              <mat-form-field appearance="outline" class="column-input">
+                <mat-label>{{ 'board.columnName' | translate }} {{ i + 1 }}</mat-label>
+                <input
+                  matInput
+                  [formControl]="$any(column)"
+                  [placeholder]="'board.enterColumnName' | translate"
+                  required
+                />
+                <mat-error *ngIf="$any(column).hasError('required')">
+                  {{ 'board.columnNameRequired' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <button
+                type="button"
+                mat-icon-button
+                color="warn"
+                (click)="removeColumn(i)"
+                [disabled]="columns.length <= 1"
+                matTooltip="{{ 'board.removeColumn' | translate }}"
+              >
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-message">
+          <mat-icon color="warn">error</mat-icon>
+          <span>{{ errorMessage | translate }}</span>
+        </div>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button
+        type="button"
+        mat-button
+        (click)="onCancel()"
+        [disabled]="isLoading"
+      >
+        {{ 'common.cancel' | translate }}
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="createBoardForm.invalid || isLoading"
+      >
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+        <mat-icon *ngIf="!isLoading">add</mat-icon>
+        {{ 'board.createBoard' | translate }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

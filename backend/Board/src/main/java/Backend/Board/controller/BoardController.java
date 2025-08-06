@@ -76,20 +76,34 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<BoardDTO> createBoard(@RequestBody BoardDTO boardDTO, 
                                                @AuthenticationPrincipal UserDetails userDetails) {
-        // Fetch the user who created the board
-        User creator = userRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        try {
+            System.out.println("Received board creation request: " + boardDTO);
+            System.out.println("UserDetails: " + (userDetails != null ? userDetails.getUsername() : "null"));
+            
+            // Fetch the user who created the board
+            User creator = userRepository.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            System.out.println("Found creator: " + creator.getUsername());
 
-        Board board = BoardMapper.toEntity(boardDTO);
-        board.setCreatedBy(creator);
+            Board board = BoardMapper.toEntity(boardDTO);
+            board.setCreatedBy(creator);
+            System.out.println("Created board entity: " + board.getName());
 
-        // Validate the board name
-        if (board.getName() == null || board.getName().trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            // Validate the board name
+            if (board.getName() == null || board.getName().trim().isEmpty()) {
+                System.out.println("Board name validation failed");
+                return ResponseEntity.badRequest().build();
+            }
+
+            Board savedBoard = boardRepository.save(board);
+            System.out.println("Successfully saved board with ID: " + savedBoard.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(BoardMapper.toDTO(savedBoard));
+        } catch (Exception e) {
+            // Log the error for debugging
+            System.err.println("Error creating board: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        Board savedBoard = boardRepository.save(board);
-        return ResponseEntity.status(HttpStatus.CREATED).body(BoardMapper.toDTO(savedBoard));
     }
 
     @DeleteMapping
