@@ -29,7 +29,7 @@ export interface UserDTO {
     /**
      * Display name shown to other users
      */
-    displayName: string;
+    displayName?: string;
     /**
      * User email address
      */

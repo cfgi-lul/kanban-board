@@ -3556,7 +3556,6 @@
           }
         },
         "required": [
-          "displayName",
           "password",
           "username"
         ]
