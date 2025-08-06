@@ -11,6 +11,7 @@ import { BoardsListComponent } from './boards-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 describe('BoardsListComponent', () => {
@@ -42,6 +43,7 @@ describe('BoardsListComponent', () => {
         HttpClientTestingModule,
         MatCardModule,
         MatButtonModule,
+        TranslateModule.forRoot(),
         BoardsListComponent,
       ],
       providers: [
@@ -65,7 +67,7 @@ describe('BoardsListComponent', () => {
     tick();
 
     expect(mockBoardService.getAllBoards).toHaveBeenCalled();
-    expect(component.loading()).toBe(false);
+    expect(component.isLoading()).toBe(false);
   }));
 
   it('should delete board and refresh list', fakeAsync(() => {

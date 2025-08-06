@@ -66,7 +66,8 @@ describe('NotFoundComponent', () => {
 
   it('should display the error code 404', () => {
     const compiled = fixture.nativeElement;
-    expect(compiled.textContent).toContain('404');
+    // Check for the translation key since translations might not be loaded in tests
+    expect(compiled.textContent).toContain('common.notFound.errorCode');
   });
 
   it('should have goBack method that calls location.back()', () => {

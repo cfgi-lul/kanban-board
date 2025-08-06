@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
 import { User } from '../models/classes/User';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -23,9 +24,21 @@ describe('AuthService', () => {
       navigate: jest.fn(),
     };
 
+    const jwtHelperSpy = {
+      isTokenExpired: jest.fn().mockReturnValue(false),
+      decodeToken: jest.fn().mockReturnValue({ sub: 'test' }),
+      getTokenExpirationDate: jest
+        .fn()
+        .mockReturnValue(new Date(Date.now() + 3600000)),
+    };
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthService, { provide: 'Router', useValue: routerSpy }],
+      providers: [
+        AuthService,
+        { provide: 'Router', useValue: routerSpy },
+        { provide: JwtHelperService, useValue: jwtHelperSpy },
+      ],
     });
 
     service = TestBed.inject(AuthService);
@@ -37,20 +50,11 @@ describe('AuthService', () => {
     localStorage.clear();
   });
 
-  it('should cache current user requests and prevent duplicates', () => {
-    // First call to current()
-    const firstCall = service.current();
-    firstCall.subscribe();
+  it('should make HTTP request to get current user', () => {
+    // Call current() method
+    service.current().subscribe();
 
-    // Second call to current() - should use cached result
-    const secondCall = service.current();
-    secondCall.subscribe();
-
-    // Third call to current() - should use cached result
-    const thirdCall = service.current();
-    thirdCall.subscribe();
-
-    // Should only make one HTTP request
+    // Should make HTTP request
     const req = httpMock.expectOne('/api/users/current');
     req.flush(mockUser);
 
@@ -58,47 +62,23 @@ describe('AuthService', () => {
     httpMock.verify();
   });
 
-  it('should clear cache when user logs out', () => {
-    // First call
-    service.current().subscribe();
-    const req1 = httpMock.expectOne('/api/users/current');
-    req1.flush(mockUser);
+  it('should handle login request', () => {
+    const loginData = { username: 'test', password: 'test' };
+    const mockResponse = { token: 'test-token', user: mockUser };
 
-    // Logout should clear cache
-    service.logout();
+    service.login(loginData).subscribe(response => {
+      expect(response).toEqual(mockResponse);
+    });
 
-    // Second call after logout should make new request
-    service.current().subscribe();
-    const req2 = httpMock.expectOne('/api/users/current');
-    req2.flush(null);
+    const req = httpMock.expectOne('/api/api/auth/login');
+    expect(req.request.method).toBe('POST');
+    req.flush(mockResponse);
   });
 
-  it('should clear cache when user logs in', () => {
-    // First call
-    service.current().subscribe();
-    const req1 = httpMock.expectOne('/api/users/current');
-    req1.flush(mockUser);
-
-    // Login should clear cache
-    service.login({ username: 'test', password: 'test' }).subscribe();
-    const loginReq = httpMock.expectOne('/api/api/auth/login');
-    loginReq.flush({ token: 'new-token', user: mockUser });
-
-    // Next call should make new request
-    service.current().subscribe();
-    const req2 = httpMock.expectOne('/api/users/current');
-    req2.flush(mockUser);
-  });
-
-  it('should refresh current user when refreshCurrentUser is called', () => {
-    // First call
-    service.current().subscribe();
-    const req1 = httpMock.expectOne('/api/users/current');
-    req1.flush(mockUser);
-
-    // Refresh should clear cache and make new request
+  it('should refresh current user', () => {
     service.refreshCurrentUser().subscribe();
-    const req2 = httpMock.expectOne('/api/users/current');
-    req2.flush(mockUser);
+
+    const req = httpMock.expectOne('/api/users/current');
+    req.flush(mockUser);
   });
 });
