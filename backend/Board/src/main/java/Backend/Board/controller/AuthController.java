@@ -1,7 +1,9 @@
 package Backend.Board.controller;
 
 import Backend.Board.config.JwtUtil;
+import Backend.Board.dto.AuthResponseDTO;
 import Backend.Board.dto.UserDTO;
+import Backend.Board.mappers.UserMapper;
 import Backend.Board.model.Role;
 import Backend.Board.model.User;
 import Backend.Board.repository.RoleRepository;
@@ -45,18 +47,24 @@ public class AuthController {
     private UserRepository userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(
+    public ResponseEntity<AuthResponseDTO> createAuthenticationToken(
             @Valid @RequestBody AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()));
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        
+        // Get the user entity to convert to DTO
+        User user = userRepository.findByUsername(authenticationRequest.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        UserDTO userDTO = UserMapper.toDTO(user);
+        
+        return ResponseEntity.ok(new AuthResponseDTO(jwt, userDTO));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<AuthResponseDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder().encode(userDTO.getPassword()));
@@ -77,7 +85,15 @@ public class AuthController {
         user.setRoles(List.of(userRole));
 
         userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        
+        // Generate JWT token for the newly registered user
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(userDTO.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails);
+        
+        // Convert the saved user to DTO
+        UserDTO savedUserDTO = UserMapper.toDTO(user);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponseDTO(jwt, savedUserDTO));
     }
 
     private PasswordEncoder passwordEncoder() {
@@ -93,11 +109,7 @@ public class AuthController {
         private String password;
     }
 
-    @Data
-    @AllArgsConstructor
-    static class AuthenticationResponse {
-        private String token;
-    }
+
 }
 
 

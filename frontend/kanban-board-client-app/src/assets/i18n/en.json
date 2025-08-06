@@ -92,14 +92,12 @@
     "title": "Settings",
     "general": "General",
     "account": "Account",
-    "notifications": "Notifications",
-    "privacy": "Privacy",
+
     "language": "Language",
     "theme": "Theme",
     "generalSettings": "General Settings",
     "accountSettings": "Account Settings",
-    "notificationSettings": "Notification Settings",
-    "privacySettings": "Privacy Settings",
+
     "themeDescription": "Choose your preferred theme for the application.",
     "languageDescription": "Choose your preferred language for the application.",
     "profileInformation": "Profile Information",
@@ -129,7 +127,24 @@
     "languages": {
       "english": "English",
       "russian": "Russian"
-    }
+    },
+
+    "changeAvatar": "Change Avatar",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email address",
+    "invalidEmail": "Please enter a valid email address",
+    "accountInformation": "Account Information",
+    "memberSince": "Member Since",
+    "lastLogin": "Last Login",
+    "accountStatus": "Account Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "never": "Never",
+    "avatarUploadSuccess": "Avatar uploaded successfully",
+    "avatarUploadError": "Failed to upload avatar",
+    "avatarRemovedSuccess": "Avatar removed successfully",
+    "avatarRemovedError": "Failed to remove avatar",
+    "removeAvatar": "Remove Avatar"
   },
   "board": {
     "boardsList": "Boards List",

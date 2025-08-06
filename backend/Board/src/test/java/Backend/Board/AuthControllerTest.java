@@ -1,6 +1,7 @@
 package Backend.Board;
 
 import Backend.Board.controller.AuthController;
+import Backend.Board.dto.AuthResponseDTO;
 import Backend.Board.dto.UserDTO;
 import Backend.Board.model.Role;
 import Backend.Board.model.User;
@@ -55,11 +56,14 @@ class AuthControllerTest {
         });
 
         // Act
-        ResponseEntity<String> response = authController.registerUser(userDTO);
+        ResponseEntity<AuthResponseDTO> response = authController.registerUser(userDTO);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("User registered successfully", response.getBody());
+        assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getToken());
+        assertNotNull(response.getBody().getUser());
+        assertEquals("testuser", response.getBody().getUser().getUsername());
 
         // Verify that the user was saved with displayName set to username
         verify(userRepository).save(argThat(user -> 
@@ -87,11 +91,14 @@ class AuthControllerTest {
         });
 
         // Act
-        ResponseEntity<String> response = authController.registerUser(userDTO);
+        ResponseEntity<AuthResponseDTO> response = authController.registerUser(userDTO);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("User registered successfully", response.getBody());
+        assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getToken());
+        assertNotNull(response.getBody().getUser());
+        assertEquals("testuser", response.getBody().getUser().getUsername());
 
         // Verify that the user was saved with the provided displayName
         verify(userRepository).save(argThat(user -> 

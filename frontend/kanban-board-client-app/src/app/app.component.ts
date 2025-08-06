@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/api/auth.service';
+import { AvatarService } from './core/api/avatar.service';
 import { ThemeService } from './core/services/theme.service';
 import { I18nService } from './core/services/i18n.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
   isSidenavOpen = false;
   currentUser = inject(AuthService).currentUser;
   isAdmin = inject(AuthService).isAdmin();
+  avatarService = inject(AvatarService);
   themeService = inject(ThemeService);
   i18nService = inject(I18nService);
   translateService = inject(TranslateService);
@@ -117,5 +119,9 @@ export class AppComponent implements OnInit {
     return (
       names[0].charAt(0) + names[names.length - 1].charAt(0)
     ).toUpperCase();
+  }
+
+  getAvatarUrl(user: UserInstance): string {
+    return this.avatarService.getAvatarUrl(user?.avatar);
   }
 }

@@ -35,6 +35,9 @@
       height: 40px;
       border-radius: 50%;
       background: var(--mat-sys-primary);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;

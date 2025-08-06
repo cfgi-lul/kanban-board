@@ -53,42 +53,6 @@
         <div *ngIf="selectedTab === 1" class="account-settings">
           <app-user-profile></app-user-profile>
         </div>
-
-        <!-- Notifications Settings -->
-        <div *ngIf="selectedTab === 2" class="notifications-settings">
-          <h3>{{ 'settings.notificationSettings' | translate }}</h3>
-          <mat-divider></mat-divider>
-
-          <div class="setting-section">
-            <h4>{{ 'settings.notificationPreferences' | translate }}</h4>
-            <p>{{ 'settings.configureNotifications' | translate }}</p>
-            <!-- Add notification settings content here -->
-            <mat-card>
-              <mat-card-content>
-                <p>
-                  {{ 'settings.notificationSettingsPlaceholder' | translate }}
-                </p>
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </div>
-
-        <!-- Privacy Settings -->
-        <div *ngIf="selectedTab === 3" class="privacy-settings">
-          <h3>{{ 'settings.privacySettings' | translate }}</h3>
-          <mat-divider></mat-divider>
-
-          <div class="setting-section">
-            <h4>{{ 'settings.privacySecurity' | translate }}</h4>
-            <p>{{ 'settings.managePrivacySecurity' | translate }}</p>
-            <!-- Add privacy settings content here -->
-            <mat-card>
-              <mat-card-content>
-                <p>{{ 'settings.privacySettingsPlaceholder' | translate }}</p>
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </div>
       </div>
     </div>
   </div>

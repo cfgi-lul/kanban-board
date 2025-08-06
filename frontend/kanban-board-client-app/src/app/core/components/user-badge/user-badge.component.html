@@ -1,8 +1,11 @@
 <div class="user-badge" [matMenuTriggerFor]="userMenu" *ngIf="user()">
-  <div class="avatar">
-    <mat-icon class="avatar-icon">person</mat-icon>
+  <div class="user-badge-content">
+    <div class="avatar">
+      <img *ngIf="user()?.avatar" [src]="getAvatarUrl()" alt="User avatar">
+      <mat-icon class="avatar-icon" *ngIf="!user()?.avatar">person</mat-icon>
+    </div>
+    <div class="name">{{ getUserDisplayName() }}</div>
   </div>
-  <div class="username">{{ getUserDisplayName() }}</div>
 </div>
 
 <mat-menu #userMenu="matMenu">

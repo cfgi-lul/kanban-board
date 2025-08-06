@@ -13,10 +13,10 @@
     display: grid;
     align-items: center;
     grid-template-areas:
-      'avatar name'
-      'avatar username';
+      'avatar name';
     grid-template-columns: auto 1fr;
     flex: 1;
+    gap: 8px;
     min-width: 0;
 
     .avatar {
@@ -25,12 +25,29 @@
       height: 32px;
       border-radius: 50%;
       background: var(--mat-sys-primary);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       color: var(--mat-sys-on-primary);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 600;
       font-size: 14px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .avatar-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .name {
@@ -38,16 +55,6 @@
       font-weight: 500;
       font-size: 14px;
       color: var(--mat-sys-on-surface);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-    }
-
-    .username {
-      grid-area: username;
-      font-size: 12px;
-      color: var(--mat-sys-on-surface-variant);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -77,6 +84,9 @@
     height: 40px;
     border-radius: 50%;
     background: var(--mat-sys-primary);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: var(--mat-sys-on-primary);
     display: flex;
     align-items: center;

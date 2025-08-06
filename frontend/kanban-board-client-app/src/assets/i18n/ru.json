@@ -92,14 +92,12 @@
     "title": "Настройки",
     "general": "Общие",
     "account": "Аккаунт",
-    "notifications": "Уведомления",
-    "privacy": "Конфиденциальность",
+
     "language": "Язык",
     "theme": "Тема",
     "generalSettings": "Общие настройки",
     "accountSettings": "Настройки аккаунта",
-    "notificationSettings": "Настройки уведомлений",
-    "privacySettings": "Настройки конфиденциальности",
+
     "themeDescription": "Выберите предпочитаемую тему для приложения.",
     "languageDescription": "Выберите предпочитаемый язык для приложения.",
     "profileInformation": "Информация профиля",
@@ -129,7 +127,24 @@
     "languages": {
       "english": "Английский",
       "russian": "Русский"
-    }
+    },
+
+    "changeAvatar": "Изменить аватар",
+    "email": "Email",
+    "emailPlaceholder": "Введите ваш email адрес",
+    "invalidEmail": "Пожалуйста, введите корректный email адрес",
+    "accountInformation": "Информация аккаунта",
+    "memberSince": "Участник с",
+    "lastLogin": "Последний вход",
+    "accountStatus": "Статус аккаунта",
+    "active": "Активный",
+    "inactive": "Неактивный",
+    "never": "Никогда",
+    "avatarUploadSuccess": "Аватар успешно загружен",
+    "avatarUploadError": "Не удалось загрузить аватар",
+    "avatarRemovedSuccess": "Аватар успешно удален",
+    "avatarRemovedError": "Не удалось удалить аватар",
+    "removeAvatar": "Удалить аватар"
   },
   "board": {
     "boardsList": "Список досок",

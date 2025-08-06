@@ -5,6 +5,7 @@ import {
   input,
 } from '@angular/core';
 import { AuthService } from './../../api/auth.service';
+import { AvatarService } from './../../api/avatar.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,6 +34,7 @@ import { CommonModule } from '@angular/common';
 export class UserBadgeComponent {
   user = input.required<UserInstance>();
   authService = inject(AuthService);
+  avatarService = inject(AvatarService);
   router = inject(Router);
   dialog = inject(MatDialog);
 
@@ -78,5 +80,9 @@ export class UserBadgeComponent {
       panelClass: 'settings-dialog-container',
       data: {},
     });
+  }
+
+  getAvatarUrl(): string {
+    return this.avatarService.getAvatarUrl(this.user()?.avatar);
   }
 }

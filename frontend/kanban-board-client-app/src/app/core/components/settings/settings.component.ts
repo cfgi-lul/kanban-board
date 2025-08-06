@@ -65,18 +65,6 @@ export class SettingsComponent {
       icon: 'account_circle',
       component: 'account',
     },
-    {
-      id: 2,
-      label: 'settings.notifications',
-      icon: 'notifications',
-      component: 'notifications',
-    },
-    {
-      id: 3,
-      label: 'settings.privacy',
-      icon: 'security',
-      component: 'privacy',
-    },
   ];
 
   constructor(

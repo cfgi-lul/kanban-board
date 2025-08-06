@@ -11,7 +11,6 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* Header */
 .settings-header {
   display: flex;
   align-items: center;
@@ -46,14 +45,12 @@
   }
 }
 
-/* Content */
 .settings-content {
   display: flex;
   flex: 1;
   overflow: hidden;
 }
 
-/* Sidebar */
 .settings-sidebar {
   width: 280px;
   background: var(--mat-sys-surface-container);
@@ -92,7 +89,6 @@
   }
 }
 
-/* Main Content */
 .settings-main {
   flex: 1;
   overflow-y: auto;
@@ -114,7 +110,6 @@
   }
 }
 
-/* Setting Sections */
 .setting-section {
   margin-bottom: 32px;
 
@@ -133,7 +128,7 @@
   }
 }
 
-/* Responsive Design */
+// Responsive Design
 @media (max-width: 768px) {
   .settings-dialog {
     max-height: 90vh;
@@ -193,5 +188,16 @@
 
   .settings-panel {
     padding: 16px;
+  }
+}
+
+// Material Design adjustments
+::ng-deep {
+  .mat-mdc-card {
+    margin-bottom: 1rem;
+  }
+
+  .mat-mdc-form-field {
+    margin-bottom: 1rem;
   }
 }

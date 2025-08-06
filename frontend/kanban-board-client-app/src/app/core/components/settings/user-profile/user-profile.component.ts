@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -13,8 +13,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserService, UserUpdateRequest } from '../../../api/user.service';
+import { AvatarService } from '../../../api/avatar.service';
 import { UserInstance } from '../../../models/classes/UserInstance';
 
 @Component({
@@ -30,24 +33,31 @@ import { UserInstance } from '../../../models/classes/UserInstance';
     MatIconModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatChipsModule,
+    MatTooltipModule,
     TranslateModule,
   ],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
   profileForm: FormGroup;
   currentUser: UserInstance | null = null;
   isLoading = false;
   isSaving = false;
+  isUploadingAvatar = false;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private avatarService: AvatarService,
     private snackBar: MatSnackBar
   ) {
     this.profileForm = this.fb.group({
       displayName: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -62,6 +72,7 @@ export class UserProfileComponent implements OnInit {
         this.currentUser = user;
         this.profileForm.patchValue({
           displayName: user.displayName || user.name || '',
+          email: user.email || '',
         });
         this.isLoading = false;
       },
@@ -78,6 +89,7 @@ export class UserProfileComponent implements OnInit {
       this.isSaving = true;
       const updateRequest: UserUpdateRequest = {
         displayName: this.profileForm.get('displayName')?.value,
+        email: this.profileForm.get('email')?.value,
       };
 
       this.userService.updateCurrentUser(updateRequest).subscribe({
@@ -93,6 +105,62 @@ export class UserProfileComponent implements OnInit {
         },
       });
     }
+  }
+
+  onAvatarClick(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      // Validate file
+      const validation = this.avatarService.validateFile(file);
+      if (!validation.isValid) {
+        this.showMessage(validation.error || 'Invalid file', 'error');
+        return;
+      }
+
+      this.isUploadingAvatar = true;
+      this.avatarService.uploadAvatar(file).subscribe({
+        next: updatedUser => {
+          this.currentUser = updatedUser;
+          this.isUploadingAvatar = false;
+          this.showMessage('settings.avatarUploadSuccess', 'success');
+          // Clear the file input
+          this.fileInput.nativeElement.value = '';
+        },
+        error: error => {
+          console.error('Error uploading avatar:', error);
+          this.isUploadingAvatar = false;
+          this.showMessage('settings.avatarUploadError', 'error');
+          // Clear the file input
+          this.fileInput.nativeElement.value = '';
+        },
+      });
+    }
+  }
+
+  removeAvatar(): void {
+    if (confirm('Are you sure you want to remove your avatar?')) {
+      this.isUploadingAvatar = true;
+      this.avatarService.removeAvatar().subscribe({
+        next: updatedUser => {
+          this.currentUser = updatedUser;
+          this.isUploadingAvatar = false;
+          this.showMessage('settings.avatarRemovedSuccess', 'success');
+        },
+        error: error => {
+          console.error('Error removing avatar:', error);
+          this.isUploadingAvatar = false;
+          this.showMessage('settings.avatarRemovedError', 'error');
+        },
+      });
+    }
+  }
+
+  getAvatarUrl(): string {
+    return this.avatarService.getAvatarUrl(this.currentUser?.avatar);
   }
 
   private showMessage(messageKey: string, type: 'success' | 'error'): void {
@@ -111,6 +179,9 @@ export class UserProfileComponent implements OnInit {
     if (control?.hasError('minlength')) {
       const requiredLength = control.getError('minlength').requiredLength;
       return `settings.minLength${requiredLength}`;
+    }
+    if (control?.hasError('email')) {
+      return 'settings.invalidEmail';
     }
     return '';
   }

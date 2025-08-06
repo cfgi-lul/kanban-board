@@ -5,6 +5,8 @@ import { UserInstance } from '../models/classes/UserInstance';
 
 export interface UserUpdateRequest {
   displayName?: string;
+  email?: string;
+  avatar?: string;
 }
 
 @Injectable({
