@@ -47,6 +47,26 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @PutMapping("/current")
+    public ResponseEntity<User> updateCurrentUser(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody UserUpdateRequest updateRequest) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        User user = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        // Only allow updating displayName, not username to prevent logout issues
+        if (updateRequest.getDisplayName() != null) {
+            user.setDisplayName(updateRequest.getDisplayName());
+        }
+
+        User updatedUser = userRepository.save(user);
+        return ResponseEntity.ok(updatedUser);
+    }
+
     @PostMapping("/{userId}/promote-to-admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> promoteToAdmin(@PathVariable Long userId) {
@@ -69,5 +89,18 @@ public class UserController {
     @DeleteMapping
     public void deleteUser(@RequestParam Long id) {
         userRepository.deleteById(id);
+    }
+
+    // DTO for user update request - only allows updating displayName
+    public static class UserUpdateRequest {
+        private String displayName;
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
+        }
     }
 }

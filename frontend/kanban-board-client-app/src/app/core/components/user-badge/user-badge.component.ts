@@ -36,11 +36,23 @@ export class UserBadgeComponent {
   router = inject(Router);
   dialog = inject(MatDialog);
 
+  getUserDisplayName(): string {
+    const user = this.user();
+    if (!user) return '';
+
+    // Use displayName if available, fallback to name, then to username
+    return user.displayName || user.name || user.username || '';
+  }
+
   getUserInitials(): string {
     const user = this.user();
-    if (!user?.name) return '?';
+    if (!user) return '?';
 
-    const names = user.name.split(' ');
+    // Use displayName for initials if available, fallback to name
+    const displayName = user.displayName || user.name;
+    if (!displayName) return '?';
+
+    const names = displayName.split(' ');
     if (names.length === 1) {
       return names[0].charAt(0).toUpperCase();
     }

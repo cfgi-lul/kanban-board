@@ -92,10 +92,21 @@ export class AppComponent implements OnInit {
     // Theme changed
   }
 
-  getUserInitials(user: User): string {
-    if (!user?.name) return '?';
+  getUserDisplayName(user: User): string {
+    if (!user) return '';
 
-    const names = user.name
+    // Use displayName if available, fallback to name, then to username
+    return user.displayName || user.name || user.username || '';
+  }
+
+  getUserInitials(user: User): string {
+    if (!user) return '?';
+
+    // Use displayName for initials if available, fallback to name
+    const displayName = user.displayName || user.name;
+    if (!displayName) return '?';
+
+    const names = displayName
       .trim()
       .split(' ')
       .filter(name => name.length > 0);

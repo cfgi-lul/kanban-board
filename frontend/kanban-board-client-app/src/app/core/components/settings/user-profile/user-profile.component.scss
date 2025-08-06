@@ -1,0 +1,50 @@
+.user-profile-container {
+  .profile-form {
+    .form-row {
+      margin-bottom: 1rem;
+
+      .full-width {
+        width: 100%;
+      }
+    }
+
+    .form-actions {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: flex-end;
+
+      .save-button {
+        min-width: 120px;
+        position: relative;
+
+        .button-spinner {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    p {
+      margin-top: 1rem;
+      color: var(--text-secondary);
+    }
+  }
+}
+
+// Snackbar styles
+::ng-deep .success-snackbar {
+  background: var(--success-color, #4caf50);
+  color: white;
+}
+
+::ng-deep .error-snackbar {
+  background: var(--error-color, #f44336);
+  color: white;
+}

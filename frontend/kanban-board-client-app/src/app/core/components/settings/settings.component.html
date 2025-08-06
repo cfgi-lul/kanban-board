@@ -51,19 +51,7 @@
 
         <!-- Account Settings -->
         <div *ngIf="selectedTab === 1" class="account-settings">
-          <h3>{{ 'settings.accountSettings' | translate }}</h3>
-          <mat-divider></mat-divider>
-
-          <div class="setting-section">
-            <h4>{{ 'settings.profileInformation' | translate }}</h4>
-            <p>{{ 'settings.manageAccountDetails' | translate }}</p>
-            <!-- Add account settings content here -->
-            <mat-card>
-              <mat-card-content>
-                <p>{{ 'settings.accountSettingsPlaceholder' | translate }}</p>
-              </mat-card-content>
-            </mat-card>
-          </div>
+          <app-user-profile></app-user-profile>
         </div>
 
         <!-- Notifications Settings -->

@@ -1,0 +1,59 @@
+<div class="user-profile-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>account_circle</mat-icon>
+        {{ 'settings.profileInformation' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ 'settings.manageAccountDetails' | translate }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>{{ 'settings.loadingProfile' | translate }}</p>
+      </div>
+
+      <form *ngIf="!isLoading" [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+        <!-- Username (read-only) -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'settings.username' | translate }}</mat-label>
+            <input matInput [value]="currentUser?.username" readonly>
+            <mat-icon matSuffix>lock</mat-icon>
+            <mat-hint>{{ 'settings.usernameReadOnly' | translate }}</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Display Name (editable) -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'settings.displayName' | translate }}</mat-label>
+            <input matInput formControlName="displayName" placeholder="{{ 'settings.displayNamePlaceholder' | translate }}">
+            <mat-error *ngIf="profileForm.get('displayName')?.hasError('required')">
+              {{ getErrorMessage('displayName') | translate }}
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('displayName')?.hasError('minlength')">
+              {{ getErrorMessage('displayName') | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="profileForm.invalid || isSaving"
+            class="save-button">
+            <mat-spinner *ngIf="isSaving" diameter="20" class="button-spinner"></mat-spinner>
+            <span *ngIf="!isSaving">{{ 'settings.saveChanges' | translate }}</span>
+            <span *ngIf="isSaving">{{ 'settings.saving' | translate }}</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

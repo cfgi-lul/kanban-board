@@ -5,7 +5,7 @@
   <ng-template #defaultAvatar>
     <mat-icon class="avatar-icon">person</mat-icon>
   </ng-template>
-  <div class="username">{{ user()?.username }}</div>
+  <div class="username">{{ getUserDisplayName() }}</div>
 </div>
 
 <mat-menu #userMenu="matMenu">

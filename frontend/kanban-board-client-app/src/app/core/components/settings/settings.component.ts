@@ -14,6 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ThemeService } from '../../services/theme.service';
 import { ThemeSelectorComponent } from './theme-selector/theme-selector.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -42,6 +43,7 @@ interface SettingsTab {
     MatTabsModule,
     ThemeSelectorComponent,
     LanguageSelectorComponent,
+    UserProfileComponent,
     TranslateModule,
   ],
   templateUrl: './settings.component.html',

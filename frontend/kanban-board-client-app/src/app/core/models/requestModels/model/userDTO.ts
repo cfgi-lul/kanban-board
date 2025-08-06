@@ -12,7 +12,8 @@
 export interface UserDTO {
     id?: number;
     username?: string;
-    name?: string;
+    name?: string; // Legacy field for backward compatibility
+    displayName?: string; // New field for display purposes
     roles?: string[];
 }
 

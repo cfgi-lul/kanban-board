@@ -59,7 +59,7 @@
                 <span class="avatar-initials">{{ getUserInitials(user) }}</span>
               </div>
               <div class="user-details">
-                <span class="user-name">{{ user.name }}</span>
+                <span class="user-name">{{ getUserDisplayName(user) }}</span>
                 <span class="user-role">{{ 'common.user' | translate }}</span>
               </div>
             } @else {

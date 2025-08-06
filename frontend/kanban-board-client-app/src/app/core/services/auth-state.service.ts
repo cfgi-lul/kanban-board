@@ -58,9 +58,13 @@ export class AuthStateService {
   // Helper methods
   getUserInitials(): string {
     const user = this._user();
-    if (!user?.name) return '?';
+    if (!user) return '?';
 
-    const names = user.name.split(' ');
+    // Use displayName for initials if available, fallback to name
+    const displayName = user.displayName || user.name;
+    if (!displayName) return '?';
+
+    const names = displayName.split(' ');
     if (names.length === 1) {
       return names[0].charAt(0).toUpperCase();
     }
@@ -72,7 +76,7 @@ export class AuthStateService {
   getDisplayName(): string {
     const user = this._user();
     if (!user) return 'Guest';
-    return user.name || user.username || 'Unknown User';
+    return user.displayName || user.name || user.username || 'Unknown User';
   }
 
   hasRole(role: string): boolean {

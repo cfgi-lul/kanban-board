@@ -34,9 +34,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String name; // Legacy field, kept for backward compatibility
+    private String displayName; // New field for display purposes
     private String password;
-    private String username;
+    private String username; // Used for login/authentication
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
