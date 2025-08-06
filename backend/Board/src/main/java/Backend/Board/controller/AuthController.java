@@ -8,9 +8,12 @@ import Backend.Board.repository.RoleRepository;
 import Backend.Board.repository.UserRepository;
 import Backend.Board.service.CustomUserDetailsService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +45,8 @@ public class AuthController {
     private UserRepository userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(
+            @Valid @RequestBody AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()));
@@ -52,11 +56,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO userDTO) {
-        if (userRepository.existsByUsername(userDTO.getUsername())) {
-            return ResponseEntity.badRequest().body("Username is already taken");
-        }
-
+    public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegisterDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder().encode(userDTO.getPassword()));
@@ -68,7 +68,7 @@ public class AuthController {
         user.setRoles(List.of(userRole));
 
         userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
     }
 
     private PasswordEncoder passwordEncoder() {
@@ -77,7 +77,10 @@ public class AuthController {
 
     @Data
     static class AuthenticationRequest {
+        @NotBlank(message = "Username is required")
         private String username;
+        
+        @NotBlank(message = "Password is required")
         private String password;
     }
 
