@@ -1,12 +1,6 @@
 package Backend.Board;
 
-import Backend.Board.controller.AuthController;
-import Backend.Board.dto.AuthResponseDTO;
-import Backend.Board.dto.UserDTO;
-import Backend.Board.model.Role;
-import Backend.Board.model.User;
-import Backend.Board.repository.RoleRepository;
-import Backend.Board.repository.UserRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,10 +10,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.kanban.user.domain.model.Role;
+import com.kanban.user.domain.model.User;
+import com.kanban.user.domain.repository.RoleRepository;
+import com.kanban.user.domain.repository.UserRepository;
+import com.kanban.user.interfaces.rest.AuthController;
+import com.kanban.user.interfaces.rest.AuthResponseDTO;
+import com.kanban.user.interfaces.rest.UserDTO;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
 class AuthControllerTest {

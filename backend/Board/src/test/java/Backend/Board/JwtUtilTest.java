@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import Backend.Board.config.JwtUtil;
+
+import com.kanban.shared.infrastructure.config.JwtUtil;
+
 
 public class JwtUtilTest {
 

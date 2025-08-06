@@ -1,15 +1,17 @@
 package Backend.Board;
 
-import Backend.Board.model.Board;
-import Backend.Board.model.BoardRoleType;
-import Backend.Board.model.User;
-import Backend.Board.model.UserBoardRole;
-import Backend.Board.repository.UserBoardRoleRepository;
-import Backend.Board.service.BoardRoleService;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.kanban.board.application.BoardRoleService;
+import com.kanban.board.domain.model.Board;
+import com.kanban.board.domain.model.BoardRoleType;
+import com.kanban.board.domain.model.UserBoardRole;
+import com.kanban.board.domain.repository.UserBoardRoleRepository;
+import com.kanban.user.domain.model.User;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

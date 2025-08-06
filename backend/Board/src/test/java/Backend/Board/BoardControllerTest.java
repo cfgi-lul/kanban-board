@@ -1,11 +1,6 @@
 package Backend.Board;
 
-import Backend.Board.controller.BoardController;
-import Backend.Board.dto.BoardDTO;
-import Backend.Board.model.Board;
-import Backend.Board.model.BoardColumn;
-import Backend.Board.model.Task;
-import Backend.Board.repository.BoardRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,9 +9,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.kanban.board.domain.model.Board;
+import com.kanban.board.domain.model.BoardColumn;
+import com.kanban.board.domain.repository.BoardRepository;
+import com.kanban.board.interfaces.rest.BoardController;
+import com.kanban.board.interfaces.rest.BoardDTO;
+import com.kanban.task.domain.model.Task;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

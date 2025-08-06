@@ -1,9 +1,10 @@
 package Backend.Board;
 
-import Backend.Board.dto.UserDTO;
-import Backend.Board.mappers.UserMapper;
-import Backend.Board.model.User;
 import org.junit.jupiter.api.Test;
+
+import com.kanban.shared.infrastructure.UserMapper;
+import com.kanban.user.domain.model.User;
+import com.kanban.user.interfaces.rest.UserDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 

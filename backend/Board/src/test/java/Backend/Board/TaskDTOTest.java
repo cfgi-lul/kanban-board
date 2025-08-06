@@ -1,10 +1,11 @@
 package Backend.Board;
 
-import Backend.Board.model.User;
 import org.junit.jupiter.api.Test;
-import Backend.Board.model.Task;
-import Backend.Board.dto.TaskDTO;
-import Backend.Board.mappers.TaskMapper;
+
+import com.kanban.shared.infrastructure.TaskMapper;
+import com.kanban.task.domain.model.Task;
+import com.kanban.task.interfaces.rest.TaskDTO;
+import com.kanban.user.domain.model.User;
 
 import java.util.Collections;
 
