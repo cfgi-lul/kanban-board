@@ -1,25 +1,30 @@
-<div class="user-badge" [matMenuTriggerFor]="userMenu" *ngIf="user()">
-  <div class="user-badge-content">
-    <div class="avatar">
-      <img *ngIf="user()?.avatar" [src]="getAvatarUrl()" alt="User avatar">
-      <mat-icon class="avatar-icon" *ngIf="!user()?.avatar">person</mat-icon>
+@if (user()) {
+  <div class="user-badge" [matMenuTriggerFor]="userMenu">
+    <div class="user-badge-content">
+      <div class="avatar">
+        @if (user()?.avatar) {
+          <img [src]="getAvatarUrl()" alt="User avatar">
+        } @else {
+          <mat-icon class="avatar-icon">person</mat-icon>
+        }
+      </div>
+      <div class="name">{{ getUserDisplayName() }}</div>
     </div>
-    <div class="name">{{ getUserDisplayName() }}</div>
   </div>
-</div>
 
-<mat-menu #userMenu="matMenu">
-  <button mat-menu-item (click)="onSettings()">
-    <mat-icon>settings</mat-icon>
-    <span>{{ 'settings.title' | translate }}</span>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="onSettings()">
+      <mat-icon>settings</mat-icon>
+      <span>{{ 'settings.title' | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon>logout</mat-icon>
+      <span>{{ 'auth.signOut' | translate }}</span>
+    </button>
+  </mat-menu>
+} @else {
+  <button mat-raised-button color="primary" (click)="onLogin()">
+    <mat-icon>login</mat-icon>
+    <span>{{ 'auth.signIn' | translate }}</span>
   </button>
-  <button mat-menu-item (click)="onLogout()">
-    <mat-icon>logout</mat-icon>
-    <span>{{ 'auth.signOut' | translate }}</span>
-  </button>
-</mat-menu>
-
-<button mat-raised-button color="primary" (click)="onLogin()" *ngIf="!user()">
-  <mat-icon>login</mat-icon>
-  <span>{{ 'auth.signIn' | translate }}</span>
-</button>
+}

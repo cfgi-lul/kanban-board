@@ -56,7 +56,9 @@
           <div class="user-info">
             @if (currentUser | async; as user) {
               <div class="user-avatar" [style.background-image]="user.avatar ? 'url(' + getAvatarUrl(user) + ')' : 'none'">
-                <span class="avatar-initials" *ngIf="!user.avatar">{{ getUserInitials(user) }}</span>
+                @if (!user.avatar) {
+                  <span class="avatar-initials">{{ getUserInitials(user) }}</span>
+                }
               </div>
               <div class="user-details">
                 <span class="user-name">{{ getUserDisplayName(user) }}</span>

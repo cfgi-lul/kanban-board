@@ -10,52 +10,54 @@
     <h2 class="section-title" translate="main.sections.title"></h2>
 
     <div class="tiles-grid">
-      <div
-        *ngFor="let tile of tiles; let i = index"
-        class="tile-container"
-        [class.tile-large]="i === 0"
-        [class.tile-medium]="i === 1 || i === 2"
-        [class.tile-small]="i > 2"
-      >
-        <mat-card
-          class="tile-card"
-          [class]="getTileClass(tile)"
-          [class.disabled]="tile.disabled"
-          (click)="onTileClick(tile)"
-          [attr.aria-label]="tile.title | translate"
+      @for (tile of tiles; track tile.id; let i = $index) {
+        <div
+          class="tile-container"
+          [class.tile-large]="i === 0"
+          [class.tile-medium]="i === 1 || i === 2"
+          [class.tile-small]="i > 2"
         >
-          <mat-card-header class="tile-header">
-            <mat-card-title class="tile-title">
-              <mat-icon class="tile-icon">{{ tile.icon }}</mat-icon>
-              <span translate="{{ tile.title }}"></span>
-            </mat-card-title>
-            <mat-chip
-              *ngIf="tile.badge"
-              class="tile-badge"
-              color="warn"
-              variant="elevated"
-            >
-              <span translate="{{ tile.badge }}"></span>
-            </mat-chip>
-          </mat-card-header>
+          <mat-card
+            class="tile-card"
+            [class]="getTileClass(tile)"
+            [class.disabled]="tile.disabled"
+            (click)="onTileClick(tile)"
+            [attr.aria-label]="tile.title | translate"
+          >
+            <mat-card-header class="tile-header">
+              <mat-card-title class="tile-title">
+                <mat-icon class="tile-icon">{{ tile.icon }}</mat-icon>
+                <span translate="{{ tile.title }}"></span>
+              </mat-card-title>
+              @if (tile.badge) {
+                <mat-chip
+                  class="tile-badge"
+                  color="warn"
+                  variant="elevated"
+                >
+                  <span translate="{{ tile.badge }}"></span>
+                </mat-chip>
+              }
+            </mat-card-header>
 
-          <mat-card-content class="tile-content">
-            <p class="tile-description" translate="{{ tile.description }}"></p>
-          </mat-card-content>
+            <mat-card-content class="tile-content">
+              <p class="tile-description" translate="{{ tile.description }}"></p>
+            </mat-card-content>
 
-          <mat-card-actions class="tile-actions">
-            <button
-              mat-button
-              color="primary"
-              class="tile-button"
-              [disabled]="tile.disabled"
-            >
-              <span translate="main.tile.open"></span>
-              <mat-icon>arrow_forward</mat-icon>
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
+            <mat-card-actions class="tile-actions">
+              <button
+                mat-button
+                color="primary"
+                class="tile-button"
+                [disabled]="tile.disabled"
+              >
+                <span translate="main.tile.open"></span>
+                <mat-icon>arrow_forward</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      }
     </div>
   </div>
 </div>

@@ -9,16 +9,17 @@
       (selectionChange)="onLanguageChange($event.value)"
       class="language-select"
     >
-      <mat-option
-        *ngFor="let language of i18nService.getLanguages()"
-        [value]="language.code"
-        class="language-option"
-      >
-        <div class="language-option-content">
-          <span class="language-name">{{ language.nativeName }}</span>
-          <span class="language-code">({{ language.code }})</span>
-        </div>
-      </mat-option>
+      @for (language of i18nService.getLanguages(); track language.code) {
+        <mat-option
+          [value]="language.code"
+          class="language-option"
+        >
+          <div class="language-option-content">
+            <span class="language-name">{{ language.nativeName }}</span>
+            <span class="language-code">({{ language.code }})</span>
+          </div>
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
 </div>

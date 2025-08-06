@@ -5,14 +5,15 @@
       [formControl]="colorSchemeControl"
       class="theme-toggle-group"
     >
-      <mat-button-toggle
-        *ngFor="let scheme of availableColorSchemes"
-        [value]="scheme.value"
-        class="theme-option"
-      >
-        <mat-icon>{{ getThemeIcon(scheme.value) }}</mat-icon>
-        <span>{{ scheme.label }}</span>
-      </mat-button-toggle>
+      @for (scheme of availableColorSchemes; track scheme.value) {
+        <mat-button-toggle
+          [value]="scheme.value"
+          class="theme-option"
+        >
+          <mat-icon>{{ getThemeIcon(scheme.value) }}</mat-icon>
+          <span>{{ scheme.label }}</span>
+        </mat-button-toggle>
+      }
     </mat-button-toggle-group>
   </div>
 </div>

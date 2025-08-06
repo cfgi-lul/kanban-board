@@ -58,10 +58,11 @@
       <!-- <mat-form-field appearance="fill" class="edit-task-dialog__field">
       <mat-label>{{ 'board.columnName' | translate }}</mat-label>
       <mat-select formControlName="column">
-        @for (column of comments$ | async; track $index) {}
-        <mat-option *ngFor="let column of data.columns" [value]="column.id">{{
-          column.name
-        }}</mat-option>
+        @for (column of data.columns; track column.id) {
+          <mat-option [value]="column.id">{{
+            column.name
+          }}</mat-option>
+        }
       </mat-select>
     </mat-form-field> -->
 

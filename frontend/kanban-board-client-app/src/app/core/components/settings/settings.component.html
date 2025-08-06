@@ -15,16 +15,17 @@
     <!-- Side Menu -->
     <div class="settings-sidebar">
       <mat-nav-list>
-        <a
-          mat-list-item
-          *ngFor="let tab of settingsTabs"
-          [class.active]="selectedTab === tab.id"
-          (click)="onTabChange(tab.id)"
-          class="settings-nav-item"
-        >
-          <mat-icon matListItemIcon>{{ tab.icon }}</mat-icon>
-          <span matListItemTitle>{{ tab.label | translate }}</span>
-        </a>
+        @for (tab of settingsTabs; track tab.id) {
+          <a
+            mat-list-item
+            [class.active]="selectedTab === tab.id"
+            (click)="onTabChange(tab.id)"
+            class="settings-nav-item"
+          >
+            <mat-icon matListItemIcon>{{ tab.icon }}</mat-icon>
+            <span matListItemTitle>{{ tab.label | translate }}</span>
+          </a>
+        }
       </mat-nav-list>
     </div>
 
@@ -32,27 +33,31 @@
     <div class="settings-main">
       <div class="settings-panel">
         <!-- General Settings -->
-        <div *ngIf="selectedTab === 0" class="general-settings">
-          <h3>{{ 'settings.generalSettings' | translate }}</h3>
-          <mat-divider></mat-divider>
+        @if (selectedTab === 0) {
+          <div class="general-settings">
+            <h3>{{ 'settings.generalSettings' | translate }}</h3>
+            <mat-divider></mat-divider>
 
-          <div class="setting-section">
-            <h4>{{ 'settings.theme' | translate }}</h4>
-            <p>{{ 'settings.themeDescription' | translate }}</p>
-            <app-theme-selector></app-theme-selector>
-          </div>
+            <div class="setting-section">
+              <h4>{{ 'settings.theme' | translate }}</h4>
+              <p>{{ 'settings.themeDescription' | translate }}</p>
+              <app-theme-selector></app-theme-selector>
+            </div>
 
-          <div class="setting-section">
-            <h4>{{ 'settings.language' | translate }}</h4>
-            <p>{{ 'settings.languageDescription' | translate }}</p>
-            <app-language-selector></app-language-selector>
+            <div class="setting-section">
+              <h4>{{ 'settings.language' | translate }}</h4>
+              <p>{{ 'settings.languageDescription' | translate }}</p>
+              <app-language-selector></app-language-selector>
+            </div>
           </div>
-        </div>
+        }
 
         <!-- Account Settings -->
-        <div *ngIf="selectedTab === 1" class="account-settings">
-          <app-user-profile></app-user-profile>
-        </div>
+        @if (selectedTab === 1) {
+          <div class="account-settings">
+            <app-user-profile></app-user-profile>
+          </div>
+        }
       </div>
     </div>
   </div>
