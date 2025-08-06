@@ -1,13 +1,16 @@
 package Backend.Board.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import Backend.Board.dto.UserDTO;
 import Backend.Board.exception.ResourceNotFoundException;
+import Backend.Board.mappers.UserMapper;
 import Backend.Board.model.Role;
 import Backend.Board.model.User;
 import Backend.Board.repository.RoleRepository;
@@ -17,8 +20,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Users", description = "User management operations")
 public class UserController {
 
     @Autowired
@@ -28,15 +38,30 @@ public class UserController {
     private RoleRepository roleRepository;
 
     @GetMapping
-    public List<User> getAllUsers(@RequestParam(required = false) Long id) {
+    @Operation(summary = "Get all users", description = "Retrieve a list of all users or a specific user by ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved users"),
+        @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    public List<UserDTO> getAllUsers(@Parameter(description = "Optional user ID to retrieve specific user") @RequestParam(required = false) Long id) {
+        List<User> users;
         if (id != null) {
-            return userRepository.findById(id).map(List::of).orElseThrow(() -> new RuntimeException("User not found"));
+            users = userRepository.findById(id).map(List::of).orElseThrow(() -> new RuntimeException("User not found"));
+        } else {
+            users = userRepository.findAll();
         }
-        return userRepository.findAll();
+        return users.stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/current")
-    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+    @Operation(summary = "Get current user", description = "Retrieve the currently authenticated user's information")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved current user"),
+        @ApiResponse(responseCode = "401", description = "User not authenticated")
+    })
+    public ResponseEntity<UserDTO> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -44,13 +69,19 @@ public class UserController {
         User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(UserMapper.toDTO(user));
     }
 
     @PutMapping("/current")
-    public ResponseEntity<User> updateCurrentUser(
+    @Operation(summary = "Update current user", description = "Update the currently authenticated user's information")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully updated user"),
+        @ApiResponse(responseCode = "401", description = "User not authenticated"),
+        @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    public ResponseEntity<UserDTO> updateCurrentUser(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestBody UserUpdateRequest updateRequest) {
+            @Parameter(description = "User data to update") @RequestBody UserDTO updateRequest) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -58,18 +89,30 @@ public class UserController {
         User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        // Only allow updating displayName, not username to prevent logout issues
+        // Update allowed fields
         if (updateRequest.getDisplayName() != null) {
             user.setDisplayName(updateRequest.getDisplayName());
         }
+        if (updateRequest.getEmail() != null) {
+            user.setEmail(updateRequest.getEmail());
+        }
+        if (updateRequest.getAvatar() != null) {
+            user.setAvatar(updateRequest.getAvatar());
+        }
 
         User updatedUser = userRepository.save(user);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(UserMapper.toDTO(updatedUser));
     }
 
     @PostMapping("/{userId}/promote-to-admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> promoteToAdmin(@PathVariable Long userId) {
+    @Operation(summary = "Promote user to admin", description = "Promote a user to admin role (Admin only)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully promoted user to admin"),
+        @ApiResponse(responseCode = "403", description = "Access denied"),
+        @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    public ResponseEntity<?> promoteToAdmin(@Parameter(description = "ID of the user to promote") @PathVariable Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
@@ -82,25 +125,24 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+    @Operation(summary = "Create new user", description = "Create a new user account")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully created user"),
+        @ApiResponse(responseCode = "400", description = "Invalid user data")
+    })
+    public ResponseEntity<UserDTO> createUser(@Parameter(description = "User data for registration") @RequestBody UserDTO userDTO) {
+        User user = UserMapper.toEntity(userDTO);
+        User savedUser = userRepository.save(user);
+        return ResponseEntity.ok(UserMapper.toDTO(savedUser));
     }
 
     @DeleteMapping
-    public void deleteUser(@RequestParam Long id) {
+    @Operation(summary = "Delete user", description = "Delete a user by ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully deleted user"),
+        @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    public void deleteUser(@Parameter(description = "ID of the user to delete") @RequestParam Long id) {
         userRepository.deleteById(id);
-    }
-
-    // DTO for user update request - only allows updating displayName
-    public static class UserUpdateRequest {
-        private String displayName;
-
-        public String getDisplayName() {
-            return displayName;
-        }
-
-        public void setDisplayName(String displayName) {
-            this.displayName = displayName;
-        }
     }
 }

@@ -15,7 +15,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { Comment } from './../../../core/models/classes/Comment';
+import { CommentInstance } from './../../../core/models/classes/CommentInstance';
 import { CommentService } from '../../../core/api/comment.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Task } from '../../../core/models/classes/Task';
+import { TaskInstance } from '../../../core/models/classes/TaskInstance';
 import { TaskService } from '../../../core/api/task.service';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -61,14 +61,14 @@ export class TaskEditorComponent {
   taskForm: FormGroup;
   isEditDescription = false;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  comments$: Observable<Comment[]>;
+  comments$: Observable<CommentInstance[]>;
 
   constructor(
     private fb: FormBuilder,
     private taskService: TaskService,
     private commentService: CommentService,
     public dialogRef: MatDialogRef<TaskEditorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { task: Task }
+    @Inject(MAT_DIALOG_DATA) public data: { task: TaskInstance }
   ) {
     this.taskForm = this.fb.group({
       title: [data.task.title, Validators.required],
@@ -103,7 +103,7 @@ export class TaskEditorComponent {
     }
   }
 
-  removeComment(comment: Comment): void {
+  removeComment(comment: CommentInstance): void {
     this.data.task.comments = this.data.task.comments.filter(
       c => c.id !== comment.id
     );
@@ -111,7 +111,7 @@ export class TaskEditorComponent {
 
   async onSave(): Promise<void> {
     if (this.taskForm.valid) {
-      const updatedTask: Task = {
+      const updatedTask: TaskInstance = {
         ...this.data.task,
         title: this.taskForm.value.title,
         description: this.taskForm.value.description,

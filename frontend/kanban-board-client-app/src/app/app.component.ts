@@ -17,7 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './core/components/header/header.component';
 import { AsyncPipe } from '@angular/common';
-import { User } from './core/models/classes/User';
+import { UserInstance } from './core/models/classes/UserInstance';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -92,14 +92,14 @@ export class AppComponent implements OnInit {
     // Theme changed
   }
 
-  getUserDisplayName(user: User): string {
+  getUserDisplayName(user: UserInstance): string {
     if (!user) return '';
 
     // Use displayName if available, fallback to name, then to username
     return user.displayName || user.name || user.username || '';
   }
 
-  getUserInitials(user: User): string {
+  getUserInitials(user: UserInstance): string {
     if (!user) return '?';
 
     // Use displayName for initials if available, fallback to name

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Task } from '../models/classes/Task';
-import { TaskDTO } from '../models/requestModels/model/models';
+import { TaskInstance } from '../models/classes/TaskInstance';
+import { TaskDTO } from '../models/requestModels/model/taskDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -12,28 +12,28 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
-  getAllTasks(): Observable<Task[]> {
+  getAllTasks(): Observable<TaskInstance[]> {
     return this.http
       .get<TaskDTO[]>(this.baseUrl)
-      .pipe(map(e => e.map(el => new Task(el))));
+      .pipe(map(e => e.map(el => new TaskInstance(el))));
   }
 
-  getTasksByID(id: string | number): Observable<Task> {
+  getTasksByID(id: string | number): Observable<TaskInstance> {
     return this.http
       .get<TaskDTO>(`${this.baseUrl}/${id}`)
-      .pipe(map(e => new Task(e)));
+      .pipe(map(e => new TaskInstance(e)));
   }
 
-  createTask(task: Task, boardId: string, columnId: string): Observable<Task> {
+  createTask(task: TaskInstance, boardId: string, columnId: string): Observable<TaskInstance> {
     return this.http
       .post<TaskDTO>(this.baseUrl, task, { params: { boardId, columnId } })
-      .pipe(map(e => new Task(e)));
+      .pipe(map(e => new TaskInstance(e)));
   }
 
-  updateTask(updatedTask: Task): Observable<Task> {
+  updateTask(updatedTask: TaskInstance): Observable<TaskInstance> {
     return this.http
       .put<TaskDTO>(`${this.baseUrl}/${updatedTask.id.toString()}`, updatedTask)
-      .pipe(map(e => new Task(e)));
+      .pipe(map(e => new TaskInstance(e)));
   }
 
   deleteTask(id: string | number): Observable<void> {

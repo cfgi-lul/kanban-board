@@ -49,6 +49,11 @@ public class CommentController {
             @RequestBody CommentDTO commentDTO,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
+        // Validate the comment content
+        if (commentDTO.getContent() == null || commentDTO.getContent().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Task task = taskRepository.findById(commentDTO.getTaskId())
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
 
@@ -59,14 +64,55 @@ public class CommentController {
         comment.setContent(commentDTO.getContent());
         comment.setTask(task);
         comment.setUser(author);
+        comment.setMentions(commentDTO.getMentions());
 
         Comment savedComment = commentRepository.save(comment);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommentMapper.toDTO(savedComment));
     }
 
-    @DeleteMapping
-    public void deleteComment(@RequestParam Long id) {
-        commentRepository.deleteById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<CommentDTO> updateComment(
+            @PathVariable Long id,
+            @RequestBody CommentDTO commentDTO,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        // Validate the comment content
+        if (commentDTO.getContent() == null || commentDTO.getContent().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return commentRepository.findById(id)
+                .map(comment -> {
+                    // Check if user is the author of the comment
+                    if (!comment.getUser().getUsername().equals(userDetails.getUsername())) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN).<CommentDTO>build();
+                    }
+
+                    comment.setContent(commentDTO.getContent());
+                    comment.setMentions(commentDTO.getMentions());
+                    
+                    Comment savedComment = commentRepository.save(comment);
+                    return ResponseEntity.ok(CommentMapper.toDTO(savedComment));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteComment(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        return commentRepository.findById(id)
+                .map(comment -> {
+                    // Check if user is the author of the comment
+                    if (!comment.getUser().getUsername().equals(userDetails.getUsername())) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN).<Void>build();
+                    }
+
+                    commentRepository.delete(comment);
+                    return ResponseEntity.noContent().<Void>build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

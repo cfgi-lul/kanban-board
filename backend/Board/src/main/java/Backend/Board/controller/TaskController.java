@@ -14,17 +14,27 @@ import org.springframework.web.bind.annotation.*;
 import Backend.Board.dto.BoardDTO;
 import Backend.Board.dto.CommentDTO;
 import Backend.Board.dto.TaskDTO;
+import Backend.Board.dto.LabelDTO;
+import Backend.Board.dto.AttachmentDTO;
 import Backend.Board.exception.ResourceNotFoundException;
 import Backend.Board.mappers.BoardMapper;
-import Backend.Board.mappers.UserMapper;
+import Backend.Board.mappers.TaskMapper;
+import Backend.Board.mappers.LabelMapper;
+import Backend.Board.mappers.AttachmentMapper;
 import Backend.Board.model.Board;
-import Backend.Board.model.Column;
+import Backend.Board.model.BoardColumn;
 import Backend.Board.model.Task;
+import Backend.Board.model.TaskPriority;
+import Backend.Board.model.TaskStatus;
 import Backend.Board.model.User;
+import Backend.Board.model.Label;
+import Backend.Board.model.Attachment;
 import Backend.Board.repository.BoardRepository;
 import Backend.Board.repository.ColumnRepository;
 import Backend.Board.repository.TaskRepository;
 import Backend.Board.repository.UserRepository;
+import Backend.Board.repository.LabelRepository;
+import Backend.Board.repository.AttachmentRepository;
 
 @RestController
 @RequestMapping("/tasks")
@@ -42,51 +52,42 @@ public class TaskController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired ColumnRepository columnRepository;
+    @Autowired
+    private ColumnRepository columnRepository;
+
+    @Autowired
+    private LabelRepository labelRepository;
+
+    @Autowired
+    private AttachmentRepository attachmentRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
         return taskRepository.findById(id)
-                .map(task -> {
-                    List<CommentDTO> commentDTOs = task.getComments().stream()
-                            .map(comment -> new CommentDTO(
-                                    comment.getId(),
-                                    comment.getContent(),
-                                    comment.getCreatedAt(),
-                                    UserMapper.toDTO(comment.getUser()),
-                                    comment.getTask().getId()))
-                            .collect(Collectors.toList());
-
-                    return ResponseEntity.ok(new TaskDTO(
-                            task.getId(),
-                            task.getTitle(),
-                            task.getDescription(),
-                            commentDTOs,
-                            UserMapper.toDTO(task.getCreatedBy()),
-                            UserMapper.toDTO(task.getAssignee()))
-                            );
-                })
+                .map(TaskMapper::toDTO)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-     @PostMapping
-    public ResponseEntity<Task> createTask(
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(
             @RequestParam Long boardId,
             @RequestParam Long columnId,
-            @RequestBody Task task,
+            @RequestBody TaskDTO taskDTO,
             @AuthenticationPrincipal UserDetails userDetails) {
         
         // Fetch the board and column
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new ResourceNotFoundException("Board not found"));
-        Column column = columnRepository.findById(columnId)
+        BoardColumn column = columnRepository.findById(columnId)
                 .orElseThrow(() -> new ResourceNotFoundException("Column not found"));
 
         // Fetch the user who created the task
         User creator = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        // Set the task's column and createdBy user
+        // Convert DTO to entity
+        Task task = TaskMapper.toEntity(taskDTO);
         task.setColumn(column);
         task.setCreatedBy(creator);
 
@@ -101,22 +102,42 @@ public class TaskController {
         // Send the updated board state via WebSocket
         sendBoardUpdate(boardId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedTask);
+        return ResponseEntity.status(HttpStatus.CREATED).body(TaskMapper.toDTO(savedTask));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        if (updatedTask.getTitle() == null || updatedTask.getTitle().trim().isEmpty()) {
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO updatedTaskDTO) {
+        if (updatedTaskDTO.getTitle() == null || updatedTaskDTO.getTitle().trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
         return taskRepository.findById(id)
                 .map(task -> {
-                    task.setTitle(updatedTask.getTitle());
-                    task.setDescription(updatedTask.getDescription());
+                    // Update task fields from DTO
+                    task.setTitle(updatedTaskDTO.getTitle());
+                    task.setDescription(updatedTaskDTO.getDescription());
+                    task.setDueDate(updatedTaskDTO.getDueDate());
+                    
+                    // Update priority and status if provided
+                    if (updatedTaskDTO.getPriority() != null) {
+                        try {
+                            task.setPriority(TaskPriority.valueOf(updatedTaskDTO.getPriority()));
+                        } catch (IllegalArgumentException e) {
+                            // Keep existing priority if invalid value
+                        }
+                    }
+                    
+                    if (updatedTaskDTO.getStatus() != null) {
+                        try {
+                            task.setStatus(TaskStatus.valueOf(updatedTaskDTO.getStatus()));
+                        } catch (IllegalArgumentException e) {
+                            // Keep existing status if invalid value
+                        }
+                    }
+                    
                     Task savedTask = taskRepository.save(task);
                     sendBoardUpdate(savedTask.getId());
-                    return ResponseEntity.ok(savedTask);
+                    return ResponseEntity.ok(TaskMapper.toDTO(savedTask));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -133,6 +154,99 @@ public class TaskController {
                     return ResponseEntity.noContent().build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Label management for tasks
+    @PostMapping("/{taskId}/labels/{labelId}")
+    public ResponseEntity<TaskDTO> addLabelToTask(@PathVariable Long taskId, @PathVariable Long labelId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+        
+        Label label = labelRepository.findById(labelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Label not found"));
+
+        // Check if label belongs to the same board as the task
+        if (!label.getBoard().getId().equals(task.getColumn().getBoard().getId())) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (!task.getLabels().contains(label)) {
+            task.getLabels().add(label);
+            Task savedTask = taskRepository.save(task);
+            return ResponseEntity.ok(TaskMapper.toDTO(savedTask));
+        }
+
+        return ResponseEntity.ok(TaskMapper.toDTO(task));
+    }
+
+    @DeleteMapping("/{taskId}/labels/{labelId}")
+    public ResponseEntity<TaskDTO> removeLabelFromTask(@PathVariable Long taskId, @PathVariable Long labelId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+        
+        Label label = labelRepository.findById(labelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Label not found"));
+
+        task.getLabels().remove(label);
+        Task savedTask = taskRepository.save(task);
+        return ResponseEntity.ok(TaskMapper.toDTO(savedTask));
+    }
+
+    // Bulk operations
+    @PostMapping("/bulk/update-status")
+    public ResponseEntity<List<TaskDTO>> bulkUpdateStatus(@RequestBody List<Long> taskIds,
+                                                         @RequestParam String status) {
+        try {
+            TaskStatus newStatus = TaskStatus.valueOf(status);
+            List<Task> tasks = taskRepository.findAllById(taskIds);
+            
+            tasks.forEach(task -> task.setStatus(newStatus));
+            List<Task> savedTasks = taskRepository.saveAll(tasks);
+            
+            List<TaskDTO> taskDTOs = savedTasks.stream()
+                    .map(TaskMapper::toDTO)
+                    .collect(Collectors.toList());
+            
+            return ResponseEntity.ok(taskDTOs);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/bulk/assign")
+    public ResponseEntity<List<TaskDTO>> bulkAssignTasks(@RequestBody List<Long> taskIds,
+                                                        @RequestParam Long assigneeId) {
+        User assignee = userRepository.findById(assigneeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Assignee not found"));
+        
+        List<Task> tasks = taskRepository.findAllById(taskIds);
+        tasks.forEach(task -> task.setAssignee(assignee));
+        
+        List<Task> savedTasks = taskRepository.saveAll(tasks);
+        List<TaskDTO> taskDTOs = savedTasks.stream()
+                .map(TaskMapper::toDTO)
+                .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(taskDTOs);
+    }
+
+    // Search and filter endpoints
+    @GetMapping("/search")
+    public ResponseEntity<List<TaskDTO>> searchTasks(@RequestParam String query,
+                                                    @RequestParam(required = false) String priority,
+                                                    @RequestParam(required = false) String status) {
+        // This would need a custom repository method for full-text search
+        // For now, returning empty list as placeholder
+        return ResponseEntity.ok(List.of());
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<TaskDTO>> filterTasks(@RequestParam(required = false) String priority,
+                                                    @RequestParam(required = false) String status,
+                                                    @RequestParam(required = false) Long assigneeId) {
+        // This would need custom repository methods for filtering
+        // For now, returning empty list as placeholder
+        return ResponseEntity.ok(List.of());
     }
 
     private void sendBoardUpdateDirect(Long boardId) {

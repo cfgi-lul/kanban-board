@@ -17,8 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
+    @JsonIgnore
     private String name;
 
     @JsonIgnore

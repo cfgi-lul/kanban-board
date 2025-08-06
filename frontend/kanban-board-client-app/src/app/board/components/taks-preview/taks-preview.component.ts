@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TaskPreviewDTO } from '../../../core/models/classes/TaskPreviewDTO';
+import { TaskPreviewInstance } from '../../../core/models/classes/TaskPreviewInstance';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './taks-preview.component.scss',
 })
 export class TaksPreviewComponent {
-  taks = input.required<TaskPreviewDTO>();
+  taks = input.required<TaskPreviewInstance>();
   name = input.required<string>();
   editTask = output<string>();
   deleteTask = output<string>();

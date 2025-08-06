@@ -1,8 +1,0 @@
-generatorName: typescript-angular
-outputDir: ./src/app/core/models/requestModels
-inputSpec: ./swagger/swagger.json
-typeMappings:
-  DateTime: "Date"
-additionalProperties:
-  withInterfaces: "true"
-  ngVersion: 16.0.0

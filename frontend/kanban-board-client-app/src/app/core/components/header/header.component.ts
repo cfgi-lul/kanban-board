@@ -14,7 +14,7 @@ import { ThemeService, ColorScheme } from '../../services/theme.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { User } from '../../models/classes/User';
+import { UserInstance } from '../../models/classes/UserInstance';
 import { UserBadgeComponent } from '../user-badge/user-badge.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,7 +38,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class HeaderComponent implements OnInit {
   themeControl = new FormControl<ColorScheme>('system');
   isLoggedIn = input.required<boolean>();
-  user = input.required<User>();
+  user = input.required<UserInstance>();
 
   constructor(private theme: ThemeService) {}
 

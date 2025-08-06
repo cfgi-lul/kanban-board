@@ -1,7 +1,7 @@
 package Backend.Board.controller;
 
 import Backend.Board.config.JwtUtil;
-import Backend.Board.dto.UserRegisterDTO;
+import Backend.Board.dto.UserDTO;
 import Backend.Board.model.Role;
 import Backend.Board.model.User;
 import Backend.Board.repository.RoleRepository;
@@ -56,11 +56,20 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegisterDTO userDTO) {
+    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder().encode(userDTO.getPassword()));
-        user.setName(userDTO.getName());
+        
+        // Set displayName to username if not provided
+        if (userDTO.getDisplayName() != null && !userDTO.getDisplayName().trim().isEmpty()) {
+            user.setDisplayName(userDTO.getDisplayName());
+        } else {
+            user.setDisplayName(userDTO.getUsername());
+        }
+        
+        user.setEmail(userDTO.getEmail());
+        user.setName(userDTO.getName()); // Legacy field
 
         // Assign default role if needed
         Role userRole = roleRepository.findByName("USER")
@@ -91,13 +100,4 @@ public class AuthController {
     }
 }
 
-class AuthenticationRequest {
-    private String username;
-    private String password;
-    // getters and setters
-}
 
-class AuthenticationResponse {
-    private String token;
-    // constructor and getter
-}

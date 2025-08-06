@@ -26,7 +26,7 @@ import {
 } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { Board } from '../core/models/classes/Board';
+import { BoardInstance } from '../core/models/classes/BoardInstance';
 import { BoardService } from '../core/api/board.service';
 import { BoardSocketService } from '../core/api/board-socket.service';
 import type { CdkDragDrop } from '@angular/cdk/drag-drop';
@@ -40,14 +40,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Observable } from 'rxjs';
 import { TaksPreviewComponent } from './components/taks-preview/taks-preview.component';
-import { Task } from '../core/models/classes/Task';
-import { TaskPreviewDTO } from '../core/models/classes/TaskPreviewDTO';
+import { TaskInstance } from '../core/models/classes/TaskInstance';
+import { TaskPreviewInstance } from '../core/models/classes/TaskPreviewInstance';
 import { TaskEditorComponent } from './components/task-editor/task-editor.component';
 import { TaskService } from './../core/api/task.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 interface BoardState {
-  board: Board;
+  board: BoardInstance;
   loading: boolean;
   error: string | null;
 }
@@ -142,8 +142,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   async onDrop(
-    event: CdkDragDrop<TaskPreviewDTO[]>,
-    currentBoard: Board
+    event: CdkDragDrop<TaskPreviewInstance[]>,
+    currentBoard: BoardInstance
   ): Promise<void> {
     try {
       const { previousContainer, container, previousIndex, currentIndex } =
@@ -237,7 +237,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async createTask(boardId: string, columnId: string): Promise<void> {
     try {
-      const newTask = new Task({
+      const newTask = new TaskInstance({
         title: 'New Task',
         description: 'Task description',
         comments: [],

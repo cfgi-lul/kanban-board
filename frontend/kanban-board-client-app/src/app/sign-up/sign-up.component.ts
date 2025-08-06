@@ -52,15 +52,10 @@ export class SignUpComponent implements OnInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {
-    this.signUpForm = this.fb.group(
-      {
-        userName: ['', [Validators.required, Validators.minLength(3)]],
-        name: ['', [Validators.required, Validators.minLength(2)]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required]],
-      },
-      { validators: this.passwordMatchValidator }
-    );
+    this.signUpForm = this.fb.group({
+      userName: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
   ngOnInit(): void {
@@ -69,26 +64,11 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  passwordMatchValidator(group: FormGroup): { [key: string]: unknown } | null {
-    const password = group.get('password');
-    const confirmPassword = group.get('confirmPassword');
-
-    if (
-      password &&
-      confirmPassword &&
-      password.value !== confirmPassword.value
-    ) {
-      return { passwordMismatch: true };
-    }
-    return null;
-  }
-
   onSignUp(): void {
     if (this.signUpForm.valid) {
       this.isLoading = true;
       const userData: RegisterRequest = {
         username: this.signUpForm.value.userName,
-        name: this.signUpForm.value.name,
         password: this.signUpForm.value.password,
       };
 
@@ -149,9 +129,6 @@ export class SignUpComponent implements OnInit {
       }
       if (control.errors['minlength']) {
         return `${controlName} must be at least ${control.errors['minlength'].requiredLength} characters`;
-      }
-      if (control.errors['passwordMismatch']) {
-        return 'Passwords do not match';
       }
     }
     return '';

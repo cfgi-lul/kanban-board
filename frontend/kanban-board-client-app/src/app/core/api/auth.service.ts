@@ -12,7 +12,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { User } from '../models/classes/User';
+import { UserInstance } from '../models/classes/UserInstance';
 
 export interface LoginRequest {
   username: string;
@@ -22,12 +22,11 @@ export interface LoginRequest {
 export interface RegisterRequest {
   username: string;
   password: string;
-  name: string;
 }
 
 export interface AuthResponse {
   token: string;
-  user: User;
+  user: UserInstance;
   expiresIn?: number;
 }
 
@@ -36,19 +35,19 @@ export interface AuthResponse {
 })
 export class AuthService {
   private apiUrl = `/api/api/auth`;
-  private currentUserSubject: BehaviorSubject<User | null>;
-  public currentUser: Observable<User | null>;
+  private currentUserSubject: BehaviorSubject<UserInstance | null>;
+  public currentUser: Observable<UserInstance | null>;
   private helper = new JwtHelperService();
   private tokenRefreshTimeout?: any;
 
   // Add cached current user observable
-  private currentUserRequest$?: Observable<User | null>;
+  private currentUserRequest$?: Observable<UserInstance | null>;
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {
-    this.currentUserSubject = new BehaviorSubject<User | null>(
+    this.currentUserSubject = new BehaviorSubject<UserInstance | null>(
       this.getUserFromStorage()
     );
     this.currentUser = this.currentUserSubject.asObservable();
@@ -57,7 +56,7 @@ export class AuthService {
     this.validateTokenOnStart();
   }
 
-  public get currentUserValue(): User | null {
+  public get currentUserValue(): UserInstance | null {
     return this.currentUserSubject.value;
   }
 
@@ -70,7 +69,7 @@ export class AuthService {
     return !token || this.helper.isTokenExpired(token);
   }
 
-  private getUserFromStorage(): User | null {
+  private getUserFromStorage(): UserInstance | null {
     try {
       const userStr = localStorage.getItem('currentUser');
       return userStr ? JSON.parse(userStr) : null;
@@ -122,7 +121,7 @@ export class AuthService {
     );
   }
 
-  private setToken(token: string, user?: User): void {
+  private setToken(token: string, user?: UserInstance): void {
     localStorage.setItem('access_token', token);
 
     // Use the provided user data if available, otherwise decode from token
@@ -241,33 +240,35 @@ export class AuthService {
     ).toUpperCase();
   }
 
-  current(): Observable<User | null> {
+  current(): Observable<UserInstance | null> {
     // If we don't have a cached request or the user is not authenticated, create a new request
     if (!this.currentUserRequest$ || !this.isAuthenticated()) {
-      this.currentUserRequest$ = this.http.get<User>('/api/users/current').pipe(
-        tap(user => {
-          if (user) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-          } else {
+      this.currentUserRequest$ = this.http
+        .get<UserInstance>('/api/users/current')
+        .pipe(
+          tap(user => {
+            if (user) {
+              localStorage.setItem('currentUser', JSON.stringify(user));
+              this.currentUserSubject.next(user);
+            } else {
+              this.clearAuthData();
+            }
+          }),
+          catchError(error => {
+            // eslint-disable-next-line no-console
+            console.error('Error fetching current user:', error);
             this.clearAuthData();
-          }
-        }),
-        catchError(error => {
-          // eslint-disable-next-line no-console
-          console.error('Error fetching current user:', error);
-          this.clearAuthData();
-          return of(null);
-        }),
-        shareReplay(1) // Cache the result and share it with all subscribers
-      );
+            return of(null);
+          }),
+          shareReplay(1) // Cache the result and share it with all subscribers
+        );
     }
 
     return this.currentUserRequest$;
   }
 
   // Add method to refresh current user (clears cache and makes new request)
-  refreshCurrentUser(): Observable<User | null> {
+  refreshCurrentUser(): Observable<UserInstance | null> {
     this.currentUserRequest$ = undefined; // Clear cache
     return this.current();
   }

@@ -1,10 +1,17 @@
 package Backend.Board.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import Backend.Board.model.Column;
+
+import Backend.Board.dto.ColumnDTO;
+import Backend.Board.exception.ResourceNotFoundException;
+import Backend.Board.mappers.ColumnMapper;
+import Backend.Board.model.BoardColumn;
 import Backend.Board.repository.ColumnRepository;
 
 @RestController
@@ -15,21 +22,59 @@ public class ColumnController {
     private ColumnRepository columnRepository;
 
     @GetMapping
-    public List<Column> getAllColumns(@RequestParam(required = false) Long id) {
+    public List<ColumnDTO> getAllColumns(@RequestParam(required = false) Long id) {
+        List<BoardColumn> columns;
         if (id != null) {
-            return columnRepository.findById(id).map(List::of)
-                    .orElseThrow(() -> new RuntimeException("Column not found"));
+            columns = columnRepository.findById(id).map(List::of)
+                    .orElseThrow(() -> new ResourceNotFoundException("Column not found"));
+        } else {
+            columns = columnRepository.findAll();
         }
-        return columnRepository.findAll();
+        return columns.stream()
+                .map(ColumnMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @PostMapping
-    public Column createColumn(@RequestBody Column column) {
-        return columnRepository.save(column);
+    public ResponseEntity<ColumnDTO> createColumn(@RequestBody ColumnDTO columnDTO) {
+        // Validate the column name
+        if (columnDTO.getName() == null || columnDTO.getName().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        BoardColumn column = ColumnMapper.toEntity(columnDTO);
+        BoardColumn savedColumn = columnRepository.save(column);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ColumnMapper.toDTO(savedColumn));
     }
 
-    @DeleteMapping
-    public void deleteColumn(@RequestParam Long id) {
-        columnRepository.deleteById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<ColumnDTO> updateColumn(@PathVariable Long id, @RequestBody ColumnDTO columnDTO) {
+        // Validate the column name
+        if (columnDTO.getName() == null || columnDTO.getName().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return columnRepository.findById(id)
+                .map(column -> {
+                    // Update column fields from DTO
+                    column.setName(columnDTO.getName());
+                    column.setOrderIndex(columnDTO.getOrderIndex());
+                    column.setColor(columnDTO.getColor());
+                    column.setTaskLimit(columnDTO.getTaskLimit());
+                    
+                    BoardColumn savedColumn = columnRepository.save(column);
+                    return ResponseEntity.ok(ColumnMapper.toDTO(savedColumn));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteColumn(@PathVariable Long id) {
+        return columnRepository.findById(id)
+                .map(column -> {
+                    columnRepository.delete(column);
+                    return ResponseEntity.noContent().<Void>build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

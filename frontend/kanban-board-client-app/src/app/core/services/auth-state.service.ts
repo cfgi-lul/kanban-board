@@ -1,10 +1,10 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { AuthService } from '../api/auth.service';
-import { User } from '../models/classes/User';
+import { UserInstance } from '../models/classes/UserInstance';
 import { toObservable } from '@angular/core/rxjs-interop';
 
 export interface AuthState {
-  user: User | null;
+  user: UserInstance | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
@@ -15,7 +15,7 @@ export interface AuthState {
 })
 export class AuthStateService {
   // Signals for reactive state management
-  private _user = signal<User | null>(null);
+  private _user = signal<UserInstance | null>(null);
   private _isLoading = signal(false);
   private _error = signal<string | null>(null);
 
@@ -81,7 +81,7 @@ export class AuthStateService {
 
   hasRole(role: string): boolean {
     const user = this._user();
-    return user?.roles?.includes(role) || false;
+    return user?.roles?.some(r => r.name === role) || false;
   }
 
   isAdmin(): boolean {

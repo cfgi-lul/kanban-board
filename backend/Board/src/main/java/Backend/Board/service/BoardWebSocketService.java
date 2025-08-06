@@ -2,10 +2,10 @@ package Backend.Board.service;
 
 import Backend.Board.dto.BoardDTO;
 import Backend.Board.dto.ColumnDTO;
-import Backend.Board.dto.TaskPreviewDTO;
+import Backend.Board.dto.TaskDTO;
 import Backend.Board.mappers.BoardMapper;
 import Backend.Board.model.Board;
-import Backend.Board.model.Column;
+import Backend.Board.model.BoardColumn;
 import Backend.Board.model.Task;
 import Backend.Board.repository.BoardRepository;
 import Backend.Board.repository.TaskRepository;
@@ -41,13 +41,13 @@ public class BoardWebSocketService {
     }
 
     private void updateColumns(Board existingBoard, List<ColumnDTO> updatedColumns) {
-        Map<Long, Column> existingColumnsMap = existingBoard.getColumns().stream()
-                .collect(Collectors.toMap(Column::getId, c -> c));
+        Map<Long, BoardColumn> existingColumnsMap = existingBoard.getColumns().stream()
+                .collect(Collectors.toMap(BoardColumn::getId, c -> c));
 
-        List<Column> newColumns = new ArrayList<>();
+        List<BoardColumn> newColumns = new ArrayList<>();
 
         for (ColumnDTO columnDTO : updatedColumns) {
-            Column column = existingColumnsMap.getOrDefault(columnDTO.getId(), new Column());
+            BoardColumn column = existingColumnsMap.getOrDefault(columnDTO.getId(), new BoardColumn());
             column.setName(columnDTO.getName());
             column.setBoard(existingBoard);
             updateTasks(column, columnDTO.getTasks());
@@ -60,13 +60,13 @@ public class BoardWebSocketService {
         existingBoard.getColumns().addAll(newColumns);
     }
 
-    private void updateTasks(Column column, List<TaskPreviewDTO> updatedTasks) {
+    private void updateTasks(BoardColumn column, List<TaskDTO> updatedTasks) {
         Map<Long, Task> existingTasksMap = column.getTasks().stream()
                 .collect(Collectors.toMap(Task::getId, t -> t));
 
         List<Task> newTasks = new ArrayList<>();
 
-        for (TaskPreviewDTO taskDTO : updatedTasks) {
+        for (TaskDTO taskDTO : updatedTasks) {
             Task task = existingTasksMap.getOrDefault(taskDTO.getId(), new Task());
             Optional<Task> taskInRepo = taskRepository.findById(taskDTO.getId());
 

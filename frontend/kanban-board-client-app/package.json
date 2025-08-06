@@ -13,7 +13,7 @@
     "lint:fix": "eslint . --ext .ts,.html --fix",
     "format": "prettier --write \"src/**/*.{ts,html,scss,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,json}\"",
-    "generate-api": "openapi-generator-cli version && npx @openapitools/openapi-generator-cli generate -c ./swagger/openapi-gen-config.yaml --global-property models,supportingFiles=models.ts",
+    "generate-api": "openapi-generator-cli version && openapi-generator-cli generate -c ./swagger/openapi-gen-config.json",
     "analyze": "ng build --stats-json && webpack-bundle-analyzer dist/kanban-board-client-app/stats.json",
     "analyze:build": "ng build --stats-json",
     "analyze:start": "webpack-bundle-analyzer dist/kanban-board-client-app/stats.json"

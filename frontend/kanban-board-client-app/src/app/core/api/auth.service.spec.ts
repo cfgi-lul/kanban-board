@@ -5,18 +5,20 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
-import { User } from '../models/classes/User';
+import { UserInstance } from '../models/classes/UserInstance';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
 
-  const mockUser: User = {
+  const mockUser: UserInstance = {
     id: 1,
     username: 'testuser',
+    password: 'password',
+    displayName: 'Test User',
     name: 'Test User',
-    roles: ['USER'],
+    roles: [],
   };
 
   beforeEach(() => {

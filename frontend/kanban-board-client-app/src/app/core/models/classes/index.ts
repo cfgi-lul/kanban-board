@@ -1,22 +1,23 @@
-// Core model classes
-export { User } from './User';
-export { Task } from './Task';
-export { Comment } from './Comment';
-export { Board } from './Board';
-export { Column } from './Column';
-export { TaskPreview } from './TaskPreview';
-export { Role } from './Role';
-
 // DTO classes
-export { UserDTO } from './UserDTO';
-export { TaskDTO } from './TaskDTO';
-export { CommentDTO } from './CommentDTO';
-export { BoardDTO } from './BoardDTO';
-export { ColumnDTO } from './ColumnDTO';
-export { TaskPreviewDTO } from './TaskPreviewDTO';
+export { UserInstance } from './UserInstance';
+export { TaskInstance } from './TaskInstance';
+export { TaskPreviewInstance } from './TaskPreviewInstance';
+export { CommentInstance } from './CommentInstance';
+export { BoardInstance } from './BoardInstance';
+export { ColumnInstance } from './ColumnInstance';
+export { AttachmentInstance } from './AttachmentInstance';
+export { LabelInstance } from './LabelInstance';
+export { RoleInstance } from './RoleInstance';
+export { NotificationInstance } from './NotificationInstance';
+
+// Analytics classes
+export { BoardAnalyticsInstance } from './BoardAnalyticsInstance';
+export { SystemAnalyticsInstance } from './SystemAnalyticsInstance';
+export { UserAnalyticsInstance } from './UserAnalyticsInstance';
+export { PerformanceMetricsInstance } from './PerformanceMetricsInstance';
+export { ProductivityMetricsInstance } from './ProductivityMetricsInstance';
+export { StatusDistributionInstance } from './StatusDistributionInstance';
 
 // Request/Response classes
-export { AuthenticationRequest } from './AuthenticationRequest';
-export { AuthenticationResponse } from './AuthenticationResponse';
-export { UserRegisterDTO } from './UserRegisterDTO';
-export { UserUpdateRequest } from './UserUpdateRequest';
+export { AuthenticationRequestInstance } from './AuthenticationRequestInstance';
+export { AuthenticationResponseInstance } from './AuthenticationResponseInstance';

@@ -31,23 +31,6 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
-          <mat-label>{{ 'auth.fullName' | translate }}</mat-label>
-          <input
-            matInput
-            formControlName="name"
-            [placeholder]="'auth.enterFullName' | translate"
-            [errorStateMatcher]="matcher"
-            autocomplete="name"
-          />
-          <mat-icon matSuffix>badge</mat-icon>
-          @if (
-            signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched
-          ) {
-            <mat-error>{{ getErrorMessage('name', signUpForm) }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="form-field">
           <mat-label>{{ 'auth.password' | translate }}</mat-label>
           <input
             matInput
@@ -65,34 +48,6 @@
             <mat-error>{{ getErrorMessage('password', signUpForm) }}</mat-error>
           }
         </mat-form-field>
-
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>{{ 'auth.confirmPassword' | translate }}</mat-label>
-          <input
-            matInput
-            formControlName="confirmPassword"
-            type="password"
-            [placeholder]="'auth.enterConfirmPassword' | translate"
-            [errorStateMatcher]="matcher"
-            autocomplete="new-password"
-          />
-          <mat-icon matSuffix>lock</mat-icon>
-          @if (
-            signUpForm.get('confirmPassword')?.invalid &&
-            signUpForm.get('confirmPassword')?.touched
-          ) {
-            <mat-error>{{
-              getErrorMessage('confirmPassword', signUpForm)
-            }}</mat-error>
-          }
-        </mat-form-field>
-
-        @if (
-          signUpForm.errors?.['passwordMismatch'] &&
-          signUpForm.get('confirmPassword')?.touched
-        ) {
-          <mat-error>{{ 'validation.passwordMismatch' | translate }}</mat-error>
-        }
 
         <button
           mat-raised-button

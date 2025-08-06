@@ -1,5 +1,5 @@
 import { map, Observable } from 'rxjs';
-import { Comment } from '../models/classes/Comment';
+import { CommentInstance } from '../models/classes/CommentInstance';
 import { CommentDTO } from '../models/requestModels/model/commentDTO';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,16 +11,16 @@ export class CommentService {
   apiUrl = '/api/comments';
   constructor(private http: HttpClient) {}
 
-  getComments(taskId: number): Observable<Comment[]> {
+  getComments(taskId: number): Observable<CommentInstance[]> {
     return this.http
       .get<CommentDTO[]>(`${this.apiUrl}/task/${taskId}`)
-      .pipe(map(e => e.map(el => new Comment(el))));
+      .pipe(map(e => e.map(el => new CommentInstance(el))));
   }
 
-  createComment(comment: Comment): Observable<Comment> {
+  createComment(comment: CommentInstance): Observable<CommentInstance> {
     return this.http
       .post<CommentDTO>(`${this.apiUrl}`, comment)
-      .pipe(map(e => new Comment(e)));
+      .pipe(map(e => new CommentInstance(e)));
   }
 
   deleteComment(id: number): Observable<void> {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../models/classes/User';
+import { UserInstance } from '../models/classes/UserInstance';
 
 export interface UserUpdateRequest {
   displayName?: string;
@@ -15,16 +15,16 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl);
+  getAllUsers(): Observable<UserInstance[]> {
+    return this.http.get<UserInstance[]>(this.baseUrl);
   }
 
-  getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/current`);
+  getCurrentUser(): Observable<UserInstance> {
+    return this.http.get<UserInstance>(`${this.baseUrl}/current`);
   }
 
-  updateCurrentUser(updateRequest: UserUpdateRequest): Observable<User> {
-    return this.http.put<User>(`${this.baseUrl}/current`, updateRequest);
+  updateCurrentUser(updateRequest: UserUpdateRequest): Observable<UserInstance> {
+    return this.http.put<UserInstance>(`${this.baseUrl}/current`, updateRequest);
   }
 
   promoteToAdmin(userId: number): Observable<void> {

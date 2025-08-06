@@ -32,7 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../core/api/auth.service';
-import { Board } from '../core/models/classes/Board';
+import { BoardInstance } from '../core/models/classes/BoardInstance';
 import { TranslateModule } from '@ngx-translate/core';
 
 export type LoadingState = 'loading' | 'error' | 'fulfilled';
@@ -64,7 +64,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   // State management
   loadingState = signal<LoadingState>('loading');
-  allBoards = signal<Board[]>([]);
+  allBoards = signal<BoardInstance[]>([]);
   searchTerm = signal('');
 
   // Computed filtered boards

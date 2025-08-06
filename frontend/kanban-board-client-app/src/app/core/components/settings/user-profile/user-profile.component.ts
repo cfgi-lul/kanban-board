@@ -15,7 +15,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserService, UserUpdateRequest } from '../../../api/user.service';
-import { User } from '../../../models/classes/User';
+import { UserInstance } from '../../../models/classes/UserInstance';
 
 @Component({
   selector: 'app-user-profile',
@@ -37,7 +37,7 @@ import { User } from '../../../models/classes/User';
 })
 export class UserProfileComponent implements OnInit {
   profileForm: FormGroup;
-  currentUser: User | null = null;
+  currentUser: UserInstance | null = null;
   isLoading = false;
   isSaving = false;
 

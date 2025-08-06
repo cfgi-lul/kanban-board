@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { User } from '../../models/classes/User';
+import { UserInstance } from '../../models/classes/UserInstance';
 import { SettingsComponent } from '../settings/settings.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
@@ -31,7 +31,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-badge.component.scss',
 })
 export class UserBadgeComponent {
-  user = input.required<User>();
+  user = input.required<UserInstance>();
   authService = inject(AuthService);
   router = inject(Router);
   dialog = inject(MatDialog);

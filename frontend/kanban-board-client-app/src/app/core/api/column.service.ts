@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Column } from '../models/classes/Column';
+import { ColumnInstance } from '../models/classes/ColumnInstance';
 import { ColumnDTO } from '../models/requestModels/model/columnDTO';
 import { Injectable } from '@angular/core';
 
@@ -11,18 +11,18 @@ export class ColumnService {
   private readonly baseUrl = '/api/columns';
   constructor(private http: HttpClient) {}
 
-  getAllColumns(id: number): Observable<Column[]> {
+  getAllColumns(id: number): Observable<ColumnInstance[]> {
     let params = new HttpParams();
     params = params.set('id', id.toString());
     return this.http
       .get<ColumnDTO[]>(this.baseUrl, { params })
-      .pipe(map(e => e.map(el => new Column(el))));
+      .pipe(map(e => e.map(el => new ColumnInstance(el))));
   }
 
-  createColumn(column: Column): Observable<Column> {
+  createColumn(column: ColumnInstance): Observable<ColumnInstance> {
     return this.http
       .post<ColumnDTO>(this.baseUrl, column)
-      .pipe(map(e => new Column(e)));
+      .pipe(map(e => new ColumnInstance(e)));
   }
 
   deleteColumn(id: number): Observable<void> {
