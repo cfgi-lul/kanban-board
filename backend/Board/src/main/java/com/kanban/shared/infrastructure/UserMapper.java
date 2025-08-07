@@ -32,7 +32,7 @@ public class UserMapper {
             user.getCreatedAt(),
             user.getUpdatedAt(),
             user.isEnabled(),
-            user.getName(),
+            user.getDisplayName(),
             roleDTOs
         );
     }
@@ -51,7 +51,7 @@ public class UserMapper {
         user.setCreatedAt(userDTO.getCreatedAt());
         user.setUpdatedAt(userDTO.getUpdatedAt());
         user.setEnabled(userDTO.isEnabled());
-        user.setName(userDTO.getName());
+        user.setDisplayName(userDTO.getName());
         
         if (userDTO.getRoles() != null) {
             List<Role> roles = userDTO.getRoles().stream()
