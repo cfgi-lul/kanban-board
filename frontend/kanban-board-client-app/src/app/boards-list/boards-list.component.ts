@@ -104,7 +104,6 @@ export class BoardsListComponent implements OnInit, OnDestroy {
           this.loadingState.set("fulfilled");
         }),
         catchError((_error) => {
-          // console.error('Error loading boards:', _error);
           this.loadingState.set("error");
           return of([]);
         }),
@@ -138,7 +137,6 @@ export class BoardsListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(CreateBoardModalComponent, {
       width: "600px",
       maxWidth: "90vw",
-      disableClose: true,
       data: null,
     });
 
