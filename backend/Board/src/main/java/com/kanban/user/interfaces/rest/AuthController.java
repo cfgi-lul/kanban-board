@@ -76,7 +76,6 @@ public class AuthController {
         }
         
         user.setEmail(userDTO.getEmail());
-        user.setName(userDTO.getName()); // Legacy field
 
         // Assign default role if needed
         Role userRole = roleRepository.findByName("USER")
