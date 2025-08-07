@@ -1,262 +1,33 @@
-.app-sidenav-container {
-  height: calc(100vh - 64px);
-}
+.sidenav {
+  &__container {
+    height: calc(100vh - 64px);
+  }
 
-:host {
-
-}
-
-.app-sidenav {
   background: var(--mat-sys-surface-container) !important;
   border-right: 1px solid var(--mat-sys-outline-variant) !important;
   width: 280px;
+
+  &__content {
+    display: flex;
+    container-type: inline-size;
+    height: 100%;
+  }
 }
 
-// Responsive sidenav behavior
-@media (max-width: 1023px) {
-  .app-sidenav {
+@media (max-width: 1024px) {
+  .sidenav {
     width: 260px;
   }
-}
-
-.sidenav-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  mat-nav-list {
-    flex: 1;
-  }
-}
-
-/* Sidenav Footer Styles */
-.sidenav-footer {
-  padding: 16px;
-  border-top: 1px solid var(--mat-sys-outline-variant);
-  background: var(--mat-sys-surface-container);
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 0;
-
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--mat-sys-primary);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px var(--mat-sys-shadow);
-      flex-shrink: 0;
-
-      .avatar-initials {
-        color: var(--mat-sys-on-primary);
-        font-weight: 600;
-        font-size: 16px;
-      }
-    }
-
-    .user-details {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-width: 0;
-
-      .user-name {
-        font-weight: 600;
-        color: var(--mat-sys-on-surface);
-        font-size: 14px;
-        line-height: 1.2;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .user-role {
-        color: var(--mat-sys-on-surface-variant);
-        font-size: 12px;
-        line-height: 1.2;
-      }
-    }
-
-    .guest-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--mat-sys-on-surface-variant);
-      flex: 1;
-
-      mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-        flex-shrink: 0;
-      }
-
-      span {
-        font-size: 14px;
-        font-weight: 500;
-      }
-    }
-  }
-}
-
-.content-wrapper {
-  display: flex;
-  container-type: inline-size;
-  height: 100%;
 }
 
 @media (max-width: 768px) {
-  .app-sidenav {
+  .sidenav {
     width: 260px;
-  }
-
-  .sidenav-header {
-    padding: 20px 16px 16px !important;
-
-    .sidenav-brand {
-      .brand-icon {
-        font-size: 24px !important;
-        width: 24px !important;
-        height: 24px !important;
-      }
-
-      .brand-text {
-        font-size: 18px !important;
-      }
-    }
-  }
-
-  .sidenav-menu {
-    padding: 12px 6px !important;
-
-    .sidenav-item {
-      margin: 2px 6px !important;
-      border-radius: 10px !important;
-
-      mat-icon {
-        font-size: 18px !important;
-        width: 18px !important;
-        height: 18px !important;
-      }
-
-      span {
-        font-size: 13px !important;
-      }
-    }
-  }
-
-  .sidenav-footer {
-    padding: 12px 16px !important;
-
-    .user-info {
-      padding: 8px 0 !important;
-
-      .user-avatar {
-        width: 36px !important;
-        height: 36px !important;
-
-        .avatar-initials {
-          font-size: 14px !important;
-        }
-      }
-
-      .user-details {
-        .user-name {
-          font-size: 13px !important;
-        }
-
-        .user-role {
-          font-size: 11px !important;
-        }
-      }
-
-      .guest-info {
-        span {
-          font-size: 13px !important;
-        }
-      }
-    }
   }
 }
 
 @media (max-width: 480px) {
-  .app-sidenav {
+  .sidenav {
     width: 240px;
-  }
-
-  .sidenav-header {
-    padding: 16px 12px 12px !important;
-
-    .sidenav-brand {
-      .brand-icon {
-        font-size: 20px !important;
-        width: 20px !important;
-        height: 20px !important;
-      }
-
-      .brand-text {
-        font-size: 16px !important;
-      }
-    }
-  }
-
-  .sidenav-menu {
-    padding: 8px 4px !important;
-
-    .sidenav-item {
-      margin: 1px 4px !important;
-      border-radius: 8px !important;
-
-      mat-icon {
-        font-size: 16px !important;
-        width: 16px !important;
-        height: 16px !important;
-      }
-
-      span {
-        font-size: 12px !important;
-      }
-    }
-  }
-
-  .sidenav-footer {
-    padding: 8px 12px !important;
-
-    .user-info {
-      padding: 6px 0 !important;
-
-      .user-avatar {
-        width: 32px !important;
-        height: 32px !important;
-
-        .avatar-initials {
-          font-size: 12px !important;
-        }
-      }
-
-      .user-details {
-        .user-name {
-          font-size: 12px !important;
-        }
-
-        .user-role {
-          font-size: 10px !important;
-        }
-      }
-
-      .guest-info {
-        span {
-          font-size: 12px !important;
-        }
-      }
-    }
   }
 }

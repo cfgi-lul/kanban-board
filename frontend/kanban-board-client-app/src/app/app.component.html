@@ -1,85 +1,21 @@
-<div class="app-container">
-  <!-- Header -->
-  <kn-header
-    (openSideNav)="toggleSidenav()"
-    [user]="currentUser | async"
-    [isLoggedIn]="(currentUser | async) !== null"
-    class="app-header"
-  />
+<kn-header
+  (openSideNav)="toggleSidenav()"
+  [user]="currentUser | async"
+  [isLoggedIn]="(currentUser | async) !== null"
+  class="header"
+/>
 
-  <!-- Main Layout -->
-  <mat-sidenav-container class="app-sidenav-container">
-    <!-- Side Navigation -->
-    <mat-sidenav
-      #sidenav
-      [mode]="sidenavMode"
-      [(opened)]="isSidenavOpen"
-      class="app-sidenav"
-    >
-      <div class="sidenav-content">
-        <mat-nav-list class="sidenav-menu">
-          <a
-            mat-list-item
-            routerLink="/sign-in"
-            routerLinkActive="active"
-            class="sidenav-item"
-          >
-            <mat-icon matListItemIcon>login</mat-icon>
-            <span matListItemTitle>{{ 'auth.signIn' | translate }}</span>
-          </a>
+<mat-sidenav-container class="sidenav__container">
+  <mat-sidenav
+    #sidenav
+    [mode]="sidenavMode"
+    [(opened)]="isSidenavOpen"
+    class="sidenav"
+  >
+    <kn-sidenav />
+  </mat-sidenav>
 
-          <a
-            mat-list-item
-            routerLink="/boards-list"
-            routerLinkActive="active"
-            class="sidenav-item"
-          >
-            <mat-icon matListItemIcon>view_list</mat-icon>
-            <span matListItemTitle>{{ 'board.boardsList' | translate }}</span>
-          </a>
-
-          @if (isAdmin) {
-            <a
-              mat-list-item
-              routerLink="/admin"
-              routerLinkActive="active"
-              class="sidenav-item"
-            >
-              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              <span matListItemTitle>{{ 'admin.panel' | translate }}</span>
-            </a>
-          }
-        </mat-nav-list>
-
-        <div class="sidenav-footer">
-          <mat-divider></mat-divider>
-          <div class="user-info">
-            @if (currentUser | async; as user) {
-              <div class="user-avatar" [style.background-image]="user.avatar ? 'url(' + getAvatarUrl(user) + ')' : 'none'">
-                @if (!user.avatar) {
-                  <span class="avatar-initials">{{ getUserInitials(user) }}</span>
-                }
-              </div>
-              <div class="user-details">
-                <span class="user-name">{{ getUserDisplayName(user) }}</span>
-                <span class="user-role">{{ 'common.user' | translate }}</span>
-              </div>
-            } @else {
-              <div class="guest-info">
-                <mat-icon>person_off</mat-icon>
-                <span>{{ 'common.guestUser' | translate }}</span>
-              </div>
-            }
-          </div>
-        </div>
-      </div>
-    </mat-sidenav>
-
-    <!-- Main Content -->
-    <mat-sidenav-content class="app-content">
-      <div class="content-wrapper">
-        <router-outlet />
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+  <mat-sidenav-content class="sidenav__content">
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

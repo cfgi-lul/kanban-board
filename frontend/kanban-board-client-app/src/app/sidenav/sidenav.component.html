@@ -1,0 +1,57 @@
+<div class="sidenav">
+  <mat-nav-list class="sidenav__menu">
+    <a
+      mat-list-item
+      routerLink="/boards-list"
+      routerLinkActive="sidenav__menu-item--active"
+      class="sidenav__menu-item"
+    >
+      <mat-icon matListItemIcon>view_list</mat-icon>
+      <span matListItemTitle>{{ 'board.boardsList' | translate }}</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/sign-in"
+      routerLinkActive="sidenav__menu-item--active"
+      class="sidenav__menu-item"
+    >
+      <mat-icon matListItemIcon>login</mat-icon>
+      <span matListItemTitle>{{ 'auth.signIn' | translate }}</span>
+    </a>
+
+    @if (isAdmin) {
+      <a
+        mat-list-item
+        routerLink="/admin"
+        routerLinkActive="sidenav__menu-item--active"
+        class="sidenav__menu-item"
+      >
+        <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+        <span matListItemTitle>{{ 'admin.panel' | translate }}</span>
+      </a>
+    }
+  </mat-nav-list>
+
+  <div class="sidenav__footer">
+    <mat-divider></mat-divider>
+    <div class="sidenav__user">
+      @if (currentUser | async; as user) {
+        <div class="sidenav__user-avatar" [style.background-image]="user.avatar ? 'url(' + getAvatarUrl(user) + ')' : 'none'">
+          @if (!user.avatar) {
+            <span class="sidenav__user-avatar-initials">{{ getUserInitials(user) }}</span>
+          }
+        </div>
+        <div class="sidenav__user-details">
+          <span class="sidenav__user-name">{{ getUserDisplayName(user) }}</span>
+          <span class="sidenav__user-role">{{ 'common.user' | translate }}</span>
+        </div>
+      } @else {
+        <div class="sidenav__guest">
+          <mat-icon>person_off</mat-icon>
+          <span>{{ 'common.guestUser' | translate }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</div>
