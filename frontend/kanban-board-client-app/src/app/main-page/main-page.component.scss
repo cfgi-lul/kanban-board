@@ -2,8 +2,7 @@
   flex: 1;
 }
 
-
-.main-page-container {
+.main-page {
   min-height: 100%;
   box-sizing: border-box;
   display: flex;
@@ -11,7 +10,7 @@
   padding: 32px;
   gap: 32px;
 
-  .welcome-section {
+  &__welcome {
     border: 1px solid var(--mat-sys-outline-variant);
     border-radius: 16px;
     padding: 16px;
@@ -20,167 +19,164 @@
     flex-direction: column;
     background-color: var(--mat-sys-primary-container);
     color: var(--mat-sys-on-primary-container);
-
-    .welcome-title {
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 32px;
-    }
   }
 
+  &__welcome-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+  }
 
-  .tiles-section {
+  &__tiles {
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
 
-    .section-title {
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 32px;
-    }
+  &__tiles-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+  }
 
-    .tiles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
+  &__tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
 }
 
 @container (max-width: 1280px) {
-  .main-page-container {
+  .main-page {
     padding: 24px;
     gap: 24px;
 
-    .tiles-section {
-      .tiles-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    &__tiles-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }
 
 @container (max-width: 1024px) {
-  .main-page-container {
+  .main-page {
     padding: 20px;
     gap: 24px;
 
-    .welcome-section {
+    &__welcome {
       border-radius: 14px;
       padding: 14px;
       gap: 14px;
-
-      .welcome-title {
-        font-size: 20px;
-        line-height: 28px;
-      }
     }
 
-    .tiles-section {
+    &__welcome-title {
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    &__tiles {
       gap: 14px;
+    }
 
-      .section-title {
-        font-size: 20px;
-        line-height: 28px;
-      }
+    &__tiles-title {
+      font-size: 20px;
+      line-height: 28px;
+    }
 
-      .tiles-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-      }
+    &__tiles-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
     }
   }
 }
 
 @container (max-width: 768px) {
-  .main-page-container {
+  .main-page {
     padding: 12px;
     gap: 12px;
 
-    .welcome-section {
+    &__welcome {
       border-radius: 12px;
       padding: 12px;
       gap: 12px;
-
-      .welcome-title {
-        font-size: 18px;
-      }
     }
 
-    .tiles-section {
+    &__welcome-title {
+      font-size: 18px;
+    }
+
+    &__tiles {
       gap: 12px;
+    }
 
-      .section-title {
-        font-size: 18px;
-      }
+    &__tiles-title {
+      font-size: 18px;
+    }
 
-      .tiles-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
+    &__tiles-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
   }
 }
 
 @container (max-width: 480px) {
-  .main-page-container {
+  .main-page {
     padding: 8px;
     gap: 8px;
 
-    .welcome-section {
+    &__welcome {
       border-radius: 8px;
       padding: 8px;
       gap: 8px;
-
-      .welcome-subtitle {
-        font-size: 14px;
-        line-height: 20px;
-      }
     }
 
-    .tiles-section {
-      gap: 8px;
+    &__welcome-subtitle {
+      font-size: 14px;
+      line-height: 20px;
+    }
 
-      .tiles-grid {
-        gap: 8px;
-      }
+    &__tiles {
+      gap: 8px;
+    }
+
+    &__tiles-grid {
+      gap: 8px;
     }
   }
 }
 
 @container (max-width: 280px) {
-  .main-page-container {
+  .main-page {
     padding: 6px;
     gap: 6px;
 
-    .welcome-section {
+    &__welcome {
       border-radius: 6px;
       padding: 6px;
       gap: 6px;
-
-      .welcome-title {
-        font-size: 14px;
-        line-height: 20px;
-      }
-
-      .welcome-subtitle {
-        font-size: 12px;
-        line-height: 16px;
-      }
     }
 
-    .tiles-section {
+    &__welcome-title {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    &__welcome-subtitle {
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    &__tiles {
       gap: 6px;
+    }
 
-      .section-title {
-        font-size: 14px;
-        line-height: 20px;
-      }
+    &__tiles-title {
+      font-size: 14px;
+      line-height: 20px;
+    }
 
-      .tiles-grid {
-        gap: 6px;
-      }
+    &__tiles-grid {
+      gap: 6px;
     }
   }
 }

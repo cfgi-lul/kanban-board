@@ -55,7 +55,7 @@ const TILES: Tile[] = [
     icon: 'help',
     route: '/help',
     color: 'primary',
-  }
+  },
 ];
 
 @Component({
@@ -76,8 +76,8 @@ export class MainPageComponent {
   private router = inject(Router);
   private translate = inject(TranslateService);
 
-  onTileClick(tile: Tile): void {
-    if (!tile.disabled) {
+  onTileClick(tile: Tile | null | undefined): void {
+    if (tile && !tile.disabled) {
       this.router.navigate([tile.route]);
     }
   }

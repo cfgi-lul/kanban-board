@@ -1,13 +1,13 @@
-<div class="main-page-container">
-  <div class="welcome-section">
-    <div class="welcome-title" translate="main.welcome.title"></div>
-    <div class="welcome-subtitle" translate="main.welcome.subtitle"></div>
+<div class="main-page">
+  <div class="main-page__welcome">
+    <div class="main-page__welcome-title" translate="main.welcome.title"></div>
+    <div class="main-page__welcome-subtitle" translate="main.welcome.subtitle"></div>
   </div>
 
-  <div class="tiles-section">
-    <div class="section-title" translate="main.sections.title"></div>
+  <div class="main-page__tiles">
+    <div class="main-page__tiles-title" translate="main.sections.title"></div>
 
-    <div class="tiles-grid">
+    <div class="main-page__tiles-grid">
       @for (tile of tiles; track tile.title) {
           <kn-tile
             [tile]="tile"
