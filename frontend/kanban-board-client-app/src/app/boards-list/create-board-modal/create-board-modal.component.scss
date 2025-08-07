@@ -15,8 +15,8 @@
   .columns-section {
     .columns-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       margin-bottom: 16px;
 
       h3 {
@@ -52,21 +52,21 @@
     align-items: center;
     gap: 8px;
     padding: 12px;
-    background-color: var(--mat-warn-50);
     border: 1px solid var(--mat-warn-200);
     border-radius: 4px;
+    background-color: var(--mat-warn-50);
     color: var(--mat-warn-700);
 
     mat-icon {
-      font-size: 20px;
       width: 20px;
       height: 20px;
+      font-size: 20px;
     }
   }
 
   mat-dialog-actions {
-    padding: 16px 0 0 0;
     margin: 0;
+    padding: 16px 0 0;
 
     button {
       min-width: 100px;
@@ -75,7 +75,7 @@
 }
 
 // Responsive design
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .create-board-modal {
     min-width: 100%;
     max-width: 100%;

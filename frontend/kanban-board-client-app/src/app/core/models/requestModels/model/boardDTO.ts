@@ -11,18 +11,16 @@ import { UserDTO } from './userDTO';
 import { LabelDTO } from './labelDTO';
 import { ColumnDTO } from './columnDTO';
 
-
-export interface BoardDTO { 
-    id?: number;
-    name: string;
-    description?: string;
-    settings?: string;
-    invitationCode?: string;
-    archived?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-    createdBy?: UserDTO;
-    columns?: Array<ColumnDTO>;
-    labels?: Array<LabelDTO>;
+export interface BoardDTO {
+  id?: number;
+  name: string;
+  description?: string;
+  settings?: string;
+  invitationCode?: string;
+  archived?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: UserDTO;
+  columns?: Array<ColumnDTO>;
+  labels?: Array<LabelDTO>;
 }
-

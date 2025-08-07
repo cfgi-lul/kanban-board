@@ -8,18 +8,16 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * Role data transfer object for API communication
  */
-export interface RoleDTO { 
-    /**
-     * Unique identifier for the role
-     */
-    id?: number;
-    /**
-     * Name of the role
-     */
-    name: string;
+export interface RoleDTO {
+  /**
+   * Unique identifier for the role
+   */
+  id?: number;
+  /**
+   * Name of the role
+   */
+  name: string;
 }
-

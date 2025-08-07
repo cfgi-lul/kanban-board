@@ -1,17 +1,18 @@
 .edit-task-dialog {
   padding: 24px;
+
   // width: ;
   &__title {
-    text-align: center;
     margin: 0 0 24px;
     font-size: 24px;
     font-weight: 500;
+    text-align: center;
   }
 
   &__content {
-    padding: 16px;
     max-width: 800px;
     margin: 0 auto;
+    padding: 16px;
   }
 
   &__form {
@@ -27,14 +28,13 @@
 
   &__description {
     &--preview {
-      height: 100%;
+      overflow: auto;
+      height: 400px;
+      min-height: 100px;
+      margin: 16px 0;
+      padding: 16px;
       border: 1px solid var(--color-border-secondary);
       border-radius: 4px;
-      padding: 16px;
-      min-height: 100px;
-      height: 400px;
-      margin: 16px 0;
-      overflow: auto;
     }
 
     &--edit {
@@ -52,8 +52,8 @@
     margin-top: 32px;
 
     &__title {
-      font-size: 19px;
       margin-bottom: 16px;
+      font-size: 19px;
       font-weight: 500;
     }
 
@@ -65,9 +65,9 @@
     }
 
     &__item {
-      background-color: var(--color-gray-100);
-      border-radius: 4px;
       padding: 16px;
+      border-radius: 4px;
+      background-color: var(--color-gray-100);
 
       &-header {
         display: flex;
@@ -89,8 +89,8 @@
       margin-top: 24px;
 
       &-button {
-        margin-top: 16px;
         float: right;
+        margin-top: 16px;
       }
     }
   }
@@ -99,13 +99,13 @@
     display: flex;
     justify-content: flex-end;
     gap: 16px;
-    padding: 24px 0;
     margin-top: 32px;
+    padding: 24px 0;
     border-top: 1px solid var(--color-gray-200);
   }
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .edit-task-dialog {
     &__content {
       padding: 8px;

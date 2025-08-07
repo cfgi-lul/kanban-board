@@ -8,8 +8,6 @@
  * Do not edit the class manually.
  */
 
-
-export interface AuthenticationResponse { 
-    token?: string;
+export interface AuthenticationResponse {
+  token?: string;
 }
-

@@ -5,41 +5,41 @@
   padding: 12px 0;
 
   &__avatar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background: var(--mat-sys-primary);
-    background-size: cover;
-    background-position: center;
     background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-position: center;
+    background-size: cover;
     box-shadow: 0 2px 8px var(--mat-sys-shadow);
-    flex-shrink: 0;
 
     &-initials {
       color: var(--mat-sys-on-primary);
-      font-weight: 600;
       font-size: 16px;
+      font-weight: 600;
     }
   }
 
   &__details {
     display: flex;
-    flex-direction: column;
     flex: 1;
+    flex-direction: column;
     min-width: 0;
   }
 
   &__name {
-    font-weight: 600;
+    overflow: hidden;
     color: var(--mat-sys-on-surface);
     font-size: 14px;
+    font-weight: 600;
     line-height: 1.2;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__role {
@@ -53,10 +53,10 @@
     color: var(--mat-sys-on-surface-variant);
 
     mat-icon {
-      font-size: 18px;
+      flex-shrink: 0;
       width: 18px;
       height: 18px;
-      flex-shrink: 0;
+      font-size: 18px;
     }
 
     span {
@@ -66,7 +66,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .user-display {
     padding: 8px 0;
 
@@ -95,7 +95,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .user-display {
     padding: 6px 0;
 

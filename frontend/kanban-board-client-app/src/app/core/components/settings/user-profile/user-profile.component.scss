@@ -18,10 +18,10 @@
 }
 
 .header-icon {
-  font-size: 32px;
   width: 32px;
   height: 32px;
   color: var(--mat-sys-primary);
+  font-size: 32px;
 }
 
 .header-text {
@@ -29,16 +29,16 @@
 }
 
 .header-title {
-  margin: 0 0 4px 0;
+  margin: 0 0 4px;
+  color: var(--mat-sys-on-surface);
   font-size: 24px;
   font-weight: 600;
-  color: var(--mat-sys-on-surface);
 }
 
 .header-subtitle {
   margin: 0;
-  font-size: 14px;
   color: var(--mat-sys-on-surface-variant);
+  font-size: 14px;
   line-height: 1.4;
 }
 
@@ -58,12 +58,12 @@
 
 .avatar-container {
   position: relative;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
   box-shadow: var(--mat-sys-shadow-light);
 
   &:hover {
@@ -71,15 +71,15 @@
   }
 
   .avatar {
+    transition: all 0.3s ease;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: var(--mat-sys-primary-container);
     border: 4px solid var(--mat-sys-outline-variant);
     border-radius: 50%;
-    transition: all 0.3s ease;
+    background-color: var(--mat-sys-primary-container);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 
     &:hover {
       border-color: var(--mat-sys-primary);
@@ -88,31 +88,28 @@
 
   .avatar-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white;
-    opacity: 0;
     transition: opacity 0.3s ease;
+    opacity: 0;
     border-radius: 50%;
+    background: rgb(0 0 0 / 60%);
+    color: white;
 
     mat-icon {
-      font-size: 24px;
       width: 24px;
       height: 24px;
       margin-bottom: 4px;
+      font-size: 24px;
     }
 
     span {
       font-size: 12px;
-      text-align: center;
       font-weight: 500;
+      text-align: center;
     }
   }
 
@@ -124,50 +121,50 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 50%;
-    padding: 12px;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    transform: translate(-50%, -50%);
+    padding: 12px;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 80%);
   }
 
   .avatar-actions {
     position: absolute;
-    bottom: -8px;
     right: -8px;
+    bottom: -8px;
     display: flex;
     gap: 4px;
   }
 
   .remove-avatar-btn {
-    background: var(--mat-sys-error-container);
-    color: var(--mat-sys-on-error-container);
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    padding: 0;
-    box-shadow: var(--mat-sys-shadow-light);
     transition: all 0.2s ease;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--mat-sys-error-container);
+    box-shadow: var(--mat-sys-shadow-light);
+    color: var(--mat-sys-on-error-container);
 
     &:hover {
       background: var(--mat-sys-error);
-      color: var(--mat-sys-on-error);
       box-shadow: var(--mat-sys-shadow-medium);
+      color: var(--mat-sys-on-error);
     }
 
     &:disabled {
-      opacity: 0.5;
       cursor: not-allowed;
+      opacity: 0.5;
     }
 
     mat-icon {
-      font-size: 16px;
       width: 16px;
       height: 16px;
+      font-size: 16px;
     }
   }
 }
@@ -191,26 +188,26 @@
 .account-info-section {
   margin-top: 32px;
   padding: 0;
-  background: transparent;
   border: none;
+  background: transparent;
   box-shadow: none;
 
   h4 {
-    margin: 0 0 16px 0;
-    color: var(--mat-sys-on-surface);
-    font-weight: 600;
-    font-size: 16px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 16px;
     padding-bottom: 8px;
     border-bottom: 2px solid var(--mat-sys-outline-variant);
+    color: var(--mat-sys-on-surface);
+    font-size: 16px;
+    font-weight: 600;
 
     mat-icon {
-      font-size: 18px;
       width: 18px;
       height: 18px;
       color: var(--mat-sys-primary);
+      font-size: 18px;
     }
   }
 }
@@ -223,47 +220,47 @@
 
 .info-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: var(--mat-sys-surface);
-  border-radius: 8px;
-  border: 1px solid var(--mat-sys-outline-variant);
+  justify-content: space-between;
   transition: all 0.2s ease;
+  padding: 12px 16px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
+  background: var(--mat-sys-surface);
 
   &:hover {
-    background: var(--mat-sys-surface-container);
     border-color: var(--mat-sys-outline);
+    background: var(--mat-sys-surface-container);
   }
 }
 
 .info-label {
-  font-size: 14px;
   color: var(--mat-sys-on-surface-variant);
+  font-size: 14px;
   font-weight: 500;
 }
 
 .info-value {
-  font-size: 14px;
   color: var(--mat-sys-on-surface);
+  font-size: 14px;
   font-weight: 500;
   text-align: right;
 }
 
 // Form Actions
 .form-actions {
-  margin-top: 32px;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+  margin-top: 32px;
 }
 
 .save-button {
+  transition: all 0.2s ease;
   min-width: 140px;
   height: 48px;
-  font-weight: 600;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  font-weight: 600;
 
   &:hover {
     box-shadow: var(--mat-sys-shadow-medium);
@@ -318,24 +315,24 @@
 
   .mat-mdc-chip-set {
     .mat-mdc-chip {
-      font-size: 12px;
       height: 24px;
       border-radius: 12px;
+      font-size: 12px;
       font-weight: 500;
     }
   }
 }
 
 // Responsive Design
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .header-content {
     gap: 12px;
   }
 
   .header-icon {
-    font-size: 28px;
     width: 28px;
     height: 28px;
+    font-size: 28px;
   }
 
   .header-title {
@@ -352,13 +349,13 @@
 
     .remove-avatar-btn {
       width: 28px;
-      height: 28px;
       min-width: 28px;
+      height: 28px;
 
       mat-icon {
-        font-size: 14px;
         width: 14px;
         height: 14px;
+        font-size: 14px;
       }
     }
   }

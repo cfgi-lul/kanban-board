@@ -1,7 +1,10 @@
 <div class="main-page">
   <div class="main-page__welcome">
     <div class="main-page__welcome-title" translate="main.welcome.title"></div>
-    <div class="main-page__welcome-subtitle" translate="main.welcome.subtitle"></div>
+    <div
+      class="main-page__welcome-subtitle"
+      translate="main.welcome.subtitle"
+    ></div>
   </div>
 
   <div class="main-page__tiles">
@@ -9,16 +12,16 @@
 
     <div class="main-page__tiles-grid">
       @for (tile of tiles; track tile.title) {
-          <kn-tile
-            [class.main-page__tiles-grid__tile--large]="tile.size === 'large'"
-            [class.main-page__tiles-grid__tile--medium]="tile.size === 'medium'"
-            [class.main-page__tiles-grid__tile--small]="tile.size === 'small'"
-            [title]="tile.title"
-            [description]="tile.description"
-            [icon]="tile.icon"
-            [color]="tile.color"
-            [routerLink]="tile.route"
-          />
+        <kn-tile
+          [class.main-page__tiles-grid__tile--large]="tile.size === 'large'"
+          [class.main-page__tiles-grid__tile--medium]="tile.size === 'medium'"
+          [class.main-page__tiles-grid__tile--small]="tile.size === 'small'"
+          [title]="tile.title"
+          [description]="tile.description"
+          [icon]="tile.icon"
+          [color]="tile.color"
+          [routerLink]="tile.route"
+        />
       }
     </div>
   </div>

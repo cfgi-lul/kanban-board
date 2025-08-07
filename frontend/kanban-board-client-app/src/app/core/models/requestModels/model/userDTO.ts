@@ -9,58 +9,56 @@
  */
 import { RoleDTO } from './roleDTO';
 
-
 /**
  * User data for registration
  */
-export interface UserDTO { 
-    /**
-     * Unique identifier for the user
-     */
-    id?: number;
-    /**
-     * Username for authentication
-     */
-    username: string;
-    /**
-     * User password (only for registration/update)
-     */
-    password: string;
-    /**
-     * Display name shown to other users
-     */
-    displayName?: string;
-    /**
-     * User email address
-     */
-    email?: string;
-    /**
-     * URL to user\'s avatar image
-     */
-    avatar?: string;
-    /**
-     * Timestamp of last login
-     */
-    lastLoginAt?: Date;
-    /**
-     * Timestamp when user was created
-     */
-    createdAt?: Date;
-    /**
-     * Timestamp when user was last updated
-     */
-    updatedAt?: Date;
-    /**
-     * Whether the user account is enabled
-     */
-    enabled?: boolean;
-    /**
-     * Legacy name field (deprecated)
-     */
-    name?: string;
-    /**
-     * List of roles assigned to the user
-     */
-    roles?: Array<RoleDTO>;
+export interface UserDTO {
+  /**
+   * Unique identifier for the user
+   */
+  id?: number;
+  /**
+   * Username for authentication
+   */
+  username: string;
+  /**
+   * User password (only for registration/update)
+   */
+  password: string;
+  /**
+   * Display name shown to other users
+   */
+  displayName?: string;
+  /**
+   * User email address
+   */
+  email?: string;
+  /**
+   * URL to user\'s avatar image
+   */
+  avatar?: string;
+  /**
+   * Timestamp of last login
+   */
+  lastLoginAt?: Date;
+  /**
+   * Timestamp when user was created
+   */
+  createdAt?: Date;
+  /**
+   * Timestamp when user was last updated
+   */
+  updatedAt?: Date;
+  /**
+   * Whether the user account is enabled
+   */
+  enabled?: boolean;
+  /**
+   * Legacy name field (deprecated)
+   */
+  name?: string;
+  /**
+   * List of roles assigned to the user
+   */
+  roles?: Array<RoleDTO>;
 }
-

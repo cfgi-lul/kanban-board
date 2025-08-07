@@ -27,7 +27,9 @@
       @if (isLoading()) {
         <div class="state-container">
           <mat-spinner diameter="50"></mat-spinner>
-          <mat-card-subtitle>{{ 'board.loadingBoards' | translate }}</mat-card-subtitle>
+          <mat-card-subtitle>{{
+            'board.loadingBoards' | translate
+          }}</mat-card-subtitle>
         </div>
       }
 
@@ -35,8 +37,12 @@
         <mat-card class="state-card">
           <mat-card-content class="state-content">
             <mat-icon color="warn" class="state-icon">error</mat-icon>
-            <mat-card-title>{{ 'board.failedToLoadBoards' | translate }}</mat-card-title>
-            <mat-card-subtitle>{{ 'board.errorLoadingBoards' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{
+              'board.failedToLoadBoards' | translate
+            }}</mat-card-title>
+            <mat-card-subtitle>{{
+              'board.errorLoadingBoards' | translate
+            }}</mat-card-subtitle>
             <button mat-raised-button color="primary" (click)="retryLoad()">
               <mat-icon>refresh</mat-icon>
               {{ 'common.retry' | translate }}
@@ -50,8 +56,12 @@
           <mat-card class="state-card">
             <mat-card-content class="state-content">
               <mat-icon class="state-icon">search_off</mat-icon>
-              <mat-card-title>{{ 'board.noBoardsFound' | translate }}</mat-card-title>
-              <mat-card-subtitle>{{ 'board.noBoardsMatchSearch' | translate }}</mat-card-subtitle>
+              <mat-card-title>{{
+                'board.noBoardsFound' | translate
+              }}</mat-card-title>
+              <mat-card-subtitle>{{
+                'board.noBoardsMatchSearch' | translate
+              }}</mat-card-subtitle>
               <button mat-button color="primary" (click)="clearSearch()">
                 {{ 'common.clearSearch' | translate }}
               </button>
@@ -60,7 +70,12 @@
         }
 
         @if (filteredBoards().length > 0) {
-          <mat-grid-list cols="3" rowHeight="1:1" gutterSize="16px" class="boards-grid">
+          <mat-grid-list
+            cols="3"
+            rowHeight="1:1"
+            gutterSize="16px"
+            class="boards-grid"
+          >
             @for (board of filteredBoards(); track board.id) {
               <mat-grid-tile>
                 <mat-card class="board-card" (click)="openBoard(board.id)">
@@ -77,15 +92,21 @@
                       </mat-card-subtitle>
                     }
                     <mat-card-subtitle>
-                      {{ 'board.columns' | translate }}: {{ board.columns?.length || 0 }}
+                      {{ 'board.columns' | translate }}:
+                      {{ board.columns?.length || 0 }}
                     </mat-card-subtitle>
                   </mat-card-content>
                   <mat-card-actions align="end">
-                    @if (authService.hasRole('ADMIN') || (canDelete(board.id) | async)) {
+                    @if (
+                      authService.hasRole('ADMIN') ||
+                      (canDelete(board.id) | async)
+                    ) {
                       <button
                         mat-icon-button
                         color="warn"
-                        (click)="deleteBoard(board.id); $event.stopPropagation()"
+                        (click)="
+                          deleteBoard(board.id); $event.stopPropagation()
+                        "
                         [matTooltip]="'common.delete' | translate"
                       >
                         <mat-icon>delete</mat-icon>
@@ -109,8 +130,12 @@
         <mat-card class="add-board-card" (click)="addBoard()">
           <mat-card-content class="add-board-content">
             <mat-icon class="add-icon">add</mat-icon>
-            <mat-card-title>{{ 'board.createNewBoard' | translate }}</mat-card-title>
-            <mat-card-subtitle>{{ 'board.clickToCreateBoard' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{
+              'board.createNewBoard' | translate
+            }}</mat-card-title>
+            <mat-card-subtitle>{{
+              'board.clickToCreateBoard' | translate
+            }}</mat-card-subtitle>
           </mat-card-content>
         </mat-card>
       }

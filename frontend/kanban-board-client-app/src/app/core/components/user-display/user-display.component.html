@@ -1,8 +1,15 @@
 @if (user(); as user) {
   <div class="user-display">
-    <div class="user-display__avatar" [style.background-image]="user.avatar ? 'url(' + getAvatarUrl(user) + ')' : 'none'">
+    <div
+      class="user-display__avatar"
+      [style.background-image]="
+        user.avatar ? 'url(' + getAvatarUrl(user) + ')' : 'none'
+      "
+    >
       @if (!user.avatar) {
-        <span class="user-display__avatar-initials">{{ getUserInitials(user) }}</span>
+        <span class="user-display__avatar-initials">{{
+          getUserInitials(user)
+        }}</span>
       }
     </div>
     <div class="user-display__details">

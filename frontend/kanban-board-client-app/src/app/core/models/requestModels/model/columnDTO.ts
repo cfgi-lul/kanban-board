@@ -9,15 +9,13 @@
  */
 import { TaskDTO } from './taskDTO';
 
-
-export interface ColumnDTO { 
-    id?: number;
-    name: string;
-    orderIndex?: number;
-    color?: string;
-    taskLimit?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    tasks?: Array<TaskDTO>;
+export interface ColumnDTO {
+  id?: number;
+  name: string;
+  orderIndex?: number;
+  color?: string;
+  taskLimit?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  tasks?: Array<TaskDTO>;
 }
-

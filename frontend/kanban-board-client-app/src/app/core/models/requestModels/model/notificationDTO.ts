@@ -9,21 +9,19 @@
  */
 import { UserDTO } from './userDTO';
 
-
-export interface NotificationDTO { 
-    id?: number;
-    title: string;
-    message: string;
-    type: string;
-    read?: boolean;
-    data?: string;
-    recipientId?: number;
-    senderId?: number;
-    taskId?: number;
-    boardId?: number;
-    recipient?: UserDTO;
-    sender?: UserDTO;
-    createdAt?: Date;
-    readAt?: Date;
+export interface NotificationDTO {
+  id?: number;
+  title: string;
+  message: string;
+  type: string;
+  read?: boolean;
+  data?: string;
+  recipientId?: number;
+  senderId?: number;
+  taskId?: number;
+  boardId?: number;
+  recipient?: UserDTO;
+  sender?: UserDTO;
+  createdAt?: Date;
+  readAt?: Date;
 }
-

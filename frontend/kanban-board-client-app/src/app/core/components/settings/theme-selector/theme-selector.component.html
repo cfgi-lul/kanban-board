@@ -6,10 +6,7 @@
       class="theme-toggle-group"
     >
       @for (scheme of availableColorSchemes; track scheme.value) {
-        <mat-button-toggle
-          [value]="scheme.value"
-          class="theme-option"
-        >
+        <mat-button-toggle [value]="scheme.value" class="theme-option">
           <mat-icon>{{ getThemeIcon(scheme.value) }}</mat-icon>
           <span>{{ scheme.label }}</span>
         </mat-button-toggle>

@@ -1,15 +1,15 @@
 .kanban-board-list {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   height: 100%;
   padding: 16px;
-  box-sizing: border-box;
 }
 
 .header {
   top: 0;
-  left: 0;
   right: 0;
+  left: 0;
 }
 
 :host {
@@ -53,27 +53,27 @@
   padding: 48px 16px;
 
   .error-card {
-    max-width: 400px;
     width: 100%;
+    max-width: 400px;
 
     .error-content {
-      text-align: center;
       padding: 16px;
+      text-align: center;
 
       .error-icon {
-        font-size: 48px;
         width: 48px;
         height: 48px;
         margin-bottom: 16px;
+        font-size: 48px;
       }
 
       h3 {
-        margin: 16px 0 8px 0;
+        margin: 16px 0 8px;
         color: var(--mat-sys-on-surface);
       }
 
       p {
-        margin: 0 0 24px 0;
+        margin: 0 0 24px;
         color: var(--mat-sys-on-surface-variant);
         line-height: 1.5;
       }
@@ -95,28 +95,28 @@
   padding: 48px 16px;
 
   .no-results-card {
-    max-width: 400px;
     width: 100%;
+    max-width: 400px;
 
     .no-results-content {
-      text-align: center;
       padding: 16px;
+      text-align: center;
 
       .no-results-icon {
-        font-size: 48px;
         width: 48px;
         height: 48px;
         margin-bottom: 16px;
         color: var(--mat-sys-on-surface-variant);
+        font-size: 48px;
       }
 
       h3 {
-        margin: 16px 0 8px 0;
+        margin: 16px 0 8px;
         color: var(--mat-sys-on-surface);
       }
 
       p {
-        margin: 0 0 24px 0;
+        margin: 0 0 24px;
         color: var(--mat-sys-on-surface-variant);
         line-height: 1.5;
       }
@@ -133,11 +133,11 @@
 
 // Board Cards
 .board-card {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
   height: auto;
   min-height: 200px;
-  cursor: pointer;
   background-color: var(--mat-sys-surface-container);
-  transition: background-color 0.2s ease;
 
   &:hover {
     background-color: var(--mat-sys-state-hover-surface);
@@ -147,15 +147,15 @@
     margin-bottom: 16px;
 
     mat-card-title {
-      font-size: 18px;
-      font-weight: 500;
       margin-bottom: 4px;
       color: var(--mat-sys-on-surface);
+      font-size: 18px;
+      font-weight: 500;
     }
 
     mat-card-subtitle {
-      font-size: 12px;
       color: var(--mat-sys-on-surface-variant);
+      font-size: 12px;
     }
   }
 
@@ -168,8 +168,8 @@
   }
 
   mat-card-actions {
-    padding: 16px;
     margin: 0;
+    padding: 16px;
 
     button {
       margin-left: 8px;
@@ -192,20 +192,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 32px 16px;
     height: 100%;
+    padding: 32px 16px;
+    text-align: center;
 
     .add-icon {
-      font-size: 48px;
       width: 48px;
       height: 48px;
       margin-bottom: 16px;
       color: var(--mat-sys-on-surface-variant);
+      font-size: 48px;
     }
 
     h3 {
-      margin: 0 0 8px 0;
+      margin: 0 0 8px;
       color: var(--mat-sys-on-surface);
       font-size: 18px;
       font-weight: 500;
@@ -221,7 +221,7 @@
 }
 
 // Responsive Design
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .kanban-board-list {
     padding: 8px;
   }

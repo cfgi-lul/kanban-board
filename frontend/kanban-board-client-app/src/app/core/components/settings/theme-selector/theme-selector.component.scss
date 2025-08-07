@@ -7,18 +7,18 @@
 /* Theme Options */
 .theme-options {
   .theme-toggle-group {
-    background: var(--mat-sys-surface-container);
+    overflow: hidden;
     border: 1px solid var(--mat-sys-outline-variant);
     border-radius: 12px;
-    overflow: hidden;
+    background: var(--mat-sys-surface-container);
     box-shadow: 0 1px 2px var(--mat-sys-shadow);
 
     .theme-option {
+      min-width: 80px;
+      padding: 12px 16px;
       border: none;
       background: transparent;
       color: var(--mat-sys-on-surface-variant);
-      padding: 12px 16px;
-      min-width: 80px;
 
       &:hover {
         background-color: var(--mat-sys-state-hover-surface);
@@ -38,9 +38,9 @@
       }
 
       mat-icon {
-        font-size: 20px;
         width: 20px;
         height: 20px;
+        font-size: 20px;
       }
 
       span {
@@ -59,8 +59,8 @@
 }
 
 .theme-preview-card {
-  border: 2px solid transparent;
   transition: all 0.2s ease;
+  border: 2px solid transparent;
   background: var(--mat-sys-surface-container);
 
   &:hover {
@@ -74,26 +74,26 @@
   }
 
   mat-card-header {
-    padding: 16px 16px 0 16px;
+    padding: 16px 16px 0;
 
     mat-icon {
-      color: var(--mat-sys-primary);
-      font-size: 24px;
       width: 24px;
       height: 24px;
+      color: var(--mat-sys-primary);
+      font-size: 24px;
     }
 
     mat-card-title {
+      margin: 0;
+      color: var(--mat-sys-on-surface);
       font-size: 16px;
       font-weight: 600;
-      color: var(--mat-sys-on-surface);
-      margin: 0;
     }
 
     mat-card-subtitle {
+      margin: 4px 0 0;
       color: var(--mat-sys-on-surface-variant);
       font-size: 12px;
-      margin: 4px 0 0 0;
     }
   }
 
@@ -115,9 +115,9 @@
         }
 
         .preview-title {
-          font-weight: 500;
           color: var(--mat-sys-on-surface);
           font-size: 14px;
+          font-weight: 500;
         }
       }
 
@@ -132,7 +132,7 @@
   }
 
   mat-card-actions {
-    padding: 0 16px 16px 16px;
+    padding: 0 16px 16px;
 
     button {
       width: 100%;
@@ -148,7 +148,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .theme-previews {
     grid-template-columns: 1fr;
   }
@@ -163,9 +163,9 @@
       }
 
       mat-icon {
-        font-size: 18px;
         width: 18px;
         height: 18px;
+        font-size: 18px;
       }
 
       span {

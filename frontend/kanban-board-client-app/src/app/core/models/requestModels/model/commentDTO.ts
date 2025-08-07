@@ -9,16 +9,14 @@
  */
 import { UserDTO } from './userDTO';
 
-
-export interface CommentDTO { 
-    id?: number;
-    content: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    editedAt?: Date;
-    mentions?: string;
-    edited?: boolean;
-    author?: UserDTO;
-    taskId?: number;
+export interface CommentDTO {
+  id?: number;
+  content: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  editedAt?: Date;
+  mentions?: string;
+  edited?: boolean;
+  author?: UserDTO;
+  taskId?: number;
 }
-

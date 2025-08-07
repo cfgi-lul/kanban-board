@@ -3,20 +3,20 @@
 }
 
 .main-page {
-  min-height: 100%;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 32px;
   gap: 32px;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 32px;
 
   &__welcome {
-    border: 1px solid var(--mat-sys-outline-variant);
-    border-radius: 16px;
-    padding: 16px;
-    gap: 16px;
     display: flex;
     flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: 16px;
     background-color: var(--mat-sys-primary-container);
     color: var(--mat-sys-on-primary-container);
   }
@@ -38,7 +38,10 @@
   }
 
   &__tiles-grid {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
     &__tile--small {
       grid-column: span 1;
     }
@@ -50,16 +53,13 @@
     &__tile--large {
       grid-column: span 3;
     }
-
-    display: grid;
-    gap: 16px;
   }
 }
 
 @container (max-width: 1280px) {
   .main-page {
-    padding: 24px;
     gap: 24px;
+    padding: 24px;
 
     &__tiles-grid {
       &__tile--large {
@@ -72,13 +72,13 @@
 
 @container (max-width: 1024px) {
   .main-page {
-    padding: 20px;
     gap: 24px;
+    padding: 20px;
 
     &__welcome {
-      border-radius: 14px;
-      padding: 14px;
       gap: 14px;
+      padding: 14px;
+      border-radius: 14px;
     }
 
     &__welcome-title {
@@ -102,13 +102,13 @@
 
 @container (max-width: 768px) {
   .main-page {
-    padding: 12px;
     gap: 12px;
+    padding: 12px;
 
     &__welcome {
-      border-radius: 12px;
-      padding: 12px;
       gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
     }
 
     &__welcome-title {
@@ -125,6 +125,7 @@
 
     &__tiles-grid {
       grid-template-columns: repeat(1, 1fr);
+
       &__tile--medium {
         grid-column: span 1;
       }
@@ -140,13 +141,13 @@
 
 @container (max-width: 480px) {
   .main-page {
-    padding: 8px;
     gap: 8px;
+    padding: 8px;
 
     &__welcome {
-      border-radius: 8px;
-      padding: 8px;
       gap: 8px;
+      padding: 8px;
+      border-radius: 8px;
     }
 
     &__welcome-subtitle {
@@ -165,13 +166,13 @@
 
 @container (max-width: 280px) {
   .main-page {
-    padding: 6px;
     gap: 6px;
+    padding: 6px;
 
     &__welcome {
-      border-radius: 6px;
-      padding: 6px;
       gap: 6px;
+      padding: 6px;
+      border-radius: 6px;
     }
 
     &__welcome-title {

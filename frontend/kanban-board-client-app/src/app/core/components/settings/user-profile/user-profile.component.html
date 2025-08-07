@@ -4,8 +4,12 @@
     <div class="header-content">
       <mat-icon class="header-icon">account_circle</mat-icon>
       <div class="header-text">
-        <h2 class="header-title">{{ 'settings.profileInformation' | translate }}</h2>
-        <p class="header-subtitle">{{ 'settings.manageAccountDetails' | translate }}</p>
+        <h2 class="header-title">
+          {{ 'settings.profileInformation' | translate }}
+        </h2>
+        <p class="header-subtitle">
+          {{ 'settings.manageAccountDetails' | translate }}
+        </p>
       </div>
     </div>
   </div>
@@ -26,7 +30,10 @@
         <!-- Profile Picture Section -->
         <div class="profile-picture-section">
           <div class="avatar-container">
-            <div class="avatar" [style.background-image]="'url(' + getAvatarUrl() + ')'">
+            <div
+              class="avatar"
+              [style.background-image]="'url(' + getAvatarUrl() + ')'"
+            >
               <div class="avatar-overlay" (click)="onAvatarClick()">
                 <mat-icon>camera_alt</mat-icon>
                 <span>{{ 'settings.changeAvatar' | translate }}</span>
@@ -120,19 +127,39 @@
           <h4>{{ 'settings.accountInformation' | translate }}</h4>
           <div class="info-grid">
             <div class="info-item">
-              <span class="info-label">{{ 'settings.memberSince' | translate }}</span>
-              <span class="info-value">{{ currentUser?.createdAt | date:'mediumDate' }}</span>
+              <span class="info-label">{{
+                'settings.memberSince' | translate
+              }}</span>
+              <span class="info-value">{{
+                currentUser?.createdAt | date: 'mediumDate'
+              }}</span>
             </div>
             <div class="info-item">
-              <span class="info-label">{{ 'settings.lastLogin' | translate }}</span>
-              <span class="info-value">{{ currentUser?.lastLoginAt ? (currentUser.lastLoginAt | date:'medium') : ('settings.never' | translate) }}</span>
+              <span class="info-label">{{
+                'settings.lastLogin' | translate
+              }}</span>
+              <span class="info-value">{{
+                currentUser?.lastLoginAt
+                  ? (currentUser.lastLoginAt | date: 'medium')
+                  : ('settings.never' | translate)
+              }}</span>
             </div>
             <div class="info-item">
-              <span class="info-label">{{ 'settings.accountStatus' | translate }}</span>
+              <span class="info-label">{{
+                'settings.accountStatus' | translate
+              }}</span>
               <span class="info-value">
                 <mat-chip-set>
-                  <mat-chip [color]="currentUser?.enabled ? 'accent' : 'warn'" selected>
-                    {{ (currentUser?.enabled ? 'settings.active' : 'settings.inactive') | translate }}
+                  <mat-chip
+                    [color]="currentUser?.enabled ? 'accent' : 'warn'"
+                    selected
+                  >
+                    {{
+                      (currentUser?.enabled
+                        ? 'settings.active'
+                        : 'settings.inactive'
+                      ) | translate
+                    }}
                   </mat-chip>
                 </mat-chip-set>
               </span>
@@ -149,15 +176,10 @@
             class="save-button"
           >
             @if (isSaving) {
-              <mat-spinner
-                diameter="20"
-                class="button-spinner"
-              ></mat-spinner>
+              <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
               <span>{{ 'settings.saving' | translate }}</span>
             } @else {
-              <span>{{
-                'settings.saveChanges' | translate
-              }}</span>
+              <span>{{ 'settings.saveChanges' | translate }}</span>
             }
           </button>
         </div>

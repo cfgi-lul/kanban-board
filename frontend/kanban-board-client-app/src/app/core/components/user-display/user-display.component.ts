@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,11 +15,7 @@ import { getUserDisplayName, getUserInitials } from '../../utils/user.utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kn-user-display',
   standalone: true,
-  imports: [
-    MatIconModule,
-    AsyncPipe,
-    TranslateModule,
-  ],
+  imports: [MatIconModule, AsyncPipe, TranslateModule],
   templateUrl: './user-display.component.html',
   styleUrl: './user-display.component.scss',
 })

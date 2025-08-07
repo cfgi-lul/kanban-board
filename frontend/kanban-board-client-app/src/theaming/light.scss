@@ -83,16 +83,16 @@
   );
 
   // Custom Light Shadows
-  --mat-sys-shadow-light: 0px 0px 4px 0px rgba(34, 60, 80, 0.15);
-  --mat-sys-shadow-medium: 0px 0px 6px 0px rgba(34, 60, 80, 0.20);
-  --mat-sys-shadow-heavy: 0px 0px 8px 0px rgba(34, 60, 80, 0.25);
+  --mat-sys-shadow-light: 0 0 4px 0 rgb(34 60 80 / 15%);
+  --mat-sys-shadow-medium: 0 0 6px 0 rgb(34 60 80 / 20%);
+  --mat-sys-shadow-heavy: 0 0 8px 0 rgb(34 60 80 / 25%);
 }
 
 /* Typography */
 :root,
 :host {
-  --mat-sys-brand-font-family: Roboto;
-  --mat-sys-plain-font-family: Roboto;
+  --mat-sys-brand-font-family: roboto;
+  --mat-sys-plain-font-family: roboto;
   --mat-sys-bold-font-weight: 700;
   --mat-sys-medium-font-weight: 500;
   --mat-sys-regular-font-weight: 400;

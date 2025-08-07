@@ -2,11 +2,11 @@
   &__container {
     height: calc(100vh - 64px);
   }
+  width: 280px;
+  border-right: 1px solid var(--mat-sys-outline-variant) !important;
+  border-radius: 0;
 
   background: var(--mat-sys-surface-container) !important;
-  border-right: 1px solid var(--mat-sys-outline-variant) !important;
-  width: 280px;
-  border-radius: 0;
 
   &__content {
     display: flex;
@@ -15,19 +15,19 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .sidenav {
     width: 260px;
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .sidenav {
     width: 260px;
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .sidenav {
     width: 240px;
   }

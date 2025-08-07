@@ -8,14 +8,12 @@
  * Do not edit the class manually.
  */
 
-
-export interface ProductivityMetrics { 
-    boardId?: number;
-    fromDate?: Date;
-    toDate?: Date;
-    tasksCreated?: number;
-    tasksCompleted?: number;
-    completionRate?: number;
-    averageTaskDuration?: number;
+export interface ProductivityMetrics {
+  boardId?: number;
+  fromDate?: Date;
+  toDate?: Date;
+  tasksCreated?: number;
+  tasksCompleted?: number;
+  completionRate?: number;
+  averageTaskDuration?: number;
 }
-

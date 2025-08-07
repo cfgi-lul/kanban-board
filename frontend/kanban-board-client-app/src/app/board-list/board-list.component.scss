@@ -1,18 +1,18 @@
 :host {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
+
   // height: 100vh;
 }
 
 .board-list-container {
-  min-height: 100%;
-
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  min-height: 100%;
   margin: 16px;
   border-radius: 8px;
-  overflow: hidden;
 }
 
 .search-toolbar {
@@ -22,8 +22,8 @@
 
 .content-area {
   flex: 1;
-  padding: 16px;
   overflow-y: auto;
+  padding: 16px;
 }
 
 .state-container {
@@ -45,9 +45,9 @@
 }
 
 .board-card {
-  height: 100%;
   cursor: pointer;
   transition: box-shadow 0.2s ease;
+  height: 100%;
 
   &:hover {
     box-shadow: 0 4px 8px var(--mat-sys-shadow);
@@ -58,34 +58,34 @@
   }
 
   .board-description {
+    display: box;
+    overflow: hidden;
     margin-bottom: 8px;
-    display: -webkit-box;
+    text-overflow: ellipsis;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }
 
 .add-board-card {
+  cursor: pointer;
+  transition: border-color 0.2s ease;
   max-width: 300px;
   margin: 0 auto;
   border: 2px dashed var(--mat-sys-outline-variant);
-  cursor: pointer;
-  transition: border-color 0.2s ease;
 
   &:hover {
     border-color: var(--mat-sys-outline);
   }
 
   .add-board-content {
-    text-align: center;
     padding: 32px 16px;
+    text-align: center;
   }
 }
 
 // Responsive design
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .board-list-container {
     margin: 8px;
   }

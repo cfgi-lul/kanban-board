@@ -8,11 +8,9 @@
  * Do not edit the class manually.
  */
 
-
-export interface StatusDistribution { 
-    todo?: number;
-    inProgress?: number;
-    review?: number;
-    done?: number;
+export interface StatusDistribution {
+  todo?: number;
+  inProgress?: number;
+  review?: number;
+  done?: number;
 }
-

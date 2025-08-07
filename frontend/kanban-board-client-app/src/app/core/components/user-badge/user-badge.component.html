@@ -3,7 +3,7 @@
     <div class="user-badge-content">
       <div class="avatar">
         @if (user()?.avatar) {
-          <img [src]="getAvatarUrl()" alt="User avatar">
+          <img [src]="getAvatarUrl()" alt="User avatar" />
         } @else {
           <mat-icon class="avatar-icon">person</mat-icon>
         }

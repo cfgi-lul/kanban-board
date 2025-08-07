@@ -36,7 +36,9 @@
             [placeholder]="'board.enterBoardDescription' | translate"
             rows="3"
           ></textarea>
-          <mat-error *ngIf="createBoardForm.get('description')?.hasError('maxlength')">
+          <mat-error
+            *ngIf="createBoardForm.get('description')?.hasError('maxlength')"
+          >
             {{ 'board.boardDescriptionMaxLength' | translate }}
           </mat-error>
         </mat-form-field>
@@ -63,7 +65,9 @@
               class="column-item"
             >
               <mat-form-field appearance="outline" class="column-input">
-                <mat-label>{{ 'board.columnName' | translate }} {{ i + 1 }}</mat-label>
+                <mat-label
+                  >{{ 'board.columnName' | translate }} {{ i + 1 }}</mat-label
+                >
                 <input
                   matInput
                   [formControl]="$any(column)"

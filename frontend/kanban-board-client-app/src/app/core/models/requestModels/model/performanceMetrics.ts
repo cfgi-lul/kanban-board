@@ -8,13 +8,11 @@
  * Do not edit the class manually.
  */
 
-
-export interface PerformanceMetrics { 
-    totalBoards?: number;
-    totalTasks?: number;
-    totalUsers?: number;
-    activeBoards?: number;
-    recentTasks?: number;
-    lastOptimization?: Date;
+export interface PerformanceMetrics {
+  totalBoards?: number;
+  totalTasks?: number;
+  totalUsers?: number;
+  activeBoards?: number;
+  recentTasks?: number;
+  lastOptimization?: Date;
 }
-
