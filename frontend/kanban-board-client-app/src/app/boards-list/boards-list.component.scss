@@ -1,236 +1,108 @@
-.kanban-board-list {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  height: 100%;
-  padding: 16px;
-}
-
-.header {
-  top: 0;
-  right: 0;
-  left: 0;
-}
-
 :host {
   flex: 1;
 }
 
-.spacer {
-  flex: 1;
-}
-
-// Search Section
-.search-section {
-  margin-bottom: 24px;
-
-  .search-field {
-    width: 100%;
-    max-width: 400px;
-  }
-}
-
-// Loading State
-.loading-container {
+.boards-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 16px;
-  text-align: center;
+  gap: 32px;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 32px;
 
-  p {
-    margin-top: 16px;
-    color: var(--mat-sys-on-surface-variant);
-    font-size: 16px;
-  }
-}
-
-// Error State
-.error-container {
-  display: flex;
-  justify-content: center;
-  padding: 48px 16px;
-
-  .error-card {
+  &__search {
     width: 100%;
     max-width: 400px;
-
-    .error-content {
-      padding: 16px;
-      text-align: center;
-
-      .error-icon {
-        width: 48px;
-        height: 48px;
-        margin-bottom: 16px;
-        font-size: 48px;
-      }
-
-      h3 {
-        margin: 16px 0 8px;
-        color: var(--mat-sys-on-surface);
-      }
-
-      p {
-        margin: 0 0 24px;
-        color: var(--mat-sys-on-surface-variant);
-        line-height: 1.5;
-      }
-    }
-  }
-}
-
-// Boards Container
-.boards-container {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-// No Results State
-.no-results {
-  display: flex;
-  justify-content: center;
-  padding: 48px 16px;
-
-  .no-results-card {
-    width: 100%;
-    max-width: 400px;
-
-    .no-results-content {
-      padding: 16px;
-      text-align: center;
-
-      .no-results-icon {
-        width: 48px;
-        height: 48px;
-        margin-bottom: 16px;
-        color: var(--mat-sys-on-surface-variant);
-        font-size: 48px;
-      }
-
-      h3 {
-        margin: 16px 0 8px;
-        color: var(--mat-sys-on-surface);
-      }
-
-      p {
-        margin: 0 0 24px;
-        color: var(--mat-sys-on-surface-variant);
-        line-height: 1.5;
-      }
-    }
-  }
-}
-
-// Boards Grid
-.boards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-// Board Cards
-.board-card {
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  height: auto;
-  min-height: 200px;
-  background-color: var(--mat-sys-surface-container);
-
-  &:hover {
-    background-color: var(--mat-sys-state-hover-surface);
   }
 
-  mat-card-header {
-    margin-bottom: 16px;
-
-    mat-card-title {
-      margin-bottom: 4px;
-      color: var(--mat-sys-on-surface);
-      font-size: 18px;
-      font-weight: 500;
-    }
-
-    mat-card-subtitle {
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 12px;
-    }
-  }
-
-  mat-card-content {
-    p {
-      margin: 0;
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 14px;
-    }
-  }
-
-  mat-card-actions {
-    margin: 0;
-    padding: 16px;
-
-    button {
-      margin-left: 8px;
-    }
-  }
-}
-
-// Add Board Card
-.add-board-card {
-  border: 2px dashed var(--mat-sys-outline-variant);
-  background: var(--mat-sys-surface-container);
-
-  &:hover {
-    border-color: var(--mat-sys-outline);
-    background: var(--mat-sys-state-hover-surface);
-  }
-
-  .add-board-content {
+  &__loading {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    padding: 32px 16px;
+    gap: 16px;
+    padding: 48px 16px;
     text-align: center;
+  }
 
-    .add-icon {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 16px;
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 48px;
-    }
+  &__loading-text {
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-medium);
+  }
 
-    h3 {
-      margin: 0 0 8px;
-      color: var(--mat-sys-on-surface);
-      font-size: 18px;
-      font-weight: 500;
-    }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 
-    p {
-      margin: 0;
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 14px;
-      line-height: 1.4;
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  &__card {
+    height: 100%;
+  }
+
+  &__add-card {
+    height: 100%;
+  }
+}
+
+@container (max-width: 1280px) {
+  .boards-list {
+    gap: 24px;
+    padding: 24px;
+  }
+}
+
+@container (max-width: 1024px) {
+  .boards-list {
+    gap: 20px;
+    padding: 20px;
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
   }
 }
 
-// Responsive Design
-@media (width <= 768px) {
-  .kanban-board-list {
+@container (max-width: 768px) {
+  .boards-list {
+    gap: 12px;
+    padding: 12px;
+
+    &__search {
+      max-width: 100%;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@container (max-width: 480px) {
+  .boards-list {
+    gap: 8px;
     padding: 8px;
-  }
 
-  .boards-grid {
-    grid-template-columns: 1fr;
+    &__grid {
+      gap: 8px;
+    }
   }
+}
 
-  .search-field {
-    max-width: 100%;
+@container (max-width: 280px) {
+  .boards-list {
+    gap: 6px;
+    padding: 6px;
+
+    &__grid {
+      gap: 6px;
+    }
   }
 }

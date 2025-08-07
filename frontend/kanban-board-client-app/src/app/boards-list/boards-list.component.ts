@@ -1,14 +1,4 @@
-import {
-  BehaviorSubject,
-  map,
-  Observable,
-  switchMap,
-  take,
-  tap,
-  catchError,
-  of,
-  shareReplay,
-} from 'rxjs';
+import { BehaviorSubject, switchMap, tap, catchError, of } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,7 +10,6 @@ import {
 } from '@angular/core';
 
 import { Router, RouterModule } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
 import { BoardService } from '../core/api/board.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -35,6 +24,10 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../core/api/auth.service';
 import { BoardInstance } from '../core/models/classes/BoardInstance';
 import { TranslateModule } from '@ngx-translate/core';
+import { BoardCardComponent } from './board-card/board-card.component';
+import { AddBoardCardComponent } from './add-board-card/add-board-card.component';
+import { ErrorDisplayComponent } from '../core/components/error-display/error-display.component';
+import { NoContentComponent } from '../core/components/no-content/no-content.component';
 import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
 
 export type LoadingState = 'loading' | 'error' | 'fulfilled';
@@ -53,17 +46,22 @@ export type LoadingState = 'loading' | 'error' | 'fulfilled';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatDialogModule,
-    AsyncPipe,
     RouterModule,
     TranslateModule,
+    BoardCardComponent,
+    AddBoardCardComponent,
+    ErrorDisplayComponent,
+    NoContentComponent,
   ],
   templateUrl: './boards-list.component.html',
   styleUrl: './boards-list.component.scss',
 })
 export class BoardsListComponent implements OnInit, OnDestroy {
-  private refreshBoards$ = new BehaviorSubject<void>(null);
+  protected refreshBoards$ = new BehaviorSubject<void>(undefined);
   private boardService = inject(BoardService);
-  private boardRolesCache = new Map<number, Observable<boolean>>();
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private authService = inject(AuthService);
 
   // State management
   loadingState = signal<LoadingState>('loading');
@@ -87,25 +85,16 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   hasError = computed(() => this.loadingState() === 'error');
   isFulfilled = computed(() => this.loadingState() === 'fulfilled');
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    public authService: AuthService
-  ) {}
-
   ngOnInit(): void {
     this.loadBoards();
   }
 
   ngOnDestroy(): void {
     this.refreshBoards$.complete();
-    this.boardRolesCache.clear();
   }
 
   private loadBoards(): void {
     this.loadingState.set('loading');
-    // Clear the cache when loading new boards
-    this.boardRolesCache.clear();
 
     this.refreshBoards$
       .pipe(
@@ -123,21 +112,25 @@ export class BoardsListComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  canDelete(boardId: number): Observable<boolean> {
-    if (!this.boardRolesCache.has(boardId)) {
-      const canDelete$ = this.authService.getBoardRoles(boardId).pipe(
-        map(e => e?.includes('ADMIN') || false),
-        shareReplay(1)
-      );
-      this.boardRolesCache.set(boardId, canDelete$);
-    }
-    return this.boardRolesCache.get(boardId)!;
+  retryLoad(): void {
+    this.loadBoards();
+  }
+
+  openBoard(boardId: number): void {
+    this.router.navigate(['/board', boardId]);
+  }
+
+  clearSearch(): void {
+    this.searchTerm.set('');
+  }
+
+  onSearchChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchTerm.set(target.value);
   }
 
   addBoard(): void {
-    // Check if user is authenticated
     if (!this.authService.isAuthenticated()) {
-      // Redirect to login page
       this.router.navigate(['/sign-in']);
       return;
     }
@@ -154,29 +147,5 @@ export class BoardsListComponent implements OnInit, OnDestroy {
         this.refreshBoards$.next();
       }
     });
-  }
-
-  openBoard(boardId: number): void {
-    this.router.navigate(['/board', boardId]);
-  }
-
-  deleteBoard(boardId: number): void {
-    this.boardService
-      .deleteBoard(boardId)
-      .pipe(take(1))
-      .subscribe(() => this.refreshBoards$.next());
-  }
-
-  retryLoad(): void {
-    this.loadBoards();
-  }
-
-  clearSearch(): void {
-    this.searchTerm.set('');
-  }
-
-  onSearchChange(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.searchTerm.set(target.value);
   }
 }

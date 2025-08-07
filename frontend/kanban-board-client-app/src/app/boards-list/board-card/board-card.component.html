@@ -1,0 +1,41 @@
+<mat-card class="board-card">
+  <mat-card-header class="board-card__header">
+    <mat-card-title class="board-card__title">{{
+      board().name
+    }}</mat-card-title>
+    <mat-card-subtitle class="board-card__subtitle"
+      >{{ 'board.boardId' | translate }}: {{ board().id }}</mat-card-subtitle
+    >
+  </mat-card-header>
+  <mat-card-content class="board-card__content">
+    @if (board().description) {
+      <div class="board-card__description">{{ board().description }}</div>
+    }
+    <div class="board-card__columns">
+      {{ 'board.columns' | translate }}:
+      {{ board().columns?.length || 0 }}
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="board-card__actions" align="end">
+    @if (allowDelete()) {
+      <button
+        mat-button
+        color="warn"
+        class="board-card__delete-btn"
+        (click)="onBoardDeleted.emit()"
+      >
+        <mat-icon class="board-card__delete-icon">delete</mat-icon>
+        <span class="board-card__delete-text">{{ 'common.delete' | translate }}</span>
+      </button>
+    }
+    <button
+      mat-raised-button
+      color="primary"
+      class="board-card__open-btn"
+      (click)="onBoardOpened.emit()"
+    >
+      <mat-icon class="board-card__open-icon">open_in_new</mat-icon>
+      <span class="board-card__open-text">{{ 'board.openBoard' | translate }}</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

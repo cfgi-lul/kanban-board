@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 /* Modern Light Theme - Sophisticated Palette */
 :root,
@@ -86,6 +86,22 @@
   --mat-sys-shadow-light: 0 0 4px 0 rgb(34 60 80 / 15%);
   --mat-sys-shadow-medium: 0 0 6px 0 rgb(34 60 80 / 20%);
   --mat-sys-shadow-heavy: 0 0 8px 0 rgb(34 60 80 / 25%);
+
+  // Material Design System Level Variables for Light Theme (Colors)
+  --mat-sys-level0-color: #ffffff;
+  --mat-sys-level1-color: #f9fafb;
+  --mat-sys-level2-color: #f3f4f6;
+  --mat-sys-level3-color: #e5e7eb;
+  --mat-sys-level4-color: #d1d5db;
+  --mat-sys-level5-color: #9ca3af;
+
+  // Material Design System Level Variables for Light Theme (Shadows)
+  --mat-sys-level0: none;
+  --mat-sys-level1: 0 0 4px 0 rgb(0 0 0 / 0.1);
+  --mat-sys-level2: 0 0 8px 0 rgb(0 0 0 / 0.1);
+  --mat-sys-level3: 0 0 12px 0 rgb(0 0 0 / 0.1);
+  --mat-sys-level4: 0 0 16px 0 rgb(0 0 0 / 0.1);
+  --mat-sys-level5: 0 0 24px 0 rgb(0 0 0 / 0.15);
 }
 
 /* Typography */

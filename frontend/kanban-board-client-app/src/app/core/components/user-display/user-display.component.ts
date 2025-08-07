@@ -5,7 +5,7 @@ import {
   input,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { AsyncPipe } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { AvatarService } from '../../api/avatar.service';
 import { UserInstance } from '../../models/classes/UserInstance';
@@ -15,7 +15,7 @@ import { getUserDisplayName, getUserInitials } from '../../utils/user.utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kn-user-display',
   standalone: true,
-  imports: [MatIconModule, AsyncPipe, TranslateModule],
+  imports: [MatIconModule, TranslateModule],
   templateUrl: './user-display.component.html',
   styleUrl: './user-display.component.scss',
 })

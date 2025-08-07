@@ -1,132 +1,79 @@
-<div class="kanban-board-list">
-  <!-- Search Section -->
-  <div class="search-section">
-    <mat-form-field appearance="outline" class="search-field">
-      <mat-label>{{ 'board.searchBoards' | translate }}</mat-label>
-      <input
-        matInput
-        [value]="searchTerm()"
-        (input)="onSearchChange($event)"
-        [placeholder]="'board.enterBoardName' | translate"
-        type="text"
-      />
-      <mat-icon matSuffix>search</mat-icon>
-      @if (searchTerm()) {
-        <button
-          matSuffix
-          mat-icon-button
-          (click)="clearSearch()"
-          [attr.aria-label]="'common.clearSearch' | translate"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      }
-    </mat-form-field>
-  </div>
+<div class="boards-list">
+  <mat-form-field appearance="outline" class="boards-list__search">
+    <mat-label class="boards-list__search-label">{{
+      'board.searchBoards' | translate
+    }}</mat-label>
+    <input
+      matInput
+      class="boards-list__search-input"
+      [value]="searchTerm()"
+      (input)="onSearchChange($event)"
+      [placeholder]="'board.enterBoardName' | translate"
+      type="text"
+    />
+    <mat-icon matSuffix class="boards-list__search-icon">search</mat-icon>
+    @if (searchTerm()) {
+      <button
+        matSuffix
+        mat-icon-button
+        class="boards-list__search-clear"
+        (click)="clearSearch()"
+        [attr.aria-label]="'common.clearSearch' | translate"
+      >
+        <mat-icon class="boards-list__search-clear-icon">close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
 
-  <!-- Loading State -->
   @if (isLoading()) {
-    <div class="loading-container">
-      <mat-spinner diameter="50"></mat-spinner>
-      <p>{{ 'board.loadingBoards' | translate }}</p>
+    <div class="boards-list__loading">
+      <mat-spinner
+        diameter="50"
+        class="boards-list__loading-spinner"
+      ></mat-spinner>
+      <div class="boards-list__loading-text">
+        {{ 'board.loadingBoards' | translate }}
+      </div>
     </div>
   }
 
-  <!-- Error State -->
   @if (hasError()) {
-    <div class="error-container">
-      <mat-card class="error-card">
-        <mat-card-content>
-          <div class="error-content">
-            <mat-icon color="warn" class="error-icon">error</mat-icon>
-            <h3>{{ 'board.failedToLoadBoards' | translate }}</h3>
-            <p>{{ 'board.errorLoadingBoards' | translate }}</p>
-            <button mat-raised-button color="primary" (click)="retryLoad()">
-              <mat-icon>refresh</mat-icon>
-              {{ 'common.retry' | translate }}
-            </button>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+    <kn-error-display
+      [errorMessage]="'board.failedToLoadBoards' | translate"
+      [errorDetails]="'board.errorLoadingBoards' | translate"
+      (onRetry)="retryLoad()"
+    />
   }
 
-  <!-- Fulfilled State -->
   @if (isFulfilled()) {
-    <div class="boards-container">
-      <!-- No Results Message -->
+    <div class="boards-list__content">
       @if (filteredBoards().length === 0 && searchTerm()) {
-        <div class="no-results">
-          <mat-card class="no-results-card">
-            <mat-card-content>
-              <div class="no-results-content">
-                <mat-icon class="no-results-icon">search_off</mat-icon>
-                <h3>{{ 'board.noBoardsFound' | translate }}</h3>
-                <p>{{ 'board.noBoardsMatchSearch' | translate }}</p>
-                <button mat-button color="primary" (click)="clearSearch()">
-                  {{ 'common.clearSearch' | translate }}
-                </button>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
+        <kn-no-content
+          [message]="'board.noBoardsFound' | translate"
+          [details]="'board.noBoardsMatchSearch' | translate"
+          [icon]="'search_off'"
+          [showActionButton]="true"
+          [actionButtonText]="'common.clearSearch' | translate"
+          (onAction)="clearSearch()"
+        />
       }
 
-      <!-- Boards Grid -->
       @if (filteredBoards().length > 0) {
-        <div class="boards-grid">
+        <div class="boards-list__grid">
           @for (board of filteredBoards(); track board.id) {
-            <mat-card class="board-card">
-              <mat-card-header>
-                <mat-card-title>{{ board.name }}</mat-card-title>
-                <mat-card-subtitle
-                  >{{ 'board.boardId' | translate }}:
-                  {{ board.id }}</mat-card-subtitle
-                >
-              </mat-card-header>
-              <mat-card-content>
-                <p>
-                  {{ 'board.columns' | translate }}:
-                  {{ board.columns?.length || 0 }}
-                </p>
-              </mat-card-content>
-              <mat-card-actions align="end">
-                @if (
-                  authService.hasRole('ADMIN') || (canDelete(board.id) | async)
-                ) {
-                  <button
-                    mat-button
-                    color="warn"
-                    (click)="deleteBoard(board.id)"
-                  >
-                    <mat-icon>delete</mat-icon>
-                    {{ 'common.delete' | translate }}
-                  </button>
-                }
-                <button
-                  mat-raised-button
-                  color="primary"
-                  (click)="openBoard(board.id)"
-                >
-                  <mat-icon>open_in_new</mat-icon>
-                  {{ 'board.openBoard' | translate }}
-                </button>
-              </mat-card-actions>
-            </mat-card>
+            <kn-board-card
+              class="boards-list__card"
+              [board]="board"
+              (onBoardOpened)="openBoard(board.id)"
+            />
           }
         </div>
       }
 
-      <!-- Add New Board Card -->
-      <mat-card class="board-card add-board-card" (click)="addBoard()">
-        <mat-card-content>
-          <div class="add-board-content">
-            <mat-icon class="add-icon">add</mat-icon>
-            <h3>{{ 'board.createNewBoard' | translate }}</h3>
-            <p>{{ 'board.clickToCreateBoard' | translate }}</p>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <kn-add-board-card
+        class="boards-list__add-card"
+        (onBoardCreate)="addBoard()"
+      />
     </div>
   }
 </div>

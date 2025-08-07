@@ -1,0 +1,9 @@
+<mat-card class="add-board" (click)="onBoardCreate.emit()" matRipple>
+  <div>
+  <mat-card-content class="add-board__content">
+    <mat-icon class="add-board__icon">add</mat-icon>
+    <div class="add-board__text">{{ 'board.createNewBoard' | translate }}</div>
+    <div class="add-board__text">{{ 'board.clickToCreateBoard' | translate }}</div>
+  </mat-card-content>
+</div>
+</mat-card>

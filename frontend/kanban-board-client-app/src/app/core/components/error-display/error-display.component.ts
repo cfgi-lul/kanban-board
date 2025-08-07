@@ -1,40 +1,89 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kn-error-display',
+  standalone: true,
+  imports: [MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   template: `
-    @if (errorMessage) {
+    @if (errorMessage()) {
       <mat-card class="error-card">
-        <mat-card-title>Error</mat-card-title>
-        <mat-card-content>
-          <p>{{ errorMessage() }}</p>
+        <mat-card-content class="error-content">
+          <mat-icon color="warn" class="error-icon">error</mat-icon>
+          <div class="error-message">{{ errorMessage() }}</div>
+          @if (errorDetails()) {
+            <div class="error-details">{{ errorDetails() }}</div>
+          }
+          @if (showRetryButton()) {
+            <button
+              mat-raised-button
+              color="primary"
+              class="error-retry"
+              (click)="onRetry.emit()"
+            >
+              <mat-icon class="error-retry-icon">refresh</mat-icon>
+              {{ 'common.retry' | translate }}
+            </button>
+          }
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="warn" (click)="clearError()">
-            Dismiss
-          </button>
-        </mat-card-actions>
       </mat-card>
     }
   `,
   styles: [
     `
       .error-card {
-        background-color: var(--color-error-light);
-        color: var(--color-error);
         margin: 16px;
-        padding: 16px;
+      }
+
+      .error-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .error-icon {
+        font-size: 3rem;
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .error-message {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .error-details {
+        color: #666;
+        margin-bottom: 1rem;
+      }
+
+      .error-retry {
+        margin-top: 1rem;
+      }
+
+      .error-retry-icon {
+        margin-right: 0.5rem;
       }
     `,
   ],
-  imports: [MatCardModule],
 })
 export class ErrorDisplayComponent {
-  errorMessage = input<string>('Error with request');
+  readonly errorMessage = input.required<string>();
+  readonly errorDetails = input<string>('');
+  readonly showRetryButton = input<boolean>(true);
 
-  clearError() {
-    this.errorMessage = null;
-  }
+  readonly onRetry = output<void>();
 }
