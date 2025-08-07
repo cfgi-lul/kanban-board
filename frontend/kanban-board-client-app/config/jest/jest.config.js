@@ -18,7 +18,7 @@ module.exports = {
   ],
   transform: {
     '^.+\\.(ts|js|html)$': ['ts-jest', {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
+      tsconfig: '<rootDir>/config/typescript/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.html$',
     }],
   },

@@ -14,7 +14,7 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: ['./tsconfig.json', './tsconfig.spec.json'],
+        project: ['./config/typescript/tsconfig.json', './config/typescript/tsconfig.spec.json'],
       },
       globals: {
         // Browser globals
@@ -66,10 +66,10 @@ export default [
       '.env*',
       'angular.json',
       'tsconfig.json',
-      'tsconfig.app.json',
-      'tsconfig.spec.json',
+              'config/typescript/tsconfig.app.json',
+              'config/typescript/tsconfig.spec.json',
       'karma.conf.js',
-      'jest.config.js',
+              'config/jest/jest.config.js',
       'src/app/core/models/requestModels/**',
       '**/*.html',
     ],

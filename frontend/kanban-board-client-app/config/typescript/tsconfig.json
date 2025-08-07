@@ -5,13 +5,13 @@
   "compilerOptions": {
     "paths": {
       "@ng-doc/generated": [
-        "./ng-doc/kanban-board-client-app/index.ts"
+        "../ng-doc/kanban-board-client-app/index.ts"
       ],
       "@ng-doc/generated/*": [
-        "./ng-doc/kanban-board-client-app/*"
+        "../ng-doc/kanban-board-client-app/*"
       ]
     },
-    "outDir": "./dist/out-tsc",
+    "outDir": "../dist/out-tsc",
     "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -26,6 +26,12 @@
     "target": "ES2022",
     "module": "ES2022"
   },
+  "include": [
+    "../src/**/*"
+  ],
+  "exclude": [
+    "../dist/out-tsc"
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
