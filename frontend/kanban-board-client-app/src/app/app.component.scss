@@ -2,6 +2,10 @@
   height: calc(100vh - 64px);
 }
 
+:host {
+
+}
+
 .app-sidenav {
   background: var(--mat-sys-surface-container) !important;
   border-right: 1px solid var(--mat-sys-outline-variant) !important;
@@ -105,6 +109,7 @@
 
 .content-wrapper {
   display: flex;
+  container-type: inline-size;
   height: 100%;
 }
 

@@ -2,457 +2,185 @@
   flex: 1;
 }
 
+
 .main-page-container {
-  display: flex;
-  flex-direction: column;
   min-height: 100%;
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.welcome-section {
-  text-align: center;
-  margin-bottom: 48px;
-  padding: 48px 32px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, var(--mat-sys-primary-container) 0%, var(--mat-sys-surface-container) 100%);
-  box-shadow: var(--mat-sys-shadow-medium);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, var(--mat-sys-primary) 0%, transparent 100%);
-    opacity: 0.05;
-  }
-
-  .welcome-title {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: var(--mat-sys-on-surface);
-    line-height: 1.2;
-    position: relative;
-    z-index: 1;
-  }
-
-  .welcome-subtitle {
-    font-size: 1.25rem;
-    color: var(--mat-sys-on-surface-variant);
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-}
-
-.section-divider {
-  margin: 32px 0;
-  border-color: var(--mat-sys-outline-variant);
-}
-
-.tiles-section {
-  margin-bottom: 48px;
-
-  .section-title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 32px;
-    color: var(--mat-sys-on-surface);
-    text-align: center;
-  }
-}
-
-.tiles-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 24px;
-  width: 100%;
-}
-
-.tile-container {
-  box-sizing: border-box;
-
-  &.tile-large {
-    grid-column: span 6;
-    grid-row: span 2;
-  }
-
-  &.tile-medium {
-    grid-column: span 3;
-    grid-row: span 2;
-  }
-
-  &.tile-small {
-    grid-column: span 3;
-    grid-row: span 1;
-  }
-}
-
-.tile-card {
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  border-radius: 16px;
-  overflow: hidden;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  background: var(--mat-sys-surface-container);
-  border: 1px solid var(--mat-sys-outline-variant);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  min-height: 200px;
-  container-type: inline-size;
-
-  &:hover {
-    box-shadow: var(--mat-sys-shadow-heavy);
-  }
-
-  &:active {
-    box-shadow: var(--mat-sys-shadow-medium);
-  }
-
-  &.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-
-    &:hover {
-      box-shadow: none;
-    }
-  }
-
-
-}
-
-.tile-header {
-  padding: 24px 24px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
-  gap: 12px;
-  min-height: 0;
-}
-
-.tile-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0;
-  flex: 1;
-  color: var(--mat-sys-on-surface);
-  min-width: 0;
-}
-
-.tile-title span {
-  flex-shrink: 1;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-
-.tile-icon {
-  font-size: 1.75rem;
-  width: 1.75rem;
-  height: 1.75rem;
-  color: var(--mat-sys-primary);
-  flex-shrink: 0;
-  min-width: 1.75rem;
-}
-
-.tile-badge {
-  font-size: 0.75rem;
-  height: 24px;
-  border-radius: 12px;
-  flex-shrink: 0;
-  min-width: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.tile-badge span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-// Container queries for responsive badge behavior
-@container (max-width: 400px) {
-  .tile-badge {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    padding: 0;
-
-    span {
-      display: none;
-    }
-
-    &::before {
-      content: "★";
-      font-size: 12px;
-      color: inherit;
-    }
-  }
-
-  .tile-title {
-    font-size: 1.1rem;
-  }
-}
-
-@container (max-width: 350px) {
-  .tile-badge {
-    width: 20px;
-    height: 20px;
-
-    &::before {
-      font-size: 10px;
-    }
-  }
-
-
-}
-
-@container (max-width: 300px) {
-
-}
-
-.tile-content {
-  padding: 16px 24px 24px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow: hidden;
-}
-
-.tile-description {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--mat-sys-on-surface-variant);
-  font-weight: 400;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.tile-actions {
-  padding: 0 24px 24px;
-  display: flex;
-  justify-content: flex-end;
-  border-top: 1px solid var(--mat-sys-outline-variant);
-  margin-top: auto;
-}
-
-.tile-button {
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-
-  mat-icon {
-    font-size: 1rem;
-    width: 1rem;
-    height: 1rem;
-    margin-left: 4px;
-  }
-}
-
-// Responsive design
-@media (max-width: 1200px) {
-  .tiles-grid {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
-  }
-
-  .tile-container {
-    &.tile-large {
-      grid-column: span 3;
-      grid-row: span 2;
-    }
-
-    &.tile-medium {
-      grid-column: span 3;
-      grid-row: span 2;
-    }
-
-    &.tile-small {
-      grid-column: span 2;
-      grid-row: span 1;
-    }
-  }
-}
-
-@media (max-width: 1024px) {
-  .tiles-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-  }
-
-  .tile-container {
-    &.tile-large {
-      grid-column: span 4;
-      grid-row: span 2;
-    }
-
-    &.tile-medium {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-
-    &.tile-small {
-      grid-column: span 2;
-      grid-row: span 1;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .main-page-container {
-    padding: 16px;
-  }
+  padding: 32px;
+  gap: 32px;
 
   .welcome-section {
-    padding: 32px 24px;
-    margin-bottom: 32px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: 16px;
+    padding: 16px;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
 
     .welcome-title {
-      font-size: 2.25rem;
-    }
-
-    .welcome-subtitle {
-      font-size: 1.1rem;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 32px;
     }
   }
 
-  .tiles-grid {
-    grid-template-columns: repeat(4, 1fr);
+
+  .tiles-section {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
-  }
 
-  .tile-container {
-    &.tile-large {
-      grid-column: span 4;
-      grid-row: span 2;
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 32px;
     }
 
-    &.tile-medium {
-      grid-column: span 2;
-      grid-row: span 2;
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
-
-    &.tile-small {
-      grid-column: span 2;
-      grid-row: span 1;
-    }
-  }
-
-  .tile-header {
-    padding: 20px 20px 12px;
-    gap: 8px;
-  }
-
-  .tile-title {
-    font-size: 1.1rem;
-  }
-
-  .tile-icon {
-    font-size: 1.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    min-width: 1.5rem;
-  }
-
-  .tile-badge {
-    font-size: 0.7rem;
-    height: 20px;
-  }
-
-  .tile-content {
-    padding: 12px 20px 20px;
-  }
-
-  .tile-actions {
-    padding: 0 20px 20px;
   }
 }
 
-@media (max-width: 480px) {
+@container (max-width: 1280px) {
+  .main-page-container {
+    padding: 24px;
+    gap: 24px;
+
+    .tiles-section {
+      .tiles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+@container (max-width: 1024px) {
+  .main-page-container {
+    padding: 20px;
+    gap: 24px;
+
+    .welcome-section {
+      border-radius: 14px;
+      padding: 14px;
+      gap: 14px;
+
+      .welcome-title {
+        font-size: 20px;
+        line-height: 28px;
+      }
+    }
+
+    .tiles-section {
+      gap: 14px;
+
+      .section-title {
+        font-size: 20px;
+        line-height: 28px;
+      }
+
+      .tiles-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+    }
+  }
+}
+
+@container (max-width: 768px) {
   .main-page-container {
     padding: 12px;
-  }
-
-  .welcome-section {
-    padding: 24px 16px;
-
-    .welcome-title {
-      font-size: 1.875rem;
-    }
-
-    .welcome-subtitle {
-      font-size: 1rem;
-    }
-  }
-
-  .tiles-grid {
-    grid-template-columns: 1fr;
     gap: 12px;
-  }
 
-  .tile-container {
-    &.tile-large,
-    &.tile-medium,
-    &.tile-small {
-      grid-column: span 1;
-      grid-row: span 1;
+    .welcome-section {
+      border-radius: 12px;
+      padding: 12px;
+      gap: 12px;
+
+      .welcome-title {
+        font-size: 18px;
+      }
+    }
+
+    .tiles-section {
+      gap: 12px;
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .tiles-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
     }
   }
+}
 
-  .tile-header {
-    padding: 16px 16px 8px;
+@container (max-width: 480px) {
+  .main-page-container {
+    padding: 8px;
+    gap: 8px;
+
+    .welcome-section {
+      border-radius: 8px;
+      padding: 8px;
+      gap: 8px;
+
+      .welcome-subtitle {
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+
+    .tiles-section {
+      gap: 8px;
+
+      .tiles-grid {
+        gap: 8px;
+      }
+    }
+  }
+}
+
+@container (max-width: 280px) {
+  .main-page-container {
+    padding: 6px;
     gap: 6px;
-  }
 
-  .tile-title {
-    font-size: 1rem;
-  }
+    .welcome-section {
+      border-radius: 6px;
+      padding: 6px;
+      gap: 6px;
 
-  .tile-icon {
-    font-size: 1.25rem;
-    width: 1.25rem;
-    height: 1.25rem;
-    min-width: 1.25rem;
-  }
+      .welcome-title {
+        font-size: 14px;
+        line-height: 20px;
+      }
 
-  .tile-badge {
-    font-size: 0.65rem;
-    height: 18px;
-  }
+      .welcome-subtitle {
+        font-size: 12px;
+        line-height: 16px;
+      }
+    }
 
-  .tile-content {
-    padding: 8px 16px 16px;
-  }
+    .tiles-section {
+      gap: 6px;
 
-  .tile-actions {
-    padding: 0 16px 16px;
+      .section-title {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .tiles-grid {
+        gap: 6px;
+      }
+    }
   }
 }

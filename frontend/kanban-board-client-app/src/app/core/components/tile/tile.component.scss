@@ -1,0 +1,245 @@
+.tile-card {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 200px;
+  container-type: inline-size;
+
+  &:hover {
+    box-shadow: var(--mat-sys-shadow-heavy);
+  }
+
+  &:active {
+    box-shadow: var(--mat-sys-shadow-medium);
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  &.tile-large {
+    min-height: 300px;
+  }
+
+  &.tile-medium {
+    min-height: 250px;
+  }
+
+  &.tile-small {
+    min-height: 200px;
+  }
+}
+
+.tile-header {
+  padding: 24px 24px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  gap: 12px;
+  min-height: 0;
+}
+
+.tile-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+  color: var(--mat-sys-on-surface);
+  min-width: 0;
+}
+
+.tile-title span {
+  flex-shrink: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.tile-icon {
+  font-size: 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--mat-sys-primary);
+  flex-shrink: 0;
+  min-width: 1.75rem;
+}
+
+.tile-badge {
+  font-size: 0.75rem;
+  height: 24px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.tile-badge span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Container queries for responsive badge behavior
+@container (max-width: 400px) {
+  .tile-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 0;
+
+    span {
+      display: none;
+    }
+
+    &::before {
+      content: "★";
+      font-size: 12px;
+      color: inherit;
+    }
+  }
+
+  .tile-title {
+    font-size: 1.1rem;
+  }
+}
+
+@container (max-width: 350px) {
+  .tile-badge {
+    width: 20px;
+    height: 20px;
+
+    &::before {
+      font-size: 10px;
+    }
+  }
+}
+
+.tile-content {
+  padding: 16px 24px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.tile-description {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--mat-sys-on-surface-variant);
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.tile-actions {
+  padding: 0 24px 24px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  margin-top: auto;
+}
+
+.tile-button {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 4px;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .tile-header {
+    padding: 20px 20px 12px;
+    gap: 8px;
+  }
+
+  .tile-title {
+    font-size: 1.1rem;
+  }
+
+  .tile-icon {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    min-width: 1.5rem;
+  }
+
+  .tile-badge {
+    font-size: 0.7rem;
+    height: 20px;
+  }
+
+  .tile-content {
+    padding: 12px 20px 20px;
+  }
+
+  .tile-actions {
+    padding: 0 20px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tile-header {
+    padding: 16px 16px 8px;
+    gap: 6px;
+  }
+
+  .tile-title {
+    font-size: 1rem;
+  }
+
+  .tile-icon {
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    min-width: 1.25rem;
+  }
+
+  .tile-badge {
+    font-size: 0.65rem;
+    height: 18px;
+  }
+
+  .tile-content {
+    padding: 8px 16px 16px;
+  }
+
+  .tile-actions {
+    padding: 0 16px 16px;
+  }
+}

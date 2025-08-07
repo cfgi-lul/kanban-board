@@ -1,0 +1,42 @@
+<mat-card
+  class="tile-card"
+  [class]="'tile-' + tile().color"
+  [class.disabled]="tile().disabled"
+  [class.tile-large]="size() === 'large'"
+  [class.tile-medium]="size() === 'medium'"
+  [class.tile-small]="size() === 'small'"
+  (click)="onTileClick()"
+  [attr.aria-label]="tile().title | translate"
+>
+  <mat-card-header class="tile-header">
+    <mat-card-title class="tile-title">
+      <mat-icon class="tile-icon">{{ tile().icon }}</mat-icon>
+      <span translate="{{ tile().title }}"></span>
+    </mat-card-title>
+    @if (tile().badge) {
+      <mat-chip
+        class="tile-badge"
+        color="warn"
+        variant="elevated"
+      >
+        <span translate="{{ tile().badge }}"></span>
+      </mat-chip>
+    }
+  </mat-card-header>
+
+  <mat-card-content class="tile-content">
+    <p class="tile-description" translate="{{ tile().description }}"></p>
+  </mat-card-content>
+
+  <mat-card-actions class="tile-actions">
+    <button
+      mat-button
+      color="primary"
+      class="tile-button"
+      [disabled]="tile().disabled"
+    >
+      <span translate="main.tile.open"></span>
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
