@@ -1,4 +1,4 @@
-package Backend.Board;
+package com.kanban.shared.infrastructure;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,4 +24,4 @@ public class UserMapperTest {
         assertEquals("testuser", userDTO.getUsername());
         assertEquals("Test User", userDTO.getDisplayName());
     }
-}
+} 

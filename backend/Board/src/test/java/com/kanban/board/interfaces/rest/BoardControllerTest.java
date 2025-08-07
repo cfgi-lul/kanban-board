@@ -1,5 +1,4 @@
-package Backend.Board;
-
+package com.kanban.board.interfaces.rest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

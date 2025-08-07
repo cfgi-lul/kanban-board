@@ -1,5 +1,4 @@
-package Backend.Board;
-
+package com.kanban.board.application;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -37,4 +36,4 @@ public class BoardRoleServiceTest {
 
         verify(userBoardRoleRepository, times(1)).save(any(UserBoardRole.class));
     }
-}
+} 

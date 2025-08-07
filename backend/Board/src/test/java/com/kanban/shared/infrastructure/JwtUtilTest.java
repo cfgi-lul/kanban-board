@@ -1,4 +1,4 @@
-package Backend.Board;
+package com.kanban.shared.infrastructure;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.kanban.shared.infrastructure.config.JwtUtil;
-
 
 public class JwtUtilTest {
 
@@ -21,4 +20,4 @@ public class JwtUtilTest {
         boolean isValid = jwtUtil.validateToken(token, userDetails);
         assertTrue(isValid);
     }
-}
+} 

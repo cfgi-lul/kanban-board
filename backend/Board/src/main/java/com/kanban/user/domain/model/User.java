@@ -1,6 +1,7 @@
 package com.kanban.user.domain.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,6 +87,9 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (roles == null) {
+            return new ArrayList<>();
+        }
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package Backend.Board;
+package com.kanban.task.interfaces.rest;
 
 import org.junit.jupiter.api.Test;
 
@@ -37,4 +37,4 @@ public class TaskDTOTest {
         assertEquals(1L, taskDTO.getAssignee().getId());
         assertTrue(taskDTO.getComments().isEmpty());
     }
-}
+} 
