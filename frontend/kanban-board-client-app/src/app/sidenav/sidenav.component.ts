@@ -6,9 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../core/api/auth.service';
-import { AvatarService } from '../core/api/avatar.service';
-import { UserInstance } from '../core/models/classes/UserInstance';
-import { getUserDisplayName, getUserInitials } from '../core/utils/user.utils';
+import { UserDisplayComponent } from '../core/components/user-display/user-display.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +19,7 @@ import { getUserDisplayName, getUserInitials } from '../core/utils/user.utils';
     MatDividerModule,
     AsyncPipe,
     TranslateModule,
+    UserDisplayComponent,
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
@@ -28,12 +27,4 @@ import { getUserDisplayName, getUserInitials } from '../core/utils/user.utils';
 export class SidenavComponent {
   currentUser = inject(AuthService).currentUser;
   isAdmin = inject(AuthService).isAdmin();
-  avatarService = inject(AvatarService);
-
-  getUserDisplayName = getUserDisplayName;
-  getUserInitials = getUserInitials;
-
-  getAvatarUrl(user: UserInstance): string {
-    return this.avatarService.getAvatarUrl(user?.avatar);
-  }
 }

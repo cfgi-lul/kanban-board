@@ -1,0 +1,18 @@
+@if (user(); as user) {
+  <div class="user-display">
+    <div class="user-display__avatar" [style.background-image]="user.avatar ? 'url(' + getAvatarUrl(user) + ')' : 'none'">
+      @if (!user.avatar) {
+        <span class="user-display__avatar-initials">{{ getUserInitials(user) }}</span>
+      }
+    </div>
+    <div class="user-display__details">
+      <span class="user-display__name">{{ getUserDisplayName(user) }}</span>
+      <span class="user-display__role">{{ 'common.user' | translate }}</span>
+    </div>
+  </div>
+} @else {
+  <div class="user-display user-display--guest">
+    <mat-icon>person_off</mat-icon>
+    <span>{{ 'common.guestUser' | translate }}</span>
+  </div>
+}

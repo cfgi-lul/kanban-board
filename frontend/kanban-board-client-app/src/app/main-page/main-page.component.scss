@@ -22,9 +22,8 @@
   }
 
   &__welcome-title {
-    font-size: 24px;
+    font: var(--mat-sys-headline-small);
     font-weight: 600;
-    line-height: 32px;
   }
 
   &__tiles {
@@ -34,9 +33,8 @@
   }
 
   &__tiles-title {
-    font-size: 24px;
+    font: var(--mat-sys-headline-small);
     font-weight: 600;
-    line-height: 32px;
   }
 
   &__tiles-grid {
@@ -84,8 +82,7 @@
     }
 
     &__welcome-title {
-      font-size: 20px;
-      line-height: 28px;
+      font: var(--mat-sys-title-large);
     }
 
     &__tiles {
@@ -93,8 +90,7 @@
     }
 
     &__tiles-title {
-      font-size: 20px;
-      line-height: 28px;
+      font: var(--mat-sys-title-large);
     }
 
     &__tiles-grid {
@@ -116,7 +112,7 @@
     }
 
     &__welcome-title {
-      font-size: 18px;
+      font: var(--mat-sys-title-medium);
     }
 
     &__tiles {
@@ -124,7 +120,7 @@
     }
 
     &__tiles-title {
-      font-size: 18px;
+      font: var(--mat-sys-title-medium);
     }
 
     &__tiles-grid {
@@ -154,8 +150,7 @@
     }
 
     &__welcome-subtitle {
-      font-size: 14px;
-      line-height: 20px;
+      font: var(--mat-sys-body-medium);
     }
 
     &__tiles {
@@ -180,13 +175,11 @@
     }
 
     &__welcome-title {
-      font-size: 14px;
-      line-height: 20px;
+      font: var(--mat-sys-body-large);
     }
 
     &__welcome-subtitle {
-      font-size: 12px;
-      line-height: 16px;
+      font: var(--mat-sys-body-small);
     }
 
     &__tiles {
@@ -194,8 +187,7 @@
     }
 
     &__tiles-title {
-      font-size: 14px;
-      line-height: 20px;
+      font: var(--mat-sys-body-large);
     }
 
     &__tiles-grid {
