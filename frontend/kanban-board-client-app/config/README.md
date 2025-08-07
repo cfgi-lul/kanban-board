@@ -18,6 +18,8 @@ config/
 ├── prettier/        # Prettier configuration
 │   ├── .prettierrc
 │   └── .prettierignore
+├── stylelint/       # Stylelint configuration
+│   └── .stylelintrc.json
 ├── jest/            # Jest testing configuration
 │   └── jest.config.js
 ├── openapi/         # OpenAPI generator configuration
@@ -48,6 +50,11 @@ config/
 - **Files**: `config/prettier/.prettierrc`, `config/prettier/.prettierignore`
 - **Purpose**: Code formatting
 - **Usage**: `npm run format`, `npm run format:check`
+
+### Stylelint
+- **File**: `config/stylelint/.stylelintrc.json`
+- **Purpose**: CSS/SCSS linting and style enforcement
+- **Usage**: `npm run stylelint`, `npm run stylelint:fix`
 
 ### Jest
 - **File**: `config/jest/jest.config.js`

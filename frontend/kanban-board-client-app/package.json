@@ -13,6 +13,8 @@
     "lint:fix": "eslint . --ext .ts,.html --fix --config config/eslint/eslint.config.js",
     "format": "prettier --write \"src/**/*.{ts,html,scss,json}\" --config config/prettier/.prettierrc",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,json}\" --config config/prettier/.prettierrc",
+    "stylelint": "stylelint \"src/**/*.{css,scss}\" --config config/stylelint/.stylelintrc.json",
+    "stylelint:fix": "stylelint \"src/**/*.{css,scss}\" --fix --config config/stylelint/.stylelintrc.json",
     "generate-api": "openapi-generator-cli version && openapi-generator-cli generate -c ./swagger/openapi-gen-config.json",
     "analyze": "ng build --stats-json && webpack-bundle-analyzer dist/kanban-board-client-app/stats.json",
     "analyze:build": "ng build --stats-json",
@@ -60,6 +62,10 @@
     "jest-preset-angular": "^14.0.0",
     "ngx-spec": "^2.1.6",
     "prettier": "^3.6.2",
+    "stylelint": "^16.3.1",
+    "stylelint-config-standard": "^37.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^7.0.0",
     "typescript": "~5.8.3",
     "webpack-bundle-analyzer": "^4.10.2"
   }
