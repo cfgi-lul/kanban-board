@@ -19,11 +19,11 @@
 
   &__description {
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     margin-bottom: 16px;
     color: var(--mat-sys-color-on-surface-variant);
     font: var(--mat-sys-body-medium);
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__columns {

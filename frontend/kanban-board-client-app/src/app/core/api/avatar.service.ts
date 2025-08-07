@@ -1,13 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UserInstance } from '../models/classes/UserInstance';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { UserInstance } from "../models/classes/UserInstance";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AvatarService {
-  private readonly baseUrl = '/api/avatar';
+  private readonly baseUrl = "/api/avatar";
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class AvatarService {
    */
   uploadAvatar(file: File): Observable<UserInstance> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     return this.http.post<UserInstance>(`${this.baseUrl}/upload`, formData);
   }
@@ -33,7 +33,7 @@ export class AvatarService {
    */
   getAvatarUrl(avatarPath: string | null): string {
     if (!avatarPath) {
-      return 'assets/default-avatar.svg';
+      return "assets/default-avatar.svg";
     }
 
     return `${window.location.origin}/api/avatar/${avatarPath}`;
@@ -48,22 +48,22 @@ export class AvatarService {
     if (file.size > maxSize) {
       return {
         isValid: false,
-        error: 'File size must be less than 5MB',
+        error: "File size must be less than 5MB",
       };
     }
 
     // Check file type
     const allowedTypes = [
-      'image/jpeg',
-      'image/jpg',
-      'image/png',
-      'image/gif',
-      'image/webp',
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/gif",
+      "image/webp",
     ];
     if (!allowedTypes.includes(file.type)) {
       return {
         isValid: false,
-        error: 'Only image files are allowed (JPEG, PNG, GIF, WebP)',
+        error: "Only image files are allowed (JPEG, PNG, GIF, WebP)",
       };
     }
 

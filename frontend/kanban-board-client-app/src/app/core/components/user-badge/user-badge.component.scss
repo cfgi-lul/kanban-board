@@ -13,7 +13,7 @@
     display: grid;
     flex: 1;
     align-items: center;
-    grid-template-areas: "avatar name";
+    grid-template-areas: 'avatar name';
     grid-template-columns: auto 1fr;
     gap: 8px;
     min-width: 0;

@@ -1,5 +1,5 @@
-import { UserDTO as UserDTOInterface } from '../requestModels/model/userDTO';
-import { RoleInstance } from './RoleInstance';
+import { UserDTO as UserDTOInterface } from "../requestModels/model/userDTO";
+import { RoleInstance } from "./RoleInstance";
 
 export class UserInstance implements UserDTOInterface {
   id?: number;
@@ -28,7 +28,7 @@ export class UserInstance implements UserDTOInterface {
     this.enabled = data.enabled;
     this.name = data.name;
     this.roles = data.roles
-      ? data.roles.map(role => new RoleInstance(role))
+      ? data.roles.map((role) => new RoleInstance(role))
       : undefined;
   }
 }

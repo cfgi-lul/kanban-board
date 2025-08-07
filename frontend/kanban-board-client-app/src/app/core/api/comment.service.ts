@@ -1,26 +1,26 @@
-import { map, Observable } from 'rxjs';
-import { CommentInstance } from '../models/classes/CommentInstance';
-import { CommentDTO } from '../models/requestModels/model/commentDTO';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { map, Observable } from "rxjs";
+import { CommentInstance } from "../models/classes/CommentInstance";
+import { CommentDTO } from "../models/requestModels/model/commentDTO";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CommentService {
-  apiUrl = '/api/comments';
+  apiUrl = "/api/comments";
   constructor(private http: HttpClient) {}
 
   getComments(taskId: number): Observable<CommentInstance[]> {
     return this.http
       .get<CommentDTO[]>(`${this.apiUrl}/task/${taskId}`)
-      .pipe(map(e => e.map(el => new CommentInstance(el))));
+      .pipe(map((e) => e.map((el) => new CommentInstance(el))));
   }
 
   createComment(comment: CommentInstance): Observable<CommentInstance> {
     return this.http
       .post<CommentDTO>(`${this.apiUrl}`, comment)
-      .pipe(map(e => new CommentInstance(e)));
+      .pipe(map((e) => new CommentInstance(e)));
   }
 
   deleteComment(id: number): Observable<void> {

@@ -1,28 +1,28 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output, inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import {
   FormBuilder,
   FormGroup,
   FormArray,
   ReactiveFormsModule,
   Validators,
-} from '@angular/forms';
+} from "@angular/forms";
 import {
   MatDialogModule,
   MatDialogRef,
   MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslateModule } from '@ngx-translate/core';
-import { BoardService } from '../../core/api/board.service';
-import { BoardInstance } from '../../core/models/classes/BoardInstance';
+} from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSelectModule } from "@angular/material/select";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { TranslateModule } from "@ngx-translate/core";
+import { BoardService } from "../../core/api/board.service";
+import { BoardInstance } from "../../core/models/classes/BoardInstance";
 
 export interface CreateBoardData {
   name: string;
@@ -31,7 +31,7 @@ export interface CreateBoardData {
 }
 
 @Component({
-  selector: 'kn-create-board-modal',
+  selector: "kn-create-board-modal",
   standalone: true,
   imports: [
     CommonModule,
@@ -47,8 +47,8 @@ export interface CreateBoardData {
     MatTooltipModule,
     TranslateModule,
   ],
-  templateUrl: './create-board-modal.component.html',
-  styleUrl: './create-board-modal.component.scss',
+  templateUrl: "./create-board-modal.component.html",
+  styleUrl: "./create-board-modal.component.scss",
 })
 export class CreateBoardModalComponent {
   private fb = inject(FormBuilder);
@@ -60,23 +60,23 @@ export class CreateBoardModalComponent {
 
   createBoardForm: FormGroup;
   isLoading = false;
-  errorMessage = '';
+  errorMessage = "";
 
   constructor() {
     this.createBoardForm = this.fb.group({
       name: [
-        '',
+        "",
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(100),
         ],
       ],
-      description: ['', [Validators.maxLength(500)]],
+      description: ["", [Validators.maxLength(500)]],
       columns: this.fb.array([
-        this.fb.control('To Do', Validators.required),
-        this.fb.control('In Progress', Validators.required),
-        this.fb.control('Done', Validators.required),
+        this.fb.control("To Do", Validators.required),
+        this.fb.control("In Progress", Validators.required),
+        this.fb.control("Done", Validators.required),
       ]),
     });
 
@@ -86,12 +86,12 @@ export class CreateBoardModalComponent {
   }
 
   get columns() {
-    return this.createBoardForm.get('columns') as FormArray;
+    return this.createBoardForm.get("columns") as FormArray;
   }
 
   addColumn(): void {
     if (this.columns.length < 10) {
-      this.columns.push(this.fb.control('', Validators.required));
+      this.columns.push(this.fb.control("", Validators.required));
     }
   }
 
@@ -104,14 +104,14 @@ export class CreateBoardModalComponent {
   onSubmit(): void {
     if (this.createBoardForm.valid) {
       this.isLoading = true;
-      this.errorMessage = '';
+      this.errorMessage = "";
 
       const formValue = this.createBoardForm.value;
       const boardData = {
         name: formValue.name,
-        description: formValue.description || '',
+        description: formValue.description || "",
         columns: formValue.columns
-          .filter((col: string) => col.trim() !== '')
+          .filter((col: string) => col.trim() !== "")
           .map((col: string, index: number) => ({
             name: col.trim(),
             orderIndex: index,
@@ -126,13 +126,13 @@ export class CreateBoardModalComponent {
           this.boardCreated.emit(board);
           this.dialogRef.close(board);
         },
-        error: error => {
+        error: (error) => {
           this.isLoading = false;
           if (error.status === 403 || error.status === 401) {
-            this.errorMessage = 'board.authenticationRequired';
+            this.errorMessage = "board.authenticationRequired";
           } else {
             this.errorMessage =
-              error.error?.message || 'board.errorCreatingBoard';
+              error.error?.message || "board.errorCreatingBoard";
           }
         },
       });

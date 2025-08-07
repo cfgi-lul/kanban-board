@@ -25,7 +25,9 @@
         (click)="onBoardDeleted.emit()"
       >
         <mat-icon class="board-card__delete-icon">delete</mat-icon>
-        <span class="board-card__delete-text">{{ 'common.delete' | translate }}</span>
+        <span class="board-card__delete-text">{{
+          'common.delete' | translate
+        }}</span>
       </button>
     }
     <button
@@ -35,7 +37,9 @@
       (click)="onBoardOpened.emit()"
     >
       <mat-icon class="board-card__open-icon">open_in_new</mat-icon>
-      <span class="board-card__open-text">{{ 'board.openBoard' | translate }}</span>
+      <span class="board-card__open-text">{{
+        'board.openBoard' | translate
+      }}</span>
     </button>
   </mat-card-actions>
 </mat-card>

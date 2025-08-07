@@ -5,24 +5,24 @@ import {
   OnInit,
   output,
   HostListener,
-} from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+} from "@angular/core";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import {
   MatButtonToggleChange,
   MatButtonToggleModule,
-} from '@angular/material/button-toggle';
-import { ThemeService, ColorScheme } from '../../services/theme.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { UserInstance } from '../../models/classes/UserInstance';
-import { UserBadgeComponent } from '../user-badge/user-badge.component';
-import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+} from "@angular/material/button-toggle";
+import { ThemeService, ColorScheme } from "../../services/theme.service";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { UserInstance } from "../../models/classes/UserInstance";
+import { UserBadgeComponent } from "../user-badge/user-badge.component";
+import { RouterModule } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'kn-header',
+  selector: "kn-header",
   imports: [
     MatToolbarModule,
     MatButtonModule,
@@ -33,11 +33,11 @@ import { TranslateModule } from '@ngx-translate/core';
     RouterModule,
     TranslateModule,
   ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  templateUrl: "./header.component.html",
+  styleUrl: "./header.component.scss",
 })
 export class HeaderComponent implements OnInit {
-  themeControl = new FormControl<ColorScheme>('system');
+  themeControl = new FormControl<ColorScheme>("system");
   isLoggedIn = input.required<boolean>();
   user = input.required<UserInstance>();
 
@@ -48,13 +48,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkScreenSize();
-    this.themeControl.valueChanges.subscribe(e => {
+    this.themeControl.valueChanges.subscribe((e) => {
       if (e) this.theme.setColorScheme(e);
     });
     this.themeControl.setValue(this.theme.getCurrentColorScheme());
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   onResize(): void {
     this.checkScreenSize();
   }

@@ -1,8 +1,8 @@
-import { CommentService } from '../../../core/api/comment.service';
-import { TaskService } from '../../../core/api/task.service';
-import { of } from 'rxjs';
+import { CommentService } from "../../../core/api/comment.service";
+import { TaskService } from "../../../core/api/task.service";
+import { of } from "rxjs";
 
-describe('TaskEditorComponent Services', () => {
+describe("TaskEditorComponent Services", () => {
   let mockCommentService: jest.Mocked<CommentService>;
   let mockTaskService: jest.Mocked<TaskService>;
 
@@ -21,24 +21,24 @@ describe('TaskEditorComponent Services', () => {
     mockTaskService.updateTask.mockReturnValue(of({}));
   });
 
-  it('should create comment service mock', () => {
+  it("should create comment service mock", () => {
     expect(mockCommentService).toBeDefined();
     expect(mockCommentService.getComments).toBeDefined();
     expect(mockCommentService.createComment).toBeDefined();
   });
 
-  it('should create task service mock', () => {
+  it("should create task service mock", () => {
     expect(mockTaskService).toBeDefined();
     expect(mockTaskService.updateTask).toBeDefined();
   });
 
-  it('should mock comment creation', () => {
-    const testComment = { content: 'Test comment', taskId: 1 };
+  it("should mock comment creation", () => {
+    const testComment = { content: "Test comment", taskId: 1 };
     mockCommentService.createComment.mockReturnValue(of({}));
 
     mockCommentService.createComment(testComment).subscribe(() => {
       expect(mockCommentService.createComment).toHaveBeenCalledWith(
-        testComment
+        testComment,
       );
     });
   });

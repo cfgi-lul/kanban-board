@@ -1,4 +1,4 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 /* Modern Dark Theme - Sophisticated Palette */
 .dark {
@@ -96,11 +96,11 @@
 
   // Material Design System Level Variables for Dark Theme (Shadows)
   --mat-sys-level0: none;
-  --mat-sys-level1: 0 0 4px 0 rgb(255 255 255 / 0.1);
-  --mat-sys-level2: 0 0 8px 0 rgb(255 255 255 / 0.15);
-  --mat-sys-level3: 0 0 12px 0 rgb(255 255 255 / 0.2);
-  --mat-sys-level4: 0 0 16px 0 rgb(255 255 255 / 0.25);
-  --mat-sys-level5: 0 0 24px 0 rgb(255 255 255 / 0.3);
+  --mat-sys-level1: 0 0 4px 0 rgb(255 255 255 / 10%);
+  --mat-sys-level2: 0 0 8px 0 rgb(255 255 255 / 15%);
+  --mat-sys-level3: 0 0 12px 0 rgb(255 255 255 / 20%);
+  --mat-sys-level4: 0 0 16px 0 rgb(255 255 255 / 25%);
+  --mat-sys-level5: 0 0 24px 0 rgb(255 255 255 / 30%);
 }
 
 /* Typography */

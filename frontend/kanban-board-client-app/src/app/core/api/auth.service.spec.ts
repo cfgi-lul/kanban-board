@@ -1,23 +1,23 @@
 // auth.service.spec.ts
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 import {
   HttpClientTestingModule,
   HttpTestingController,
-} from '@angular/common/http/testing';
-import { AuthService } from './auth.service';
-import { UserInstance } from '../models/classes/UserInstance';
-import { JwtHelperService } from '@auth0/angular-jwt';
+} from "@angular/common/http/testing";
+import { AuthService } from "./auth.service";
+import { UserInstance } from "../models/classes/UserInstance";
+import { JwtHelperService } from "@auth0/angular-jwt";
 
-describe('AuthService', () => {
+describe("AuthService", () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
 
   const mockUser: UserInstance = {
     id: 1,
-    username: 'testuser',
-    password: 'password',
-    displayName: 'Test User',
-    name: 'Test User',
+    username: "testuser",
+    password: "password",
+    displayName: "Test User",
+    name: "Test User",
     roles: [],
   };
 
@@ -28,7 +28,7 @@ describe('AuthService', () => {
 
     const jwtHelperSpy = {
       isTokenExpired: jest.fn().mockReturnValue(false),
-      decodeToken: jest.fn().mockReturnValue({ sub: 'test' }),
+      decodeToken: jest.fn().mockReturnValue({ sub: "test" }),
       getTokenExpirationDate: jest
         .fn()
         .mockReturnValue(new Date(Date.now() + 3600000)),
@@ -38,7 +38,7 @@ describe('AuthService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         AuthService,
-        { provide: 'Router', useValue: routerSpy },
+        { provide: "Router", useValue: routerSpy },
         { provide: JwtHelperService, useValue: jwtHelperSpy },
       ],
     });
@@ -52,35 +52,35 @@ describe('AuthService', () => {
     localStorage.clear();
   });
 
-  it('should make HTTP request to get current user', () => {
+  it("should make HTTP request to get current user", () => {
     // Call current() method
     service.current().subscribe();
 
     // Should make HTTP request
-    const req = httpMock.expectOne('/api/users/current');
+    const req = httpMock.expectOne("/api/users/current");
     req.flush(mockUser);
 
     // Verify no additional requests were made
     httpMock.verify();
   });
 
-  it('should handle login request', () => {
-    const loginData = { username: 'test', password: 'test' };
-    const mockResponse = { token: 'test-token', user: mockUser };
+  it("should handle login request", () => {
+    const loginData = { username: "test", password: "test" };
+    const mockResponse = { token: "test-token", user: mockUser };
 
-    service.login(loginData).subscribe(response => {
+    service.login(loginData).subscribe((response) => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne('/api/api/auth/login');
-    expect(req.request.method).toBe('POST');
+    const req = httpMock.expectOne("/api/api/auth/login");
+    expect(req.request.method).toBe("POST");
     req.flush(mockResponse);
   });
 
-  it('should refresh current user', () => {
+  it("should refresh current user", () => {
     service.refreshCurrentUser().subscribe();
 
-    const req = httpMock.expectOne('/api/users/current');
+    const req = httpMock.expectOne("/api/users/current");
     req.flush(mockUser);
   });
 });

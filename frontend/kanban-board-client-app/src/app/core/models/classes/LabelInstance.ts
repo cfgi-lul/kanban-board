@@ -1,4 +1,4 @@
-import { LabelDTO as LabelDTOInterface } from '../requestModels/model/labelDTO';
+import { LabelDTO as LabelDTOInterface } from "../requestModels/model/labelDTO";
 
 export class LabelInstance implements LabelDTOInterface {
   id?: number;

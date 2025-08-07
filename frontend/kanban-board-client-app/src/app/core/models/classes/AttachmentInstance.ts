@@ -1,5 +1,5 @@
-import { AttachmentDTO as AttachmentDTOInterface } from '../requestModels/model/attachmentDTO';
-import { UserInstance } from './UserInstance';
+import { AttachmentDTO as AttachmentDTOInterface } from "../requestModels/model/attachmentDTO";
+import { UserInstance } from "./UserInstance";
 
 export class AttachmentInstance implements AttachmentDTOInterface {
   id?: number;

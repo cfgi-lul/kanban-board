@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UserInstance } from '../models/classes/UserInstance';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { UserInstance } from "../models/classes/UserInstance";
 
 export interface UserUpdateRequest {
   displayName?: string;
@@ -10,10 +10,10 @@ export interface UserUpdateRequest {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class UserService {
-  private readonly baseUrl = '/api/users';
+  private readonly baseUrl = "/api/users";
 
   constructor(private http: HttpClient) {}
 
@@ -26,18 +26,18 @@ export class UserService {
   }
 
   updateCurrentUser(
-    updateRequest: UserUpdateRequest
+    updateRequest: UserUpdateRequest,
   ): Observable<UserInstance> {
     return this.http.put<UserInstance>(
       `${this.baseUrl}/current`,
-      updateRequest
+      updateRequest,
     );
   }
 
   promoteToAdmin(userId: number): Observable<void> {
     return this.http.post<void>(
       `${this.baseUrl}/${userId}/promote-to-admin`,
-      {}
+      {},
     );
   }
 }
