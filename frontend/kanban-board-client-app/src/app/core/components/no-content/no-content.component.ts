@@ -15,18 +15,18 @@ import { TranslateModule } from "@ngx-translate/core";
   standalone: true,
   imports: [MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   template: `
-    <mat-card class="no-content-card">
-      <mat-card-content class="no-content-content">
-        <mat-icon class="no-content-icon">{{ icon() }}</mat-icon>
-        <div class="no-content-message">{{ message() }}</div>
+    <mat-card class="no-content">
+      <mat-card-content class="no-content__content">
+        <mat-icon class="no-content__icon">{{ icon() }}</mat-icon>
+        <div class="no-content__message">{{ message() }}</div>
         @if (details()) {
-          <div class="no-content-details">{{ details() }}</div>
+          <div class="no-content__details">{{ details() }}</div>
         }
         @if (showActionButton()) {
           <button
             mat-button
             color="primary"
-            class="no-content-action"
+            class="no-content__action"
             (click)="onAction.emit()"
           >
             {{ actionButtonText() }}
@@ -37,40 +37,40 @@ import { TranslateModule } from "@ngx-translate/core";
   `,
   styles: [
     `
-      .no-content-card {
+      .no-content {
         margin: 16px;
-      }
 
-      .no-content-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 2rem;
-      }
+        &__content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 32px;
+        }
 
-      .no-content-icon {
-        font-size: 3rem;
-        width: 3rem;
-        height: 3rem;
-        margin-bottom: 1rem;
-        color: #666;
-      }
+        &__icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          margin-bottom: 16px;
+          color: var(--mat-sys-color-on-surface-variant);
+        }
 
-      .no-content-message {
-        font-size: 1.2rem;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-        color: #333;
-      }
+        &__message {
+          margin-bottom: 8px;
+          color: var(--mat-sys-color-on-surface);
+          font: var(--mat-sys-title-large);
+        }
 
-      .no-content-details {
-        color: #666;
-        margin-bottom: 1rem;
-      }
+        &__details {
+          color: var(--mat-sys-color-on-surface-variant);
+          margin-bottom: 16px;
+          font: var(--mat-sys-body-medium);
+        }
 
-      .no-content-action {
-        margin-top: 1rem;
+        &__action {
+          margin-top: 16px;
+        }
       }
     `,
   ],

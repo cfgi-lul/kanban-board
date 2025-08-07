@@ -86,7 +86,7 @@ export class SessionTimeoutService {
     // Try to refresh the token
     this.authService.refreshCurrentUser().subscribe({
       next: () => {
-        this.snackBar.open('Session extended successfully!', 'Close', {
+        this.snackBar.open('common.sessionExtendedSuccessfully', 'common.close', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
@@ -111,9 +111,9 @@ export class SessionTimeoutService {
 
   private handleSessionExpiry(): void {
     this.authService.logout();
-    this.snackBar.open(
-      'Your session has expired. Please sign in again.',
-      'Close',
+          this.snackBar.open(
+        'common.sessionExpired',
+        'common.close',
       {
         duration: 5000,
         horizontalPosition: 'center',

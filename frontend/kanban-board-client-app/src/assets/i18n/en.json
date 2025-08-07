@@ -35,6 +35,8 @@
     "actions": "Actions",
     "backHome": "Back to Home",
     "goBack": "Go Back",
+    "sessionExtendedSuccessfully": "Session extended successfully!",
+    "sessionExpired": "Your session has expired. Please sign in again.",
     "notFound": {
       "title": "Page Not Found",
       "subtitle": "Oops! The page you're looking for doesn't exist.",
@@ -76,7 +78,11 @@
     "enterFirstName": "Enter your first name",
     "enterLastName": "Enter your last name",
     "enterFullName": "Enter your full name",
-    "enterConfirmPassword": "Confirm your password"
+    "enterConfirmPassword": "Confirm your password",
+    "signInSuccess": "Successfully signed in!",
+    "signInFailed": "Sign in failed. Please try again.",
+    "signUpSuccess": "Account created successfully! Welcome!",
+    "signUpFailed": "Registration failed. Please try again."
   },
   "header": {
     "toggleNavigation": "Toggle navigation menu",
@@ -110,7 +116,6 @@
     "notificationSettingsPlaceholder": "Notification settings will be implemented here.",
     "privacySettingsPlaceholder": "Privacy settings will be implemented here.",
     "displayName": "Display Name",
-    "username": "Username",
     "displayNamePlaceholder": "Enter your display name",
     "usernameReadOnly": "Username cannot be changed for security reasons",
     "saveChanges": "Save Changes",
@@ -123,14 +128,12 @@
     "fieldRequired": "This field is required",
     "minLength2": "Must be at least 2 characters long",
     "minLength3": "Must be at least 3 characters long",
-    "close": "Close",
     "languages": {
       "english": "English",
       "russian": "Russian"
     },
 
     "changeAvatar": "Change Avatar",
-    "email": "Email",
     "emailPlaceholder": "Enter your email address",
     "invalidEmail": "Please enter a valid email address",
     "accountInformation": "Account Information",
@@ -204,11 +207,21 @@
     "boardNameMinLength": "Board name must be at least 3 characters",
     "boardNameMaxLength": "Board name cannot exceed 100 characters",
     "boardDescriptionMaxLength": "Board description cannot exceed 500 characters",
-    "addColumn": "Add Column",
-    "removeColumn": "Remove Column",
     "createBoard": "Create Board",
     "errorCreatingBoard": "Error creating board. Please try again.",
-    "authenticationRequired": "Authentication required. Please log in to create a board."
+    "authenticationRequired": "Authentication required. Please log in to create a board.",
+    "taskMovedSuccessfully": "Task moved successfully",
+    "failedToMoveTask": "Failed to move task. Please try again.",
+    "failedToLoadTaskDetails": "Failed to load task details.",
+    "taskUpdatedSuccessfully": "Task updated successfully",
+    "taskDeletedSuccessfully": "Task deleted successfully",
+    "failedToDeleteTask": "Failed to delete task.",
+    "taskCreatedSuccessfully": "Task created successfully",
+    "failedToCreateTask": "Failed to create task.",
+    "defaultColumnTodo": "To Do",
+    "defaultColumnInProgress": "In Progress",
+    "defaultColumnDone": "Done",
+    "newTask": "New Task"
   },
   "validation": {
     "required": "This field is required",

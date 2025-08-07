@@ -35,6 +35,8 @@
     "actions": "Действия",
     "backHome": "Вернуться домой",
     "goBack": "Назад",
+    "sessionExtendedSuccessfully": "Сессия успешно продлена!",
+    "sessionExpired": "Ваша сессия истекла. Пожалуйста, войдите в систему снова.",
     "notFound": {
       "title": "Страница не найдена",
       "subtitle": "Упс! Страница, которую вы ищете, не существует.",
@@ -76,7 +78,11 @@
     "enterFirstName": "Введите имя",
     "enterLastName": "Введите фамилию",
     "enterFullName": "Введите полное имя",
-    "enterConfirmPassword": "Подтвердите пароль"
+    "enterConfirmPassword": "Подтвердите пароль",
+    "signInSuccess": "Успешный вход в систему!",
+    "signInFailed": "Ошибка входа. Пожалуйста, попробуйте снова.",
+    "signUpSuccess": "Аккаунт успешно создан! Добро пожаловать!",
+    "signUpFailed": "Ошибка регистрации. Пожалуйста, попробуйте снова."
   },
   "header": {
     "toggleNavigation": "Переключить меню навигации",
@@ -110,7 +116,6 @@
     "notificationSettingsPlaceholder": "Настройки уведомлений будут реализованы здесь.",
     "privacySettingsPlaceholder": "Настройки конфиденциальности будут реализованы здесь.",
     "displayName": "Отображаемое имя",
-    "username": "Имя пользователя",
     "displayNamePlaceholder": "Введите отображаемое имя",
     "usernameReadOnly": "Имя пользователя нельзя изменить по соображениям безопасности",
     "saveChanges": "Сохранить изменения",
@@ -123,14 +128,12 @@
     "fieldRequired": "Это поле обязательно для заполнения",
     "minLength2": "Должно содержать не менее 2 символов",
     "minLength3": "Должно содержать не менее 3 символов",
-    "close": "Закрыть",
     "languages": {
       "english": "Английский",
       "russian": "Русский"
     },
 
     "changeAvatar": "Изменить аватар",
-    "email": "Email",
     "emailPlaceholder": "Введите ваш email адрес",
     "invalidEmail": "Пожалуйста, введите корректный email адрес",
     "accountInformation": "Информация аккаунта",
@@ -204,11 +207,21 @@
     "boardNameMinLength": "Название доски должно содержать не менее 3 символов",
     "boardNameMaxLength": "Название доски не может превышать 100 символов",
     "boardDescriptionMaxLength": "Описание доски не может превышать 500 символов",
-    "addColumn": "Добавить колонку",
-    "removeColumn": "Удалить колонку",
     "createBoard": "Создать доску",
     "errorCreatingBoard": "Ошибка создания доски. Пожалуйста, попробуйте снова.",
-    "authenticationRequired": "Требуется аутентификация. Пожалуйста, войдите в систему для создания доски."
+    "authenticationRequired": "Требуется аутентификация. Пожалуйста, войдите в систему для создания доски.",
+    "taskMovedSuccessfully": "Задача успешно перемещена",
+    "failedToMoveTask": "Не удалось переместить задачу. Пожалуйста, попробуйте снова.",
+    "failedToLoadTaskDetails": "Не удалось загрузить детали задачи.",
+    "taskUpdatedSuccessfully": "Задача успешно обновлена",
+    "taskDeletedSuccessfully": "Задача успешно удалена",
+    "failedToDeleteTask": "Не удалось удалить задачу.",
+    "taskCreatedSuccessfully": "Задача успешно создана",
+    "failedToCreateTask": "Не удалось создать задачу.",
+    "defaultColumnTodo": "К выполнению",
+    "defaultColumnInProgress": "В процессе",
+    "defaultColumnDone": "Выполнено",
+    "newTask": "Новая задача"
   },
   "validation": {
     "required": "Это поле обязательно для заполнения",

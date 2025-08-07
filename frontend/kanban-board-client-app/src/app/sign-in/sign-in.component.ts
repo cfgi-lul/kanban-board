@@ -81,12 +81,12 @@ export class SignInComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.showSuccessMessage("Successfully signed in!");
+            this.showSuccessMessage("auth.signInSuccess");
             this.router.navigate([this.returnUrl]);
           },
           error: (error) => {
             this.showErrorMessage(
-              error.message || "Sign in failed. Please try again.",
+              error.message || "auth.signInFailed",
             );
           },
         });
@@ -103,7 +103,7 @@ export class SignInComponent implements OnInit {
   }
 
   private showSuccessMessage(message: string): void {
-    this.snackBar.open(message, "Close", {
+    this.snackBar.open(message, "common.close", {
       duration: 3000,
       horizontalPosition: "center",
       verticalPosition: "top",
@@ -112,7 +112,7 @@ export class SignInComponent implements OnInit {
   }
 
   private showErrorMessage(message: string): void {
-    this.snackBar.open(message, "Close", {
+    this.snackBar.open(message, "common.close", {
       duration: 5000,
       horizontalPosition: "center",
       verticalPosition: "top",

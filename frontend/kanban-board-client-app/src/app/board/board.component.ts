@@ -178,10 +178,10 @@ export class BoardComponent implements OnInit, OnDestroy {
         currentBoard
       );
 
-      this.showSuccessMessage('Task moved successfully');
+      this.showSuccessMessage('board.taskMovedSuccessfully');
     } catch {
       // console.error('Error moving task:', error);
-      this.showErrorMessage('Failed to move task. Please try again.');
+      this.showErrorMessage('board.failedToMoveTask');
     }
   }
 
@@ -191,7 +191,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.taskService.getTasksByID(taskId).pipe(
           catchError(error => {
             // console.error('Error loading task:', error);
-            this.showErrorMessage('Failed to load task details.');
+            this.showErrorMessage('board.failedToLoadTaskDetails');
             throw error;
           })
         )
@@ -209,7 +209,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         .pipe(take(1))
         .subscribe(result => {
           if (result) {
-            this.showSuccessMessage('Task updated successfully');
+            this.showSuccessMessage('board.taskUpdatedSuccessfully');
           }
         });
     } catch {
@@ -223,13 +223,13 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.taskService.deleteTask(taskId).pipe(
           catchError(error => {
             // console.error('Error deleting task:', error);
-            this.showErrorMessage('Failed to delete task.');
+            this.showErrorMessage('board.failedToDeleteTask');
             throw error;
           })
         )
       );
 
-      this.showSuccessMessage('Task deleted successfully');
+      this.showSuccessMessage('board.taskDeletedSuccessfully');
     } catch {
       // console.error('Error deleting task:', error);
     }
@@ -238,8 +238,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   async createTask(boardId: string, columnId: string): Promise<void> {
     try {
       const newTask = new TaskInstance({
-        title: 'New Task',
-        description: 'Task description',
+        title: 'board.newTask',
+        description: 'board.taskDescription',
         comments: [],
       });
 
@@ -247,20 +247,20 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.taskService.createTask(newTask, boardId, columnId).pipe(
           catchError(error => {
             // console.error('Error creating task:', error);
-            this.showErrorMessage('Failed to create task.');
+            this.showErrorMessage('board.failedToCreateTask');
             throw error;
           })
         )
       );
 
-      this.showSuccessMessage('Task created successfully');
+      this.showSuccessMessage('board.taskCreatedSuccessfully');
     } catch {
       // console.error('Error creating task:', error);
     }
   }
 
   private showSuccessMessage(message: string): void {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, 'common.close', {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
@@ -268,7 +268,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   private showErrorMessage(message: string): void {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, 'common.close', {
       duration: 5000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',

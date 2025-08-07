@@ -82,12 +82,12 @@ export class SignUpComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.showSuccessMessage("Account created successfully! Welcome!");
+            this.showSuccessMessage("auth.signUpSuccess");
             this.router.navigate([this.returnUrl]);
           },
           error: (error) => {
             this.showErrorMessage(
-              error.message || "Registration failed. Please try again.",
+              error.message || "auth.signUpFailed",
             );
           },
         });
@@ -104,7 +104,7 @@ export class SignUpComponent implements OnInit {
   }
 
   private showSuccessMessage(message: string): void {
-    this.snackBar.open(message, "Close", {
+    this.snackBar.open(message, "common.close", {
       duration: 3000,
       horizontalPosition: "center",
       verticalPosition: "top",
@@ -113,7 +113,7 @@ export class SignUpComponent implements OnInit {
   }
 
   private showErrorMessage(message: string): void {
-    this.snackBar.open(message, "Close", {
+    this.snackBar.open(message, "common.close", {
       duration: 5000,
       horizontalPosition: "center",
       verticalPosition: "top",
