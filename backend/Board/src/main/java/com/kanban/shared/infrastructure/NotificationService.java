@@ -2,7 +2,6 @@ package com.kanban.shared.infrastructure;
 
 import com.kanban.shared.domain.model.Notification;
 import com.kanban.user.domain.model.User;
-import com.kanban.user.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -15,9 +14,6 @@ public class NotificationService {
 
     @Autowired
     private NotificationRepository notificationRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     /**
      * Create a notification for task assignment
@@ -104,7 +100,7 @@ public class NotificationService {
      * Delete old notifications (cleanup)
      */
     public void deleteOldNotifications(int daysOld) {
-        LocalDateTime cutoffDate = LocalDateTime.now().minusDays(daysOld);
+        LocalDateTime.now().minusDays(daysOld);
         // Implementation would depend on your repository method
         // notificationRepository.deleteByCreatedAtBefore(cutoffDate);
     }

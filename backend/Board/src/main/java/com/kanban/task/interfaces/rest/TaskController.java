@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import com.kanban.board.interfaces.rest.BoardDTO;
 import com.kanban.shared.infrastructure.BoardMapper;
 import com.kanban.shared.infrastructure.TaskMapper;
-import com.kanban.board.domain.model.Board;
 import com.kanban.board.domain.model.BoardColumn;
 import com.kanban.task.domain.model.Task;
 import com.kanban.task.domain.model.TaskPriority;
@@ -25,7 +24,6 @@ import com.kanban.board.domain.repository.ColumnRepository;
 import com.kanban.task.domain.repository.TaskRepository;
 import com.kanban.user.domain.repository.UserRepository;
 import com.kanban.shared.infrastructure.LabelRepository;
-import com.kanban.shared.infrastructure.AttachmentRepository;
 
 
 
@@ -53,9 +51,6 @@ public class TaskController {
     @Autowired
     private LabelRepository labelRepository;
 
-    @Autowired
-    private AttachmentRepository attachmentRepository;
-
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
         return taskRepository.findById(id)
@@ -72,7 +67,7 @@ public class TaskController {
             @AuthenticationPrincipal UserDetails userDetails) {
         
         // Fetch the board and column
-        Board board = boardRepository.findById(boardId)
+        boardRepository.findById(boardId)
                 .orElseThrow(() -> new ResourceNotFoundException("Board not found"));
         BoardColumn column = columnRepository.findById(columnId)
                 .orElseThrow(() -> new ResourceNotFoundException("Column not found"));
