@@ -1,59 +1,286 @@
-# KanbanBoardClientApp
+# Kanban Board - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+Современное веб-приложение для управления задачами, построенное на Angular с использованием Material Design.
 
-## Development server
+## Быстрый старт
 
-To start a local development server, run:
+### Предварительные требования
 
-```bash
-ng serve
-```
+- **Node.js** версии 18 или выше
+- **npm** версии 9 или выше
+- **Angular CLI** версии 20 или выше
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Установка
 
 ```bash
-ng generate component component-name
+# Клонирование репозитория
+git clone <repository-url>
+cd kanban-board/frontend/kanban-board-client-app
+
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Приложение будет доступно по адресу: `http://localhost:4200`
 
+## Доступные команды
+
+### Разработка
 ```bash
-ng generate --help
+npm start          # Запуск сервера разработки
+npm run build      # Сборка для продакшена
+npm run watch      # Сборка в режиме наблюдения
 ```
 
-## Building
-
-To build the project run:
-
+### Тестирование
 ```bash
-ng build
+npm run test              # Запуск unit тестов
+npm run test:watch        # Запуск тестов в режиме наблюдения
+npm run test:coverage     # Запуск тестов с покрытием кода
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+### Линтинг и форматирование
 ```bash
-ng test
+npm run lint              # Проверка кода ESLint
+npm run lint:fix          # Автоматическое исправление ошибок ESLint
+npm run stylelint         # Проверка стилей Stylelint
+npm run stylelint:fix     # Автоматическое исправление стилей
+npm run format            # Форматирование кода Prettier
+npm run format:check      # Проверка форматирования
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### Анализ и API
 ```bash
-ng e2e
+npm run generate-api      # Генерация API клиента из Swagger
+npm run analyze           # Анализ размера бандла
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Структура проекта
 
-## Additional Resources
+```
+src/
+├── app/
+│   ├── admin-component/          # Административная панель
+│   ├── analytics/               # Аналитика и метрики
+│   ├── board/                   # Компоненты доски
+│   │   └── components/
+│   │       ├── task-editor/     # Редактор задач
+│   │       └── taks-preview/    # Предварительный просмотр задач
+│   ├── boards-list/             # Список досок
+│   ├── core/                    # Основные компоненты и сервисы
+│   │   ├── api/                 # API сервисы
+│   │   ├── components/          # Переиспользуемые компоненты
+│   │   │   ├── header/          # Заголовок приложения
+│   │   │   ├── settings/        # Настройки пользователя
+│   │   │   ├── tile/            # Компонент плитки
+│   │   │   ├── user-badge/      # Бейдж пользователя
+│   │   │   └── user-display/    # Отображение пользователя
+│   │   ├── guards/              # Защитники маршрутов
+│   │   ├── intersceptors/       # HTTP перехватчики
+│   │   ├── models/              # Модели данных
+│   │   ├── services/            # Общие сервисы
+│   │   └── utils/               # Утилиты
+│   ├── help/                    # Справка
+│   ├── main-page/               # Главная страница
+│   ├── news/                    # Новости
+│   ├── not-found/               # Страница 404
+│   ├── sidenav/                 # Боковая навигация
+│   ├── sign-in/                 # Страница входа
+│   └── sign-up/                 # Страница регистрации
+├── assets/                      # Статические ресурсы
+│   ├── i18n/                    # Файлы интернационализации
+│   └── default-avatar.svg       # Аватар по умолчанию
+├── theaming/                    # Темы оформления
+│   ├── dark.scss               # Темная тема
+│   └── light.scss              # Светлая тема
+└── main.ts                     # Точка входа приложения
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Конфигурация
+
+### Структура конфигурационных файлов
+
+```
+config/
+├── editor/           # Настройки редактора (.editorconfig)
+├── typescript/       # Конфигурация TypeScript
+├── eslint/          # Конфигурация ESLint
+├── prettier/        # Конфигурация Prettier
+├── stylelint/       # Конфигурация Stylelint
+├── jest/            # Конфигурация Jest
+├── openapi/         # Конфигурация OpenAPI
+├── nginx/           # Конфигурация Nginx
+└── README.md        # Документация конфигурации
+```
+
+### Основные технологии
+
+- **Angular 20** - Основной фреймворк
+- **Angular Material** - UI компоненты
+- **RxJS** - Реактивное программирование
+- **TypeScript** - Типизированный JavaScript
+- **SCSS** - Препроцессор CSS
+- **Jest** - Тестирование
+- **ESLint** - Линтинг кода
+- **Prettier** - Форматирование кода
+- **Stylelint** - Линтинг стилей
+
+## Дизайн и UX
+
+### Темы оформления
+- **Светлая тема** - Основная тема приложения
+- **Темная тема** - Альтернативная тема
+- **Автоматическое переключение** - В зависимости от системных настроек
+
+### Адаптивный дизайн
+- **Desktop** - Полнофункциональный интерфейс
+- **Tablet** - Адаптированный для планшетов
+- **Mobile** - Мобильная версия
+
+### Доступность
+- Поддержка клавиатурной навигации
+- Семантическая разметка
+- Контрастные цвета
+- Поддержка скринридеров
+
+## Интернационализация
+
+Приложение поддерживает многоязычность:
+
+- **Русский** - Основной язык
+- **Английский** - Дополнительный язык
+
+Файлы переводов находятся в `src/assets/i18n/`
+
+## Безопасность
+
+- **JWT токены** - Аутентификация
+- **HTTP перехватчики** - Автоматическое добавление токенов
+- **Защитники маршрутов** - Контроль доступа
+- **XSS защита** - Санитизация данных
+
+## Аналитика
+
+Встроенная система аналитики для отслеживания:
+- Активности пользователей
+- Производительности доски
+- Метрик продуктивности
+- Системной аналитики
+
+## Тестирование
+
+### Unit тесты
+- Компоненты тестируются с помощью Jest
+- Сервисы покрыты unit тестами
+- Guards и interceptors протестированы
+
+### E2E тесты
+- Критические пользовательские сценарии
+- Тестирование аутентификации
+- Тестирование создания и управления задачами
+
+## Развертывание
+
+### Продакшен сборка
+```bash
+npm run build
+```
+
+### Docker
+```bash
+docker build -t kanban-frontend .
+docker run -p 80:80 kanban-frontend
+```
+
+### Nginx конфигурация
+Конфигурация для продакшена находится в `config/nginx/nginx.conf`
+
+## Вклад в проект
+
+### Установка зависимостей для разработки
+```bash
+npm install
+```
+
+### Запуск линтеров
+```bash
+npm run lint
+npm run stylelint
+```
+
+### Форматирование кода
+```bash
+npm run format
+npm run stylelint:fix
+```
+
+### Запуск тестов
+```bash
+npm run test
+npm run test:coverage
+```
+
+## Стиль кода
+
+### TypeScript
+- Строгая типизация
+- ESLint правила
+- Prettier форматирование
+
+### SCSS
+- BEM методология
+- Переменные для тем
+- Модульная структура
+
+### Angular
+- Standalone компоненты
+- OnPush стратегия обнаружения изменений
+- Reactive формы
+
+## Устранение неполадок
+
+### Проблемы с установкой
+```bash
+# Очистка кэша npm
+npm cache clean --force
+
+# Удаление node_modules
+rm -rf node_modules package-lock.json
+
+# Переустановка зависимостей
+npm install
+```
+
+### Проблемы с линтерами
+```bash
+# Автоматическое исправление ESLint
+npm run lint:fix
+
+# Автоматическое исправление Stylelint
+npm run stylelint:fix
+```
+
+### Проблемы с тестами
+```bash
+# Очистка кэша Jest
+npm run test -- --clearCache
+```
+
+## Поддержка
+
+При возникновении проблем:
+1. Проверьте раздел "Устранение неполадок"
+2. Ознакомьтесь с документацией конфигурации в `config/README.md`
+3. Создайте issue в репозитории проекта
+
+## Лицензия
+
+Этот проект лицензирован под MIT License.
+
+---
+
+**Версия**: 1.0.0  
+**Последнее обновление**: Август 2025
