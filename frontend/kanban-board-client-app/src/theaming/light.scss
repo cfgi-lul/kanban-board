@@ -1,40 +1,40 @@
 @use '@angular/material' as mat;
 
-/* Pleasant Light Theme - Ocean Breeze */
+/* Modern Light Theme - Sophisticated Palette */
 :root,
 :host {
   @include mat.theme-overrides(
     (
-      // Primary - Ocean Blue
-      primary: #2563eb,
+      // Primary - Modern Slate Blue
+      primary: #475569,
       on-primary: #ffffff,
-      primary-container: #dbeafe,
-      on-primary-container: #1e40af,
-      inverse-primary: #93c5fd,
-      primary-fixed: #dbeafe,
-      primary-fixed-dim: #93c5fd,
-      on-primary-fixed: #1e40af,
-      on-primary-fixed-variant: #1d4ed8,
+      primary-container: #f1f5f9,
+      on-primary-container: #334155,
+      inverse-primary: #cbd5e1,
+      primary-fixed: #f1f5f9,
+      primary-fixed-dim: #cbd5e1,
+      on-primary-fixed: #334155,
+      on-primary-fixed-variant: #475569,
 
-      // Secondary - Soft Teal
-      secondary: #0891b2,
+      // Secondary - Sage Green
+      secondary: #10b981,
       on-secondary: #ffffff,
-      secondary-container: #cffafe,
-      on-secondary-container: #0e7490,
-      secondary-fixed: #cffafe,
-      secondary-fixed-dim: #a5f3fc,
-      on-secondary-fixed: #0e7490,
-      on-secondary-fixed-variant: #0c4a6e,
+      secondary-container: #d1fae5,
+      on-secondary-container: #065f46,
+      secondary-fixed: #d1fae5,
+      secondary-fixed-dim: #a7f3d0,
+      on-secondary-fixed: #065f46,
+      on-secondary-fixed-variant: #047857,
 
-      // Tertiary - Warm Coral
-      tertiary: #f97316,
+      // Tertiary - Warm Gray
+      tertiary: #9ca3af,
       on-tertiary: #ffffff,
-      tertiary-container: #fed7aa,
-      on-tertiary-container: #c2410c,
-      tertiary-fixed: #fed7aa,
-      tertiary-fixed-dim: #fdba74,
-      on-tertiary-fixed: #c2410c,
-      on-tertiary-fixed-variant: #9a3412,
+      tertiary-container: #f3f4f6,
+      on-tertiary-container: #4b5563,
+      tertiary-fixed: #f3f4f6,
+      tertiary-fixed-dim: #d1d5db,
+      on-tertiary-fixed: #4b5563,
+      on-tertiary-fixed-variant: #6b7280,
 
       // Surface Colors - Clean Whites
       background: #fafafa,
@@ -52,7 +52,7 @@
       // Shadows and Effects
       shadow: #000000,
       scrim: #000000,
-      surface-tint: #2563eb,
+      surface-tint: #475569,
       inverse-surface: #1f2937,
       inverse-on-surface: #f9fafb,
 
@@ -66,7 +66,7 @@
       neutral-variant: #6b7280,
       neutral-variant20: #374151,
 
-      // Error Colors
+      // Error Colors - Muted Red
       error: #dc2626,
       error-container: #fef2f2,
       on-error: #ffffff,
@@ -77,8 +77,8 @@
       on-surface-variant: #4b5563,
 
       // Inverse Colors
-      inverse-secondary: #a5f3fc,
-      inverse-tertiary: #fdba74
+      inverse-secondary: #e5e7eb,
+      inverse-tertiary: #d1d5db
     )
   );
 

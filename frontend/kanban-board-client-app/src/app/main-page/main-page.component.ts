@@ -1,62 +1,67 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDividerModule } from '@angular/material/divider';
 
 import { MatRippleModule } from '@angular/material/core';
-import { Tile, TileComponent } from '../core/components/tile/tile.component';
+import { TileComponent } from '../core/components/tile/tile.component';
 
-
-const TILES: Tile[] = [
+const TILES: {
+  title: string;
+  description: string;
+  icon: string;
+  color: 'primary' | 'accent' | 'warn';
+  route: string;
+  size: 'large' | 'medium' | 'small';
+}[] = [
   {
-    id: 'boards',
     title: 'main.boards.title',
     description: 'main.boards.description',
     icon: 'dashboard',
-    route: '/boards-list',
     color: 'primary',
+    route: '/boards-list',
+    size: 'large',
   },
   {
-    id: 'news',
     title: 'main.news.title',
     description: 'main.news.description',
     icon: 'newspaper',
-    route: '/news',
     color: 'accent',
-    badge: 'main.news.badge',
+    route: '/news',
+    size: 'small',
   },
   {
-    id: 'analytics',
     title: 'main.analytics.title',
     description: 'main.analytics.description',
     icon: 'analytics',
-    route: '/analytics',
     color: 'primary',
+    route: '/analytics',
+    size: 'small',
   },
   {
-    id: 'settings',
     title: 'main.settings.title',
     description: 'main.settings.description',
     icon: 'settings',
-    route: '/settings',
     color: 'accent',
+    route: '/settings',
+    size: 'small',
   },
   {
-    id: 'admin',
     title: 'main.admin.title',
     description: 'main.admin.description',
     icon: 'admin_panel_settings',
-    route: '/admin',
     color: 'warn',
+    route: '/admin',
+    size: 'small',
   },
   {
-    id: 'help',
     title: 'main.help.title',
     description: 'main.help.description',
     icon: 'help',
-    route: '/help',
     color: 'primary',
+    route: '/help',
+    size: 'small',
   },
 ];
 
@@ -68,19 +73,12 @@ const TILES: Tile[] = [
     TranslateModule,
     MatDividerModule,
     TileComponent,
+    RouterLink,
     MatRippleModule,
   ],
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  tiles: Tile[] = TILES;
-  private router = inject(Router);
-  private translate = inject(TranslateService);
-
-  onTileClick(tile: Tile | null | undefined): void {
-    if (tile && !tile.disabled) {
-      this.router.navigate([tile.route]);
-    }
-  }
+  tiles = TILES;
 }

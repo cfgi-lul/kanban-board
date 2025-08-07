@@ -10,8 +10,14 @@
     <div class="main-page__tiles-grid">
       @for (tile of tiles; track tile.title) {
           <kn-tile
-            [tile]="tile"
-            (tileClick)="onTileClick(tile)"
+            [class.main-page__tiles-grid__tile--large]="tile.size === 'large'"
+            [class.main-page__tiles-grid__tile--medium]="tile.size === 'medium'"
+            [class.main-page__tiles-grid__tile--small]="tile.size === 'small'"
+            [title]="tile.title"
+            [description]="tile.description"
+            [icon]="tile.icon"
+            [color]="tile.color"
+            [routerLink]="tile.route"
           />
       }
     </div>

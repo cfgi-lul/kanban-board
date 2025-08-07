@@ -40,8 +40,20 @@
   }
 
   &__tiles-grid {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    &__tile--small {
+      grid-column: span 1;
+    }
+
+    &__tile--medium {
+      grid-column: span 2;
+    }
+
+    &__tile--large {
+      grid-column: span 3;
+    }
+
+    display: grid;
     gap: 16px;
   }
 }
@@ -52,7 +64,10 @@
     gap: 24px;
 
     &__tiles-grid {
-      grid-template-columns: repeat(2, 1fr);
+      &__tile--large {
+        grid-column: span 2;
+      }
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 }
@@ -113,7 +128,14 @@
     }
 
     &__tiles-grid {
-      grid-template-columns: 1fr;
+      &__tile--medium {
+        grid-column: span 1;
+      }
+
+      &__tile--large {
+        grid-column: span 1;
+      }
+
       gap: 12px;
     }
   }
@@ -140,6 +162,7 @@
     }
 
     &__tiles-grid {
+      grid-template-columns: repeat(1, 1fr);
       gap: 8px;
     }
   }

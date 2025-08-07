@@ -1,32 +1,20 @@
 <mat-card
   class="tile"
-  [class]="'tile--' + tile().color"
-  [class.tile--large]="size() === 'large'"
-  [class.tile--medium]="size() === 'medium'"
-  [class.tile--small]="size() === 'small'"
+  [class]="'tile--' + color()"
   (click)="onTileClick()"
-  [attr.aria-label]="tile().title | translate"
+  [attr.aria-label]="title() | translate"
   matRipple
 >
   <div>
     <mat-card-header class="tile__header">
       <mat-card-title class="tile__title">
-        <mat-icon class="tile__icon">{{ tile().icon }}</mat-icon>
-        <span translate="{{ tile().title }}"></span>
+        <mat-icon class="tile__icon">{{ icon() }}</mat-icon>
+        <span translate="{{ title() }}"></span>
       </mat-card-title>
-      @if (tile().badge) {
-        <mat-chip
-          class="tile__badge"
-          color="warn"
-          variant="elevated"
-        >
-          <span translate="{{ tile().badge }}"></span>
-        </mat-chip>
-      }
     </mat-card-header>
 
     <mat-card-content class="tile__content">
-      <span class="tile__description" translate="{{ tile().description }}"></span>
+      <span class="tile__description" translate="{{ description() }}"></span>
     </mat-card-content>
   </div>
 </mat-card>

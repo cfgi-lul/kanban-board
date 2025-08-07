@@ -1,83 +1,83 @@
 @use '@angular/material' as mat;
 
-/* WebStorm Darcula Theme */
+/* Modern Dark Theme - Sophisticated Palette */
 .dark {
   @include mat.theme-overrides(
     (
-      // Primary - Darcula Blue
-      primary: #3c78dc,
-      on-primary: #ffffff,
-      primary-container: #2b579a,
-      on-primary-container: #ffffff,
-      inverse-primary: #2b579a,
-      primary-fixed: #2b579a,
-      primary-fixed-dim: #3c78dc,
-      on-primary-fixed: #ffffff,
-      on-primary-fixed-variant: #1e4b8a,
+      // Primary - Modern Slate Blue
+      primary: #94a3b8,
+      on-primary: #1e293b,
+      primary-container: #334155,
+      on-primary-container: #e2e8f0,
+      inverse-primary: #334155,
+      primary-fixed: #334155,
+      primary-fixed-dim: #475569,
+      on-primary-fixed: #e2e8f0,
+      on-primary-fixed-variant: #475569,
 
-      // Secondary - Darcula Green
-      secondary: #6a8759,
-      on-secondary: #ffffff,
-      secondary-container: #4a5d3e,
-      on-secondary-container: #ffffff,
-      secondary-fixed: #4a5d3e,
-      secondary-fixed-dim: #6a8759,
-      on-secondary-fixed: #ffffff,
-      on-secondary-fixed-variant: #3d4a2e,
+      // Secondary - Bright Emerald
+      secondary: #34d399,
+      on-secondary: #064e3b,
+      secondary-container: #065f46,
+      on-secondary-container: #d1fae5,
+      secondary-fixed: #065f46,
+      secondary-fixed-dim: #10b981,
+      on-secondary-fixed: #d1fae5,
+      on-secondary-fixed-variant: #047857,
 
-      // Tertiary - Darcula Orange
-      tertiary: #ffc66d,
-      on-tertiary: #2d2d2d,
-      tertiary-container: #cc8f3d,
-      on-tertiary-container: #ffffff,
-      tertiary-fixed: #cc8f3d,
-      tertiary-fixed-dim: #ffc66d,
-      on-tertiary-fixed: #2d2d2d,
-      on-tertiary-fixed-variant: #a67a2e,
+      // Tertiary - Warm Gray
+      tertiary: #cbd5e1,
+      on-tertiary: #1f2937,
+      tertiary-container: #4b5563,
+      on-tertiary-container: #f9fafb,
+      tertiary-fixed: #4b5563,
+      tertiary-fixed-dim: #9ca3af,
+      on-tertiary-fixed: #f9fafb,
+      on-tertiary-fixed-variant: #6b7280,
 
-      // Surface Colors - Darcula Grays
-      background: #2b2b2b,
-      on-background: #a9b7c6,
-      surface: #2b2b2b,
-      surface-dim: #2b2b2b,
-      surface-bright: #3c3f41,
-      surface-container-lowest: #1e1e1e,
-      surface-container-low: #3c3f41,
-      surface-container: #4c5052,
-      surface-container-high: #5c6164,
-      surface-container-highest: #6c7174,
-      on-surface: #a9b7c6,
+      // Surface Colors - Modern Dark Grays
+      background: #0f172a,
+      on-background: #e2e8f0,
+      surface: #1e293b,
+      surface-dim: #0f172a,
+      surface-bright: #334155,
+      surface-container-lowest: #020617,
+      surface-container-low: #1e293b,
+      surface-container: #334155,
+      surface-container-high: #475569,
+      surface-container-highest: #64748b,
+      on-surface: #e2e8f0,
 
       // Shadows and Effects
       shadow: #000000,
       scrim: #000000,
-      surface-tint: #3c78dc,
-      inverse-surface: #a9b7c6,
-      inverse-on-surface: #2b2b2b,
+      surface-tint: #94a3b8,
+      inverse-surface: #e2e8f0,
+      inverse-on-surface: #0f172a,
 
       // Outlines
-      outline: #6c7174,
-      outline-variant: #4c5052,
+      outline: #64748b,
+      outline-variant: #334155,
 
       // Neutral Colors
-      neutral: #6c7174,
-      neutral10: #2b2b2b,
-      neutral-variant: #6c7174,
-      neutral-variant20: #4c5052,
+      neutral: #64748b,
+      neutral10: #0f172a,
+      neutral-variant: #64748b,
+      neutral-variant20: #334155,
 
-      // Error Colors - Darcula Red
-      error: #ff6b68,
-      error-container: #8b0000,
-      on-error: #ffffff,
-      on-error-container: #ffffff,
+      // Error Colors - Muted Red
+      error: #f87171,
+      error-container: #7f1d1d,
+      on-error: #450a0a,
+      on-error-container: #fecaca,
 
       // Surface Variants
-      surface-variant: #4c5052,
-      on-surface-variant: #a9b7c6,
+      surface-variant: #334155,
+      on-surface-variant: #cbd5e1,
 
       // Inverse Colors
-      inverse-secondary: #6a8759,
-      inverse-tertiary: #ffc66d
+      inverse-secondary: #9ca3af,
+      inverse-tertiary: #cbd5e1
     )
   );
 

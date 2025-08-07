@@ -7,23 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 
-export interface Tile {
-  id: string;
-  title: string;
-  description?: string;
-  icon?: string;
-  route?: string;
-  color: 'primary' | 'accent' | 'warn';
-  badge?: string;
-  disabled?: boolean;
-}
-
-const DEFAULT_TILE: Tile = {
-  title: 'default',
-  color: 'primary',
-  id: 'id',
-};
-
 @Component({
   selector: 'kn-tile',
   standalone: true,
@@ -40,13 +23,14 @@ const DEFAULT_TILE: Tile = {
   styleUrls: ['./tile.component.scss'],
 })
 export class TileComponent {
-  readonly tile = input<Tile>(DEFAULT_TILE);
+  readonly title = input<string>('');
+  readonly description = input<string>('');
+  readonly icon = input<string>('');
+  readonly color = input<'primary' | 'accent' | 'warn'>('primary');
   readonly size = input<'small' | 'medium' | 'large'>('small');
-  readonly tileClick = new EventEmitter<Tile>();
+  readonly tileClick = new EventEmitter<void>();
 
   onTileClick(): void {
-    if (!this.tile().disabled) {
-      this.tileClick.emit(this.tile());
-    }
+    this.tileClick.emit();
   }
 }
