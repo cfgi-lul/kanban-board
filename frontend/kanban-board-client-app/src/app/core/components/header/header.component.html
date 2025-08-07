@@ -2,14 +2,16 @@
   <div class="header-container">
     <!-- Left Section -->
     <div class="header-left">
-      <button
-        mat-icon-button
-        class="menu-button"
-        (click)="openSideNav.emit()"
-        [attr.aria-label]="'header.toggleNavigation' | translate"
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
+      @if (isSmallScreen) {
+        <button
+          mat-icon-button
+          class="menu-button"
+          (click)="openSideNav.emit()"
+          [attr.aria-label]="'header.toggleNavigation' | translate"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
 
       <div class="brand" routerLink="/main" style="cursor: pointer">
         <div class="brand-logo">

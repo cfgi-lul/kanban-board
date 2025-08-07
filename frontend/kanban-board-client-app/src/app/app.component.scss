@@ -8,6 +8,13 @@
   width: 280px;
 }
 
+// Responsive sidenav behavior
+@media (max-width: 1023px) {
+  .app-sidenav {
+    width: 260px;
+  }
+}
+
 .sidenav-content {
   display: flex;
   flex-direction: column;
@@ -41,7 +48,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+      box-shadow: 0 2px 8px var(--mat-sys-shadow);
       flex-shrink: 0;
 
       .avatar-initials {

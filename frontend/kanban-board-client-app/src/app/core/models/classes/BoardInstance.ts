@@ -29,10 +29,10 @@ export class BoardInstance implements BoardDTOInterface {
       ? new UserInstance(data.createdBy)
       : undefined;
     this.columns = data.columns
-      ? data.columns.map((column) => new ColumnInstance(column))
+      ? data.columns.map(column => new ColumnInstance(column))
       : undefined;
     this.labels = data.labels
-      ? data.labels.map((label) => new LabelInstance(label))
+      ? data.labels.map(label => new LabelInstance(label))
       : undefined;
   }
 }

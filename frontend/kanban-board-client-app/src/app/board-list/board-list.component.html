@@ -1,0 +1,119 @@
+<mat-sidenav-container class="board-list-container">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="search-toolbar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>{{ 'board.searchBoards' | translate }}</mat-label>
+        <input
+          matInput
+          [value]="searchTerm()"
+          (input)="onSearchChange($event)"
+          [placeholder]="'board.enterBoardName' | translate"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+        @if (searchTerm()) {
+          <button
+            matSuffix
+            mat-icon-button
+            (click)="clearSearch()"
+            [attr.aria-label]="'common.clearSearch' | translate"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+    </mat-toolbar>
+
+    <div class="content-area">
+      @if (isLoading()) {
+        <div class="state-container">
+          <mat-spinner diameter="50"></mat-spinner>
+          <mat-card-subtitle>{{ 'board.loadingBoards' | translate }}</mat-card-subtitle>
+        </div>
+      }
+
+      @if (hasError()) {
+        <mat-card class="state-card">
+          <mat-card-content class="state-content">
+            <mat-icon color="warn" class="state-icon">error</mat-icon>
+            <mat-card-title>{{ 'board.failedToLoadBoards' | translate }}</mat-card-title>
+            <mat-card-subtitle>{{ 'board.errorLoadingBoards' | translate }}</mat-card-subtitle>
+            <button mat-raised-button color="primary" (click)="retryLoad()">
+              <mat-icon>refresh</mat-icon>
+              {{ 'common.retry' | translate }}
+            </button>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      @if (isFulfilled()) {
+        @if (filteredBoards().length === 0 && searchTerm()) {
+          <mat-card class="state-card">
+            <mat-card-content class="state-content">
+              <mat-icon class="state-icon">search_off</mat-icon>
+              <mat-card-title>{{ 'board.noBoardsFound' | translate }}</mat-card-title>
+              <mat-card-subtitle>{{ 'board.noBoardsMatchSearch' | translate }}</mat-card-subtitle>
+              <button mat-button color="primary" (click)="clearSearch()">
+                {{ 'common.clearSearch' | translate }}
+              </button>
+            </mat-card-content>
+          </mat-card>
+        }
+
+        @if (filteredBoards().length > 0) {
+          <mat-grid-list cols="3" rowHeight="1:1" gutterSize="16px" class="boards-grid">
+            @for (board of filteredBoards(); track board.id) {
+              <mat-grid-tile>
+                <mat-card class="board-card" (click)="openBoard(board.id)">
+                  <mat-card-header>
+                    <mat-card-title>{{ board.name }}</mat-card-title>
+                    <mat-card-subtitle>
+                      {{ 'board.boardId' | translate }}: {{ board.id }}
+                    </mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    @if (board.description) {
+                      <mat-card-subtitle class="board-description">
+                        {{ board.description }}
+                      </mat-card-subtitle>
+                    }
+                    <mat-card-subtitle>
+                      {{ 'board.columns' | translate }}: {{ board.columns?.length || 0 }}
+                    </mat-card-subtitle>
+                  </mat-card-content>
+                  <mat-card-actions align="end">
+                    @if (authService.hasRole('ADMIN') || (canDelete(board.id) | async)) {
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        (click)="deleteBoard(board.id); $event.stopPropagation()"
+                        [matTooltip]="'common.delete' | translate"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    }
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      (click)="openBoard(board.id); $event.stopPropagation()"
+                      [matTooltip]="'board.openBoard' | translate"
+                    >
+                      <mat-icon>open_in_new</mat-icon>
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </mat-grid-tile>
+            }
+          </mat-grid-list>
+        }
+
+        <mat-card class="add-board-card" (click)="addBoard()">
+          <mat-card-content class="add-board-content">
+            <mat-icon class="add-icon">add</mat-icon>
+            <mat-card-title>{{ 'board.createNewBoard' | translate }}</mat-card-title>
+            <mat-card-subtitle>{{ 'board.clickToCreateBoard' | translate }}</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

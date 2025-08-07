@@ -1,11 +1,10 @@
 .header-toolbar {
   background: var(--mat-sys-surface-container) !important;
-  border-bottom: 1px solid var(--mat-sys-outline-variant) !important;
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
   backdrop-filter: blur(20px) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 1px 3px var(--mat-sys-shadow) !important;
   transition: all 0.3s ease !important;
   padding: 0 !important;
   min-height: 64px !important;
@@ -51,7 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 8px var(--mat-sys-shadow);
 
   .brand-icon {
     color: var(--mat-sys-on-primary) !important;
@@ -82,7 +81,7 @@
   border: 1px solid var(--mat-sys-outline-variant) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 1px 2px var(--mat-sys-shadow) !important;
 
   .mat-button-toggle {
     border: none !important;
@@ -121,7 +120,7 @@
   padding: 0 16px !important;
   height: 40px !important;
   border-radius: 10px !important;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+  box-shadow: 0 2px 8px var(--mat-sys-shadow) !important;
 
   mat-icon {
     font-size: 18px !important;

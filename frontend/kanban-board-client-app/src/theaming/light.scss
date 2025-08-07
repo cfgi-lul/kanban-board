@@ -81,6 +81,11 @@
       inverse-tertiary: #fdba74
     )
   );
+
+  // Custom Light Shadows
+  --mat-sys-shadow-light: 0px 0px 4px 0px rgba(34, 60, 80, 0.15);
+  --mat-sys-shadow-medium: 0px 0px 6px 0px rgba(34, 60, 80, 0.20);
+  --mat-sys-shadow-heavy: 0px 0px 8px 0px rgba(34, 60, 80, 0.25);
 }
 
 /* Typography */

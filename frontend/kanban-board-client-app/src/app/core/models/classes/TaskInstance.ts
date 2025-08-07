@@ -29,19 +29,17 @@ export class TaskInstance implements TaskDTOInterface {
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
     this.comments = data.comments
-      ? data.comments.map((comment) => new CommentInstance(comment))
+      ? data.comments.map(comment => new CommentInstance(comment))
       : undefined;
     this.attachments = data.attachments
-      ? data.attachments.map((attachment) => new AttachmentInstance(attachment))
+      ? data.attachments.map(attachment => new AttachmentInstance(attachment))
       : undefined;
     this.labels = data.labels
-      ? data.labels.map((label) => new LabelInstance(label))
+      ? data.labels.map(label => new LabelInstance(label))
       : undefined;
     this.createdBy = data.createdBy
       ? new UserInstance(data.createdBy)
       : undefined;
-    this.assignee = data.assignee
-      ? new UserInstance(data.assignee)
-      : undefined;
+    this.assignee = data.assignee ? new UserInstance(data.assignee) : undefined;
   }
 }

@@ -1,7 +1,17 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -54,7 +64,14 @@ export class CreateBoardModalComponent {
 
   constructor() {
     this.createBoardForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
       description: ['', [Validators.maxLength(500)]],
       columns: this.fb.array([
         this.fb.control('To Do', Validators.required),
@@ -99,11 +116,9 @@ export class CreateBoardModalComponent {
             name: col.trim(),
             orderIndex: index,
             color: null,
-            taskLimit: null
+            taskLimit: null,
           })),
       };
-
-
 
       this.boardService.createBoard(boardData).subscribe({
         next: (board: BoardInstance) => {
@@ -111,12 +126,13 @@ export class CreateBoardModalComponent {
           this.boardCreated.emit(board);
           this.dialogRef.close(board);
         },
-        error: (error) => {
+        error: error => {
           this.isLoading = false;
           if (error.status === 403 || error.status === 401) {
             this.errorMessage = 'board.authenticationRequired';
           } else {
-            this.errorMessage = error.error?.message || 'board.errorCreatingBoard';
+            this.errorMessage =
+              error.error?.message || 'board.errorCreatingBoard';
           }
         },
       });

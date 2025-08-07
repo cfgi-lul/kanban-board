@@ -24,7 +24,11 @@ export class TaskService {
       .pipe(map(e => new TaskInstance(e)));
   }
 
-  createTask(task: TaskInstance, boardId: string, columnId: string): Observable<TaskInstance> {
+  createTask(
+    task: TaskInstance,
+    boardId: string,
+    columnId: string
+  ): Observable<TaskInstance> {
     return this.http
       .post<TaskDTO>(this.baseUrl, task, { params: { boardId, columnId } })
       .pipe(map(e => new TaskInstance(e)));

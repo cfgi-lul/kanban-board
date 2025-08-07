@@ -3,6 +3,8 @@ import {
   Component,
   inject,
   OnInit,
+  OnDestroy,
+  HostListener,
 } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/api/auth.service';
@@ -13,13 +15,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule, MatDrawerMode } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './core/components/header/header.component';
 import { AsyncPipe } from '@angular/common';
 import { UserInstance } from './core/models/classes/UserInstance';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,15 +44,19 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'kanban-board-client-app';
   isSidenavOpen = false;
+  sidenavMode: MatDrawerMode = 'side';
+  isLargeScreen = false;
   currentUser = inject(AuthService).currentUser;
   isAdmin = inject(AuthService).isAdmin();
   avatarService = inject(AvatarService);
   themeService = inject(ThemeService);
   i18nService = inject(I18nService);
   translateService = inject(TranslateService);
+
+  private readonly LARGE_SCREEN_BREAKPOINT = 1024; // 1024px and above
 
   constructor() {
     // Theme is now initialized automatically by the ThemeService
@@ -58,6 +65,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkScreenSize();
     // Test translation loading
     window.setTimeout(() => {
       // Translation testing removed for production
@@ -77,8 +85,41 @@ export class AppComponent implements OnInit {
     }, 1000);
   }
 
+  ngOnDestroy(): void {
+    // Cleanup if needed
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize(): void {
+    const wasLargeScreen = this.isLargeScreen;
+    this.isLargeScreen = window.innerWidth >= this.LARGE_SCREEN_BREAKPOINT;
+
+    if (this.isLargeScreen !== wasLargeScreen) {
+      this.updateSidenavBehavior();
+    }
+  }
+
+  private updateSidenavBehavior(): void {
+    if (this.isLargeScreen) {
+      // Large screen: always open, side mode
+      this.sidenavMode = 'side';
+      this.isSidenavOpen = true;
+    } else {
+      // Small screen: overlay mode, starts closed
+      this.sidenavMode = 'over';
+      this.isSidenavOpen = false;
+    }
+  }
+
   toggleSidenav(): void {
-    this.isSidenavOpen = !this.isSidenavOpen;
+    if (!this.isLargeScreen) {
+      // Only allow toggle on small screens
+      this.isSidenavOpen = !this.isSidenavOpen;
+    }
   }
 
   toggleTheme(): void {

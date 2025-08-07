@@ -31,9 +31,7 @@ export class NotificationInstance implements NotificationDTOInterface {
     this.recipient = data.recipient
       ? new UserInstance(data.recipient)
       : undefined;
-    this.sender = data.sender
-      ? new UserInstance(data.sender)
-      : undefined;
+    this.sender = data.sender ? new UserInstance(data.sender) : undefined;
     this.createdAt = data.createdAt;
     this.readAt = data.readAt;
   }

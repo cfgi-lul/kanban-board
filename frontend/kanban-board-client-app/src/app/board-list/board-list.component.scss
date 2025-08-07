@@ -1,0 +1,104 @@
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  // height: 100vh;
+}
+
+.board-list-container {
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.search-toolbar {
+  padding: 16px;
+  background: var(--mat-sys-surface-container);
+}
+
+.content-area {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.state-card {
+  max-width: 400px;
+  margin: 48px auto;
+}
+
+.boards-grid {
+  margin-bottom: 16px;
+}
+
+.board-card {
+  height: 100%;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 8px var(--mat-sys-shadow);
+  }
+
+  mat-card-content {
+    flex: 1;
+  }
+
+  .board-description {
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.add-board-card {
+  max-width: 300px;
+  margin: 0 auto;
+  border: 2px dashed var(--mat-sys-outline-variant);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--mat-sys-outline);
+  }
+
+  .add-board-content {
+    text-align: center;
+    padding: 32px 16px;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .board-list-container {
+    margin: 8px;
+  }
+
+  .content-area {
+    padding: 8px;
+  }
+
+  .boards-grid {
+    ::ng-deep {
+      .mat-mdc-grid-list {
+        cols: 1;
+      }
+    }
+  }
+}

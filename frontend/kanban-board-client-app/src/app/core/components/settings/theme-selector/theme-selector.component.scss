@@ -11,7 +11,7 @@
     border: 1px solid var(--mat-sys-outline-variant);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px var(--mat-sys-shadow);
 
     .theme-option {
       border: none;
@@ -65,12 +65,12 @@
 
   &:hover {
     border-color: var(--mat-sys-outline-variant);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--mat-sys-shadow);
   }
 
   &.selected {
     border-color: var(--mat-sys-primary);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 4px 12px var(--mat-sys-shadow);
   }
 
   mat-card-header {

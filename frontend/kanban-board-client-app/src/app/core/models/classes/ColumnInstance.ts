@@ -20,7 +20,7 @@ export class ColumnInstance implements ColumnDTOInterface {
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
     this.tasks = data.tasks
-      ? data.tasks.map((task) => new TaskInstance(task))
+      ? data.tasks.map(task => new TaskInstance(task))
       : undefined;
   }
 }

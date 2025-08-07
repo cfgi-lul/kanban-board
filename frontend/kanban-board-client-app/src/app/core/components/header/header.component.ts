@@ -4,6 +4,7 @@ import {
   input,
   OnInit,
   output,
+  HostListener,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -40,13 +41,26 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = input.required<boolean>();
   user = input.required<UserInstance>();
 
+  isSmallScreen = false;
+  private readonly LARGE_SCREEN_BREAKPOINT = 1024;
+
   constructor(private theme: ThemeService) {}
 
   ngOnInit(): void {
+    this.checkScreenSize();
     this.themeControl.valueChanges.subscribe(e => {
       if (e) this.theme.setColorScheme(e);
     });
     this.themeControl.setValue(this.theme.getCurrentColorScheme());
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize(): void {
+    this.isSmallScreen = window.innerWidth < this.LARGE_SCREEN_BREAKPOINT;
   }
 
   themeChange(event: MatButtonToggleChange): void {

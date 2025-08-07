@@ -80,6 +80,11 @@
       inverse-tertiary: #ffc66d
     )
   );
+
+  // Custom Dark Shadows
+  --mat-sys-shadow-light: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+  --mat-sys-shadow-medium: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+  --mat-sys-shadow-heavy: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* Typography */

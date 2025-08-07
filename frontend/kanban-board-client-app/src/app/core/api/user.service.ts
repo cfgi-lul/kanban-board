@@ -25,8 +25,13 @@ export class UserService {
     return this.http.get<UserInstance>(`${this.baseUrl}/current`);
   }
 
-  updateCurrentUser(updateRequest: UserUpdateRequest): Observable<UserInstance> {
-    return this.http.put<UserInstance>(`${this.baseUrl}/current`, updateRequest);
+  updateCurrentUser(
+    updateRequest: UserUpdateRequest
+  ): Observable<UserInstance> {
+    return this.http.put<UserInstance>(
+      `${this.baseUrl}/current`,
+      updateRequest
+    );
   }
 
   promoteToAdmin(userId: number): Observable<void> {

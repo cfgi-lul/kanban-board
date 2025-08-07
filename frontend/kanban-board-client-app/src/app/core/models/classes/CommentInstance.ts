@@ -20,9 +20,7 @@ export class CommentInstance implements CommentDTOInterface {
     this.editedAt = data.editedAt;
     this.mentions = data.mentions;
     this.edited = data.edited;
-    this.author = data.author
-      ? new UserInstance(data.author)
-      : undefined;
+    this.author = data.author ? new UserInstance(data.author) : undefined;
     this.taskId = data.taskId;
   }
 }
