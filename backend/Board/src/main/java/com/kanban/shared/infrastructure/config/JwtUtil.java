@@ -1,7 +1,6 @@
 package com.kanban.shared.infrastructure.config;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
@@ -13,7 +12,7 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
-    private final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final SecretKey SECRET_KEY = Jwts.SIG.HS256.key().build();
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
