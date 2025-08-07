@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDividerModule } from '@angular/material/divider';
-import { TileComponent, Tile } from '../core/components/tile';
+
 import { MatRippleModule } from '@angular/material/core';
+import { Tile, TileComponent } from '../core/components/tile/tile.component';
+
 
 const TILES: Tile[] = [
   {

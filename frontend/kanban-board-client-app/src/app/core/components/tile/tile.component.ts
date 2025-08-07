@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatRippleModule } from '@angular/material/core';
 
 export interface Tile {
   id: string;
@@ -33,6 +34,7 @@ const DEFAULT_TILE: Tile = {
     MatIconModule,
     MatButtonModule,
     MatChipsModule,
+    MatRippleModule,
   ],
   templateUrl: './tile.component.html',
   styleUrls: ['./tile.component.scss'],
