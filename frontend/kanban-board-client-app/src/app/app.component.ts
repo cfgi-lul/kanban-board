@@ -23,7 +23,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-root',
+  selector: 'kn-root',
   imports: [
     RouterOutlet,
     MatGridListModule,

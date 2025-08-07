@@ -54,7 +54,7 @@ interface BoardState {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-board',
+  selector: 'kn-board',
   imports: [
     TaksPreviewComponent,
     CdkDropListGroup,

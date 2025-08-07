@@ -21,7 +21,7 @@ import { AvatarService } from '../../../api/avatar.service';
 import { UserInstance } from '../../../models/classes/UserInstance';
 
 @Component({
-  selector: 'app-user-profile',
+  selector: 'kn-user-profile',
   standalone: true,
   imports: [
     CommonModule,

@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-help',
+  selector: 'kn-help',
   standalone: true,
   imports: [CommonModule, TranslateModule, MatCardModule, MatIconModule],
   template: `

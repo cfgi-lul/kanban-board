@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-not-found',
+  selector: 'kn-not-found',
   imports: [
     MatCardModule,
     MatButtonModule,

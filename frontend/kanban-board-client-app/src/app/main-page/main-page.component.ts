@@ -20,7 +20,7 @@ interface MainPageTile {
 }
 
 @Component({
-  selector: 'app-main-page',
+  selector: 'kn-main-page',
   standalone: true,
   imports: [
     CommonModule,

@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-taks-preview',
+  selector: 'kn-taks-preview',
   imports: [
     MatCardModule,
     MatButtonModule,

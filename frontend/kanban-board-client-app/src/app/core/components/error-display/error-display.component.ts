@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-error-display',
+  selector: 'kn-error-display',
   template: `
     @if (errorMessage) {
       <mat-card class="error-card">

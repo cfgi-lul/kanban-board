@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-header',
+  selector: 'kn-header',
   imports: [
     MatToolbarModule,
     MatButtonModule,

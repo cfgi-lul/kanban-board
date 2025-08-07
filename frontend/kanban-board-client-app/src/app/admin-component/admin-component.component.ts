@@ -9,7 +9,7 @@ import { UserService } from '../core/api/user.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-admin-component',
+  selector: 'kn-admin-component',
   imports: [
     MatCardModule,
     MatButtonModule,

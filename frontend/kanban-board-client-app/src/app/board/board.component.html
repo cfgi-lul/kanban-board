@@ -38,7 +38,7 @@
 
               <mat-card-content class="column-content">
                 @for (task of column.tasks; track task.id) {
-                  <app-taks-preview
+                  <kn-taks-preview
                     [taks]="task"
                     (editTask)="editTask(task.id)"
                     [name]="task.title"

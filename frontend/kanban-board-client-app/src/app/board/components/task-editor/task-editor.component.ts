@@ -33,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
 @Component({
-  selector: 'app-task-editor',
+  selector: 'kn-task-editor',
   imports: [
     MatDialogModule,
     MatButtonModule,

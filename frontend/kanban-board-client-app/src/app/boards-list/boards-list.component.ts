@@ -41,7 +41,7 @@ export type LoadingState = 'loading' | 'error' | 'fulfilled';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-boards-list',
+  selector: 'kn-boards-list',
   imports: [
     MatCardModule,
     MatButtonModule,

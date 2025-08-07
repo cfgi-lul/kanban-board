@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-sign-up',
+  selector: 'kn-sign-up',
   imports: [
     MatCardModule,
     MatButtonModule,

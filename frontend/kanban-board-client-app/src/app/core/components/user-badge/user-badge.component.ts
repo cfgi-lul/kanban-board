@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-user-badge',
+  selector: 'kn-user-badge',
   imports: [
     CommonModule,
     TranslateModule,

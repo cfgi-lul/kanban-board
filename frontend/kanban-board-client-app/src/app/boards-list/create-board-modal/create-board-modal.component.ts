@@ -21,7 +21,7 @@ export interface CreateBoardData {
 }
 
 @Component({
-  selector: 'app-create-board-modal',
+  selector: 'kn-create-board-modal',
   standalone: true,
   imports: [
     CommonModule,

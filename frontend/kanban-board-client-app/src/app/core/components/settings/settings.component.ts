@@ -30,7 +30,7 @@ interface SettingsTab {
 }
 
 @Component({
-  selector: 'app-settings',
+  selector: 'kn-settings',
   standalone: true,
   imports: [
     CommonModule,

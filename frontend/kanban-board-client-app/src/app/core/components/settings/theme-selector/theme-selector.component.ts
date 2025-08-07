@@ -9,7 +9,7 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { ThemeService } from '../../../services/theme.service';
 
 @Component({
-  selector: 'app-theme-selector',
+  selector: 'kn-theme-selector',
   standalone: true,
   imports: [
     CommonModule,

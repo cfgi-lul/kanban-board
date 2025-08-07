@@ -41,13 +41,13 @@
             <div class="setting-section">
               <h4>{{ 'settings.theme' | translate }}</h4>
               <p>{{ 'settings.themeDescription' | translate }}</p>
-              <app-theme-selector></app-theme-selector>
+              <kn-theme-selector></kn-theme-selector>
             </div>
 
             <div class="setting-section">
               <h4>{{ 'settings.language' | translate }}</h4>
               <p>{{ 'settings.languageDescription' | translate }}</p>
-              <app-language-selector></app-language-selector>
+              <kn-language-selector></kn-language-selector>
             </div>
           </div>
         }
@@ -55,7 +55,7 @@
         <!-- Account Settings -->
         @if (selectedTab === 1) {
           <div class="account-settings">
-            <app-user-profile></app-user-profile>
+            <kn-user-profile></kn-user-profile>
           </div>
         }
       </div>

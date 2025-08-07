@@ -23,7 +23,7 @@
     <div class="header-right">
       <!-- User Section -->
       @if (isLoggedIn) {
-        <app-user-badge [user]="user()" />
+        <kn-user-badge [user]="user()" />
       } @else {
         <button
           mat-raised-button

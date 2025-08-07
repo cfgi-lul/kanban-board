@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { I18nService } from '../../../services/i18n.service';
 
 @Component({
-  selector: 'app-language-selector',
+  selector: 'kn-language-selector',
   standalone: true,
   imports: [
     CommonModule,
