@@ -8,9 +8,7 @@ import com.kanban.user.domain.model.User;
 import com.kanban.task.domain.repository.TaskRepository;
 import com.kanban.board.domain.repository.BoardRepository;
 import com.kanban.user.domain.repository.UserRepository;
-import com.kanban.board.domain.repository.ColumnRepository;
 import com.kanban.shared.infrastructure.CommentRepository;
-import com.kanban.shared.infrastructure.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -34,13 +32,7 @@ public class AnalyticsService {
     private UserRepository userRepository;
 
     @Autowired
-    private ColumnRepository columnRepository;
-
-    @Autowired
     private CommentRepository commentRepository;
-
-    @Autowired
-    private NotificationRepository notificationRepository;
 
     /**
      * Get board analytics
@@ -211,7 +203,7 @@ public class AnalyticsService {
         metrics.setFromDate(fromDate);
         metrics.setToDate(toDate);
 
-        Board board = boardRepository.findById(boardId)
+        boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("Board not found"));
 
         // Get tasks created in date range
