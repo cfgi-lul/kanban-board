@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
-export type ColorScheme = "light" | "dark" | "system";
+export type ColorScheme = 'light' | 'dark' | 'system';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ThemeService {
   private currentColorSchemeSubject = new BehaviorSubject<ColorScheme>(
-    "system",
+    'system'
   );
 
   public currentColorScheme$ = this.currentColorSchemeSubject.asObservable();
@@ -40,7 +40,7 @@ export class ThemeService {
     const body = document.body;
 
     // Remove all color scheme classes
-    body.classList.remove("light", "dark", "system");
+    body.classList.remove('light', 'dark', 'system');
 
     // Add the new color scheme class
     body.classList.add(scheme);
@@ -51,9 +51,9 @@ export class ThemeService {
    */
   private loadSavedColorScheme(): void {
     const savedScheme = localStorage.getItem(
-      "kanban-color-scheme",
+      'kanban-color-scheme'
     ) as ColorScheme;
-    if (savedScheme && ["light", "dark", "system"].includes(savedScheme)) {
+    if (savedScheme && ['light', 'dark', 'system'].includes(savedScheme)) {
       this.setColorScheme(savedScheme);
     }
   }
@@ -62,7 +62,7 @@ export class ThemeService {
    * Save color scheme to localStorage
    */
   private saveColorScheme(scheme: ColorScheme): void {
-    localStorage.setItem("kanban-color-scheme", scheme);
+    localStorage.setItem('kanban-color-scheme', scheme);
   }
 
   /**
@@ -75,19 +75,19 @@ export class ThemeService {
   }> {
     return [
       {
-        value: "light",
-        label: "Light",
-        description: "Ocean Breeze - Clean and bright",
+        value: 'light',
+        label: 'Light',
+        description: 'Ocean Breeze - Clean and bright',
       },
       {
-        value: "dark",
-        label: "Dark",
-        description: "WebStorm Darcula - Classic IDE dark theme",
+        value: 'dark',
+        label: 'Dark',
+        description: 'WebStorm Darcula - Classic IDE dark theme',
       },
       {
-        value: "system",
-        label: "System",
-        description: "Follow system preference",
+        value: 'system',
+        label: 'System',
+        description: 'Follow system preference',
       },
     ];
   }
@@ -97,7 +97,7 @@ export class ThemeService {
    */
   toggleTheme(): void {
     const currentScheme = this.getCurrentColorScheme();
-    const newScheme = currentScheme === "light" ? "dark" : "light";
+    const newScheme = currentScheme === 'light' ? 'dark' : 'light';
     this.setColorScheme(newScheme);
   }
 

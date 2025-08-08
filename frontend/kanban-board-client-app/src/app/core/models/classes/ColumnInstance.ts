@@ -1,5 +1,5 @@
-import { ColumnDTO as ColumnDTOInterface } from "../requestModels/model/columnDTO";
-import { TaskInstance } from "./TaskInstance";
+import { ColumnDTO as ColumnDTOInterface } from '../requestModels/model/columnDTO';
+import { TaskInstance } from './TaskInstance';
 
 export class ColumnInstance implements ColumnDTOInterface {
   id?: number;
@@ -20,7 +20,7 @@ export class ColumnInstance implements ColumnDTOInterface {
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
     this.tasks = data.tasks
-      ? data.tasks.map((task) => new TaskInstance(task))
+      ? data.tasks.map(task => new TaskInstance(task))
       : undefined;
   }
 }

@@ -7,12 +7,12 @@ import {
   throwError,
   of,
   shareReplay,
-} from "rxjs";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable, inject } from "@angular/core";
-import { JwtHelperService } from "@auth0/angular-jwt";
-import { Router } from "@angular/router";
-import { UserInstance } from "../models/classes/UserInstance";
+} from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
+import { UserInstance } from '../models/classes/UserInstance';
 
 export interface LoginRequest {
   username: string;
@@ -31,7 +31,7 @@ export interface AuthResponse {
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
@@ -48,7 +48,7 @@ export class AuthService {
 
   constructor() {
     this.currentUserSubject = new BehaviorSubject<UserInstance | null>(
-      this.getUserFromStorage(),
+      this.getUserFromStorage()
     );
     this.currentUser = this.currentUserSubject.asObservable();
 
@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   public get token(): string | null {
-    return localStorage.getItem("access_token");
+    return localStorage.getItem('access_token');
   }
 
   public get isTokenExpired(): boolean {
@@ -71,11 +71,11 @@ export class AuthService {
 
   private getUserFromStorage(): UserInstance | null {
     try {
-      const userStr = localStorage.getItem("currentUser");
+      const userStr = localStorage.getItem('currentUser');
       return userStr ? JSON.parse(userStr) : null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error parsing user from storage:", error);
+      console.error('Error parsing user from storage:', error);
       return null;
     }
   }
@@ -106,27 +106,27 @@ export class AuthService {
 
   public refreshToken(): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/refresh`, {}).pipe(
-      tap((response) => {
+      tap(response => {
         if (response.token) {
           this.setToken(response.token);
           this.setupTokenRefresh();
         }
       }),
-      catchError((error) => {
+      catchError(error => {
         // eslint-disable-next-line no-console
-        console.error("Token refresh failed:", error);
+        console.error('Token refresh failed:', error);
         this.logout();
         return throwError(() => error);
-      }),
+      })
     );
   }
 
   private setToken(token: string, user?: UserInstance): void {
-    localStorage.setItem("access_token", token);
+    localStorage.setItem('access_token', token);
 
     // Use the provided user data if available, otherwise decode from token
     const userData = user || this.helper.decodeToken(token);
-    localStorage.setItem("currentUser", JSON.stringify(userData));
+    localStorage.setItem('currentUser', JSON.stringify(userData));
     this.currentUserSubject.next(userData);
   }
 
@@ -138,7 +138,7 @@ export class AuthService {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
       .pipe(
-        tap((response) => {
+        tap(response => {
           if (response.token) {
             this.setToken(response.token, response.user);
             this.setupTokenRefresh();
@@ -146,19 +146,19 @@ export class AuthService {
             this.currentUserRequest$ = undefined;
           }
         }),
-        catchError(this.handleAuthError.bind(this)),
+        catchError(this.handleAuthError.bind(this))
       );
   }
 
   logout(): void {
     this.clearAuthData();
     this.currentUserRequest$ = undefined; // Clear cache
-    this.router.navigate(["/auth/sign-in"]);
+    this.router.navigate(['/auth/sign-in']);
   }
 
   private clearAuthData(): void {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("currentUser");
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
 
     if (this.tokenRefreshTimeout) {
@@ -174,7 +174,7 @@ export class AuthService {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/register`, userData)
       .pipe(
-        tap((response) => {
+        tap(response => {
           if (response.token) {
             this.setToken(response.token, response.user);
             this.setupTokenRefresh();
@@ -182,7 +182,7 @@ export class AuthService {
             this.currentUserRequest$ = undefined;
           }
         }),
-        catchError(this.handleAuthError.bind(this)),
+        catchError(this.handleAuthError.bind(this))
       );
   }
 
@@ -192,11 +192,11 @@ export class AuthService {
 
   getRoles(): string[] {
     const user = this.currentUserValue;
-    return user?.roles?.map((role) => role.name) || [];
+    return user?.roles?.map(role => role.name) || [];
   }
 
   public isAdmin(): boolean {
-    return this.hasRole("ADMIN");
+    return this.hasRole('ADMIN');
   }
 
   public hasRole(role: string): boolean {
@@ -209,29 +209,29 @@ export class AuthService {
         string[]
       >(`/api/boards/${boardId}/users/${this.currentUserValue?.id}/role`)
       .pipe(
-        catchError((error) => {
+        catchError(error => {
           // eslint-disable-next-line no-console
-          console.error("Error fetching board roles:", error);
+          console.error('Error fetching board roles:', error);
           return of([]);
-        }),
+        })
       );
   }
 
   public getDisplayName(): string {
     const user = this.currentUserValue;
-    if (!user) return "Guest";
-    return user.displayName || user.name || user.username || "Unknown User";
+    if (!user) return 'Guest';
+    return user.displayName || user.name || user.username || 'Unknown User';
   }
 
   public getUserInitials(): string {
     const user = this.currentUserValue;
-    if (!user) return "?";
+    if (!user) return '?';
 
     // Use displayName for initials if available, fallback to name
     const displayName = user.displayName || user.name;
-    if (!displayName) return "?";
+    if (!displayName) return '?';
 
-    const names = displayName.split(" ");
+    const names = displayName.split(' ');
     if (names.length === 1) {
       return names[0].charAt(0).toUpperCase();
     }
@@ -244,23 +244,23 @@ export class AuthService {
     // If we don't have a cached request or the user is not authenticated, create a new request
     if (!this.currentUserRequest$ || !this.isAuthenticated()) {
       this.currentUserRequest$ = this.http
-        .get<UserInstance>("/api/users/current")
+        .get<UserInstance>('/api/users/current')
         .pipe(
-          tap((user) => {
+          tap(user => {
             if (user) {
-              localStorage.setItem("currentUser", JSON.stringify(user));
+              localStorage.setItem('currentUser', JSON.stringify(user));
               this.currentUserSubject.next(user);
             } else {
               this.clearAuthData();
             }
           }),
-          catchError((error) => {
+          catchError(error => {
             // eslint-disable-next-line no-console
-            console.error("Error fetching current user:", error);
+            console.error('Error fetching current user:', error);
             this.clearAuthData();
             return of(null);
           }),
-          shareReplay(1), // Cache the result and share it with all subscribers
+          shareReplay(1) // Cache the result and share it with all subscribers
         );
     }
 
@@ -274,20 +274,20 @@ export class AuthService {
   }
 
   private handleAuthError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = "Authentication failed";
+    let errorMessage = 'Authentication failed';
 
     if (error.error?.message) {
       errorMessage = error.error.message;
     } else if (error.status === 401) {
-      errorMessage = "Invalid credentials";
+      errorMessage = 'Invalid credentials';
     } else if (error.status === 403) {
-      errorMessage = "Access denied";
+      errorMessage = 'Access denied';
     } else if (error.status === 0) {
-      errorMessage = "Network error - please check your connection";
+      errorMessage = 'Network error - please check your connection';
     }
 
     // eslint-disable-next-line no-console
-    console.error("Auth error:", error);
+    console.error('Auth error:', error);
     return throwError(() => new Error(errorMessage));
   }
 }

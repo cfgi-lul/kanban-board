@@ -30,4 +30,4 @@ export const DASHBOARD_ROUTES: Routes = [
     loadComponent: () => BoardsListComponent,
     canActivate: [authGuard],
   },
-]; 
+];

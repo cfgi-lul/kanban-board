@@ -9,4 +9,4 @@ export const ADMIN_ROUTES: Routes = [
     loadComponent: () => AdminComponentComponent,
     canActivate: [adminGuard],
   },
-]; 
+];

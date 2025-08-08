@@ -4,21 +4,21 @@ import {
   inject,
   OnInit,
   HostListener,
-} from "@angular/core";
-import { RouterModule, RouterOutlet } from "@angular/router";
-import { AuthService } from "./core/api/auth.service";
-import { ThemeService } from "./core/services/theme.service";
-import { I18nService } from "./core/services/i18n.service";
-import { MatButtonModule } from "@angular/material/button";
-import { MatSidenavModule, MatDrawerMode } from "@angular/material/sidenav";
-import { HeaderComponent } from "./core/components/header/header.component";
-import { SidenavComponent } from "./sidenav/sidenav.component";
-import { AsyncPipe } from "@angular/common";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+} from '@angular/core';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { AuthService } from './core/api/auth.service';
+import { ThemeService } from './core/services/theme.service';
+import { I18nService } from './core/services/i18n.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule, MatDrawerMode } from '@angular/material/sidenav';
+import { HeaderComponent } from './core/components/header/header.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { AsyncPipe } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "kn-root",
+  selector: 'kn-root',
   imports: [
     RouterOutlet,
     MatSidenavModule,
@@ -29,13 +29,13 @@ import { TranslateModule, TranslateService } from "@ngx-translate/core";
     AsyncPipe,
     TranslateModule,
   ],
-  templateUrl: "./app.component.html",
-  styleUrl: "./app.component.scss",
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = "kanban-board-client-app";
+  title = 'kanban-board-client-app';
   isSidenavOpen = false;
-  sidenavMode: MatDrawerMode = "side";
+  sidenavMode: MatDrawerMode = 'side';
   isLargeScreen = false;
   currentUser = inject(AuthService).currentUser;
   isAdmin = inject(AuthService).isAdmin();
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     this.checkScreenSize();
   }
 
-  @HostListener("window:resize", ["$event"])
+  @HostListener('window:resize', ['$event'])
   onResize(): void {
     this.checkScreenSize();
   }
@@ -67,10 +67,10 @@ export class AppComponent implements OnInit {
 
   private updateSidenavBehavior(): void {
     if (this.isLargeScreen) {
-      this.sidenavMode = "side";
+      this.sidenavMode = 'side';
       this.isSidenavOpen = true;
     } else {
-      this.sidenavMode = "over";
+      this.sidenavMode = 'over';
       this.isSidenavOpen = false;
     }
   }

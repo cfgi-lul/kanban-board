@@ -4,17 +4,17 @@ import {
   fakeAsync,
   TestBed,
   tick,
-} from "@angular/core/testing";
-import { AuthService } from "../core/api/auth.service";
-import { BoardService } from "../core/api/board.service";
-import { BoardsListComponent } from "./boards-list.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { TranslateModule } from "@ngx-translate/core";
-import { of } from "rxjs";
+} from '@angular/core/testing';
+import { AuthService } from '../core/api/auth.service';
+import { BoardService } from '../core/api/board.service';
+import { BoardsListComponent } from './boards-list.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
-describe("BoardsListComponent", () => {
+describe('BoardsListComponent', () => {
   let component: BoardsListComponent;
   let fixture: ComponentFixture<BoardsListComponent>;
   let mockBoardService: jest.Mocked<BoardService>;
@@ -36,7 +36,7 @@ describe("BoardsListComponent", () => {
     // Setup default return values
     mockAuthService.isAuthenticated.mockReturnValue(true);
     mockAuthService.hasRole.mockReturnValue(false);
-    mockAuthService.getBoardRoles.mockReturnValue(of(["READER"]));
+    mockAuthService.getBoardRoles.mockReturnValue(of(['READER']));
 
     await TestBed.configureTestingModule({
       imports: [
@@ -57,20 +57,20 @@ describe("BoardsListComponent", () => {
 
     // Mock initial board data
     mockBoardService.getAllBoards.mockReturnValue(
-      of([{ id: 1, name: "Test Board", columns: [] }]),
+      of([{ id: 1, name: 'Test Board', columns: [] }])
     );
 
     fixture.detectChanges();
   });
 
-  it("should load boards on initialization", fakeAsync(() => {
+  it('should load boards on initialization', fakeAsync(() => {
     tick();
 
     expect(mockBoardService.getAllBoards).toHaveBeenCalled();
     expect(component.isLoading()).toBe(false);
   }));
 
-  it("should delete board and refresh list", fakeAsync(() => {
+  it('should delete board and refresh list', fakeAsync(() => {
     const boardId = 1;
     mockBoardService.deleteBoard.mockReturnValue(of(undefined));
 

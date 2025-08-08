@@ -55,8 +55,8 @@
 
   // Form fields
   &__field {
-    margin-top: 8px;
     width: 100%;
+    margin-top: 8px;
   }
 
   // Columns section
@@ -209,13 +209,13 @@
       &--mobile {
         display: flex; // Show mobile button
         width: 32px;
-        height: 32px;
         min-width: 32px;
+        height: 32px;
 
         .mat-icon {
-          font-size: 18px;
           width: 18px;
           height: 18px;
+          font-size: 18px;
         }
       }
 

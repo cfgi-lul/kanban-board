@@ -3,22 +3,22 @@ import {
   Component,
   inject,
   input,
-} from "@angular/core";
-import { AuthService } from "./../../api/auth.service";
-import { AvatarService } from "./../../api/avatar.service";
-import { MatButtonModule } from "@angular/material/button";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatDialog } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { UserInstance } from "../../models/classes/UserInstance";
-import { SettingsComponent } from "../settings/settings.component";
-import { TranslateModule } from "@ngx-translate/core";
+} from '@angular/core';
+import { AuthService } from './../../api/auth.service';
+import { AvatarService } from './../../api/avatar.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { UserInstance } from '../../models/classes/UserInstance';
+import { SettingsComponent } from '../settings/settings.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "kn-user-badge",
+  selector: 'kn-user-badge',
   imports: [
     TranslateModule,
     MatButtonModule,
@@ -26,8 +26,8 @@ import { TranslateModule } from "@ngx-translate/core";
     MatIconModule,
     MatDividerModule,
   ],
-  templateUrl: "./user-badge.component.html",
-  styleUrl: "./user-badge.component.scss",
+  templateUrl: './user-badge.component.html',
+  styleUrl: './user-badge.component.scss',
 })
 export class UserBadgeComponent {
   user = input.required<UserInstance>();
@@ -38,21 +38,21 @@ export class UserBadgeComponent {
 
   getUserDisplayName(): string {
     const user = this.user();
-    if (!user) return "";
+    if (!user) return '';
 
     // Use displayName if available, fallback to name, then to username
-    return user.displayName || user.name || user.username || "";
+    return user.displayName || user.name || user.username || '';
   }
 
   getUserInitials(): string {
     const user = this.user();
-    if (!user) return "?";
+    if (!user) return '?';
 
     // Use displayName for initials if available, fallback to name
     const displayName = user.displayName || user.name;
-    if (!displayName) return "?";
+    if (!displayName) return '?';
 
-    const names = displayName.split(" ");
+    const names = displayName.split(' ');
     if (names.length === 1) {
       return names[0].charAt(0).toUpperCase();
     }
@@ -63,19 +63,19 @@ export class UserBadgeComponent {
 
   onLogout(): void {
     this.authService.logout();
-    this.router.navigate(["/auth/sign-in"]);
+    this.router.navigate(['/auth/sign-in']);
   }
 
   onLogin(): void {
-    this.router.navigate(["/auth/sign-in"]);
+    this.router.navigate(['/auth/sign-in']);
   }
 
   onSettings(): void {
     this.dialog.open(SettingsComponent, {
-      width: "900px",
-      maxWidth: "95vw",
-      maxHeight: "90vh",
-      panelClass: "settings-dialog-container",
+      width: '900px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      panelClass: 'settings-dialog-container',
       data: {},
     });
   }

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from "@angular/core";
+import { Component, inject, signal } from '@angular/core';
 
 import {
   FormBuilder,
@@ -6,25 +6,25 @@ import {
   FormArray,
   ReactiveFormsModule,
   Validators,
-} from "@angular/forms";
+} from '@angular/forms';
 import {
   MatDialogModule,
   MatDialogRef,
   MAT_DIALOG_DATA,
-} from "@angular/material/dialog";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { MatSelectModule } from "@angular/material/select";
-import { MatChipsModule } from "@angular/material/chips";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
-import { BoardService } from "../../../core/api/board.service";
-import { BoardInstance } from "../../../core/models/classes/BoardInstance";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { BoardDTO } from "../../../core/models/requestModels/model/boardDTO";
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { BoardService } from '../../../core/api/board.service';
+import { BoardInstance } from '../../../core/models/classes/BoardInstance';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BoardDTO } from '../../../core/models/requestModels/model/boardDTO';
 
 interface BoardColumn {
   name: string;
@@ -46,7 +46,7 @@ export interface CreateBoardData {
 }
 
 @Component({
-  selector: "kn-create-board-modal",
+  selector: 'kn-create-board-modal',
   imports: [
     ReactiveFormsModule,
     MatDialogModule,
@@ -61,8 +61,8 @@ export interface CreateBoardData {
     TranslateModule,
     MatToolbarModule,
   ],
-  templateUrl: "./create-board-modal.component.html",
-  styleUrl: "./create-board-modal.component.scss",
+  templateUrl: './create-board-modal.component.html',
+  styleUrl: './create-board-modal.component.scss',
 })
 export class CreateBoardModalComponent {
   private readonly fb = inject(FormBuilder);
@@ -73,19 +73,19 @@ export class CreateBoardModalComponent {
 
   readonly createBoardForm: FormGroup;
   isLoading = signal(false);
-  errorMessage = signal("");
+  errorMessage = signal('');
 
   constructor() {
     this.createBoardForm = this.initializeForm(this.data);
   }
 
   get columns() {
-    return this.createBoardForm.get("columns") as FormArray;
+    return this.createBoardForm.get('columns') as FormArray;
   }
 
   addColumn(): void {
     if (this.columns.length < 10) {
-      this.columns.push(this.fb.control("", Validators.required));
+      this.columns.push(this.fb.control('', Validators.required));
     }
   }
 
@@ -101,7 +101,7 @@ export class CreateBoardModalComponent {
     }
 
     this.isLoading.set(true);
-    this.errorMessage.set("");
+    this.errorMessage.set('');
 
     const boardData = this.prepareBoardData();
     this.submitBoardData(boardData);
@@ -113,16 +113,16 @@ export class CreateBoardModalComponent {
 
   private initializeForm(data: CreateBoardData): FormGroup {
     const defaultColumns = [
-      this.translate.instant("board.defaultColumn.todo"),
-      this.translate.instant("board.defaultColumn.inProgress"),
-      this.translate.instant("board.defaultColumn.done"),
+      this.translate.instant('board.defaultColumn.todo'),
+      this.translate.instant('board.defaultColumn.inProgress'),
+      this.translate.instant('board.defaultColumn.done'),
     ];
 
     const defaultName =
-      data?.name || this.translate.instant("board.defaultColumn.name");
+      data?.name || this.translate.instant('board.defaultColumn.name');
     const defaultDescription =
       data?.description ||
-      this.translate.instant("board.defaultColumn.description");
+      this.translate.instant('board.defaultColumn.description');
 
     return this.fb.group({
       name: [
@@ -135,7 +135,7 @@ export class CreateBoardModalComponent {
       ],
       description: [defaultDescription, [Validators.maxLength(500)]],
       columns: this.fb.array(
-        defaultColumns.map((col) => this.fb.control(col, Validators.required)),
+        defaultColumns.map(col => this.fb.control(col, Validators.required))
       ),
     });
   }
@@ -144,9 +144,9 @@ export class CreateBoardModalComponent {
     const formValue = this.createBoardForm.value;
     return {
       name: formValue.name,
-      description: formValue.description || "",
+      description: formValue.description || '',
       columns: formValue.columns
-        .filter((col: string) => col.trim() !== "")
+        .filter((col: string) => col.trim() !== '')
         .map((col: string, index: number) => ({
           name: col.trim(),
           orderIndex: index,
@@ -162,7 +162,7 @@ export class CreateBoardModalComponent {
         this.isLoading.set(false);
         this.dialogRef.close(board);
       },
-      error: (error) => {
+      error: error => {
         this.isLoading.set(false);
         this.handleError(error);
       },
@@ -171,9 +171,9 @@ export class CreateBoardModalComponent {
 
   private handleError(error: any): void {
     if (error.status === 403 || error.status === 401) {
-      this.errorMessage.set("board.authenticationRequired");
+      this.errorMessage.set('board.authenticationRequired');
     } else {
-      this.errorMessage.set(error.error?.message || "board.errorCreatingBoard");
+      this.errorMessage.set(error.error?.message || 'board.errorCreatingBoard');
     }
   }
 }

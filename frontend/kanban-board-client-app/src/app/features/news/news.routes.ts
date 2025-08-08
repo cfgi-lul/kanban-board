@@ -9,4 +9,4 @@ export const NEWS_ROUTES: Routes = [
     loadComponent: () => NewsComponent,
     canActivate: [authGuard],
   },
-]; 
+];

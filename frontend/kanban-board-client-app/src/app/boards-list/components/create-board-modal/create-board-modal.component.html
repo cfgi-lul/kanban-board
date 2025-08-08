@@ -148,9 +148,7 @@
     [disabled]="createBoardForm.invalid || isLoading()"
   >
     @if (isLoading()) {
-      <mat-spinner class="create-board-modal__spinner"
-        diameter="20"
-       />
+      <mat-spinner class="create-board-modal__spinner" diameter="20" />
     } @else {
       <mat-icon class="create-board-modal__submit-icon">add</mat-icon>
     }

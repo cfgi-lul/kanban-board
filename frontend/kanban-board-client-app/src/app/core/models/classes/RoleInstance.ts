@@ -1,4 +1,4 @@
-import { RoleDTO as RoleDTOInterface } from "../requestModels/model/roleDTO";
+import { RoleDTO as RoleDTOInterface } from '../requestModels/model/roleDTO';
 
 export class RoleInstance implements RoleDTOInterface {
   id?: number;

@@ -3,15 +3,15 @@ import {
   Component,
   input,
   output,
-} from "@angular/core";
-import { MatCardModule } from "@angular/material/card";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { TranslateModule } from "@ngx-translate/core";
+} from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "kn-no-content",
+  selector: 'kn-no-content',
   imports: [MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   template: `
     <mat-card class="no-content">
@@ -76,10 +76,10 @@ import { TranslateModule } from "@ngx-translate/core";
 })
 export class NoContentComponent {
   readonly message = input.required<string>();
-  readonly details = input<string>("");
-  readonly icon = input<string>("search_off");
+  readonly details = input<string>('');
+  readonly icon = input<string>('search_off');
   readonly showActionButton = input<boolean>(false);
-  readonly actionButtonText = input<string>("common.clear");
+  readonly actionButtonText = input<string>('common.clear');
 
   readonly onAction = output<void>();
 }

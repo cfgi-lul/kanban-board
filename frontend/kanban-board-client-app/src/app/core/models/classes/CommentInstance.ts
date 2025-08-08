@@ -1,5 +1,5 @@
-import { CommentDTO as CommentDTOInterface } from "../requestModels/model/commentDTO";
-import { UserInstance } from "./UserInstance";
+import { CommentDTO as CommentDTOInterface } from '../requestModels/model/commentDTO';
+import { UserInstance } from './UserInstance';
 
 export class CommentInstance implements CommentDTOInterface {
   id?: number;

@@ -3,15 +3,15 @@ import {
   Component,
   input,
   output,
-} from "@angular/core";
-import { MatCardModule } from "@angular/material/card";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { TranslateModule } from "@ngx-translate/core";
+} from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "kn-error-display",
+  selector: 'kn-error-display',
   imports: [MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   template: `
     @if (errorMessage()) {
@@ -30,7 +30,7 @@ import { TranslateModule } from "@ngx-translate/core";
               (click)="onRetry.emit()"
             >
               <mat-icon class="error-retry-icon">refresh</mat-icon>
-              {{ "common.retry" | translate }}
+              {{ 'common.retry' | translate }}
             </button>
           }
         </mat-card-content>
@@ -81,7 +81,7 @@ import { TranslateModule } from "@ngx-translate/core";
 })
 export class ErrorDisplayComponent {
   readonly errorMessage = input.required<string>();
-  readonly errorDetails = input<string>("");
+  readonly errorDetails = input<string>('');
   readonly showRetryButton = input<boolean>(true);
 
   readonly onRetry = output<void>();

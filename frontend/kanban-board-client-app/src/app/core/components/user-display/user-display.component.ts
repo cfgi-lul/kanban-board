@@ -3,20 +3,20 @@ import {
   Component,
   inject,
   input,
-} from "@angular/core";
-import { MatIconModule } from "@angular/material/icon";
+} from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
-import { TranslateModule } from "@ngx-translate/core";
-import { AvatarService } from "../../api/avatar.service";
-import { UserInstance } from "../../models/classes/UserInstance";
-import { getUserDisplayName, getUserInitials } from "../../utils/user.utils";
+import { TranslateModule } from '@ngx-translate/core';
+import { AvatarService } from '../../api/avatar.service';
+import { UserInstance } from '../../models/classes/UserInstance';
+import { getUserDisplayName, getUserInitials } from '../../utils/user.utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "kn-user-display",
+  selector: 'kn-user-display',
   imports: [MatIconModule, TranslateModule],
-  templateUrl: "./user-display.component.html",
-  styleUrl: "./user-display.component.scss",
+  templateUrl: './user-display.component.html',
+  styleUrl: './user-display.component.scss',
 })
 export class UserDisplayComponent {
   user = input<UserInstance | null>();

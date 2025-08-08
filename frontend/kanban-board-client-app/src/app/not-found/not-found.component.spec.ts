@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Router } from "@angular/router";
-import { Location } from "@angular/common";
-import { TranslateModule } from "@ngx-translate/core";
-import { MatCardModule } from "@angular/material/card";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatListModule } from "@angular/material/list";
-import { RouterModule } from "@angular/router";
-import { NotFoundComponent } from "./not-found.component";
-import { ThemeService } from "../core/services/theme.service";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
+import { NotFoundComponent } from './not-found.component';
+import { ThemeService } from '../core/services/theme.service';
 
-describe("NotFoundComponent", () => {
+describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
   let fixture: ComponentFixture<NotFoundComponent>;
   let router: jest.Mocked<Router>;
@@ -60,40 +60,40 @@ describe("NotFoundComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should display the error code 404", () => {
+  it('should display the error code 404', () => {
     const compiled = fixture.nativeElement;
     // Check for the translation key since translations might not be loaded in tests
-    expect(compiled.textContent).toContain("common.notFound.errorCode");
+    expect(compiled.textContent).toContain('common.notFound.errorCode');
   });
 
-  it("should have goBack method that calls location.back()", () => {
+  it('should have goBack method that calls location.back()', () => {
     component.goBack();
     expect(location.back).toHaveBeenCalled();
   });
 
-  it("should have goHome method that navigates to root", () => {
+  it('should have goHome method that navigates to root', () => {
     component.goHome();
-    expect(router.navigate).toHaveBeenCalledWith(["/"]);
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
 
-  it("should have getCurrentTheme method that calls themeService", () => {
-    themeService.getCurrentColorScheme.mockReturnValue("light");
+  it('should have getCurrentTheme method that calls themeService', () => {
+    themeService.getCurrentColorScheme.mockReturnValue('light');
     const theme = component.getCurrentTheme();
     expect(themeService.getCurrentColorScheme).toHaveBeenCalled();
-    expect(theme).toBe("light");
+    expect(theme).toBe('light');
   });
 
-  it("should render action buttons", () => {
+  it('should render action buttons', () => {
     const compiled = fixture.nativeElement;
-    const buttons = compiled.querySelectorAll("button");
+    const buttons = compiled.querySelectorAll('button');
     expect(buttons.length).toBeGreaterThan(0);
   });
 
-  it("should have proper Angular Material imports", () => {
+  it('should have proper Angular Material imports', () => {
     expect(component).toBeTruthy();
     // The component should render without errors, indicating all imports are correct
   });

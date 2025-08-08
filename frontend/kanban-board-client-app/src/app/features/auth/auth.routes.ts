@@ -5,4 +5,4 @@ import { SignUpComponent } from '../../sign-up/sign-up.component';
 export const AUTH_ROUTES: Routes = [
   { path: 'sign-in', title: 'Sign In', loadComponent: () => SignInComponent },
   { path: 'sign-up', title: 'Sign Up', loadComponent: () => SignUpComponent },
-]; 
+];

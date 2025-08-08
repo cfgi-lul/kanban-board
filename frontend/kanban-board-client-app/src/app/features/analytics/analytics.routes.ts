@@ -9,4 +9,4 @@ export const ANALYTICS_ROUTES: Routes = [
     loadComponent: () => AnalyticsComponent,
     canActivate: [authGuard],
   },
-]; 
+];

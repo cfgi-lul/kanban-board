@@ -9,4 +9,4 @@ export const HELP_ROUTES: Routes = [
     loadComponent: () => HelpComponent,
     canActivate: [authGuard],
   },
-]; 
+];
