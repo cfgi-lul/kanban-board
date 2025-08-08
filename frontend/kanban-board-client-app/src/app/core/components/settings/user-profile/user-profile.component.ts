@@ -1,9 +1,9 @@
 import {
   Component,
   OnInit,
-  ViewChild,
   ElementRef,
   inject,
+  viewChild
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
@@ -51,7 +51,7 @@ export class UserProfileComponent implements OnInit {
   private avatarService = inject(AvatarService);
   private snackBar = inject(MatSnackBar);
 
-  @ViewChild("fileInput") fileInput!: ElementRef<HTMLInputElement>;
+  readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>("fileInput");
 
   profileForm: FormGroup;
   currentUser: UserInstance | null = null;
@@ -113,7 +113,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onAvatarClick(): void {
-    this.fileInput.nativeElement.click();
+    this.fileInput().nativeElement.click();
   }
 
   onFileSelected(event: any): void {
@@ -133,14 +133,14 @@ export class UserProfileComponent implements OnInit {
           this.isUploadingAvatar = false;
           this.showMessage("settings.avatarUploadSuccess", "success");
           // Clear the file input
-          this.fileInput.nativeElement.value = "";
+          this.fileInput().nativeElement.value = "";
         },
         error: (error) => {
           console.error("Error uploading avatar:", error);
           this.isUploadingAvatar = false;
           this.showMessage("settings.avatarUploadError", "error");
           // Clear the file input
-          this.fileInput.nativeElement.value = "";
+          this.fileInput().nativeElement.value = "";
         },
       });
     }
