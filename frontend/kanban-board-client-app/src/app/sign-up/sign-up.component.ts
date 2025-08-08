@@ -86,9 +86,7 @@ export class SignUpComponent implements OnInit {
             this.router.navigate([this.returnUrl]);
           },
           error: (error) => {
-            this.showErrorMessage(
-              error.message || "auth.signUpFailed",
-            );
+            this.showErrorMessage(error.message || "auth.signUpFailed");
           },
         });
     } else {

@@ -1,0 +1,227 @@
+:host {
+  display: block;
+}
+
+.create-board-modal {
+  $self: &;
+
+  // Spacing variables
+  $spacing: (
+    xs: 4px,
+    sm: 8px,
+    md: 12px,
+    lg: 16px,
+    xl: 24px,
+  );
+
+  // Typography variables
+  $typography: (
+    title: (
+      desktop: var(--mat-sys-headline-medium),
+      tablet: var(--mat-sys-headline-small),
+      mobile: var(--mat-sys-title-large),
+      small: var(--mat-sys-title-medium),
+    ),
+    subtitle: (
+      desktop: var(--mat-sys-title-large),
+      small: var(--mat-sys-title-medium),
+    ),
+  );
+
+  // Main container
+  gap: map-get($spacing, xl);
+
+  // Title section
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: map-get($spacing, sm);
+    font: map-get(map-get($typography, title), desktop);
+    font-weight: 500;
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+    }
+  }
+
+  // Form section
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($spacing, xl);
+  }
+
+  // Form fields
+  &__field {
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  // Columns section
+  &__columns {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($spacing, lg);
+    margin: 0 -#{map-get($spacing, xl)};
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: map-get($spacing, sm) map-get($spacing, xl);
+      background-color: var(--mat-sys-surface-container);
+    }
+
+    &-title {
+      font: map-get(map-get($typography, subtitle), desktop);
+      font-weight: 500;
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: map-get($spacing, lg);
+      padding: 0 map-get($spacing, xl);
+    }
+  }
+
+  // Column items
+  &__column {
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: map-get($spacing, sm);
+    }
+
+    &-field {
+      flex: 1;
+    }
+  }
+
+  // Remove column button
+  &__remove-column-btn {
+    // Default styles for desktop/tablet
+
+    &--mobile {
+      display: none; // Hidden by default on desktop
+    }
+
+    &--desktop {
+      display: flex; // Visible by default on desktop
+    }
+  }
+
+  // Error message
+  &__error-message {
+    display: flex;
+    align-items: center;
+    gap: map-get($spacing, sm);
+    padding: map-get($spacing, sm) map-get($spacing, lg);
+    border-radius: 4px;
+    background-color: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+  }
+
+  // Actions section
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: map-get($spacing, sm);
+    padding: map-get($spacing, lg) map-get($spacing, xl);
+  }
+
+  // Submit button
+  &__submit-btn {
+    display: flex;
+    align-items: center;
+    gap: map-get($spacing, sm);
+  }
+
+  // Spinner
+  &__spinner {
+    margin: 0;
+  }
+
+  // Responsive breakpoints
+  @media (max-width: 768px) {
+    gap: map-get($spacing, lg);
+
+    #{$self}__title {
+      font: map-get(map-get($typography, title), tablet);
+    }
+
+    #{$self}__form {
+      gap: map-get($spacing, lg);
+    }
+
+    #{$self}__columns {
+      gap: map-get($spacing, md);
+      margin: 0 -#{map-get($spacing, lg)};
+
+      &-header {
+        padding: map-get($spacing, sm) map-get($spacing, lg);
+      }
+
+      &-list {
+        gap: map-get($spacing, md);
+        padding: 0 map-get($spacing, lg);
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    gap: map-get($spacing, sm);
+
+    #{$self}__title {
+      font: map-get(map-get($typography, title), mobile);
+    }
+
+    #{$self}__form {
+      gap: map-get($spacing, sm);
+    }
+
+    #{$self}__columns {
+      gap: map-get($spacing, xs);
+      margin: 0 -#{map-get($spacing, sm)};
+
+      &-header {
+        padding: map-get($spacing, xs) map-get($spacing, sm);
+      }
+
+      &-list {
+        gap: map-get($spacing, xs);
+        padding: 0 map-get($spacing, sm);
+      }
+    }
+
+    #{$self}__actions {
+      padding: map-get($spacing, sm) map-get($spacing, sm);
+    }
+
+    #{$self}__column-item {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #{$self}__remove-column-btn {
+      &--mobile {
+        display: flex; // Show mobile button
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+
+        .mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      &--desktop {
+        display: none; // Hide desktop button
+      }
+    }
+  }
+}

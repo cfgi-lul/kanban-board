@@ -1,0 +1,160 @@
+<mat-toolbar mat-dialog-title color="primary" class="create-board-modal__title">
+  <h2>{{ 'board.createNewBoard' | translate }}</h2>
+</mat-toolbar>
+
+<mat-dialog-content class="create-board-modal" [formGroup]="createBoardForm">
+  <div class="create-board-modal__form">
+    <!-- Board Name -->
+    <mat-form-field appearance="outline" class="create-board-modal__field">
+      <mat-label>{{ 'board.boardName' | translate }}</mat-label>
+      <input
+        matInput
+        class="create-board-modal__input"
+        formControlName="name"
+        [placeholder]="'board.enterBoardName' | translate"
+        required
+      />
+      @if (createBoardForm.get('name')?.hasError('required')) {
+        <mat-error class="create-board-modal__error">{{
+          'board.boardNameRequired' | translate
+        }}</mat-error>
+      }
+      @if (createBoardForm.get('name')?.hasError('minlength')) {
+        <mat-error class="create-board-modal__error">{{
+          'board.boardNameMinLength' | translate
+        }}</mat-error>
+      }
+      @if (createBoardForm.get('name')?.hasError('maxlength')) {
+        <mat-error class="create-board-modal__error">{{
+          'board.boardNameMaxLength' | translate
+        }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="create-board-modal__field">
+      <mat-label>{{ 'board.boardDescription' | translate }}</mat-label>
+      <textarea
+        matInput
+        class="create-board-modal__textarea"
+        formControlName="description"
+        [placeholder]="'board.enterBoardDescription' | translate"
+        rows="3"
+      ></textarea>
+      @if (createBoardForm.get('description')?.hasError('maxlength')) {
+        <mat-error class="create-board-modal__error">{{
+          'board.boardDescriptionMaxLength' | translate
+        }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="create-board-modal__columns">
+      <div class="create-board-modal__columns-list">
+        @for (column of columns.controls; track $index) {
+          <div class="create-board-modal__column-item">
+            <mat-form-field
+              appearance="outline"
+              class="create-board-modal__column-field"
+            >
+              <mat-label
+                >{{ 'board.columnName' | translate }}
+                {{ $index + 1 }}</mat-label
+              >
+              <input
+                matInput
+                class="create-board-modal__column-input"
+                [formControl]="$any(column)"
+                [placeholder]="'board.enterColumnName' | translate"
+                required
+              />
+              <!-- Mobile: button inside input -->
+              <button
+                matSuffix
+                type="button"
+                mat-icon-button
+                color="warn"
+                class="create-board-modal__remove-column-btn create-board-modal__remove-column-btn--mobile"
+                (click)="removeColumn($index)"
+                [disabled]="columns.length <= 1"
+                matTooltip="{{ 'board.deleteColumn' | translate }}"
+              >
+                <mat-icon>remove</mat-icon>
+              </button>
+              @if ($any(column).hasError('required')) {
+                <mat-error class="create-board-modal__error">{{
+                  'board.columnNameRequired' | translate
+                }}</mat-error>
+              }
+            </mat-form-field>
+
+            <!-- Desktop: button outside input -->
+            <button
+              type="button"
+              mat-icon-button
+              color="warn"
+              class="create-board-modal__remove-column-btn create-board-modal__remove-column-btn--desktop"
+              (click)="removeColumn($index)"
+              [disabled]="columns.length <= 1"
+              matTooltip="{{ 'board.deleteColumn' | translate }}"
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+          </div>
+        }
+        <mat-toolbar class="create-board-modal__columns-header">
+          <span class="create-board-modal__columns-title">{{
+            'board.boardColumns' | translate
+          }}</span>
+          <button
+            type="button"
+            mat-icon-button
+            color="primary"
+            class="create-board-modal__add-column-btn"
+            (click)="addColumn()"
+            [disabled]="columns?.value?.length >= 10"
+            matTooltip="{{ 'board.addColumn' | translate }}"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-toolbar>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    @if (errorMessage()) {
+      <mat-error class="create-board-modal__error-message">
+        <mat-icon class="create-board-modal__error-icon">error</mat-icon>
+        {{ errorMessage() | translate }}
+      </mat-error>
+    }
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="create-board-modal__actions" align="end">
+  <button
+    type="button"
+    mat-button
+    class="create-board-modal__cancel-btn"
+    (click)="onCancel()"
+    [disabled]="isLoading()"
+  >
+    {{ 'common.cancel' | translate }}
+  </button>
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    class="create-board-modal__submit-btn"
+    [disabled]="createBoardForm.invalid || isLoading()"
+  >
+    @if (isLoading()) {
+      <mat-spinner
+        class="create-board-modal__spinner"
+        diameter="20"
+      ></mat-spinner>
+    } @else {
+      <mat-icon class="create-board-modal__submit-icon">add</mat-icon>
+    }
+    {{ 'board.createNewBoard' | translate }}
+  </button>
+</mat-dialog-actions>

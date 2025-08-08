@@ -86,12 +86,16 @@ export class SessionTimeoutService {
     // Try to refresh the token
     this.authService.refreshCurrentUser().subscribe({
       next: () => {
-        this.snackBar.open('common.sessionExtendedSuccessfully', 'common.close', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar'],
-        });
+        this.snackBar.open(
+          'common.sessionExtendedSuccessfully',
+          'common.close',
+          {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar'],
+          }
+        );
 
         // Clear warning timeout
         if (this.warningTimeout) {
@@ -111,16 +115,12 @@ export class SessionTimeoutService {
 
   private handleSessionExpiry(): void {
     this.authService.logout();
-          this.snackBar.open(
-        'common.sessionExpired',
-        'common.close',
-      {
-        duration: 5000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        panelClass: ['error-snackbar'],
-      }
-    );
+    this.snackBar.open('common.sessionExpired', 'common.close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar'],
+    });
   }
 
   // Public method to manually extend session

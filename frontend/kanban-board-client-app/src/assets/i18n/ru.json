@@ -150,6 +150,13 @@
     "removeAvatar": "Удалить аватар"
   },
   "board": {
+    "defaultColumn": {
+      "name": "Название колонки",
+      "description": "Описание колонки",
+      "todo": "К выполнению",
+      "inProgress": "В процессе",
+      "done": "Выполнено"
+    },
     "boardsList": "Список досок",
     "searchBoards": "Поиск досок",
     "enterBoardName": "Введите название доски...",

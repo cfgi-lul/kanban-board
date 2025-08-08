@@ -4,7 +4,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { TranslateModule } from "@ngx-translate/core";
-import { BoardInstance } from "../../core/models/classes/BoardInstance";
+import { BoardInstance } from "../../../core/models/classes/BoardInstance";
 
 @Component({
   selector: "kn-board-card",

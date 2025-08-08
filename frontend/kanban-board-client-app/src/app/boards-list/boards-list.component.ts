@@ -24,11 +24,12 @@ import { MatDialogModule, MatDialog } from "@angular/material/dialog";
 import { AuthService } from "../core/api/auth.service";
 import { BoardInstance } from "../core/models/classes/BoardInstance";
 import { TranslateModule } from "@ngx-translate/core";
-import { BoardCardComponent } from "./board-card/board-card.component";
-import { AddBoardCardComponent } from "./add-board-card/add-board-card.component";
+
+import { AddBoardCardComponent } from "./components/add-board-card/add-board-card.component";
 import { ErrorDisplayComponent } from "../core/components/error-display/error-display.component";
 import { NoContentComponent } from "../core/components/no-content/no-content.component";
-import { CreateBoardModalComponent } from "./create-board-modal/create-board-modal.component";
+import { CreateBoardModalComponent } from "./components/create-board-modal/create-board-modal.component";
+import { BoardCardComponent } from "./components/board-card/board-card.component";
 
 export type LoadingState = "loading" | "error" | "fulfilled";
 

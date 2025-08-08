@@ -150,6 +150,13 @@
     "removeAvatar": "Remove Avatar"
   },
   "board": {
+    "defaultColumn": {
+      "todo": "To Do",
+      "inProgress": "In Progress",
+      "done": "Done",
+      "name": "Column Name",
+      "description": "Column Description"
+    },
     "boardsList": "Boards List",
     "searchBoards": "Search boards",
     "enterBoardName": "Enter board name...",
