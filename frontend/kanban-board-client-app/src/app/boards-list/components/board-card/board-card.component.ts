@@ -8,7 +8,6 @@ import { BoardInstance } from "../../../core/models/classes/BoardInstance";
 
 @Component({
   selector: "kn-board-card",
-  standalone: true,
   imports: [
     MatCardModule,
     MatButtonModule,

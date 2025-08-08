@@ -22,7 +22,6 @@ import { UserInstance } from "../../../models/classes/UserInstance";
 
 @Component({
   selector: "kn-user-profile",
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

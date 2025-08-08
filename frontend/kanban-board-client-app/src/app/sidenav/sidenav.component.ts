@@ -11,7 +11,6 @@ import { UserDisplayComponent } from "../core/components/user-display/user-displ
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "kn-sidenav",
-  standalone: true,
   imports: [
     RouterModule,
     MatIconModule,

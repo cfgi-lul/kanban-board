@@ -1,5 +1,5 @@
 import { Component, inject, signal } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import {
   FormBuilder,
   FormGroup,
@@ -47,9 +47,7 @@ export interface CreateBoardData {
 
 @Component({
   selector: "kn-create-board-modal",
-  standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -61,8 +59,8 @@ export interface CreateBoardData {
     MatProgressSpinnerModule,
     MatTooltipModule,
     TranslateModule,
-    MatToolbarModule,
-  ],
+    MatToolbarModule
+],
   templateUrl: "./create-board-modal.component.html",
   styleUrl: "./create-board-modal.component.scss",
 })

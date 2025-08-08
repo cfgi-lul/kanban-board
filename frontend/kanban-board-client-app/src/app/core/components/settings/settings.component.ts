@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -31,9 +31,7 @@ interface SettingsTab {
 
 @Component({
   selector: "kn-settings",
-  standalone: true,
   imports: [
-    CommonModule,
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
@@ -44,8 +42,8 @@ interface SettingsTab {
     ThemeSelectorComponent,
     LanguageSelectorComponent,
     UserProfileComponent,
-    TranslateModule,
-  ],
+    TranslateModule
+],
   templateUrl: "./settings.component.html",
   styleUrls: ["./settings.component.scss"],
 })

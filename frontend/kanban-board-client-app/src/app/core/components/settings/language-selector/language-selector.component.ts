@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
@@ -8,14 +8,12 @@ import { I18nService } from "../../../services/i18n.service";
 
 @Component({
   selector: "kn-language-selector",
-  standalone: true,
   imports: [
-    CommonModule,
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    TranslateModule,
-  ],
+    TranslateModule
+],
   templateUrl: "./language-selector.component.html",
   styleUrls: ["./language-selector.component.scss"],
 })

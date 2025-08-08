@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { Router, RouterLink } from "@angular/router";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { MatDividerModule } from "@angular/material/divider";
@@ -67,15 +67,13 @@ const TILES: {
 
 @Component({
   selector: "kn-main-page",
-  standalone: true,
   imports: [
-    CommonModule,
     TranslateModule,
     MatDividerModule,
     TileComponent,
     RouterLink,
-    MatRippleModule,
-  ],
+    MatRippleModule
+],
   templateUrl: "./main-page.component.html",
   styleUrls: ["./main-page.component.scss"],
 })

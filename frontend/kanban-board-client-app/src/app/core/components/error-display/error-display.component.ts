@@ -12,7 +12,6 @@ import { TranslateModule } from "@ngx-translate/core";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "kn-error-display",
-  standalone: true,
   imports: [MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   template: `
     @if (errorMessage()) {

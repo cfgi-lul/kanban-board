@@ -14,7 +14,6 @@ import { getUserDisplayName, getUserInitials } from "../../utils/user.utils";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "kn-user-display",
-  standalone: true,
   imports: [MatIconModule, TranslateModule],
   templateUrl: "./user-display.component.html",
   styleUrl: "./user-display.component.scss",

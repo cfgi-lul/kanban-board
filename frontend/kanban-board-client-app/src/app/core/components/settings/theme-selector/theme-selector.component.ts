@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -10,16 +10,14 @@ import { ThemeService } from "../../../services/theme.service";
 
 @Component({
   selector: "kn-theme-selector",
-  standalone: true,
   imports: [
-    CommonModule,
     MatButtonToggleModule,
     MatCardModule,
     MatIconModule,
     MatFormFieldModule,
     MatSelectModule,
-    ReactiveFormsModule,
-  ],
+    ReactiveFormsModule
+],
   templateUrl: "./theme-selector.component.html",
   styleUrls: ["./theme-selector.component.scss"],
 })

@@ -6,7 +6,6 @@ import { MatRippleModule } from "@angular/material/core";
 
 @Component({
   selector: "kn-add-board-card",
-  standalone: true,
   imports: [MatCardModule, MatIconModule, TranslateModule, MatRippleModule],
   templateUrl: "./add-board-card.component.html",
   styleUrl: "./add-board-card.component.scss",

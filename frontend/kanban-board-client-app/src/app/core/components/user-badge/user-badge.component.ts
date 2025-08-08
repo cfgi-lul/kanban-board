@@ -15,19 +15,18 @@ import { Router } from "@angular/router";
 import { UserInstance } from "../../models/classes/UserInstance";
 import { SettingsComponent } from "../settings/settings.component";
 import { TranslateModule } from "@ngx-translate/core";
-import { CommonModule } from "@angular/common";
+
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "kn-user-badge",
   imports: [
-    CommonModule,
     TranslateModule,
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    MatDividerModule,
-  ],
+    MatDividerModule
+],
   templateUrl: "./user-badge.component.html",
   styleUrl: "./user-badge.component.scss",
 })

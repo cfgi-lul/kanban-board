@@ -12,7 +12,6 @@ import { TranslateModule } from "@ngx-translate/core";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "kn-no-content",
-  standalone: true,
   imports: [MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   template: `
     <mat-card class="no-content">

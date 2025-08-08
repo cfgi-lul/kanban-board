@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'kn-analytics',
-  standalone: true,
-  imports: [CommonModule, TranslateModule, MatCardModule, MatIconModule],
+  imports: [TranslateModule, MatCardModule, MatIconModule],
   template: `
     <div class="analytics-container">
       <h1 translate="analytics.title"></h1>
