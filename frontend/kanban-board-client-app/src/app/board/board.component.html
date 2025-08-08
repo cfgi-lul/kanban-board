@@ -2,7 +2,7 @@
   @if (boardState$ | async; as boardState) {
     @if (boardState.loading) {
       <div class="loading-container">
-        <mat-spinner diameter="50"></mat-spinner>
+        <mat-spinner diameter="50" />
         <p>{{ 'board.loadingBoard' | translate }}</p>
       </div>
     } @else if (boardState.error) {
@@ -72,7 +72,7 @@
     }
   } @else {
     <div class="loading-container">
-      <mat-spinner diameter="50"></mat-spinner>
+      <mat-spinner diameter="50" />
       <p>{{ 'common.initializing' | translate }}</p>
     </div>
   }
