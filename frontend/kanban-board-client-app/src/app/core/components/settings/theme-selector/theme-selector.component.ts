@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatCardModule } from "@angular/material/card";
@@ -16,12 +16,14 @@ import { ThemeService } from "../../../services/theme.service";
     MatIconModule,
     MatFormFieldModule,
     MatSelectModule,
-    ReactiveFormsModule
-],
+    ReactiveFormsModule,
+  ],
   templateUrl: "./theme-selector.component.html",
   styleUrls: ["./theme-selector.component.scss"],
 })
 export class ThemeSelectorComponent {
+  themeService = inject(ThemeService);
+
   colorSchemeControl = new FormControl("system");
   availableColorSchemes: Array<{
     value: "light" | "dark" | "system";
@@ -29,14 +31,11 @@ export class ThemeSelectorComponent {
     description: string;
   }> = [];
 
-  constructor(public themeService: ThemeService) {
-    // Initialize available color schemes
+  constructor() {
     this.availableColorSchemes = this.themeService.getAvailableColorSchemes();
 
-    // Initialize with current color scheme
     this.colorSchemeControl.setValue(this.themeService.getCurrentColorScheme());
 
-    // Listen for changes
     this.colorSchemeControl.valueChanges.subscribe((scheme) => {
       if (scheme) {
         this.themeService.setColorScheme(scheme as "light" | "dark" | "system");

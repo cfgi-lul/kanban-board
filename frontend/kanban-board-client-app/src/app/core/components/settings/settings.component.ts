@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import {
   MatDialogRef,
@@ -42,12 +42,16 @@ interface SettingsTab {
     ThemeSelectorComponent,
     LanguageSelectorComponent,
     UserProfileComponent,
-    TranslateModule
-],
+    TranslateModule,
+  ],
   templateUrl: "./settings.component.html",
   styleUrls: ["./settings.component.scss"],
 })
 export class SettingsComponent {
+  dialogRef = inject<MatDialogRef<SettingsComponent>>(MatDialogRef);
+  data = inject<SettingsData>(MAT_DIALOG_DATA);
+  themeService = inject(ThemeService);
+
   selectedTab = 0;
 
   settingsTabs = [
@@ -64,12 +68,6 @@ export class SettingsComponent {
       component: "account",
     },
   ];
-
-  constructor(
-    public dialogRef: MatDialogRef<SettingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: SettingsData,
-    public themeService: ThemeService,
-  ) {}
 
   onTabChange(index: number): void {
     this.selectedTab = index;

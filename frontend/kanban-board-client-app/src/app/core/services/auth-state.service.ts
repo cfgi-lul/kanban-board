@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, signal, inject } from '@angular/core';
 import { AuthService } from '../api/auth.service';
 import { UserInstance } from '../models/classes/UserInstance';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -14,6 +14,8 @@ export interface AuthState {
   providedIn: 'root',
 })
 export class AuthStateService {
+  private authService = inject(AuthService);
+
   // Signals for reactive state management
   private _user = signal<UserInstance | null>(null);
   private _isLoading = signal(false);
@@ -31,7 +33,7 @@ export class AuthStateService {
   public readonly isLoading$ = toObservable(this.isLoading);
   public readonly error$ = toObservable(this.error);
 
-  constructor(private authService: AuthService) {
+  constructor() {
     this.initializeAuthState();
   }
 

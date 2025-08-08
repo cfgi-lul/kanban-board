@@ -10,6 +10,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import {
   catchError,
@@ -73,17 +74,15 @@ interface BoardState {
   styleUrl: './board.component.scss',
 })
 export class BoardComponent implements OnInit, OnDestroy {
+  private boardService = inject(BoardService);
+  private activatedRoute = inject(ActivatedRoute);
+  private matDialog = inject(MatDialog);
+  private taskService = inject(TaskService);
+  private boardSocketService = inject(BoardSocketService);
+  private snackBar = inject(MatSnackBar);
+
   boardState$: Observable<BoardState>;
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private boardService: BoardService,
-    private activatedRoute: ActivatedRoute,
-    private matDialog: MatDialog,
-    private taskService: TaskService,
-    private boardSocketService: BoardSocketService,
-    private snackBar: MatSnackBar
-  ) {}
 
   ngOnInit(): void {
     this.initializeBoard();

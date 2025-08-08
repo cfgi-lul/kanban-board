@@ -5,6 +5,7 @@ import {
   OnInit,
   output,
   HostListener,
+  inject,
 } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import {
@@ -37,14 +38,14 @@ import { TranslateModule } from "@ngx-translate/core";
   styleUrl: "./header.component.scss",
 })
 export class HeaderComponent implements OnInit {
+  private theme = inject(ThemeService);
+
   themeControl = new FormControl<ColorScheme>("system");
   isLoggedIn = input.required<boolean>();
   user = input.required<UserInstance>();
 
   isSmallScreen = false;
   private readonly LARGE_SCREEN_BREAKPOINT = 1024;
-
-  constructor(private theme: ThemeService) {}
 
   ngOnInit(): void {
     this.checkScreenSize();

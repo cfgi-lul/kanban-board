@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject, Observable } from "rxjs";
 
@@ -12,6 +12,8 @@ export interface Language {
   providedIn: "root",
 })
 export class I18nService {
+  private translateService = inject(TranslateService);
+
   private currentLanguageSubject = new BehaviorSubject<string>("en");
   public currentLanguage$ = this.currentLanguageSubject.asObservable();
 
@@ -20,7 +22,7 @@ export class I18nService {
     { code: "ru", name: "Russian", nativeName: "Русский" },
   ];
 
-  constructor(private translateService: TranslateService) {
+  constructor() {
     // console.log('I18nService: Initializing...');
     this.initializeLanguage();
   }

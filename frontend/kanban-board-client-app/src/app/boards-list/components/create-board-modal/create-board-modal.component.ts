@@ -59,8 +59,8 @@ export interface CreateBoardData {
     MatProgressSpinnerModule,
     MatTooltipModule,
     TranslateModule,
-    MatToolbarModule
-],
+    MatToolbarModule,
+  ],
   templateUrl: "./create-board-modal.component.html",
   styleUrl: "./create-board-modal.component.scss",
 })

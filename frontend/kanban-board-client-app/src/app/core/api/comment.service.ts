@@ -2,14 +2,15 @@ import { map, Observable } from "rxjs";
 import { CommentInstance } from "../models/classes/CommentInstance";
 import { CommentDTO } from "../models/requestModels/model/commentDTO";
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
 })
 export class CommentService {
+  private http = inject(HttpClient);
+
   apiUrl = "/api/comments";
-  constructor(private http: HttpClient) {}
 
   getComments(taskId: number): Observable<CommentInstance[]> {
     return this.http

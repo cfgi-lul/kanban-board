@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  inject,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   FormBuilder,
@@ -40,6 +46,11 @@ import { UserInstance } from "../../../models/classes/UserInstance";
   styleUrls: ["./user-profile.component.scss"],
 })
 export class UserProfileComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+  private avatarService = inject(AvatarService);
+  private snackBar = inject(MatSnackBar);
+
   @ViewChild("fileInput") fileInput!: ElementRef<HTMLInputElement>;
 
   profileForm: FormGroup;
@@ -48,12 +59,7 @@ export class UserProfileComponent implements OnInit {
   isSaving = false;
   isUploadingAvatar = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private avatarService: AvatarService,
-    private snackBar: MatSnackBar,
-  ) {
+  constructor() {
     this.profileForm = this.fb.group({
       displayName: ["", [Validators.required, Validators.minLength(2)]],
       email: ["", [Validators.required, Validators.email]],

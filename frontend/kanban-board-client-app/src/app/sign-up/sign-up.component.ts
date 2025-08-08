@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -39,19 +44,19 @@ import { TranslateModule } from "@ngx-translate/core";
   styleUrl: "./sign-up.component.scss",
 })
 export class SignUpComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private snackBar = inject(MatSnackBar);
+
   signUpForm: FormGroup;
   isLoading = false;
   isSignUpLoading = false;
   returnUrl: string = "/boards-list";
   matcher = new ErrorStateMatcher();
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private snackBar: MatSnackBar,
-  ) {
+  constructor() {
     this.signUpForm = this.fb.group({
       userName: ["", [Validators.required, Validators.minLength(3)]],
       password: ["", [Validators.required, Validators.minLength(6)]],

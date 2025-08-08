@@ -72,8 +72,8 @@ const TILES: {
     MatDividerModule,
     TileComponent,
     RouterLink,
-    MatRippleModule
-],
+    MatRippleModule,
+  ],
   templateUrl: "./main-page.component.html",
   styleUrls: ["./main-page.component.scss"],
 })

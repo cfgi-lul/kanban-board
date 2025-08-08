@@ -2,19 +2,19 @@
 import { filter, map, Observable, take } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { AuthService } from './auth.service';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BoardSocketService {
+  private authService = inject(AuthService);
+
   private socket$: WebSocketSubject<any>;
   private readonly stompHeaders = {
     'accept-version': '1.2',
     host: 'localhost',
   };
-
-  constructor(private authService: AuthService) {}
 
   connect(boardId: string): void {
     this.socket$ = webSocket({

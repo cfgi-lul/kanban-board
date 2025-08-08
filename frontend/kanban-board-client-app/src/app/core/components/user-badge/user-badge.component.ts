@@ -16,7 +16,6 @@ import { UserInstance } from "../../models/classes/UserInstance";
 import { SettingsComponent } from "../settings/settings.component";
 import { TranslateModule } from "@ngx-translate/core";
 
-
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "kn-user-badge",
@@ -25,8 +24,8 @@ import { TranslateModule } from "@ngx-translate/core";
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    MatDividerModule
-],
+    MatDividerModule,
+  ],
   templateUrl: "./user-badge.component.html",
   styleUrl: "./user-badge.component.scss",
 })

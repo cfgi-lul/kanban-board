@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { firstValueFrom, Observable, repeat, take } from 'rxjs';
 import {
@@ -58,18 +58,22 @@ const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
   styleUrl: './task-editor.component.scss',
 })
 export class TaskEditorComponent {
+  private fb = inject(FormBuilder);
+  private taskService = inject(TaskService);
+  private commentService = inject(CommentService);
+  dialogRef = inject<MatDialogRef<TaskEditorComponent>>(MatDialogRef);
+  data = inject<{
+    task: TaskInstance;
+  }>(MAT_DIALOG_DATA);
+
   taskForm: FormGroup;
   isEditDescription = false;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   comments$: Observable<CommentInstance[]>;
 
-  constructor(
-    private fb: FormBuilder,
-    private taskService: TaskService,
-    private commentService: CommentService,
-    public dialogRef: MatDialogRef<TaskEditorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { task: TaskInstance }
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.taskForm = this.fb.group({
       title: [data.task.title, Validators.required],
       description: [data.task.description],

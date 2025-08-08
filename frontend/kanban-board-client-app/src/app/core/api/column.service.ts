@@ -2,14 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { ColumnInstance } from '../models/classes/ColumnInstance';
 import { ColumnDTO } from '../models/requestModels/model/columnDTO';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColumnService {
+  private http = inject(HttpClient);
+
   private readonly baseUrl = '/api/columns';
-  constructor(private http: HttpClient) {}
 
   getAllColumns(id: number): Observable<ColumnInstance[]> {
     let params = new HttpParams();

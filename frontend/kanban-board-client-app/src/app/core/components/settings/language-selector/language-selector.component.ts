@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
@@ -12,13 +12,13 @@ import { I18nService } from "../../../services/i18n.service";
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    TranslateModule
-],
+    TranslateModule,
+  ],
   templateUrl: "./language-selector.component.html",
   styleUrls: ["./language-selector.component.scss"],
 })
 export class LanguageSelectorComponent {
-  constructor(public i18nService: I18nService) {}
+  i18nService = inject(I18nService);
 
   onLanguageChange(languageCode: string): void {
     this.i18nService.setLanguage(languageCode);

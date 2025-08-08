@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserInstance } from "../models/classes/UserInstance";
 
@@ -13,9 +13,9 @@ export interface UserUpdateRequest {
   providedIn: "root",
 })
 export class UserService {
-  private readonly baseUrl = "/api/users";
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private readonly baseUrl = "/api/users";
 
   getAllUsers(): Observable<UserInstance[]> {
     return this.http.get<UserInstance[]>(this.baseUrl);

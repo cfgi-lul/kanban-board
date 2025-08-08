@@ -15,8 +15,8 @@ import { MatRippleModule } from "@angular/material/core";
     MatIconModule,
     MatButtonModule,
     MatChipsModule,
-    MatRippleModule
-],
+    MatRippleModule,
+  ],
   templateUrl: "./tile.component.html",
   styleUrls: ["./tile.component.scss"],
 })

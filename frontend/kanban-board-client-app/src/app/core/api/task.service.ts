@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { TaskInstance } from "../models/classes/TaskInstance";
 import { TaskDTO } from "../models/requestModels/model/taskDTO";
@@ -8,9 +8,9 @@ import { TaskDTO } from "../models/requestModels/model/taskDTO";
   providedIn: "root",
 })
 export class TaskService {
-  private readonly baseUrl = "/api/tasks";
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private readonly baseUrl = "/api/tasks";
 
   getAllTasks(): Observable<TaskInstance[]> {
     return this.http

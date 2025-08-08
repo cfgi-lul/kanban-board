@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserInstance } from "../models/classes/UserInstance";
 
@@ -7,13 +7,10 @@ import { UserInstance } from "../models/classes/UserInstance";
   providedIn: "root",
 })
 export class AvatarService {
+  private http = inject(HttpClient);
+
   private readonly baseUrl = "/api/avatar";
 
-  constructor(private http: HttpClient) {}
-
-  /**
-   * Upload a new avatar image
-   */
   uploadAvatar(file: File): Observable<UserInstance> {
     const formData = new FormData();
     formData.append("file", file);
@@ -21,16 +18,10 @@ export class AvatarService {
     return this.http.post<UserInstance>(`${this.baseUrl}/upload`, formData);
   }
 
-  /**
-   * Remove the current avatar
-   */
   removeAvatar(): Observable<UserInstance> {
     return this.http.delete<UserInstance>(`${this.baseUrl}/remove`);
   }
 
-  /**
-   * Get avatar URL for a user
-   */
   getAvatarUrl(avatarPath: string | null): string {
     if (!avatarPath) {
       return "assets/default-avatar.svg";
@@ -39,9 +30,6 @@ export class AvatarService {
     return `${window.location.origin}/api/avatar/${avatarPath}`;
   }
 
-  /**
-   * Validate file before upload
-   */
   validateFile(file: File): { isValid: boolean; error?: string } {
     // Check file size (5MB limit)
     const maxSize = 5 * 1024 * 1024; // 5MB

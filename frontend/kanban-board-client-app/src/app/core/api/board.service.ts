@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { BoardInstance } from "../models/classes/BoardInstance";
 import { BoardDTO } from "../models/requestModels/model/boardDTO";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { map } from "rxjs";
 import type { Observable } from "rxjs/internal/Observable";
 
@@ -9,9 +9,9 @@ import type { Observable } from "rxjs/internal/Observable";
   providedIn: "root",
 })
 export class BoardService {
-  private readonly baseUrl = "/api/boards";
+  private httpClient = inject(HttpClient);
 
-  constructor(private httpClient: HttpClient) {}
+  private readonly baseUrl = "/api/boards";
 
   getAllBoards(): Observable<BoardInstance[]> {
     return this.httpClient

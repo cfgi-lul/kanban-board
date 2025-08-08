@@ -9,7 +9,7 @@ import {
   shareReplay,
 } from "rxjs";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Router } from "@angular/router";
 import { UserInstance } from "../models/classes/UserInstance";
@@ -34,6 +34,9 @@ export interface AuthResponse {
   providedIn: "root",
 })
 export class AuthService {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+
   private apiUrl = `/api/api/auth`;
   private currentUserSubject: BehaviorSubject<UserInstance | null>;
   public currentUser: Observable<UserInstance | null>;
@@ -43,10 +46,7 @@ export class AuthService {
   // Add cached current user observable
   private currentUserRequest$?: Observable<UserInstance | null>;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) {
+  constructor() {
     this.currentUserSubject = new BehaviorSubject<UserInstance | null>(
       this.getUserFromStorage(),
     );
