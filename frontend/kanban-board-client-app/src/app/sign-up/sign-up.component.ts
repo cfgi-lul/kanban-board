@@ -53,7 +53,7 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   isLoading = false;
   isSignUpLoading = false;
-  returnUrl: string = "/boards-list";
+  returnUrl: string = "/dashboard/boards-list";
   matcher = new ErrorStateMatcher();
 
   constructor() {
@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.returnUrl = params["returnUrl"] || "/boards-list";
+      this.returnUrl = params["returnUrl"] || "/dashboard/boards-list";
     });
   }
 

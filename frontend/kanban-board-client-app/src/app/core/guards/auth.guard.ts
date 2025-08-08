@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = (
   if (!authService.isAuthenticated()) {
     // Store the attempted URL for redirect after login
     const returnUrl = state.url;
-    router.navigate(['/sign-in'], { queryParams: { returnUrl } });
+    router.navigate(['/auth/sign-in'], { queryParams: { returnUrl } });
     return of(false);
   }
 
@@ -27,14 +27,14 @@ export const authGuard: CanActivateFn = (
       } else {
         // User not found, redirect to login
         const returnUrl = state.url;
-        router.navigate(['/sign-in'], { queryParams: { returnUrl } });
+        router.navigate(['/auth/sign-in'], { queryParams: { returnUrl } });
         return false;
       }
     }),
     catchError(() => {
       // Error occurred, redirect to login
       const returnUrl = state.url;
-      router.navigate(['/sign-in'], { queryParams: { returnUrl } });
+      router.navigate(['/auth/sign-in'], { queryParams: { returnUrl } });
       return of(false);
     })
   );

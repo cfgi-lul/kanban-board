@@ -35,7 +35,7 @@ export class NotFoundComponent {
   }
 
   goHome(): void {
-    this.router.navigate(["/"]);
+    this.router.navigate(["/dashboard/main"]);
   }
 
   getCurrentTheme(): string {

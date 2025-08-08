@@ -63,11 +63,11 @@ export class UserBadgeComponent {
 
   onLogout(): void {
     this.authService.logout();
-    this.router.navigate(["/sign-in"]);
+    this.router.navigate(["/auth/sign-in"]);
   }
 
   onLogin(): void {
-    this.router.navigate(["/sign-in"]);
+    this.router.navigate(["/auth/sign-in"]);
   }
 
   onSettings(): void {

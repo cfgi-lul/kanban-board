@@ -117,7 +117,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   }
 
   openBoard(boardId: number): void {
-    this.router.navigate(["/board", boardId]);
+    this.router.navigate(["/dashboard/board", boardId]);
   }
 
   clearSearch(): void {
@@ -131,7 +131,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   addBoard(): void {
     if (!this.authService.isAuthenticated()) {
-      this.router.navigate(["/sign-in"]);
+      this.router.navigate(["/auth/sign-in"]);
       return;
     }
 

@@ -153,7 +153,7 @@ export class AuthService {
   logout(): void {
     this.clearAuthData();
     this.currentUserRequest$ = undefined; // Clear cache
-    this.router.navigate(["/sign-in"]);
+    this.router.navigate(["/auth/sign-in"]);
   }
 
   private clearAuthData(): void {

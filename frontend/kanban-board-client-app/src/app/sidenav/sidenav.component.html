@@ -2,7 +2,7 @@
   <mat-nav-list class="sidenav__menu">
     <a
       mat-list-item
-      routerLink="/boards-list"
+      routerLink="/dashboard/boards-list"
       routerLinkActive="sidenav__menu-item--active"
       class="sidenav__menu-item"
     >
@@ -12,7 +12,7 @@
 
     <a
       mat-list-item
-      routerLink="/sign-in"
+      routerLink="/auth/sign-in"
       routerLinkActive="sidenav__menu-item--active"
       class="sidenav__menu-item"
     >
@@ -23,7 +23,7 @@
     @if (isAdmin) {
       <a
         mat-list-item
-        routerLink="/admin"
+        routerLink="/admin/admin"
         routerLinkActive="sidenav__menu-item--active"
         class="sidenav__menu-item"
       >

@@ -20,7 +20,7 @@ const TILES: {
     description: "main.boards.description",
     icon: "dashboard",
     color: "primary",
-    route: "/boards-list",
+    route: "/dashboard/boards-list",
     size: "large",
   },
   {
@@ -28,7 +28,7 @@ const TILES: {
     description: "main.news.description",
     icon: "newspaper",
     color: "accent",
-    route: "/news",
+    route: "/news/news",
     size: "small",
   },
   {
@@ -36,7 +36,7 @@ const TILES: {
     description: "main.analytics.description",
     icon: "analytics",
     color: "primary",
-    route: "/analytics",
+    route: "/analytics/analytics",
     size: "small",
   },
   {
@@ -44,7 +44,7 @@ const TILES: {
     description: "main.settings.description",
     icon: "settings",
     color: "accent",
-    route: "/settings",
+    route: "/dashboard/settings",
     size: "small",
   },
   {
@@ -52,7 +52,7 @@ const TILES: {
     description: "main.admin.description",
     icon: "admin_panel_settings",
     color: "warn",
-    route: "/admin",
+    route: "/admin/admin",
     size: "small",
   },
   {
@@ -60,7 +60,7 @@ const TILES: {
     description: "main.help.description",
     icon: "help",
     color: "primary",
-    route: "/help",
+    route: "/help/help",
     size: "small",
   },
 ];
