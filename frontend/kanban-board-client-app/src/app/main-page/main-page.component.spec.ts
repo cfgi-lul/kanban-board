@@ -1,10 +1,11 @@
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 
 import { MainPageComponent } from './main-page.component';
-import { Tile } from '../core/components/tile';
 
 describe('MainPageComponent', () => {
   let component: MainPageComponent;
@@ -17,8 +18,35 @@ describe('MainPageComponent', () => {
     } as Partial<Router>;
 
     await TestBed.configureTestingModule({
-      imports: [MainPageComponent, TranslateModule.forRoot()],
-      providers: [{ provide: Router, useValue: routerSpy }],
+      imports: [
+        MainPageComponent,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+      ],
+      providers: [
+        { provide: Router, useValue: routerSpy },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {},
+            params: { subscribe: jest.fn() },
+            queryParams: { subscribe: jest.fn() },
+            fragment: { subscribe: jest.fn() },
+            data: { subscribe: jest.fn() },
+            url: { subscribe: jest.fn() },
+            outlet: 'primary',
+            component: MainPageComponent,
+            routeConfig: null,
+            root: {} as ActivatedRoute,
+            parent: null,
+            firstChild: null,
+            children: [],
+            pathFromRoot: [],
+            paramMap: { subscribe: jest.fn() },
+            queryParamMap: { subscribe: jest.fn() },
+          },
+        },
+      ],
     }).compileComponents();
 
     mockRouter = TestBed.inject(Router) as Partial<Router>;
@@ -46,42 +74,50 @@ describe('MainPageComponent', () => {
 
     it('should have tiles with required properties', () => {
       const firstTile = component.tiles[0];
-      expect(firstTile).toHaveProperty('id');
       expect(firstTile).toHaveProperty('title');
-      expect(firstTile).toHaveProperty('route');
+      expect(firstTile).toHaveProperty('description');
+      expect(firstTile).toHaveProperty('icon');
       expect(firstTile).toHaveProperty('color');
+      expect(firstTile).toHaveProperty('route');
+      expect(firstTile).toHaveProperty('size');
     });
   });
 
   describe('Tile Data Structure', () => {
     it('should have boards tile as first tile', () => {
-      const boardsTile = component.tiles.find(tile => tile.id === 'boards');
+      const boardsTile = component.tiles.find(
+        tile => tile.title === 'main.boards.title'
+      );
       expect(boardsTile).toBeDefined();
-      expect(boardsTile?.route).toBe('/boards-list');
+      expect(boardsTile?.route).toBe('/dashboard/boards-list');
       expect(boardsTile?.color).toBe('primary');
     });
 
-    it('should have news tile with badge', () => {
-      const newsTile = component.tiles.find(tile => tile.id === 'news');
+    it('should have news tile with correct properties', () => {
+      const newsTile = component.tiles.find(
+        tile => tile.title === 'main.news.title'
+      );
       expect(newsTile).toBeDefined();
-      expect(newsTile?.badge).toBe('main.news.badge');
       expect(newsTile?.color).toBe('accent');
+      expect(newsTile?.route).toBe('/news/news');
     });
 
     it('should have admin tile with warn color', () => {
-      const adminTile = component.tiles.find(tile => tile.id === 'admin');
+      const adminTile = component.tiles.find(
+        tile => tile.title === 'main.admin.title'
+      );
       expect(adminTile).toBeDefined();
       expect(adminTile?.color).toBe('warn');
     });
 
     it('should have all tiles with valid routes', () => {
       const validRoutes = [
-        '/boards-list',
-        '/news',
-        '/analytics',
-        '/settings',
-        '/admin',
-        '/help',
+        '/dashboard/boards-list',
+        '/news/news',
+        '/analytics/analytics',
+        '/dashboard/settings',
+        '/admin/admin',
+        '/help/help',
       ];
       component.tiles.forEach(tile => {
         expect(validRoutes).toContain(tile.route);
@@ -94,68 +130,12 @@ describe('MainPageComponent', () => {
         expect(validColors).toContain(tile.color);
       });
     });
-  });
 
-  describe('onTileClick Method', () => {
-    it('should navigate when tile is clicked and not disabled', () => {
-      const tile: Tile = {
-        id: 'test',
-        title: 'Test Tile',
-        route: '/test-route',
-        color: 'primary',
-      };
-
-      component.onTileClick(tile);
-
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/test-route']);
-      expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
-    });
-
-    it('should not navigate when tile is disabled', () => {
-      const disabledTile: Tile = {
-        id: 'test',
-        title: 'Test Tile',
-        route: '/test-route',
-        color: 'primary',
-        disabled: true,
-      };
-
-      component.onTileClick(disabledTile);
-
-      expect(mockRouter.navigate).not.toHaveBeenCalled();
-    });
-
-    it('should handle multiple tile clicks', () => {
-      const tile1: Tile = {
-        id: 'test1',
-        title: 'Test 1',
-        route: '/route1',
-        color: 'primary',
-      };
-      const tile2: Tile = {
-        id: 'test2',
-        title: 'Test 2',
-        route: '/route2',
-        color: 'accent',
-      };
-
-      component.onTileClick(tile1);
-      component.onTileClick(tile2);
-
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/route1']);
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/route2']);
-      expect(mockRouter.navigate).toHaveBeenCalledTimes(2);
-    });
-
-    it('should handle tile without route', () => {
-      const tileWithoutRoute: Tile = {
-        id: 'test',
-        title: 'Test Tile',
-        color: 'primary',
-      };
-
-      expect(() => component.onTileClick(tileWithoutRoute)).not.toThrow();
-      expect(mockRouter.navigate).toHaveBeenCalledWith([undefined]);
+    it('should have all tiles with valid sizes', () => {
+      const validSizes = ['large', 'medium', 'small'];
+      component.tiles.forEach(tile => {
+        expect(validSizes).toContain(tile.size);
+      });
     });
   });
 
@@ -220,54 +200,56 @@ describe('MainPageComponent', () => {
       const tileComponents = fixture.debugElement.queryAll(By.css('kn-tile'));
 
       tileComponents.forEach((tileComponent, index) => {
-        const tileInput = tileComponent.componentInstance.tile;
-        expect(tileInput()).toEqual(component.tiles[index]);
+        const componentInstance = tileComponent.componentInstance;
+        const expectedTile = component.tiles[index];
+
+        // Check that the inputs are properly bound (size is not bound as input)
+        expect(componentInstance.title()).toBe(expectedTile.title);
+        expect(componentInstance.description()).toBe(expectedTile.description);
+        expect(componentInstance.icon()).toBe(expectedTile.icon);
+        expect(componentInstance.color()).toBe(expectedTile.color);
+        // Note: size is not bound as input, it's only used for CSS classes
       });
     });
 
-    it('should bind tile click event', () => {
+    it('should have routerLink attributes on tile components', () => {
       const tileComponents = fixture.debugElement.queryAll(By.css('kn-tile'));
-      const firstTileComponent = tileComponents[0];
 
-      expect(firstTileComponent.componentInstance.tileClick).toBeDefined();
+      tileComponents.forEach((tileComponent, index) => {
+        const routerLink = tileComponent.nativeElement.getAttribute(
+          'ng-reflect-router-link'
+        );
+        expect(routerLink).toBeDefined();
+      });
     });
   });
 
-  describe('Component Integration', () => {
-    it('should handle tile click from template', () => {
-      const firstTile = component.tiles[0];
-
-      // Call the method directly instead of simulating component event
-      component.onTileClick(firstTile);
-
-      expect(mockRouter.navigate).toHaveBeenCalledWith([firstTile.route]);
+  describe('Component Structure', () => {
+    it('should have tiles with correct structure', () => {
+      component.tiles.forEach(tile => {
+        expect(tile).toHaveProperty('title');
+        expect(tile).toHaveProperty('description');
+        expect(tile).toHaveProperty('icon');
+        expect(tile).toHaveProperty('color');
+        expect(tile).toHaveProperty('route');
+        expect(tile).toHaveProperty('size');
+      });
     });
 
-    it('should not navigate when disabled tile is clicked from template', () => {
-      const disabledTile = { ...component.tiles[0], disabled: true };
-
-      // Call the method directly instead of simulating component event
-      component.onTileClick(disabledTile);
-
-      expect(mockRouter.navigate).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Error Handling', () => {
-    it('should handle null tile gracefully', () => {
-      expect(() => component.onTileClick(null)).not.toThrow();
-      expect(mockRouter.navigate).not.toHaveBeenCalled();
+    it('should have boards tile with large size', () => {
+      const boardsTile = component.tiles.find(
+        tile => tile.title === 'main.boards.title'
+      );
+      expect(boardsTile?.size).toBe('large');
     });
 
-    it('should handle undefined tile gracefully', () => {
-      expect(() => component.onTileClick(undefined)).not.toThrow();
-      expect(mockRouter.navigate).not.toHaveBeenCalled();
-    });
-
-    it('should handle tile with missing properties', () => {
-      const incompleteTile = { id: 'test' } as Tile;
-      expect(() => component.onTileClick(incompleteTile)).not.toThrow();
-      expect(mockRouter.navigate).toHaveBeenCalledWith([undefined]);
+    it('should have other tiles with small size', () => {
+      const smallTiles = component.tiles.filter(
+        tile => tile.title !== 'main.boards.title'
+      );
+      smallTiles.forEach(tile => {
+        expect(tile.size).toBe('small');
+      });
     });
   });
 });

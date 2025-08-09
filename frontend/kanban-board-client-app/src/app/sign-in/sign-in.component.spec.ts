@@ -55,7 +55,7 @@ describe('SignInComponent', () => {
 
     it('should initialize with default values', () => {
       expect(component.isSignInLoading).toBe(false);
-      expect(component.returnUrl).toBe('/boards-list');
+      expect(component.returnUrl).toBe('/dashboard/boards-list');
       expect(component.signInForm).toBeDefined();
     });
 
@@ -77,7 +77,7 @@ describe('SignInComponent', () => {
   describe('ngOnInit', () => {
     it('should use default returnUrl when no query params', () => {
       component.ngOnInit();
-      expect(component.returnUrl).toBe('/boards-list');
+      expect(component.returnUrl).toBe('/dashboard/boards-list');
     });
   });
 

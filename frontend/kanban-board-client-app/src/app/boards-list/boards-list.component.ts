@@ -147,4 +147,15 @@ export class BoardsListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  deleteBoard(boardId: number): void {
+    this.boardService.deleteBoard(boardId).subscribe({
+      next: () => {
+        this.refreshBoards$.next();
+      },
+      error: error => {
+        console.error('Error deleting board:', error);
+      },
+    });
+  }
 }

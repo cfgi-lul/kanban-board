@@ -1,80 +1,78 @@
-<div class="auth-container">
-  <mat-card class="auth-card">
-    <mat-card-header class="auth-header">
-      <div class="auth-logo">
-        <mat-icon class="logo-icon">dashboard</mat-icon>
-        <h1 class="logo-text">{{ 'header.brandTitle' | translate }}</h1>
+<div class="auth">
+  <mat-card class="auth__card">
+    <mat-card-header class="auth__header">
+      <div class="auth__logo">
+        <mat-icon class="auth__logo-icon">dashboard</mat-icon>
+        <div class="auth__logo-text">{{ 'header.brandTitle' | translate }}</div>
       </div>
-      <mat-card-subtitle class="auth-subtitle">{{
+      <mat-card-subtitle class="auth__subtitle">{{
         'auth.createAccount' | translate
       }}</mat-card-subtitle>
     </mat-card-header>
 
-    <mat-card-content class="auth-content">
-      <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="auth-form">
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>{{ 'auth.username' | translate }}</mat-label>
-          <input
-            matInput
-            formControlName="userName"
-            [placeholder]="'auth.enterUsername' | translate"
-            [errorStateMatcher]="matcher"
-            autocomplete="username"
-          />
-          <mat-icon matSuffix>person</mat-icon>
-          @if (
-            signUpForm.get('userName')?.invalid &&
-            signUpForm.get('userName')?.touched
-          ) {
-            <mat-error>{{ getErrorMessage('userName', signUpForm) }}</mat-error>
-          }
-        </mat-form-field>
+    <mat-card-content class="auth__content" [formGroup]="signUpForm">
+      <mat-form-field appearance="outline" class="auth__form-field">
+        <mat-label>{{ 'auth.username' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="userName"
+          [placeholder]="'auth.enterUsername' | translate"
+          [errorStateMatcher]="matcher"
+          autocomplete="username"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+        @if (
+          signUpForm.get('userName')?.invalid &&
+          signUpForm.get('userName')?.touched
+        ) {
+          <mat-error>{{ getErrorMessage('userName', signUpForm) }}</mat-error>
+        }
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>{{ 'auth.password' | translate }}</mat-label>
-          <input
-            matInput
-            formControlName="password"
-            type="password"
-            [placeholder]="'auth.enterPassword' | translate"
-            [errorStateMatcher]="matcher"
-            autocomplete="new-password"
-          />
-          <mat-icon matSuffix>lock</mat-icon>
-          @if (
-            signUpForm.get('password')?.invalid &&
-            signUpForm.get('password')?.touched
-          ) {
-            <mat-error>{{ getErrorMessage('password', signUpForm) }}</mat-error>
-          }
-        </mat-form-field>
+      <mat-form-field appearance="outline" class="auth__form-field">
+        <mat-label>{{ 'auth.password' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          [placeholder]="'auth.enterPassword' | translate"
+          [errorStateMatcher]="matcher"
+          autocomplete="new-password"
+        />
+        <mat-icon matSuffix>lock</mat-icon>
+        @if (
+          signUpForm.get('password')?.invalid &&
+          signUpForm.get('password')?.touched
+        ) {
+          <mat-error>{{ getErrorMessage('password', signUpForm) }}</mat-error>
+        }
+      </mat-form-field>
 
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="signUpForm.invalid || isSignUpLoading"
-          class="submit-button"
-        >
-          @if (isSignUpLoading) {
-            <mat-spinner diameter="20" class="button-spinner" />
-            <span>{{ 'auth.signingUp' | translate }}</span>
-          } @else {
-            <ng-container>
-              <mat-icon>login</mat-icon>
-              <span>{{ 'auth.signUp' | translate }}</span>
-            </ng-container>
-          }
-        </button>
-      </form>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSignUp()"
+        [disabled]="signUpForm.invalid || isSignUpLoading"
+        class="auth__submit-button"
+      >
+        @if (isSignUpLoading) {
+          <mat-spinner diameter="20" class="auth__button-spinner" />
+          <span>{{ 'auth.signingUp' | translate }}</span>
+        } @else {
+          <ng-container>
+            <mat-icon>login</mat-icon>
+            <span>{{ 'auth.signUp' | translate }}</span>
+          </ng-container>
+        }
+      </button>
 
-      <div class="auth-footer">
-        <p class="footer-text">
+      <div class="auth__footer">
+        <div class="auth__footer-text">
           {{ 'auth.alreadyHaveAccount' | translate }}
-          <a routerLink="/auth/sign-in" class="footer-link">{{
+          <a routerLink="/auth/sign-in" class="auth__footer-link">{{
             'auth.signInHere' | translate
           }}</a>
-        </p>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>

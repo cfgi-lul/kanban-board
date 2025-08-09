@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -14,22 +15,22 @@ import { ThemeService } from '../core/services/theme.service';
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
   let fixture: ComponentFixture<NotFoundComponent>;
-  let router: jest.Mocked<Router>;
-  let location: jest.Mocked<Location>;
-  let themeService: jest.Mocked<ThemeService>;
+  let router: Partial<Router>;
+  let location: Partial<Location>;
+  let themeService: Partial<ThemeService>;
 
   beforeEach(async () => {
     const routerSpy = {
       navigate: jest.fn(),
-    } as jest.Mocked<Router>;
+    } as Partial<Router>;
 
     const locationSpy = {
       back: jest.fn(),
-    } as jest.Mocked<Location>;
+    } as Partial<Location>;
 
     const themeServiceSpy = {
       getCurrentColorScheme: jest.fn(),
-    } as jest.Mocked<ThemeService>;
+    } as Partial<ThemeService>;
 
     await TestBed.configureTestingModule({
       imports: [
@@ -49,9 +50,9 @@ describe('NotFoundComponent', () => {
       ],
     }).compileComponents();
 
-    router = TestBed.inject(Router) as jest.Mocked<Router>;
-    location = TestBed.inject(Location) as jest.Mocked<Location>;
-    themeService = TestBed.inject(ThemeService) as jest.Mocked<ThemeService>;
+    router = TestBed.inject(Router) as Partial<Router>;
+    location = TestBed.inject(Location) as Partial<Location>;
+    themeService = TestBed.inject(ThemeService) as Partial<ThemeService>;
   });
 
   beforeEach(() => {
@@ -77,11 +78,11 @@ describe('NotFoundComponent', () => {
 
   it('should have goHome method that navigates to root', () => {
     component.goHome();
-    expect(router.navigate).toHaveBeenCalledWith(['/']);
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard/main']);
   });
 
   it('should have getCurrentTheme method that calls themeService', () => {
-    themeService.getCurrentColorScheme.mockReturnValue('light');
+    (themeService.getCurrentColorScheme as jest.Mock).mockReturnValue('light');
     const theme = component.getCurrentTheme();
     expect(themeService.getCurrentColorScheme).toHaveBeenCalled();
     expect(theme).toBe('light');

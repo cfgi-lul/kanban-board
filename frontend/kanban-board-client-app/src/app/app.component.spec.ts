@@ -1,3 +1,11 @@
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  jest,
+  afterEach,
+} from '@jest/globals';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -7,25 +15,35 @@ import { AppComponent } from './app.component';
 import { AuthService } from './core/api/auth.service';
 import { ThemeService } from './core/services/theme.service';
 import { I18nService } from './core/services/i18n.service';
+import { UserInstance } from './core/models/classes/UserInstance';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let authService: Partial<AuthService>;
   let themeService: Partial<ThemeService>;
+  let i18nService: Partial<I18nService>;
+  let translateService: Partial<TranslateService>;
 
-  const mockUser = {
+  const mockUser: UserInstance = {
     id: 1,
     username: 'testuser',
     name: 'Test User',
-    roles: ['USER'],
-    avatarUrl: null,
+    displayName: 'Test User',
+    password: 'password',
+    roles: [],
+    avatar: undefined,
   };
+
+  // Store original window properties
+  const originalInnerWidth = window.innerWidth;
+  const originalAddEventListener = window.addEventListener;
+  const originalRemoveEventListener = window.removeEventListener;
 
   beforeEach(async () => {
     const authServiceSpy = {
       isAdmin: jest.fn().mockReturnValue(false),
-      currentUser: new BehaviorSubject(mockUser),
+      currentUser: new BehaviorSubject<UserInstance | null>(mockUser),
     } as Partial<AuthService>;
 
     const themeServiceSpy = {
@@ -66,6 +84,19 @@ describe('AppComponent', () => {
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService) as Partial<AuthService>;
     themeService = TestBed.inject(ThemeService) as Partial<ThemeService>;
+    i18nService = TestBed.inject(I18nService) as Partial<I18nService>;
+    translateService = TestBed.inject(
+      TranslateService
+    ) as Partial<TranslateService>;
+  });
+
+  afterEach(() => {
+    // Restore original window properties
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: originalInnerWidth,
+    });
   });
 
   describe('Component Initialization', () => {
@@ -76,6 +107,8 @@ describe('AppComponent', () => {
     it('should have correct initial properties', () => {
       expect(component.title).toBe('kanban-board-client-app');
       expect(component.isSidenavOpen).toBe(false);
+      expect(component.sidenavMode).toBe('side');
+      expect(component.isLargeScreen).toBe(false);
     });
 
     it('should inject required services', () => {
@@ -84,6 +117,144 @@ describe('AppComponent', () => {
       expect(component.themeService).toBeDefined();
       expect(component.i18nService).toBeDefined();
       expect(component.translateService).toBeDefined();
+    });
+
+    it('should initialize with correct large screen breakpoint', () => {
+      expect(component['LARGE_SCREEN_BREAKPOINT']).toBe(1280);
+    });
+  });
+
+  describe('Screen Size Detection', () => {
+    it('should detect large screen correctly', () => {
+      // Mock large screen
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1400,
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(true);
+    });
+
+    it('should detect small screen correctly', () => {
+      // Mock small screen
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 800,
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(false);
+    });
+
+    it('should update sidenav behavior when screen size changes', () => {
+      // Set initial state to large screen
+      component.isLargeScreen = true;
+      component.sidenavMode = 'side';
+      component.isSidenavOpen = true;
+
+      // Mock small screen
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 800,
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(false);
+      expect(component.sidenavMode).toBe('over');
+      expect(component.isSidenavOpen).toBe(false);
+
+      // Change to large screen
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1400,
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(true);
+      expect(component.sidenavMode).toBe('side');
+      expect(component.isSidenavOpen).toBe(true);
+    });
+
+    it('should not update sidenav behavior when screen size does not change', () => {
+      // Set initial state
+      component.isLargeScreen = false;
+      component.sidenavMode = 'over';
+      component.isSidenavOpen = false;
+
+      // Mock same screen size
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 800,
+      });
+
+      const initialMode = component.sidenavMode;
+      const initialOpen = component.isSidenavOpen;
+
+      component['checkScreenSize']();
+
+      // Should not change since screen size didn't actually change
+      expect(component.sidenavMode).toBe(initialMode);
+      expect(component.isSidenavOpen).toBe(initialOpen);
+    });
+  });
+
+  describe('Sidenav Management', () => {
+    it('should toggle sidenav only on small screens', () => {
+      // Small screen
+      component.isLargeScreen = false;
+      component.isSidenavOpen = false;
+
+      component.toggleSidenav();
+      expect(component.isSidenavOpen).toBe(true);
+
+      component.toggleSidenav();
+      expect(component.isSidenavOpen).toBe(false);
+    });
+
+    it('should not toggle sidenav on large screens', () => {
+      // Large screen
+      component.isLargeScreen = true;
+      component.isSidenavOpen = true;
+
+      component.toggleSidenav();
+      // Should not change on large screens
+      expect(component.isSidenavOpen).toBe(true);
+    });
+
+    it('should set correct sidenav mode for large screens', () => {
+      component.isLargeScreen = true;
+      component['updateSidenavBehavior']();
+
+      expect(component.sidenavMode).toBe('side');
+      expect(component.isSidenavOpen).toBe(true);
+    });
+
+    it('should set correct sidenav mode for small screens', () => {
+      component.isLargeScreen = false;
+      component['updateSidenavBehavior']();
+
+      expect(component.sidenavMode).toBe('over');
+      expect(component.isSidenavOpen).toBe(false);
+    });
+  });
+
+  describe('Theme Management', () => {
+    it('should call theme service toggle method', () => {
+      component.toggleTheme();
+      expect(themeService.toggleTheme).toHaveBeenCalled();
+    });
+
+    it('should call theme service only once per toggle', () => {
+      component.toggleTheme();
+      component.toggleTheme();
+
+      expect(themeService.toggleTheme).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -97,114 +268,14 @@ describe('AppComponent', () => {
       expect(component.isAdmin).toBe(false);
       expect(authService.isAdmin).toHaveBeenCalled();
     });
-  });
 
-  describe('getUserInitials Method', () => {
-    it('should get user initials correctly for full name', () => {
-      const initials = component.getUserInitials(mockUser);
-      expect(initials).toBe('TU'); // Test User -> TU
-    });
+    it('should update admin status when service changes', () => {
+      (authService.isAdmin as jest.Mock).mockReturnValue(true);
 
-    it('should handle user with single name', () => {
-      const singleNameUser = { ...mockUser, name: 'John' };
-      const initials = component.getUserInitials(singleNameUser);
-      expect(initials).toBe('J');
-    });
-
-    it('should handle user without name', () => {
-      const noNameUser = { ...mockUser, name: undefined };
-      const initials = component.getUserInitials(noNameUser);
-      expect(initials).toBe('?');
-    });
-
-    it('should handle user with null name', () => {
-      const nullNameUser = { ...mockUser, name: null };
-      const initials = component.getUserInitials(nullNameUser);
-      expect(initials).toBe('?');
-    });
-
-    it('should handle user with empty name', () => {
-      const emptyNameUser = { ...mockUser, name: '' };
-      const initials = component.getUserInitials(emptyNameUser);
-      expect(initials).toBe('?');
-    });
-
-    it('should handle user with multiple names', () => {
-      const multiNameUser = { ...mockUser, name: 'John Doe Smith' };
-      const initials = component.getUserInitials(multiNameUser);
-      expect(initials).toBe('JS'); // John Smith
-    });
-
-    it('should handle user with extra spaces', () => {
-      const spacedNameUser = { ...mockUser, name: '  John   Doe  ' };
-      const initials = component.getUserInitials(spacedNameUser);
-      expect(initials).toBe('JD'); // John Doe - the method should handle spaces
-    });
-
-    it('should handle user with only spaces in name', () => {
-      const spacedUser = { ...mockUser, name: '   ' };
-      const initials = component.getUserInitials(spacedUser);
-      expect(initials).toBe('?'); // Should return '?' for empty/whitespace names
-    });
-
-    it('should handle user with special characters in name', () => {
-      const specialUser = { ...mockUser, name: 'José María' };
-      const initials = component.getUserInitials(specialUser);
-      expect(initials).toBe('JM'); // José María
-    });
-  });
-
-  describe('Theme Management', () => {
-    it('should toggle theme when toggleTheme is called', () => {
-      component.toggleTheme();
-      expect(themeService.toggleTheme).toHaveBeenCalled();
-    });
-
-    it('should get correct theme icon for light theme', () => {
-      (themeService.getCurrentColorScheme as jest.Mock).mockReturnValue(
-        'light'
-      );
-      const icon = component.getThemeIcon();
-      expect(icon).toBe('dark_mode');
-    });
-
-    it('should get correct theme icon for dark theme', () => {
-      (themeService.getCurrentColorScheme as jest.Mock).mockReturnValue('dark');
-      const icon = component.getThemeIcon();
-      expect(icon).toBe('light_mode');
-    });
-
-    it('should get correct theme icon for system theme', () => {
-      (themeService.getCurrentColorScheme as jest.Mock).mockReturnValue(
-        'system'
-      );
-      const icon = component.getThemeIcon();
-      expect(icon).toBe('light_mode'); // Default fallback
-    });
-  });
-
-  describe('Sidenav Management', () => {
-    it('should toggle sidenav state', () => {
-      expect(component.isSidenavOpen).toBe(false);
-
-      component.toggleSidenav();
-      expect(component.isSidenavOpen).toBe(true);
-
-      component.toggleSidenav();
-      expect(component.isSidenavOpen).toBe(false);
-    });
-  });
-
-  describe('Event Handlers', () => {
-    it('should handle theme change event', () => {
-      const mockEvent = new Event('change');
-      expect(() => component.onThemeChange(mockEvent)).not.toThrow();
-    });
-
-    it('should handle theme change event with null', () => {
-      expect(() =>
-        component.onThemeChange(null as unknown as Event)
-      ).not.toThrow();
+      // Re-inject the service to get updated value
+      const newComponent =
+        TestBed.createComponent(AppComponent).componentInstance;
+      expect(newComponent.isAdmin).toBe(true);
     });
   });
 
@@ -212,36 +283,47 @@ describe('AppComponent', () => {
     it('should initialize component without errors', () => {
       expect(() => component.ngOnInit()).not.toThrow();
     });
+
+    it('should call checkScreenSize on initialization', () => {
+      const checkScreenSizeSpy = jest.spyOn(
+        component as any,
+        'checkScreenSize'
+      );
+      component.ngOnInit();
+      expect(checkScreenSizeSpy).toHaveBeenCalled();
+    });
   });
 
-  describe('Edge Cases', () => {
-    it('should handle undefined user in getUserInitials', () => {
-      const initials = component.getUserInitials(undefined as unknown);
-      expect(initials).toBe('?');
+  describe('Window Resize Handling', () => {
+    it('should handle window resize events', () => {
+      const checkScreenSizeSpy = jest.spyOn(
+        component as any,
+        'checkScreenSize'
+      );
+
+      // Simulate window resize
+      component.onResize();
+
+      expect(checkScreenSizeSpy).toHaveBeenCalled();
     });
 
-    it('should handle null user in getUserInitials', () => {
-      const initials = component.getUserInitials(null as unknown);
-      expect(initials).toBe('?');
-    });
+    it('should update screen size on resize', () => {
+      // Mock resize to large screen
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1400,
+      });
 
-    it('should handle user with only spaces in name', () => {
-      const spacedUser = { ...mockUser, name: '   ' };
-      const initials = component.getUserInitials(spacedUser);
-      expect(initials).toBe('?');
-    });
-
-    it('should handle user with special characters in name', () => {
-      const specialUser = { ...mockUser, name: 'José María' };
-      const initials = component.getUserInitials(specialUser);
-      expect(initials).toBe('JM'); // José María
+      component.onResize();
+      expect(component.isLargeScreen).toBe(true);
     });
   });
 
   describe('Service Integration', () => {
     it('should use theme service correctly', () => {
-      component.getThemeIcon();
-      expect(themeService.getCurrentColorScheme).toHaveBeenCalled();
+      component.toggleTheme();
+      expect(themeService.toggleTheme).toHaveBeenCalled();
     });
 
     it('should use auth service correctly', () => {
@@ -254,6 +336,56 @@ describe('AppComponent', () => {
 
     it('should have access to i18n service', () => {
       expect(component.i18nService).toBeDefined();
+    });
+
+    it('should have access to current user from auth service', () => {
+      expect(component.currentUser).toBe(authService.currentUser);
+    });
+  });
+
+  describe('Edge Cases', () => {
+    it('should handle exact breakpoint width', () => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1280, // Exact breakpoint
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(true);
+    });
+
+    it('should handle width just below breakpoint', () => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1279, // Just below breakpoint
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(false);
+    });
+
+    it('should handle very small screen width', () => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 320, // Mobile width
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(false);
+    });
+
+    it('should handle very large screen width', () => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 2560, // 4K width
+      });
+
+      component['checkScreenSize']();
+      expect(component.isLargeScreen).toBe(true);
     });
   });
 });

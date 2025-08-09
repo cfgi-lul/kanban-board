@@ -81,6 +81,7 @@
           "builder": "@angular-builders/jest:run",
           "options": {
             "tsConfig": "config/typescript/tsconfig.spec.json",
+
             "inlineStyleLanguage": ["scss"],
             "assets": [
               "src/favicon.ico",

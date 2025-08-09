@@ -1,4 +1,5 @@
 // admin.guard.spec.ts
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
@@ -10,28 +11,28 @@ import { AuthService } from '../api/auth.service';
 import { adminGuard } from './admin.guard';
 
 describe('AdminGuard', () => {
-  let authService: jest.Mocked<AuthService>;
+  let authService: Partial<AuthService>;
   let router: Router;
 
   beforeEach(() => {
     const authSpy = {
       isAuthenticated: jest.fn(),
       isAdmin: jest.fn(),
-    } as unknown as AuthService;
+    } as Partial<AuthService>;
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       providers: [{ provide: AuthService, useValue: authSpy }],
     });
 
-    authService = TestBed.inject(AuthService) as jest.Mocked<AuthService>;
+    authService = TestBed.inject(AuthService) as Partial<AuthService>;
     router = TestBed.inject(Router);
     jest.spyOn(router, 'navigate');
   });
 
   it('should allow access for admin users', () => {
-    authService.isAuthenticated.mockReturnValue(true);
-    authService.isAdmin.mockReturnValue(true);
+    (authService.isAuthenticated as jest.Mock).mockReturnValue(true);
+    (authService.isAdmin as jest.Mock).mockReturnValue(true);
 
     const result = TestBed.runInInjectionContext(() =>
       adminGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot)
@@ -40,13 +41,13 @@ describe('AdminGuard', () => {
   });
 
   it('should redirect non-admin users', () => {
-    authService.isAuthenticated.mockReturnValue(true);
-    authService.isAdmin.mockReturnValue(false);
+    (authService.isAuthenticated as jest.Mock).mockReturnValue(true);
+    (authService.isAdmin as jest.Mock).mockReturnValue(false);
 
     const result = TestBed.runInInjectionContext(() =>
       adminGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot)
     );
     expect(result).toBe(false);
-    expect(router.navigate).toHaveBeenCalledWith(['/sign-in']);
+    expect(router.navigate).toHaveBeenCalledWith(['/auth/sign-in']);
   });
 });

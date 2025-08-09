@@ -1,0 +1,242 @@
+$spacing-scale: (
+  xs: 8px,
+  sm: 16px,
+  md: 24px,
+  lg: 32px,
+  xl: 48px,
+  xxl: 64px,
+  xxxl: 80px,
+  xxxxl: 96px,
+);
+$responsive-factors: (
+  1280: 1,
+  1024: 0.75,
+  768: 0.5,
+  480: 0.33,
+  280: 0.25,
+);
+
+@function responsive-spacing($size, $factor) {
+  $base-value: map-get($spacing-scale, $size);
+  @return calc($base-value * $factor);
+}
+
+@mixin padding($size) {
+  @if map-has-key($spacing-scale, $size) {
+    padding: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin padding-x($size) {
+  @if map-has-key($spacing-scale, $size) {
+    padding-left: map-get($spacing-scale, $size);
+    padding-right: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin padding-y($size) {
+  @if map-has-key($spacing-scale, $size) {
+    padding-top: map-get($spacing-scale, $size);
+    padding-bottom: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin padding-top($size) {
+  @if map-has-key($spacing-scale, $size) {
+    padding-top: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin padding-right($size) {
+  @if map-has-key($spacing-scale, $size) {
+    padding-right: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin padding-bottom($size) {
+  @if map-has-key($spacing-scale, $size) {
+    padding-bottom: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin padding-left($size) {
+  @if map-has-key($spacing-scale, $size) {
+    padding-left: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin margin($size) {
+  @if map-has-key($spacing-scale, $size) {
+    margin: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin margin-x($size) {
+  @if map-has-key($spacing-scale, $size) {
+    margin-left: map-get($spacing-scale, $size);
+    margin-right: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin margin-y($size) {
+  @if map-has-key($spacing-scale, $size) {
+    margin-top: map-get($spacing-scale, $size);
+    margin-bottom: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin margin-top($size) {
+  @if map-has-key($spacing-scale, $size) {
+    margin-top: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin margin-right($size) {
+  @if map-has-key($spacing-scale, $size) {
+    margin-right: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin margin-bottom($size) {
+  @if map-has-key($spacing-scale, $size) {
+    margin-bottom: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin margin-left($size) {
+  @if map-has-key($spacing-scale, $size) {
+    margin-left: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin gap($size) {
+  @if map-has-key($spacing-scale, $size) {
+    gap: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin gap-x($size) {
+  @if map-has-key($spacing-scale, $size) {
+    column-gap: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin gap-y($size) {
+  @if map-has-key($spacing-scale, $size) {
+    row-gap: map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@function spacing($size) {
+  @if map-has-key($spacing-scale, $size) {
+    @return map-get($spacing-scale, $size);
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin container-padding($size) {
+  @if map-has-key($spacing-scale, $size) {
+    @container (min-width: 280px) {
+      padding: responsive-spacing($size, 0.25);
+    }
+
+    @container (min-width: 480px) {
+      padding: responsive-spacing($size, 0.33);
+    }
+
+    @container (min-width: 768px) {
+      padding: responsive-spacing($size, 0.5);
+    }
+
+    @container (min-width: 1024px) {
+      padding: responsive-spacing($size, 0.75);
+    }
+
+    @container (min-width: 1280px) {
+      padding: responsive-spacing($size, 1);
+    }
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}
+
+@mixin container-margin($size) {
+  @if map-has-key($spacing-scale, $size) {
+    @container (min-width: 280px) {
+      margin: responsive-spacing($size, 0.25);
+    }
+
+    @container (min-width: 480px) {
+      margin: responsive-spacing($size, 0.33);
+    }
+
+    @container (min-width: 768px) {
+      margin: responsive-spacing($size, 0.5);
+    }
+
+    @container (min-width: 1024px) {
+      margin: responsive-spacing($size, 0.75);
+    }
+
+    @container (min-width: 1280px) {
+      margin: responsive-spacing($size, 1);
+    }
+  }
+  @else {
+    @error "Invalid spacing size: #{$size}. Available sizes: #{map-keys($spacing-scale)}";
+  }
+}

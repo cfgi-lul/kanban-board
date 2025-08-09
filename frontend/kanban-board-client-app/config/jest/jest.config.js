@@ -1,6 +1,7 @@
 module.exports = {
   preset: 'jest-preset-angular',
   testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/src/setup-jest.ts'],
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
     '^ngx-markdown$': '<rootDir>/src/app/core/mocks/ngx-markdown.mock.ts',
