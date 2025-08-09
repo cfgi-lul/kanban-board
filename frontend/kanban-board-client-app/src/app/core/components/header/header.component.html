@@ -1,11 +1,10 @@
-<mat-toolbar class="header-toolbar">
-  <div class="header-container">
-    <!-- Left Section -->
-    <div class="header-left">
+<mat-toolbar class="header">
+  <div class="header__container">
+    <div class="header__left">
       @if (isSmallScreen) {
         <button
           mat-icon-button
-          class="menu-button"
+          class="header__menu-button"
           (click)="openSideNav.emit()"
           [attr.aria-label]="'header.toggleNavigation' | translate"
         >
@@ -13,24 +12,22 @@
         </button>
       }
 
-      <div class="brand" routerLink="/dashboard/main" style="cursor: pointer">
-        <div class="brand-logo">
-          <mat-icon class="brand-icon">dashboard</mat-icon>
+      <div class="header__brand" routerLink="/dashboard/main">
+        <div class="header__brand-logo">
+          <mat-icon class="header__brand-icon">dashboard</mat-icon>
         </div>
-        <h1 class="brand-title">{{ 'header.brandTitle' | translate }}</h1>
+        <div class="header__brand-title">{{ 'header.brandTitle' | translate }}</div>
       </div>
     </div>
 
-    <!-- Right Section -->
-    <div class="header-right">
-      <!-- User Section -->
+    <div class="header__right">
       @if (isLoggedIn) {
         <kn-user-badge [user]="user()" />
       } @else {
         <button
           mat-raised-button
           color="primary"
-          class="login-button"
+          class="header__login-button"
           routerLink="/auth/sign-in"
         >
           <mat-icon>login</mat-icon>

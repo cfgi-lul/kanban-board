@@ -1,225 +1,160 @@
 @import "../../../../theaming/mixins";
 
-.header-toolbar {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 1000 !important;
-  transition: all 0.3s ease !important;
-  backdrop-filter: blur(20px) !important;
-  min-height: 64px !important;
-  padding: 0 !important;
-  background: var(--mat-sys-surface-container) !important;
-  box-shadow: 0 1px 3px var(--mat-sys-shadow) !important;
+:host {
+  flex: 1;
+  container-type: inline-size;
 }
 
-.header-container {
+.header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1400px;
+  flex-direction: column;
+  @include gap(xl);
+  box-sizing: border-box;
   height: 64px;
-  margin: 0 auto;
-  @include padding-x(md);
-}
+  background: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-/* Left Section */
-.header-left {
-  display: flex;
-  align-items: center;
-  @include gap(lg);
-}
-
-.menu-button {
-  color: var(--mat-sys-on-surface-variant) !important;
-
-  &:hover {
-    background-color: var(--mat-sys-state-hover-surface) !important;
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    @include padding-x(md);
   }
-}
 
-.brand {
-  display: flex;
-  align-items: center;
-  @include gap(sm);
-}
-
-.brand-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--mat-sys-primary);
-  box-shadow: 0 2px 8px var(--mat-sys-shadow);
-
-  .brand-icon {
-    width: 20px !important;
-    height: 20px !important;
-    color: var(--mat-sys-on-primary) !important;
-    font-size: 20px !important;
+  &__left {
+    display: flex;
+    align-items: center;
+    @include gap(lg);
   }
-}
 
-.brand-title {
-  margin: 0;
-  color: var(--mat-sys-on-surface);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-/* Right Section */
-.header-right {
-  display: flex;
-  align-items: center;
-  @include gap(sm);
-}
-
-/* Theme Toggle */
-.theme-toggle {
-  overflow: hidden !important;
-  border: 1px solid var(--mat-sys-outline-variant) !important;
-  border-radius: 12px !important;
-  background: var(--mat-sys-surface-container) !important;
-  box-shadow: 0 1px 2px var(--mat-sys-shadow) !important;
-
-  .mat-button-toggle {
-    min-width: 36px !important;
-    height: 36px !important;
-    border: none !important;
-    background: transparent !important;
-    color: var(--mat-sys-on-surface-variant) !important;
+  &__menu-button {
+    color: var(--mat-sys-on-surface-variant);
 
     &:hover {
-      background-color: var(--mat-sys-state-hover-surface) !important;
-    }
-
-    &.mat-button-toggle-checked {
-      background-color: var(--mat-sys-primary) !important;
-      color: var(--mat-sys-on-primary) !important;
-    }
-
-    .mat-button-toggle-label-content {
-      padding: 0 !important;
-      line-height: 36px !important;
-    }
-
-    mat-icon {
-      width: 18px !important;
-      height: 18px !important;
-      font-size: 18px !important;
+      background-color: var(--mat-sys-state-hover-surface);
     }
   }
-}
 
-/* Login Button */
-.login-button {
-  display: flex !important;
-  align-items: center !important;
-  @include gap(xs);
-  height: 40px !important;
-  @include padding-x(sm);
-  border-radius: 10px !important;
-  box-shadow: 0 2px 8px var(--mat-sys-shadow) !important;
+  &__brand {
+    display: flex;
+    align-items: center;
+    @include gap(sm);
+    cursor: pointer;
 
-  mat-icon {
-    width: 18px !important;
-    height: 18px !important;
-    font-size: 18px !important;
+    &-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--mat-sys-primary);
+      box-shadow: var(--mat-sys-level2);
+    }
+
+    &-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--mat-sys-on-primary);
+    }
+
+    &-title {
+      margin: 0;
+      color: var(--mat-sys-on-surface);
+      font: var(--mat-sys-headline-small);
+    }
   }
 
-  span {
-    font-size: 14px !important;
-    font-weight: 600 !important;
-  }
-}
-
-/* Responsive Design */
-@media (width <= 768px) {
-  .header-container {
-    height: 56px;
-    @include padding-x(sm);
-  }
-
-  .header-left {
+  &__right {
+    display: flex;
+    align-items: center;
     @include gap(sm);
   }
 
-  .brand-title {
-    font-size: 20px;
-  }
-
-  .brand-logo {
-    width: 32px;
-    height: 32px;
-
-    .brand-icon {
-      width: 18px !important;
-      height: 18px !important;
-      font-size: 18px !important;
-    }
-  }
-
-  .header-right {
+  &__login-button {
+    display: flex;
+    align-items: center;
     @include gap(xs);
-  }
-
-  .theme-toggle .mat-button-toggle {
-    min-width: 32px !important;
-    height: 32px !important;
-
-    .mat-button-toggle-label-content {
-      line-height: 32px !important;
-    }
+    height: 40px;
+    @include padding-x(sm);
+    border-radius: 10px;
 
     mat-icon {
-      width: 16px !important;
-      height: 16px !important;
-      font-size: 16px !important;
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
     }
-  }
-
-  .login-button {
-    height: 36px !important;
-    @include padding-x(sm);
 
     span {
-      display: none !important;
+      font: var(--mat-sys-body-medium);
     }
   }
 }
 
-@media (width <= 480px) {
-  .header-container {
-    @include padding-x(sm);
-  }
+@container (max-width: 768px) {
+  .header {
+    min-height: 56px;
 
-  .brand-title {
-    display: none;
-  }
+    &__container {
+      @include padding-x(sm);
+    }
 
-  .header-right {
-    @include gap(xs);
-  }
+    &__left {
+      @include gap(sm);
+    }
 
-  .theme-toggle {
-    border-radius: 8px !important;
-
-    .mat-button-toggle {
-      min-width: 28px !important;
-      height: 28px !important;
-
-      .mat-button-toggle-label-content {
-        line-height: 28px !important;
+    &__brand {
+      &-logo {
+        width: 32px;
+        height: 32px;
       }
 
-      mat-icon {
-        width: 14px !important;
-        height: 14px !important;
-        font-size: 14px !important;
+      &-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
       }
+
+      &-title {
+        font: var(--mat-sys-title-large);
+      }
+    }
+
+    &__right {
+      @include gap(xs);
+    }
+
+    &__login-button {
+      height: 36px;
+      @include padding-x(sm);
+
+      span {
+        display: none;
+      }
+    }
+  }
+}
+
+@container (max-width: 480px) {
+  .header {
+    &__container {
+      @include padding-x(sm);
+    }
+
+    &__brand {
+      &-title {
+        display: none;
+      }
+    }
+
+    &__right {
+      @include gap(xs);
     }
   }
 }
