@@ -11,7 +11,6 @@
     @include padding-y(md);
 
     &-item {
-      @include margin-x(sm);
       @include margin-y(xs);
 
       &--active {
@@ -38,8 +37,7 @@
 
       &-item {
         @include margin-x(xs);
-        @include margin-top(xs);
-        @include margin-bottom(xs);
+        @include margin-y(xs); // Fixed: Use margin-y instead of separate top/bottom
 
         mat-icon {
           width: 18px;
@@ -54,8 +52,7 @@
     }
 
     &__footer {
-      @include padding-x(md);
-      @include padding-y(sm);
+      @include padding(sm); // Fixed: Use consistent padding
     }
   }
 }
@@ -68,12 +65,12 @@
 
       &-item {
         @include margin-x(xs);
-        @include margin-top(xs);
-        @include margin-bottom(xs);
+        @include margin-y(xs); // Fixed: Use margin-y instead of separate top/bottom
 
         mat-icon {
           width: 16px;
           height: 16px;
+          font-size: 16px; // Added missing font-size property
         }
 
         span {
@@ -83,8 +80,7 @@
     }
 
     &__footer {
-      @include padding-x(sm);
-      @include padding-y(sm);
+      @include padding(sm);
     }
   }
 }
