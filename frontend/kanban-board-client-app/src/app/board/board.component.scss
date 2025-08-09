@@ -1,3 +1,5 @@
+@import "../../theaming/mixins";
+
 .board-container {
   display: flex;
   flex-direction: column;
@@ -10,7 +12,8 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  @include padding-x(md);
+  @include padding-y(sm);
   border-bottom: 1px solid var(--mat-sys-outline-variant);
   background: var(--mat-sys-surface-container);
 
@@ -24,24 +27,24 @@
   .board-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    @include gap(sm);
   }
 }
 
 .board {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  @include gap(md);
   overflow-x: auto;
   height: 100%;
-  padding: 16px;
+  @include padding(md);
 }
 
 .column-wrapper {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  gap: 12px;
+  @include gap(sm);
   min-width: 300px;
   max-width: 350px;
 }
@@ -61,13 +64,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px;
+    @include padding(md);
     border-bottom: 1px solid var(--mat-sys-outline-variant);
 
     .column-title {
       display: flex;
       align-items: center;
-      gap: 8px;
+      @include gap(sm);
       margin: 0;
       color: var(--mat-sys-on-surface);
       font-size: 16px;
@@ -76,7 +79,7 @@
 
     .column-actions {
       display: flex;
-      gap: 8px;
+      @include gap(sm);
     }
   }
 
@@ -84,17 +87,17 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: 12px;
+    @include gap(sm);
     overflow-y: auto;
     min-height: 100px;
-    padding: 16px;
+    @include padding(md);
   }
 }
 
 .task-card {
   cursor: pointer;
   transition: all 0.2s ease;
-  padding: 12px;
+  @include padding(sm);
   border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 6px;
   background: var(--mat-sys-surface);
@@ -105,7 +108,7 @@
   }
 
   .task-title {
-    margin: 0 0 8px;
+    @include margin-bottom(sm);
     color: var(--mat-sys-on-surface);
     font-size: 14px;
     font-weight: 500;
@@ -115,7 +118,7 @@
   .task-description {
     display: box;
     overflow: hidden;
-    margin: 0 0 8px;
+    @include margin-bottom(sm);
     color: var(--mat-sys-on-surface-variant);
     font-size: 12px;
     line-height: 1.4;
@@ -131,7 +134,8 @@
     font-size: 11px;
 
     .task-priority {
-      padding: 2px 6px;
+      @include padding-x(xs);
+      @include padding-y(xs);
       border-radius: 4px;
       font-weight: 500;
 
@@ -154,7 +158,7 @@
     .task-assignee {
       display: flex;
       align-items: center;
-      gap: 4px;
+      @include gap(xs);
     }
   }
 }
@@ -175,8 +179,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 16px;
+    @include gap(sm);
+    @include padding(md);
     color: var(--mat-sys-on-surface-variant);
 
     .add-icon {
@@ -205,17 +209,17 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 32px;
+  @include padding(xl);
   text-align: center;
 
   mat-spinner {
-    margin-bottom: 16px;
+    @include margin-bottom(md);
   }
 
   mat-icon {
     width: 48px;
     height: 48px;
-    margin-bottom: 16px;
+    @include margin-bottom(md);
     color: var(--mat-sys-on-surface-variant);
     font-size: 48px;
   }
@@ -228,14 +232,14 @@
   }
 
   p {
-    margin: 0 0 16px;
+    @include margin-bottom(md);
     color: var(--mat-sys-on-surface-variant);
     font-size: 14px;
     line-height: 1.5;
   }
 
   button {
-    margin-top: 8px;
+    @include margin-top(sm);
   }
 }
 
@@ -273,7 +277,8 @@
 // Responsive design
 @media (width <= 768px) {
   .board-header {
-    padding: 12px 16px;
+    @include padding-x(sm);
+    @include padding-y(sm);
 
     .board-title {
       font-size: 20px;
@@ -281,12 +286,12 @@
   }
 
   .board-content {
-    gap: 12px;
-    padding: 12px;
+    @include gap(sm);
+    @include padding(sm);
   }
 
   .columns-container {
-    gap: 12px;
+    @include gap(sm);
   }
 
   .column {
@@ -297,24 +302,25 @@
 
 @media (width <= 480px) {
   .board-header {
-    padding: 8px 12px;
+    @include padding-x(sm);
+    @include padding-y(sm);
 
     .board-title {
       font-size: 18px;
     }
 
     .board-actions {
-      gap: 8px;
+      @include gap(sm);
     }
   }
 
   .board-content {
-    gap: 8px;
-    padding: 8px;
+    @include gap(sm);
+    @include padding(sm);
   }
 
   .columns-container {
-    gap: 8px;
+    @include gap(sm);
   }
 
   .column {

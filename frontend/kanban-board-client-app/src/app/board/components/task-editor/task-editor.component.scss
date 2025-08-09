@@ -1,9 +1,11 @@
+@import "../../../../theaming/mixins";
+
 .edit-task-dialog {
-  padding: 24px;
+  @include padding(lg);
 
   // width: ;
   &__title {
-    margin: 0 0 24px;
+    @include margin-bottom(lg);
     font-size: 24px;
     font-weight: 500;
     text-align: center;
@@ -12,18 +14,18 @@
   &__content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 16px;
+    @include padding(md);
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    @include gap(lg);
   }
 
   &__field {
     width: 100%;
-    margin-bottom: 16px;
+    @include margin-bottom(md);
   }
 
   &__description {
@@ -31,8 +33,8 @@
       overflow: auto;
       height: 400px;
       min-height: 100px;
-      margin: 16px 0;
-      padding: 16px;
+      @include margin-y(md);
+      @include padding(md);
       border: 1px solid var(--color-border-secondary);
       border-radius: 4px;
     }
@@ -40,19 +42,19 @@
     &--edit {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      @include gap(md);
     }
 
     &__button {
-      margin-top: 8px;
+      @include margin-top(sm);
     }
   }
 
   &__comments {
-    margin-top: 32px;
+    @include margin-top(xl);
 
     &__title {
-      margin-bottom: 16px;
+      @include margin-bottom(md);
       font-size: 19px;
       font-weight: 500;
     }
@@ -60,19 +62,19 @@
     &__list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-bottom: 32px;
+      @include gap(md);
+      @include margin-bottom(xl);
     }
 
     &__item {
-      padding: 16px;
+      @include padding(md);
       border-radius: 4px;
       background-color: var(--color-gray-100);
 
       &-header {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 8px;
+        @include margin-bottom(sm);
       }
 
       &-timestamp {
@@ -86,11 +88,11 @@
     }
 
     &__new {
-      margin-top: 24px;
+      @include margin-top(lg);
 
       &-button {
         float: right;
-        margin-top: 16px;
+        @include margin-top(md);
       }
     }
   }
@@ -98,9 +100,9 @@
   &__actions {
     display: flex;
     justify-content: flex-end;
-    gap: 16px;
-    margin-top: 32px;
-    padding: 24px 0;
+    @include gap(md);
+    @include margin-top(xl);
+    @include padding-y(lg);
     border-top: 1px solid var(--color-gray-200);
   }
 }
@@ -108,7 +110,7 @@
 @media (width <= 600px) {
   .edit-task-dialog {
     &__content {
-      padding: 8px;
+      @include padding(sm);
     }
   }
 }

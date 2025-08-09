@@ -1,8 +1,10 @@
+@import "../../../../theaming/mixins";
+
 .user-display {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 0;
+  @include gap(sm);
+  @include padding-y(sm);
 
   &__avatar {
     display: flex;
@@ -49,7 +51,7 @@
   }
 
   &--guest {
-    gap: 8px;
+    @include gap(sm);
     color: var(--mat-sys-on-surface-variant);
 
     mat-icon {
@@ -68,7 +70,7 @@
 
 @media (width <= 768px) {
   .user-display {
-    padding: 8px 0;
+    @include padding-y(sm);
 
     &__avatar {
       width: 36px;
@@ -97,7 +99,7 @@
 
 @media (width <= 480px) {
   .user-display {
-    padding: 6px 0;
+    @include padding-y(xs);
 
     &__avatar {
       width: 32px;

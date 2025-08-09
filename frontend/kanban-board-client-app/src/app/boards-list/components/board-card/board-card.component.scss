@@ -1,9 +1,11 @@
+@import "../../../../theaming/mixins";
+
 .board-card {
   container-type: inline-size;
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 12px;
+  @include padding(sm);
   box-shadow: var(--mat-sys-level2);
 
   &__header {
@@ -19,7 +21,7 @@
 
   &__description {
     overflow: hidden;
-    margin-bottom: 16px;
+    @include margin-bottom(sm);
     color: var(--mat-sys-color-on-surface-variant);
     font: var(--mat-sys-body-medium);
     white-space: nowrap;
@@ -36,22 +38,22 @@
   }
 
   @container (max-width: 1280px) {
-    padding: 10px;
+    @include padding(sm);
   }
 
   @container (max-width: 1024px) {
-    padding: 8px;
+    @include padding(xs);
   }
 
   @container (max-width: 768px) {
-    padding: 6px;
+    @include padding(xs);
   }
 
   @container (max-width: 480px) {
-    padding: 4px;
+    @include padding(xs);
   }
 
   @container (max-width: 280px) {
-    padding: 2px;
+    @include padding(xs);
   }
 }

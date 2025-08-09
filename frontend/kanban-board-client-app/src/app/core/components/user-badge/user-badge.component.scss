@@ -1,9 +1,12 @@
+@import "../../../../theaming/mixins";
+
 .user-badge {
   display: flex;
   align-items: center;
-  gap: 12px;
+  @include gap(sm);
   transition: background 0.2s;
-  padding: 8px 12px;
+  @include padding-x(sm);
+  @include padding-y(sm);
   border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 20px;
   background: var(--mat-sys-surface-container);
@@ -15,7 +18,7 @@
     align-items: center;
     grid-template-areas: "avatar name";
     grid-template-columns: auto 1fr;
-    gap: 8px;
+    @include gap(sm);
     min-width: 0;
 
     .avatar {
@@ -75,8 +78,8 @@
 .menu-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
+  @include gap(sm);
+  @include padding(md);
 
   .avatar {
     display: flex;

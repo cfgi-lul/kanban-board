@@ -1,18 +1,11 @@
+@import "../../../../theaming/mixins";
+
 :host {
   display: block;
 }
 
 .create-board-modal {
   $self: &;
-
-  // Spacing variables
-  $spacing: (
-    xs: 4px,
-    sm: 8px,
-    md: 12px,
-    lg: 16px,
-    xl: 24px,
-  );
 
   // Typography variables
   $typography: (
@@ -29,13 +22,13 @@
   );
 
   // Main container
-  gap: map-get($spacing, xl);
+  @include gap(xl);
 
   // Title section
   &__title {
     display: flex;
     align-items: center;
-    gap: map-get($spacing, sm);
+    @include gap(sm);
     font: map-get(map-get($typography, title), desktop);
     font-weight: 500;
 
@@ -50,27 +43,28 @@
   &__form {
     display: flex;
     flex-direction: column;
-    gap: map-get($spacing, xl);
+    @include gap(xl);
   }
 
   // Form fields
   &__field {
     width: 100%;
-    margin-top: 8px;
+    @include margin-top(xs);
   }
 
   // Columns section
   &__columns {
     display: flex;
     flex-direction: column;
-    gap: map-get($spacing, lg);
-    margin: 0 -#{map-get($spacing, xl)};
+    @include gap(lg);
+    @include margin-x(xl);
 
     &-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: map-get($spacing, sm) map-get($spacing, xl);
+      @include padding-y(sm);
+      @include padding-x(xl);
       background-color: var(--mat-sys-surface-container);
     }
 
@@ -82,8 +76,8 @@
     &-list {
       display: flex;
       flex-direction: column;
-      gap: map-get($spacing, lg);
-      padding: 0 map-get($spacing, xl);
+      @include gap(lg);
+      @include padding-x(xl);
     }
   }
 
@@ -92,7 +86,7 @@
     &-item {
       display: flex;
       align-items: center;
-      gap: map-get($spacing, sm);
+      @include gap(sm);
     }
 
     &-field {
@@ -117,8 +111,9 @@
   &__error-message {
     display: flex;
     align-items: center;
-    gap: map-get($spacing, sm);
-    padding: map-get($spacing, sm) map-get($spacing, lg);
+    @include gap(sm);
+    @include padding-y(sm);
+    @include padding-x(lg);
     border-radius: 4px;
     background-color: var(--mat-sys-error-container);
     color: var(--mat-sys-on-error-container);
@@ -128,15 +123,16 @@
   &__actions {
     display: flex;
     justify-content: flex-end;
-    gap: map-get($spacing, sm);
-    padding: map-get($spacing, lg) map-get($spacing, xl);
+    @include gap(sm);
+    @include padding-y(lg);
+    @include padding-x(xl);
   }
 
   // Submit button
   &__submit-btn {
     display: flex;
     align-items: center;
-    gap: map-get($spacing, sm);
+    @include gap(sm);
   }
 
   // Spinner
@@ -146,58 +142,61 @@
 
   // Responsive breakpoints
   @media (max-width: 768px) {
-    gap: map-get($spacing, lg);
+    @include gap(lg);
 
     #{$self}__title {
       font: map-get(map-get($typography, title), tablet);
     }
 
     #{$self}__form {
-      gap: map-get($spacing, lg);
+      @include gap(lg);
     }
 
     #{$self}__columns {
-      gap: map-get($spacing, md);
-      margin: 0 -#{map-get($spacing, lg)};
+      @include gap(md);
+      @include margin-x(lg);
 
       &-header {
-        padding: map-get($spacing, sm) map-get($spacing, lg);
+        @include padding-y(sm);
+        @include padding-x(lg);
       }
 
       &-list {
-        gap: map-get($spacing, md);
-        padding: 0 map-get($spacing, lg);
+        @include gap(md);
+        @include padding-x(lg);
       }
     }
   }
 
   @media (max-width: 480px) {
-    gap: map-get($spacing, sm);
+    @include gap(sm);
 
     #{$self}__title {
       font: map-get(map-get($typography, title), mobile);
     }
 
     #{$self}__form {
-      gap: map-get($spacing, sm);
+      @include gap(sm);
     }
 
     #{$self}__columns {
-      gap: map-get($spacing, xs);
-      margin: 0 -#{map-get($spacing, sm)};
+      @include gap(xs);
+      @include margin-x(sm);
 
       &-header {
-        padding: map-get($spacing, xs) map-get($spacing, sm);
+        @include padding-y(xs);
+        @include padding-x(sm);
       }
 
       &-list {
-        gap: map-get($spacing, xs);
-        padding: 0 map-get($spacing, sm);
+        @include gap(xs);
+        @include padding-x(sm);
       }
     }
 
     #{$self}__actions {
-      padding: map-get($spacing, sm) map-get($spacing, sm);
+      @include padding-y(sm);
+      @include padding-x(sm);
     }
 
     #{$self}__column-item {

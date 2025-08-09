@@ -1,3 +1,5 @@
+@import "../../../../theaming/mixins";
+
 .add-board {
   display: flex;
   flex-direction: column;
@@ -20,20 +22,20 @@
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    padding: 32px;
+    @include padding(xl);
     text-align: center;
   }
 
   &__icon {
     width: 48px;
     height: 48px;
-    margin-bottom: 16px;
+    @include margin-bottom(sm);
     color: var(--mat-sys-color-on-surface-variant);
     font-size: 48px;
   }
 
   &__text {
-    margin-bottom: 8px;
+    @include margin-bottom(xs);
     color: var(--mat-sys-color-on-surface-variant);
     font: var(--mat-sys-title-medium);
 
@@ -44,25 +46,25 @@
 
   @container (max-width: 1280px) {
     &__content {
-      padding: 16px;
+      @include padding(sm);
     }
   }
 
   @container (max-width: 1024px) {
     &__content {
-      padding: 12px;
+      @include padding(sm);
     }
   }
 
   @container (max-width: 768px) {
     &__content {
-      padding: 8px;
+      @include padding(xs);
     }
   }
 
   @container (max-width: 280px) {
     &__content {
-      padding: 4px;
+      @include padding(xs);
     }
   }
 }

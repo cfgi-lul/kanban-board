@@ -1,3 +1,5 @@
+@import "../../../../theaming/mixins";
+
 .header-toolbar {
   position: sticky !important;
   top: 0 !important;
@@ -18,14 +20,14 @@
   max-width: 1400px;
   height: 64px;
   margin: 0 auto;
-  padding: 0 24px;
+  @include padding-x(md);
 }
 
 /* Left Section */
 .header-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  @include gap(lg);
 }
 
 .menu-button {
@@ -39,7 +41,7 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  @include gap(sm);
 }
 
 .brand-logo {
@@ -72,7 +74,7 @@
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  @include gap(sm);
 }
 
 /* Theme Toggle */
@@ -116,9 +118,9 @@
 .login-button {
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  @include gap(xs);
   height: 40px !important;
-  padding: 0 16px !important;
+  @include padding-x(sm);
   border-radius: 10px !important;
   box-shadow: 0 2px 8px var(--mat-sys-shadow) !important;
 
@@ -138,11 +140,11 @@
 @media (width <= 768px) {
   .header-container {
     height: 56px;
-    padding: 0 16px;
+    @include padding-x(sm);
   }
 
   .header-left {
-    gap: 16px;
+    @include gap(sm);
   }
 
   .brand-title {
@@ -161,7 +163,7 @@
   }
 
   .header-right {
-    gap: 8px;
+    @include gap(xs);
   }
 
   .theme-toggle .mat-button-toggle {
@@ -181,7 +183,7 @@
 
   .login-button {
     height: 36px !important;
-    padding: 0 12px !important;
+    @include padding-x(sm);
 
     span {
       display: none !important;
@@ -191,7 +193,7 @@
 
 @media (width <= 480px) {
   .header-container {
-    padding: 0 12px;
+    @include padding-x(sm);
   }
 
   .brand-title {
@@ -199,7 +201,7 @@
   }
 
   .header-right {
-    gap: 6px;
+    @include gap(xs);
   }
 
   .theme-toggle {

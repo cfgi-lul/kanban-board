@@ -1,3 +1,5 @@
+@import "../../theaming/mixins";
+
 .sidenav {
   display: flex;
   flex-direction: column;
@@ -5,10 +7,12 @@
 
   &__menu {
     flex: 1;
-    padding: 16px 8px;
+    @include padding-x(sm);
+    @include padding-y(md);
 
     &-item {
-      margin: 4px 8px;
+      @include margin-x(sm);
+      @include margin-y(xs);
 
       &--active {
         background: var(--mat-sys-surface-container-highest);
@@ -21,7 +25,7 @@
   }
 
   &__footer {
-    padding: 16px;
+    @include padding(md);
     background: var(--mat-sys-surface-container);
   }
 }
@@ -29,10 +33,13 @@
 @media (width <= 768px) {
   .sidenav {
     &__menu {
-      padding: 12px 6px;
+      @include padding-x(xs);
+      @include padding-y(sm);
 
       &-item {
-        margin: 2px 6px;
+        @include margin-x(xs);
+        @include margin-top(xs);
+        @include margin-bottom(xs);
 
         mat-icon {
           width: 18px;
@@ -47,7 +54,8 @@
     }
 
     &__footer {
-      padding: 12px 16px;
+      @include padding-x(md);
+      @include padding-y(sm);
     }
   }
 }
@@ -55,10 +63,13 @@
 @media (width <= 480px) {
   .sidenav {
     &__menu {
-      padding: 8px 4px;
+      @include padding-x(xs);
+      @include padding-y(sm);
 
       &-item {
-        margin: 1px 4px;
+        @include margin-x(xs);
+        @include margin-top(xs);
+        @include margin-bottom(xs);
 
         mat-icon {
           width: 16px;
@@ -72,7 +83,8 @@
     }
 
     &__footer {
-      padding: 8px 12px;
+      @include padding-x(sm);
+      @include padding-y(sm);
     }
   }
 }

@@ -1,3 +1,5 @@
+@import "../../../../theaming/mixins.scss";
+
 .tile {
   &:hover {
     transition: box-shadow 200ms ease-in-out;
@@ -26,14 +28,14 @@
   }
 
   &__header {
-    gap: 16px;
-    padding: 16px;
+    @include gap(sm);
+    @include padding(sm);
   }
 
   &__title {
     display: flex;
     align-items: center;
-    gap: 8px;
+    @include gap(xs);
     font: var(--mat-sys-title-large);
   }
 
@@ -44,7 +46,7 @@
 
   &__content {
     flex: 1;
-    padding: 16px;
+    @include padding(sm);
   }
 
   &__description {
@@ -55,8 +57,8 @@
 @container (max-width: 1024px) {
   .tile {
     &__header {
-      gap: 14px;
-      padding: 14px;
+      @include gap(sm);
+      @include padding(sm);
     }
 
     &__title {
@@ -64,7 +66,7 @@
     }
 
     &__content {
-      padding: 14px;
+      @include padding(sm);
     }
   }
 }
@@ -72,12 +74,12 @@
 @container (max-width: 768px) {
   .tile {
     &__header {
-      gap: 12px;
-      padding: 12px;
+      @include gap(sm);
+      @include padding(sm);
     }
 
     &__content {
-      padding: 12px;
+      @include padding(sm);
     }
   }
 }
@@ -85,8 +87,8 @@
 @container (max-width: 480px) {
   .tile {
     &__header {
-      gap: 8px;
-      padding: 8px;
+      @include gap(xs);
+      @include padding(xs);
     }
 
     &__title {
@@ -99,7 +101,7 @@
     }
 
     &__content {
-      padding: 8px;
+      @include padding(xs);
     }
 
     &__description {
@@ -111,8 +113,8 @@
 @container (max-width: 280px) {
   .tile {
     &__header {
-      gap: 6px;
-      padding: 6px;
+      @include gap(xs);
+      @include padding(xs);
     }
 
     &__title {
@@ -125,7 +127,7 @@
     }
 
     &__content {
-      padding: 6px;
+      @include padding(xs);
     }
 
     &__description {

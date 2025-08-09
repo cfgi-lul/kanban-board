@@ -1,9 +1,11 @@
+@import "../../theaming/mixins";
+
 .not-found-container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100%;
-  padding: 1rem;
+  @include padding(sm);
   background-color: var(--mat-sys-surface);
 }
 
@@ -23,12 +25,13 @@
 }
 
 .not-found-content {
-  padding: 3rem 2rem;
+  @include padding-y(xl);
+  @include padding-x(lg);
 }
 
 // Error Code Section
 .error-code {
-  margin-bottom: 2rem;
+  @include margin-bottom(lg);
 
   .error-number {
     display: block;
@@ -42,11 +45,11 @@
 
 // Main Content Section
 .main-content {
-  margin-bottom: 2rem;
+  @include margin-bottom(lg);
 
   .error-title {
     margin-top: 0;
-    margin-bottom: 1rem;
+    @include margin-bottom(sm);
     color: var(--mat-sys-on-surface);
     font-size: 2rem;
     font-weight: 600;
@@ -54,7 +57,7 @@
 
   .error-subtitle {
     opacity: 0.8;
-    margin-bottom: 1rem;
+    @include margin-bottom(sm);
     color: var(--mat-sys-on-surface);
     font-size: 1.25rem;
   }
@@ -70,11 +73,11 @@
 
 // Suggestions Section
 .suggestions-section {
-  margin-bottom: 2rem;
+  @include margin-bottom(lg);
 
   .suggestions-title {
     margin-top: 0;
-    margin-bottom: 1rem;
+    @include margin-bottom(sm);
     color: var(--mat-sys-on-surface);
     font-size: 1.125rem;
     font-weight: 600;
@@ -87,7 +90,7 @@
     mat-list-item {
       transition: background-color 0.2s ease;
       min-height: 48px; // Touch-friendly height
-      margin-bottom: 0.5rem;
+      @include margin-bottom(xs);
       border-radius: 8px;
 
       &:hover {
@@ -115,7 +118,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  @include gap(sm);
 
   .home-button {
     min-width: 160px;
@@ -123,7 +126,7 @@
     font-weight: 500;
 
     mat-icon {
-      margin-right: 0.5rem;
+      @include margin-right(xs);
     }
   }
 
@@ -135,7 +138,7 @@
     font-weight: 500;
 
     mat-icon {
-      margin-right: 0.5rem;
+      @include margin-right(xs);
     }
 
     &:hover {
@@ -147,11 +150,12 @@
 // Responsive Design - Tablet
 @media (width <= 768px) {
   .not-found-container {
-    padding: 0.5rem;
+    @include padding(xs);
   }
 
   .not-found-content {
-    padding: 2rem 1.5rem;
+    @include padding-y(lg);
+    @include padding-x(md);
   }
 
   .error-code .error-number {
@@ -169,7 +173,7 @@
   .action-buttons {
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    @include gap(sm);
 
     .home-button,
     .back-button {
@@ -182,18 +186,19 @@
 
   .suggestions-list mat-list-item {
     min-height: 52px; // Larger touch target
-    padding: 0.75rem 0;
+    @include padding-y(sm);
   }
 }
 
 // Responsive Design - Mobile
 @media (width <= 480px) {
   .not-found-container {
-    padding: 0.25rem;
+    @include padding(xs);
   }
 
   .not-found-content {
-    padding: 1.5rem 1rem;
+    @include padding-y(md);
+    @include padding-x(sm);
   }
 
   .error-code .error-number {
@@ -216,18 +221,18 @@
   }
 
   .suggestions-section {
-    margin-bottom: 1.5rem;
+    @include margin-bottom(md);
 
     .suggestions-title {
-      margin-bottom: 0.75rem;
+      @include margin-bottom(sm);
       font-size: 1rem;
     }
 
     .suggestions-list {
       mat-list-item {
         min-height: 56px; // Even larger touch target on mobile
-        margin-bottom: 0.25rem;
-        padding: 0.5rem 0;
+        @include margin-bottom(xs);
+        @include padding-y(xs);
 
         mat-icon {
           width: 18px;
@@ -244,7 +249,7 @@
   }
 
   .action-buttons {
-    gap: 0.5rem;
+    @include gap(xs);
 
     .home-button,
     .back-button {
@@ -267,7 +272,8 @@
 // Extra Small Mobile Devices
 @media (width <= 360px) {
   .not-found-content {
-    padding: 1rem 0.75rem;
+    @include padding-y(sm);
+    @include padding-x(sm);
   }
 
   .error-code .error-number {
@@ -288,7 +294,7 @@
 
   .suggestions-section .suggestions-list mat-list-item {
     min-height: 48px;
-    padding: 0.25rem 0;
+    @include padding-y(xs);
 
     span {
       font-size: 0.85rem;
@@ -305,11 +311,12 @@
 // Landscape Mobile
 @media (width <= 768px) and (orientation: landscape) {
   .not-found-container {
-    padding: 0.5rem;
+    @include padding(xs);
   }
 
   .not-found-content {
-    padding: 1.5rem 1rem;
+    @include padding-y(md);
+    @include padding-x(sm);
   }
 
   .error-code .error-number {
@@ -321,12 +328,12 @@
   }
 
   .suggestions-section {
-    margin-bottom: 1rem;
+    @include margin-bottom(sm);
   }
 
   .action-buttons {
     flex-direction: row;
-    gap: 0.5rem;
+    @include gap(xs);
 
     .home-button,
     .back-button {

@@ -1,3 +1,5 @@
+@import "../../theaming/mixins";
+
 :host {
   flex: 1;
 }
@@ -5,16 +7,16 @@
 .main-page {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  @include gap(xl);
   box-sizing: border-box;
   min-height: 100%;
-  padding: 32px;
+  @include padding(xl);
 
   &__welcome {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 16px;
+    @include gap(md);
+    @include padding(md);
     border: 1px solid var(--mat-sys-outline-variant);
     border-radius: 16px;
     background-color: var(--mat-sys-primary-container);
@@ -29,7 +31,7 @@
   &__tiles {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    @include gap(md);
   }
 
   &__tiles-title {
@@ -40,7 +42,7 @@
   &__tiles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    @include gap(md);
 
     &__tile--small {
       grid-column: span 1;
@@ -58,8 +60,8 @@
 
 @container (max-width: 1280px) {
   .main-page {
-    gap: 24px;
-    padding: 24px;
+    @include gap(lg);
+    @include padding(lg);
 
     &__tiles-grid {
       &__tile--large {
@@ -72,12 +74,12 @@
 
 @container (max-width: 1024px) {
   .main-page {
-    gap: 24px;
-    padding: 20px;
+    @include gap(lg);
+    @include padding(md);
 
     &__welcome {
-      gap: 14px;
-      padding: 14px;
+      @include gap(sm);
+      @include padding(sm);
       border-radius: 14px;
     }
 
@@ -86,7 +88,7 @@
     }
 
     &__tiles {
-      gap: 14px;
+      @include gap(sm);
     }
 
     &__tiles-title {
@@ -95,19 +97,19 @@
 
     &__tiles-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+      @include gap(sm);
     }
   }
 }
 
 @container (max-width: 768px) {
   .main-page {
-    gap: 12px;
-    padding: 12px;
+    @include gap(sm);
+    @include padding(sm);
 
     &__welcome {
-      gap: 12px;
-      padding: 12px;
+      @include gap(sm);
+      @include padding(sm);
       border-radius: 12px;
     }
 
@@ -116,7 +118,7 @@
     }
 
     &__tiles {
-      gap: 12px;
+      @include gap(sm);
     }
 
     &__tiles-title {
@@ -134,19 +136,19 @@
         grid-column: span 1;
       }
 
-      gap: 12px;
+      @include gap(sm);
     }
   }
 }
 
 @container (max-width: 480px) {
   .main-page {
-    gap: 8px;
-    padding: 8px;
+    @include gap(xs);
+    @include padding(xs);
 
     &__welcome {
-      gap: 8px;
-      padding: 8px;
+      @include gap(xs);
+      @include padding(xs);
       border-radius: 8px;
     }
 
@@ -155,23 +157,23 @@
     }
 
     &__tiles {
-      gap: 8px;
+      @include gap(xs);
     }
 
     &__tiles-grid {
-      gap: 8px;
+      @include gap(xs);
     }
   }
 }
 
 @container (max-width: 280px) {
   .main-page {
-    gap: 6px;
-    padding: 6px;
+    @include gap(xs);
+    @include padding(xs);
 
     &__welcome {
-      gap: 6px;
-      padding: 6px;
+      @include gap(xs);
+      @include padding(xs);
       border-radius: 6px;
     }
 
@@ -184,7 +186,7 @@
     }
 
     &__tiles {
-      gap: 6px;
+      @include gap(xs);
     }
 
     &__tiles-title {
@@ -192,7 +194,7 @@
     }
 
     &__tiles-grid {
-      gap: 6px;
+      @include gap(xs);
     }
   }
 }

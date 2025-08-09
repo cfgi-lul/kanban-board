@@ -1,3 +1,5 @@
+@import "../../../../theaming/mixins";
+
 .settings-dialog {
   display: flex;
   flex-direction: column;
@@ -15,14 +17,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 32px;
+  @include padding-y(md);
+  @include padding-x(xl);
   border-bottom: 1px solid var(--mat-sys-outline-variant);
   background: var(--mat-sys-surface-container);
 
   h2 {
     display: flex;
     align-items: center;
-    gap: 12px;
+    @include gap(sm);
     margin: 0;
     color: var(--mat-sys-on-surface);
     font-size: 24px;
@@ -59,7 +62,8 @@
 
   .settings-nav-item {
     transition: all 0.2s ease;
-    padding: 16px 24px;
+    @include padding-y(sm);
+    @include padding-x(md);
     border-radius: 0;
     color: var(--mat-sys-on-surface-variant);
 
@@ -78,7 +82,7 @@
     }
 
     mat-icon {
-      margin-right: 16px;
+      @include margin-right(md);
       color: var(--mat-sys-on-surface-variant);
     }
 
@@ -96,32 +100,33 @@
 }
 
 .settings-panel {
-  padding: 32px;
+  @include padding(xl);
 
   h3 {
-    margin: 0 0 16px;
+    @include margin-bottom(md);
     color: var(--mat-sys-on-surface);
     font-size: 20px;
     font-weight: 600;
   }
 
   mat-divider {
-    margin: 16px 0 24px;
+    @include margin-y(md);
+    @include margin-bottom(lg);
   }
 }
 
 .setting-section {
-  margin-bottom: 32px;
+  @include margin-bottom(xl);
 
   h4 {
-    margin: 0 0 8px;
+    @include margin-bottom(sm);
     color: var(--mat-sys-on-surface);
     font-size: 16px;
     font-weight: 600;
   }
 
   p {
-    margin: 0 0 16px;
+    @include margin-bottom(md);
     color: var(--mat-sys-on-surface-variant);
     font-size: 14px;
     line-height: 1.5;
@@ -136,7 +141,8 @@
   }
 
   .settings-header {
-    padding: 16px 20px;
+    @include padding-y(sm);
+    @include padding-x(lg);
 
     h2 {
       font-size: 20px;
@@ -161,7 +167,7 @@
   }
 
   .settings-panel {
-    padding: 20px;
+    @include padding(md);
   }
 }
 
@@ -173,7 +179,8 @@
   }
 
   .settings-header {
-    padding: 12px 16px;
+    @include padding-y(sm);
+    @include padding-x(sm);
 
     h2 {
       font-size: 18px;
@@ -187,7 +194,7 @@
   }
 
   .settings-panel {
-    padding: 16px;
+    @include padding(sm);
   }
 }
 

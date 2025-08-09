@@ -1,3 +1,5 @@
+@import "../../theaming/mixins";
+
 :host {
   flex: 1;
 }
@@ -5,10 +7,10 @@
 .boards-list {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  @include gap(xl);
   box-sizing: border-box;
   min-height: 100%;
-  padding: 32px;
+  @include padding(xl);
 
   &__search {
     width: 100%;
@@ -20,8 +22,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    padding: 48px 16px;
+    @include gap(md);
+    @include padding-x(md);
+    @include padding-y(xxxxl);
     text-align: center;
   }
 
@@ -33,13 +36,13 @@
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    @include gap(md);
   }
 
   &__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
+    @include gap(md);
   }
 
   &__card {
@@ -53,27 +56,27 @@
 
 @container (max-width: 1280px) {
   .boards-list {
-    gap: 24px;
-    padding: 24px;
+    @include gap(lg);
+    @include padding(lg);
   }
 }
 
 @container (max-width: 1024px) {
   .boards-list {
-    gap: 20px;
-    padding: 20px;
+    @include gap(md);
+    @include padding(md);
 
     &__grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      @include gap(md);
     }
   }
 }
 
 @container (max-width: 768px) {
   .boards-list {
-    gap: 12px;
-    padding: 12px;
+    @include gap(sm);
+    @include padding(sm);
 
     &__search {
       max-width: 100%;
@@ -87,22 +90,22 @@
 
 @container (max-width: 480px) {
   .boards-list {
-    gap: 8px;
-    padding: 8px;
+    @include gap(sm);
+    @include padding(sm);
 
     &__grid {
-      gap: 8px;
+      @include gap(sm);
     }
   }
 }
 
 @container (max-width: 280px) {
   .boards-list {
-    gap: 6px;
-    padding: 6px;
+    @include gap(xs);
+    @include padding(xs);
 
     &__grid {
-      gap: 6px;
+      @include gap(xs);
     }
   }
 }

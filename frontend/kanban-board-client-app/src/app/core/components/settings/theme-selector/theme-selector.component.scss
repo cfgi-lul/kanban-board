@@ -1,7 +1,9 @@
+@import "../../../../../theaming/mixins";
+
 .theme-selector {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  @include gap(lg);
 }
 
 /* Theme Options */
@@ -15,7 +17,8 @@
 
     .theme-option {
       min-width: 80px;
-      padding: 12px 16px;
+      @include padding-x(md);
+      @include padding-y(sm);
       border: none;
       background: transparent;
       color: var(--mat-sys-on-surface-variant);
@@ -33,7 +36,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 4px;
+        @include gap(xs);
         padding: 0;
       }
 
@@ -55,7 +58,7 @@
 .theme-previews {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+  @include gap(lg);
 }
 
 .theme-preview-card {
@@ -74,7 +77,8 @@
   }
 
   mat-card-header {
-    padding: 16px 16px 0;
+    @include padding-x(md);
+    @include padding-top(md);
 
     mat-icon {
       width: 24px;
@@ -91,21 +95,22 @@
     }
 
     mat-card-subtitle {
-      margin: 4px 0 0;
+      @include margin-y(xs);
+      @include margin-top(xs);
       color: var(--mat-sys-on-surface-variant);
       font-size: 12px;
     }
   }
 
   mat-card-content {
-    padding: 16px;
+    @include padding(md);
 
     .theme-preview-content {
       .preview-header {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
+        @include gap(sm);
+        @include margin-bottom(sm);
 
         .preview-avatar {
           width: 32px;
@@ -132,7 +137,8 @@
   }
 
   mat-card-actions {
-    padding: 0 16px 16px;
+    @include padding-x(md);
+    @include padding-bottom(md);
 
     button {
       width: 100%;
@@ -156,10 +162,11 @@
   .theme-options .theme-toggle-group {
     .theme-option {
       min-width: 60px;
-      padding: 8px 12px;
+      @include padding-x(sm);
+      @include padding-y(sm);
 
       .mat-button-toggle-label-content {
-        gap: 2px;
+        @include gap(xs);
       }
 
       mat-icon {

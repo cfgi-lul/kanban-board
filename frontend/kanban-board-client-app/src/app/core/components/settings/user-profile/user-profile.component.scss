@@ -1,19 +1,21 @@
+@import "../../../../../theaming/mixins";
+
 .user-profile {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  @include gap(lg);
 }
 
 // Header Section
 .profile-header {
-  margin-bottom: 24px;
+  @include margin-bottom(lg);
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding-bottom: 16px;
+  @include gap(md);
+  @include padding-bottom(md);
   border-bottom: 2px solid var(--mat-sys-outline-variant);
 }
 
@@ -29,7 +31,7 @@
 }
 
 .header-title {
-  margin: 0 0 4px;
+  @include margin-bottom(xs);
   color: var(--mat-sys-on-surface);
   font-size: 24px;
   font-weight: 600;
@@ -46,14 +48,14 @@
 .profile-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  @include gap(lg);
 }
 
 // Profile Picture Section
 .profile-picture-section {
   display: flex;
   justify-content: center;
-  margin-bottom: 32px;
+  @include margin-bottom(xl);
 }
 
 .avatar-container {
@@ -102,7 +104,7 @@
     mat-icon {
       width: 24px;
       height: 24px;
-      margin-bottom: 4px;
+      @include margin-bottom(xs);
       font-size: 24px;
     }
 
@@ -126,7 +128,7 @@
     align-items: center;
     justify-content: center;
     transform: translate(-50%, -50%);
-    padding: 12px;
+    @include padding(sm);
     border-radius: 50%;
     background: rgb(0 0 0 / 80%);
   }
@@ -136,7 +138,7 @@
     right: -8px;
     bottom: -8px;
     display: flex;
-    gap: 4px;
+    @include gap(xs);
   }
 
   .remove-avatar-btn {
@@ -173,7 +175,7 @@
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  @include gap(lg);
 }
 
 .form-row {
@@ -186,7 +188,7 @@
 
 // Account Information Section - Clean Design
 .account-info-section {
-  margin-top: 32px;
+  @include margin-top(xl);
   padding: 0;
   border: none;
   background: transparent;
@@ -195,9 +197,9 @@
   h4 {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin: 0 0 16px;
-    padding-bottom: 8px;
+    @include gap(sm);
+    @include margin-bottom(md);
+    @include padding-bottom(sm);
     border-bottom: 2px solid var(--mat-sys-outline-variant);
     color: var(--mat-sys-on-surface);
     font-size: 16px;
@@ -215,7 +217,7 @@
 .info-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  @include gap(sm);
 }
 
 .info-item {
@@ -223,7 +225,8 @@
   align-items: center;
   justify-content: space-between;
   transition: all 0.2s ease;
-  padding: 12px 16px;
+  @include padding-y(sm);
+  @include padding-x(sm);
   border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 8px;
   background: var(--mat-sys-surface);
@@ -251,8 +254,8 @@
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 32px;
+  @include gap(sm);
+  @include margin-top(xl);
 }
 
 .save-button {
@@ -267,7 +270,7 @@
   }
 
   .button-spinner {
-    margin-right: 8px;
+    @include margin-right(xs);
   }
 }
 
@@ -277,11 +280,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 24px;
+  @include padding-y(xl);
+  @include padding-x(md);
   text-align: center;
 
   p {
-    margin-top: 16px;
+    @include margin-top(sm);
     color: var(--mat-sys-on-surface-variant);
     font-size: 16px;
   }
@@ -326,7 +330,7 @@
 // Responsive Design
 @media (width <= 768px) {
   .header-content {
-    gap: 12px;
+    @include gap(sm);
   }
 
   .header-icon {
@@ -367,7 +371,8 @@
   }
 
   .info-item {
-    padding: 10px 12px;
+    @include padding-y(sm);
+    @include padding-x(sm);
   }
 
   .form-actions {
