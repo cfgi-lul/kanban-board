@@ -2,12 +2,12 @@
 
 :host {
   flex: 1;
-  container-type: inline-size;
 }
 
 .header {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   @include gap(xl);
   box-sizing: border-box;
   height: 64px;
@@ -31,14 +31,6 @@
     display: flex;
     align-items: center;
     @include gap(lg);
-  }
-
-  &__menu-button {
-    color: var(--mat-sys-on-surface-variant);
-
-    &:hover {
-      background-color: var(--mat-sys-state-hover-surface);
-    }
   }
 
   &__brand {
@@ -66,7 +58,6 @@
 
     &-title {
       margin: 0;
-      color: var(--mat-sys-on-surface);
       font: var(--mat-sys-headline-small);
     }
   }
@@ -97,7 +88,7 @@
   }
 }
 
-@container (max-width: 768px) {
+@media (width < 768px) {
   .header {
     min-height: 56px;
 
@@ -140,8 +131,7 @@
     }
   }
 }
-
-@container (max-width: 480px) {
+@media (width < 480px) {
   .header {
     &__container {
       @include padding-x(sm);

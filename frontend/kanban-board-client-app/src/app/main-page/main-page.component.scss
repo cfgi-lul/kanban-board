@@ -1,6 +1,7 @@
 @import "../../theaming/mixins";
 
 :host {
+  container-type: inline-size;
   flex: 1;
 }
 

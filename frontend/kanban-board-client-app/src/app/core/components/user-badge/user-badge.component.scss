@@ -1,49 +1,101 @@
 @import "../../../../theaming/mixins";
 
+:host {
+  display: block;
+}
+
 .user-badge {
   display: flex;
   align-items: center;
-  @include gap(sm);
-  transition: background 0.2s;
+  cursor: pointer;
+  border-radius: 24px;
+  box-shadow: var(--mat-sys-level1);
+  transition: all 0.2s ease-in-out;
   @include padding-x(sm);
-  @include padding-y(sm);
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: 20px;
-  background: var(--mat-sys-surface-container);
-  color: var(--mat-sys-on-surface);
+  @include padding-y(xs);
 
-  .user-badge-content {
-    display: grid;
-    flex: 1;
+  &:hover {
+    box-shadow: var(--mat-sys-level2);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &-content {
+    display: flex;
     align-items: center;
-    grid-template-areas: "avatar name";
-    grid-template-columns: auto 1fr;
     @include gap(sm);
-    min-width: 0;
+  }
+
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--mat-sys-level5-color);
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .avatar-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      color: var(--mat-sys-level0-color);
+    }
+  }
+
+  .name {
+    font: var(--mat-sys-body-medium);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-badge {
+    @include padding-x(xs);
+    @include padding-y(xs);
 
     .avatar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      grid-area: avatar;
-      overflow: hidden;
+      width: 28px;
+      height: 28px;
+
+      .avatar-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+      }
+    }
+
+    .name {
+      font: var(--mat-sys-body-small);
+      max-width: 100px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .user-badge {
+    .name {
+      display: none;
+    }
+
+    .avatar {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
-      background: var(--mat-sys-primary);
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      color: var(--mat-sys-on-primary);
-      font-size: 14px;
-      font-weight: 600;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-      }
 
       .avatar-icon {
         width: 20px;
@@ -51,88 +103,52 @@
         font-size: 20px;
       }
     }
-
-    .name {
-      grid-area: name;
-      overflow: hidden;
-      min-width: 0;
-      color: var(--mat-sys-on-surface);
-      font-size: 14px;
-      font-weight: 500;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
   }
+}
+
+// Angular Material menu styling overrides
+::ng-deep .mat-mdc-menu-panel {
+  background: var(--mat-sys-level2-color);
+  border: 1px solid var(--mat-sys-level4-color);
+  border-radius: 8px;
+  box-shadow: var(--mat-sys-level2);
+  min-width: 180px;
+
+  .mat-mdc-menu-item {
+
+    font: var(--mat-sys-body-medium);
+    @include padding-x(sm);
+    @include padding-y(xs);
+
+    &:hover {
+      background: var(--mat-sys-level1-color);
+    }
+
+    .mat-icon {
+      color: var(--mat-sys-level5-color);
+      margin-right: 12px;
+    }
+
+  }
+}
+
+// Login button styling (when user is not logged in)
+:host button[mat-raised-button] {
+  background: var(--mat-sys-level5-color);
+  border: none;
+  border-radius: 8px;
+  @include padding-x(sm);
+  @include padding-y(xs);
+  font: var(--mat-sys-body-medium);
+  transition: all 0.2s ease-in-out;
 
   &:hover {
-    background: var(--mat-sys-state-hover-surface);
+    background: var(--mat-sys-level4-color);
+    box-shadow: var(--mat-sys-level1);
   }
 
-  mat-icon {
-    flex-shrink: 0;
-    color: var(--mat-sys-on-surface-variant);
-    font-size: 20px;
-  }
-}
-
-.menu-header {
-  display: flex;
-  align-items: center;
-  @include gap(sm);
-  @include padding(md);
-
-  .avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--mat-sys-primary);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    color: var(--mat-sys-on-primary);
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  .info {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    min-width: 0;
-
-    .name {
-      overflow: hidden;
-      color: var(--mat-sys-on-surface);
-      font-size: 14px;
-      font-weight: 500;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .username {
-      overflow: hidden;
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 12px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  }
-}
-
-@media (width <= 600px) {
-  .user-badge {
-    .user-badge-content {
-      .name,
-      .username {
-        display: none;
-      }
-    }
-
-    mat-icon {
-      display: none;
-    }
+  .mat-icon {
+    margin-right: 8px;
+    color: var(--mat-sys-level0-color);
   }
 }
