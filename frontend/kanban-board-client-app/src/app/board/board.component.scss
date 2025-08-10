@@ -81,6 +81,7 @@
     }
 
     &-content {
+      flex: 1;
       width: 382px;
       // min-height: 100px;
       // min-height: 600px;
@@ -105,8 +106,8 @@
     }
 
     &-content {
-      display: flex;
-      align-items: center;
+      // display: flex;
+      // align-items: center;
       @include gap(sm);
       // @include padding-y(sm);
     }
