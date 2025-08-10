@@ -2,7 +2,9 @@
   <div class="avatar-picker__image-container">
     <div
       class="avatar-picker__image"
-      [style.background-image]="hasAvatar() ? 'url(' + avatarUrl() + ')' : 'none'"
+      [style.background-image]="
+        hasAvatar() ? 'url(' + avatarUrl() + ')' : 'none'
+      "
     >
       @if (!hasAvatar()) {
         <div class="avatar-picker__placeholder">
@@ -10,12 +12,19 @@
         </div>
       }
       <div class="avatar-picker__image-overlay" (click)="onAvatarClick()">
-        <mat-icon class="avatar-picker__image-overlay-icon">camera_alt</mat-icon>
-        <span class="avatar-picker__image-overlay-text">{{ 'settings.changeAvatar' | translate }}</span>
+        <mat-icon class="avatar-picker__image-overlay-icon"
+          >camera_alt</mat-icon
+        >
+        <span class="avatar-picker__image-overlay-text">{{
+          'settings.changeAvatar' | translate
+        }}</span>
       </div>
       @if (isUploading()) {
         <div class="avatar-picker__image-loading">
-          <mat-spinner class="avatar-picker__image-loading-spinner" diameter="30" />
+          <mat-spinner
+            class="avatar-picker__image-loading-spinner"
+            diameter="30"
+          />
         </div>
       }
     </div>

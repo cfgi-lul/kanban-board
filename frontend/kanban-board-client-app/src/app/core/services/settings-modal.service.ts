@@ -3,7 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { SettingsComponent, SettingsData } from '../components/settings/settings.component';
+import {
+  SettingsComponent,
+  SettingsData,
+} from '../components/settings/settings.component';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +35,7 @@ export class SettingsModalService {
   private checkAndOpenSettingsModal(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const settingsParam = urlParams.get('settings');
-    
+
     if (settingsParam === 'true') {
       this.openSettingsModal();
     }
@@ -40,7 +43,11 @@ export class SettingsModalService {
 
   openSettingsModal(): void {
     // Check if modal is already open
-    if (this.dialog.openDialogs.some(dialog => dialog.componentInstance instanceof SettingsComponent)) {
+    if (
+      this.dialog.openDialogs.some(
+        dialog => dialog.componentInstance instanceof SettingsComponent
+      )
+    ) {
       return;
     }
 
@@ -66,7 +73,7 @@ export class SettingsModalService {
   private updateUrl(open: boolean): void {
     const currentUrl = this.router.url;
     const url = new URL(currentUrl, window.location.origin);
-    
+
     if (open) {
       url.searchParams.set('settings', 'true');
     } else {
@@ -74,7 +81,7 @@ export class SettingsModalService {
     }
 
     // Remove trailing ? if no parameters
-    const newUrl = url.searchParams.toString() 
+    const newUrl = url.searchParams.toString()
       ? `${url.pathname}?${url.searchParams.toString()}`
       : url.pathname;
 
@@ -86,4 +93,4 @@ export class SettingsModalService {
     this.destroy$.next();
     this.destroy$.complete();
   }
-} 
+}

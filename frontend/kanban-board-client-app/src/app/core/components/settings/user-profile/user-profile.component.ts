@@ -157,22 +157,21 @@ export class UserProfileComponent implements OnInit {
   }
 
   removeAvatar(): void {
-
-      this.isUploadingAvatar = true;
-      this.avatarService.removeAvatar().subscribe({
-        next: updatedUser => {
-          this.currentUser = updatedUser;
-          // Update the auth state service to reflect changes throughout the app
-          this.authStateService.updateUser(updatedUser);
-          this.isUploadingAvatar = false;
-          this.showMessage('settings.avatarRemovedSuccess', 'success');
-        },
-        error: error => {
-          console.error('Error removing avatar:', error);
-          this.isUploadingAvatar = false;
-          this.showMessage('settings.avatarRemovedError', 'error');
-        },
-      });
+    this.isUploadingAvatar = true;
+    this.avatarService.removeAvatar().subscribe({
+      next: updatedUser => {
+        this.currentUser = updatedUser;
+        // Update the auth state service to reflect changes throughout the app
+        this.authStateService.updateUser(updatedUser);
+        this.isUploadingAvatar = false;
+        this.showMessage('settings.avatarRemovedSuccess', 'success');
+      },
+      error: error => {
+        console.error('Error removing avatar:', error);
+        this.isUploadingAvatar = false;
+        this.showMessage('settings.avatarRemovedError', 'error');
+      },
+    });
   }
 
   getAvatarUrl(): string {

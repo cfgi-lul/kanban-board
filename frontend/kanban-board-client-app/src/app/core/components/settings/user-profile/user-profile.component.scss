@@ -78,7 +78,6 @@
       @include margin-bottom(lg);
     }
 
-
     &__submit {
       font: var(--mat-sys-title-medium);
     }
@@ -92,7 +91,6 @@
     &__header {
       @include margin-bottom(md);
     }
-
 
     &__subtitle {
       font: var(--mat-sys-body-small);
