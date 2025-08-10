@@ -1,7 +1,6 @@
 @import "../../../../../theaming/mixins";
 
 :host {
-  
 }
 
 .theme-selector {
@@ -9,16 +8,16 @@
   container-type: inline-size;
 
   &__toggle-group {
-    width: 100%;
     display: flex;
-    border-radius: 12px;
     overflow: hidden;
+    width: 100%;
+    border-radius: 12px;
   }
 
   &__option {
     flex: 1;
-    min-height: 80px;
     transition: all 0.2s ease;
+    min-height: 80px;
     @include padding(md);
 
     &:hover {
@@ -27,24 +26,23 @@
 
     &.mat-button-toggle-checked {
       background: var(--mat-sys-primary-container) !important;
-      color: var(--mat-sys-on-primary-container) !important;
       box-shadow: var(--mat-sys-level2);
+      color: var(--mat-sys-on-primary-container) !important;
     }
   }
 
   &__icon {
     width: 24px;
     height: 24px;
-    font-size: 24px;
-    color: inherit;
     margin-right: 0;
+    color: inherit;
+    font-size: 24px;
   }
 
   &__label {
     font: var(--mat-sys-label-large);
     text-align: center;
   }
-
 
   @container (max-width: 480px) {
     &__option {
