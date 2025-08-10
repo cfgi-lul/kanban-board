@@ -1,64 +1,70 @@
 <div class="settings-dialog">
-  <!-- Header -->
-  <div class="settings-header">
-    <h2 mat-dialog-title>
-      <mat-icon>settings</mat-icon>
-      {{ 'settings.title' | translate }}
-    </h2>
-    <button mat-icon-button (click)="onClose()" class="close-button">
+  <div class="settings-dialog__header">
+    <div class="settings-dialog__title" mat-dialog-title>
+      <!-- Hamburger menu for mobile -->
+      @if (isMobileView) {
+        <button 
+          mat-icon-button 
+          class="settings-dialog__menu-button"
+          (click)="toggleNavigation()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+      <mat-icon class="settings-dialog__title-icon">settings</mat-icon>
+      <span class="settings-dialog__title-text">{{ 'settings.title' | translate }}</span>
+    </div>
+    <button 
+      mat-icon-button 
+      class="settings-dialog__close-button" 
+      (click)="onClose()"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <!-- Content -->
-  <div class="settings-content">
-    <!-- Side Menu -->
-    <div class="settings-sidebar">
-      <mat-nav-list>
-        @for (tab of settingsTabs; track tab.id) {
-          <a
-            mat-list-item
-            [class.active]="selectedTab === tab.id"
-            (click)="onTabChange(tab.id)"
-            class="settings-nav-item"
-          >
-            <mat-icon matListItemIcon>{{ tab.icon }}</mat-icon>
-            <span matListItemTitle>{{ tab.label | translate }}</span>
-          </a>
-        }
-      </mat-nav-list>
-    </div>
+  <div class="settings-dialog__content">
+    <!-- Navigation overlay for mobile -->
+    @if (isMobileView) {
+      <div 
+        class="settings-dialog__nav-overlay"
+        [class.settings-dialog__nav-overlay--visible]="isNavigationOpen"
+        (click)="closeNavigation()"
+      ></div>
+    }
 
-    <!-- Main Content -->
-    <div class="settings-main">
-      <div class="settings-panel">
-        <!-- General Settings -->
-        @if (selectedTab === 0) {
-          <div class="general-settings">
-            <h3>{{ 'settings.generalSettings' | translate }}</h3>
-            <mat-divider />
+    <!-- Navigation sidebar -->
+    <mat-nav-list 
+      class="settings-dialog__nav"
+      [class.settings-dialog__nav--mobile]="isMobileView"
+      [class.settings-dialog__nav--open]="isMobileView && isNavigationOpen"
+    >
+      @for (tab of settingsTabs; track tab.id) {
+        <div
+          mat-list-item
+          class="settings-dialog__nav-item"
+          [class.settings-dialog__nav-item--active]="selectedTab === tab.id"
+          (click)="onTabChange(tab.id)"
+        >
+          <mat-icon 
+            class="settings-dialog__nav-icon" 
+            matListItemIcon
+          >{{ tab.icon }}</mat-icon>
+          <span 
+            class="settings-dialog__nav-text" 
+            matListItemTitle
+          >{{ tab.label | translate }}</span>
+        </div>
+      }
+    </mat-nav-list>
 
-            <div class="setting-section">
-              <h4>{{ 'settings.theme' | translate }}</h4>
-              <p>{{ 'settings.themeDescription' | translate }}</p>
-              <kn-theme-selector />
-            </div>
-
-            <div class="setting-section">
-              <h4>{{ 'settings.language' | translate }}</h4>
-              <p>{{ 'settings.languageDescription' | translate }}</p>
-              <kn-language-selector />
-            </div>
-          </div>
-        }
-
-        <!-- Account Settings -->
-        @if (selectedTab === 1) {
-          <div class="account-settings">
-            <kn-user-profile />
-          </div>
-        }
-      </div>
+    <div class="settings-dialog__main">
+      @if (selectedTab === 0) {
+        <kn-general-settings class="settings-dialog__general-settings"/>
+      }
+      @if (selectedTab === 1) {
+        <kn-user-profile class="settings-dialog__user-profile"/>
+      }
     </div>
   </div>
 </div>

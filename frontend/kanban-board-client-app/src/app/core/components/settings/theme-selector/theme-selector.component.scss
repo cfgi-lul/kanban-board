@@ -1,183 +1,26 @@
 @import "../../../../../theaming/mixins";
 
 .theme-selector {
-  display: flex;
-  flex-direction: column;
-  @include gap(lg);
-}
-
-/* Theme Options */
-.theme-options {
-  .theme-toggle-group {
-    overflow: hidden;
-    border: 1px solid var(--mat-sys-outline-variant);
-    border-radius: 12px;
-    background: var(--mat-sys-surface-container);
-    box-shadow: 0 1px 2px var(--mat-sys-shadow);
-
-    .theme-option {
-      min-width: 80px;
-      @include padding-x(md);
-      @include padding-y(sm);
-      border: none;
-      background: transparent;
-      color: var(--mat-sys-on-surface-variant);
-
-      &:hover {
-        background-color: var(--mat-sys-state-hover-surface);
-      }
-
-      &.mat-button-toggle-checked {
-        background-color: var(--mat-sys-primary);
-        color: var(--mat-sys-on-primary);
-      }
-
-      .mat-button-toggle-label-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        @include gap(xs);
-        padding: 0;
-      }
-
-      mat-icon {
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-      }
-
-      span {
-        font-size: 12px;
-        font-weight: 500;
-      }
-    }
-  }
-}
-
-/* Theme Previews */
-.theme-previews {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  @include gap(lg);
-}
-
-.theme-preview-card {
-  transition: all 0.2s ease;
-  border: 2px solid transparent;
-  background: var(--mat-sys-surface-container);
-
-  &:hover {
-    border-color: var(--mat-sys-outline-variant);
-    box-shadow: 0 4px 12px var(--mat-sys-shadow);
+  container-type: inline-size;
+  &__toggle-group {
+    width: 100%;
   }
 
-  &.selected {
-    border-color: var(--mat-sys-primary);
-    box-shadow: 0 4px 12px var(--mat-sys-shadow);
+  &__option {
+    flex: 1;
   }
 
-  mat-card-header {
-    @include padding-x(md);
-    @include padding-top(md);
+  &__icon {
+    margin-right: var(--spacing-sm);
+  }
 
-    mat-icon {
-      width: 24px;
-      height: 24px;
-      color: var(--mat-sys-primary);
-      font-size: 24px;
+  @container (width <= 480px) {
+    &__label {
+      display: none;
     }
 
-    mat-card-title {
-      margin: 0;
-      color: var(--mat-sys-on-surface);
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    mat-card-subtitle {
-      @include margin-y(xs);
-      @include margin-top(xs);
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 12px;
-    }
-  }
-
-  mat-card-content {
-    @include padding(md);
-
-    .theme-preview-content {
-      .preview-header {
-        display: flex;
-        align-items: center;
-        @include gap(sm);
-        @include margin-bottom(sm);
-
-        .preview-avatar {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background: var(--mat-sys-primary);
-        }
-
-        .preview-title {
-          color: var(--mat-sys-on-surface);
-          font-size: 14px;
-          font-weight: 500;
-        }
-      }
-
-      .preview-body {
-        .preview-text {
-          color: var(--mat-sys-on-surface-variant);
-          font-size: 12px;
-          line-height: 1.4;
-        }
-      }
-    }
-  }
-
-  mat-card-actions {
-    @include padding-x(md);
-    @include padding-bottom(md);
-
-    button {
-      width: 100%;
-      border-radius: 8px;
-      font-weight: 500;
-
-      &.selected {
-        background-color: var(--mat-sys-primary);
-        color: var(--mat-sys-on-primary);
-      }
-    }
-  }
-}
-
-/* Responsive Design */
-@media (width <= 768px) {
-  .theme-previews {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-options .theme-toggle-group {
-    .theme-option {
-      min-width: 60px;
-      @include padding-x(sm);
-      @include padding-y(sm);
-
-      .mat-button-toggle-label-content {
-        @include gap(xs);
-      }
-
-      mat-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 18px;
-      }
-
-      span {
-        font-size: 10px;
-      }
+    &__icon {
+      margin-right: 0;
     }
   }
 }

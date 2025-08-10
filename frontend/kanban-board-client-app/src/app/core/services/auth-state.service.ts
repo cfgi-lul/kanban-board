@@ -57,6 +57,10 @@ export class AuthStateService {
     this._error.set(null);
   }
 
+  updateUser(user: UserInstance): void {
+    this._user.set(user);
+  }
+
   // Helper methods
   getUserInitials(): string {
     const user = this._user();

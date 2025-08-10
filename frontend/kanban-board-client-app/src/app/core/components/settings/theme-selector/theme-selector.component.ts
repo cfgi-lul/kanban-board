@@ -55,17 +55,4 @@ export class ThemeSelectorComponent {
         return 'palette';
     }
   }
-
-  getThemeDescription(scheme: string): string {
-    switch (scheme) {
-      case 'light':
-        return 'Light theme with bright colors and high contrast';
-      case 'dark':
-        return 'Dark theme with WebStorm Darcula colors';
-      case 'system':
-        return 'Follows your system preference';
-      default:
-        return 'Unknown theme';
-    }
-  }
 }

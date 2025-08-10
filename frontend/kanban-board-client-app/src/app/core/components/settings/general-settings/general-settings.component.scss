@@ -1,0 +1,61 @@
+@import "../../../../../theaming/mixins";
+
+:host{
+  container-type: inline-size;
+}
+.general-settings {
+
+  &__title {
+    @include margin-bottom(md);
+    font: var(--mat-sys-headline-large);
+  }
+
+  &__section {
+    @include margin-bottom(xl);
+
+    &-title {
+      @include margin-bottom(sm);
+      font: var(--mat-sys-title-large);
+    }
+
+    &-description {
+      @include margin-bottom(md);
+      font: var(--mat-sys-body-medium);
+    }
+  }
+
+  @container (width <= 768px) {
+
+
+    &__title {
+      font: var(--mat-sys-headline-medium);
+    }
+
+    &__section {
+      @include margin-bottom(lg);
+
+      &-title {
+        font: var(--mat-sys-title-medium);
+      }
+    }
+  }
+
+  @container (width <= 480px) {
+
+    &__title {
+      font: var(--mat-sys-headline-small);
+    }
+
+    &__section {
+      @include margin-bottom(md);
+
+      &-title {
+        font: var(--mat-sys-title-small);
+      }
+
+      &-description {
+        font: var(--mat-sys-body-small);
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener, OnInit } from '@angular/core';
 
 import {
   MatDialogRef,
@@ -15,6 +15,7 @@ import { ThemeService } from '../../services/theme.service';
 import { ThemeSelectorComponent } from './theme-selector/theme-selector.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -42,17 +43,20 @@ interface SettingsTab {
     ThemeSelectorComponent,
     LanguageSelectorComponent,
     UserProfileComponent,
+    GeneralSettingsComponent,
     TranslateModule,
   ],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
   dialogRef = inject<MatDialogRef<SettingsComponent>>(MatDialogRef);
   data = inject<SettingsData>(MAT_DIALOG_DATA);
   themeService = inject(ThemeService);
 
   selectedTab = 0;
+  isMobileView = false;
+  isNavigationOpen = false;
 
   settingsTabs = [
     {
@@ -69,8 +73,35 @@ export class SettingsComponent {
     },
   ];
 
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.checkMobileView();
+  }
+
+  ngOnInit(): void {
+    this.checkMobileView();
+  }
+
+  private checkMobileView(): void {
+    this.isMobileView = window.innerWidth <= 768;
+    if (!this.isMobileView) {
+      this.isNavigationOpen = false;
+    }
+  }
+
+  toggleNavigation(): void {
+    this.isNavigationOpen = !this.isNavigationOpen;
+  }
+
+  closeNavigation(): void {
+    this.isNavigationOpen = false;
+  }
+
   onTabChange(index: number): void {
     this.selectedTab = index;
+    if (this.isMobileView) {
+      this.closeNavigation();
+    }
   }
 
   onClose(): void {

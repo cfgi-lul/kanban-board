@@ -25,6 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService, UserUpdateRequest } from '../../../api/user.service';
 import { AvatarService } from '../../../api/avatar.service';
 import { UserInstance } from '../../../models/classes/UserInstance';
+import { AuthStateService } from '../../../services/auth-state.service';
 
 @Component({
   selector: 'kn-user-profile',
@@ -50,6 +51,7 @@ export class UserProfileComponent implements OnInit {
   private userService = inject(UserService);
   private avatarService = inject(AvatarService);
   private snackBar = inject(MatSnackBar);
+  private authStateService = inject(AuthStateService);
 
   readonly fileInput =
     viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
@@ -72,22 +74,33 @@ export class UserProfileComponent implements OnInit {
   }
 
   loadCurrentUser(): void {
-    this.isLoading = true;
-    this.userService.getCurrentUser().subscribe({
-      next: user => {
-        this.currentUser = user;
-        this.profileForm.patchValue({
-          displayName: user.displayName || user.name || '',
-          email: user.email || '',
-        });
-        this.isLoading = false;
-      },
-      error: error => {
-        console.error('Error loading user profile:', error);
-        this.isLoading = false;
-        this.showMessage('settings.profileLoadError', 'error');
-      },
-    });
+    // Use existing user data from auth state instead of making a new API call
+    const currentUser = this.authStateService.user();
+    if (currentUser) {
+      this.currentUser = currentUser;
+      this.profileForm.patchValue({
+        displayName: currentUser.displayName || currentUser.name || '',
+        email: currentUser.email || '',
+      });
+    } else {
+      // Fallback to API call only if user data is not available in auth state
+      this.isLoading = true;
+      this.userService.getCurrentUser().subscribe({
+        next: user => {
+          this.currentUser = user;
+          this.profileForm.patchValue({
+            displayName: user.displayName || user.name || '',
+            email: user.email || '',
+          });
+          this.isLoading = false;
+        },
+        error: error => {
+          console.error('Error loading user profile:', error);
+          this.isLoading = false;
+          this.showMessage('settings.profileLoadError', 'error');
+        },
+      });
+    }
   }
 
   onSubmit(): void {
@@ -101,6 +114,8 @@ export class UserProfileComponent implements OnInit {
       this.userService.updateCurrentUser(updateRequest).subscribe({
         next: updatedUser => {
           this.currentUser = updatedUser;
+          // Update the auth state service to reflect changes throughout the app
+          this.authStateService.updateUser(updatedUser);
           this.isSaving = false;
           this.showMessage('settings.profileUpdateSuccess', 'success');
         },
@@ -131,6 +146,8 @@ export class UserProfileComponent implements OnInit {
       this.avatarService.uploadAvatar(file).subscribe({
         next: updatedUser => {
           this.currentUser = updatedUser;
+          // Update the auth state service to reflect changes throughout the app
+          this.authStateService.updateUser(updatedUser);
           this.isUploadingAvatar = false;
           this.showMessage('settings.avatarUploadSuccess', 'success');
           // Clear the file input
@@ -153,6 +170,8 @@ export class UserProfileComponent implements OnInit {
       this.avatarService.removeAvatar().subscribe({
         next: updatedUser => {
           this.currentUser = updatedUser;
+          // Update the auth state service to reflect changes throughout the app
+          this.authStateService.updateUser(updatedUser);
           this.isUploadingAvatar = false;
           this.showMessage('settings.avatarRemovedSuccess', 'success');
         },
