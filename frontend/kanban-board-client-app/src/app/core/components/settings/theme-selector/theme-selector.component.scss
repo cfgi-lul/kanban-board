@@ -1,27 +1,65 @@
 @import "../../../../../theaming/mixins";
 
+:host {
+  
+}
+
 .theme-selector {
+  @include margin-bottom(lg);
   container-type: inline-size;
 
   &__toggle-group {
     width: 100%;
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
   }
 
   &__option {
     flex: 1;
+    min-height: 80px;
+    transition: all 0.2s ease;
+    @include padding(md);
+
+    &:hover {
+      background: var(--mat-sys-surface-container-high) !important;
+    }
+
+    &.mat-button-toggle-checked {
+      background: var(--mat-sys-primary-container) !important;
+      color: var(--mat-sys-on-primary-container) !important;
+      box-shadow: var(--mat-sys-level2);
+    }
   }
 
   &__icon {
-    margin-right: var(--spacing-sm);
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    color: inherit;
+    margin-right: 0;
   }
 
-  @container (width <= 480px) {
-    &__label {
-      display: none;
+  &__label {
+    font: var(--mat-sys-label-large);
+    text-align: center;
+  }
+
+
+  @container (max-width: 480px) {
+    &__option {
+      min-height: 60px;
+      @include padding(xs);
     }
 
     &__icon {
-      margin-right: 0;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+    }
+
+    &__label {
+      display: none;
     }
   }
 }
