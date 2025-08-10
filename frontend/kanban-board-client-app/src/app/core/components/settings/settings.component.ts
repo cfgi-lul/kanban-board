@@ -40,8 +40,6 @@ interface SettingsTab {
     MatDividerModule,
     MatCardModule,
     MatTabsModule,
-    ThemeSelectorComponent,
-    LanguageSelectorComponent,
     UserProfileComponent,
     GeneralSettingsComponent,
     TranslateModule,
