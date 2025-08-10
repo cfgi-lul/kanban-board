@@ -1,8 +1,5 @@
 @import "../../../../../theaming/mixins";
 
-:host {
-}
-
 .theme-selector {
   @include margin-bottom(lg);
   container-type: inline-size;

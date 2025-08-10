@@ -1,10 +1,7 @@
 @import "../../../../../../theaming/mixins";
 
-:host {
-  container-type: inline-size;
-}
-
 .avatar-picker {
+  container-type: inline-size;
   position: relative;
   display: flex;
   justify-content: center;

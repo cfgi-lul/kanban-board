@@ -3,10 +3,11 @@
 :host {
   display: block;
   flex: 1;
-  container-type: inline-size;
+  
 }
 
 .auth {
+  container-type: inline-size;
   display: flex;
   align-items: center;
   justify-content: center;

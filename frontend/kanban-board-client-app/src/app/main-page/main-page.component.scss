@@ -1,11 +1,12 @@
 @import "../../theaming/mixins";
 
 :host {
-  container-type: inline-size;
+  
   flex: 1;
 }
 
 .main-page {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   @include gap(xl);
