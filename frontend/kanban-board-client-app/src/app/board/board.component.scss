@@ -1,4 +1,4 @@
-@import "../../theaming/mixins";
+@import "../../theming/mixins";
 
 .board-container {
   display: flex;
@@ -122,8 +122,6 @@
     color: var(--mat-sys-on-surface-variant);
     font-size: 12px;
     line-height: 1.4;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
   }
 
   .task-meta {
