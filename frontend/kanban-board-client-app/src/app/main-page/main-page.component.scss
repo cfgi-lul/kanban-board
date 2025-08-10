@@ -1,4 +1,4 @@
-@import "../../theming/mixins";
+@use "../../theming/mixins" as *;
 
 :host {
   flex: 1;
@@ -65,10 +65,11 @@
     @include padding(lg);
 
     &__tiles-grid {
+      grid-template-columns: repeat(3, 1fr);
+
       &__tile--large {
         grid-column: span 2;
       }
-      grid-template-columns: repeat(3, 1fr);
     }
   }
 }
@@ -97,8 +98,8 @@
     }
 
     &__tiles-grid {
-      grid-template-columns: repeat(2, 1fr);
       @include gap(sm);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }
@@ -127,6 +128,7 @@
     }
 
     &__tiles-grid {
+      @include gap(sm);
       grid-template-columns: repeat(1, 1fr);
 
       &__tile--medium {
@@ -136,8 +138,6 @@
       &__tile--large {
         grid-column: span 1;
       }
-
-      @include gap(sm);
     }
   }
 }

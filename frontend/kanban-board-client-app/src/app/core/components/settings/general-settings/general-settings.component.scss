@@ -1,4 +1,4 @@
-@import "../../../../../theming/mixins";
+@use "../../../../../theming/mixins" as *;
 
 .general-settings {
   container-type: inline-size;

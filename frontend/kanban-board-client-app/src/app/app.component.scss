@@ -1,14 +1,14 @@
-@import "../theming/mixins";
+@use "../theming/mixins" as *;
 
 .sidenav {
-  &__container {
-    height: calc(100vh - 64px);
-  }
   width: 280px;
   border-right: 1px solid var(--mat-sys-outline-variant) !important;
   border-radius: 0;
-
   background: var(--mat-sys-surface-container) !important;
+
+  &__container {
+    height: calc(100vh - 64px);
+  }
 
   &__content {
     display: flex;

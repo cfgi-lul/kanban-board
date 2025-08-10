@@ -1,4 +1,4 @@
-@import "../../../../../theming/mixins";
+@use "../../../../../theming/mixins" as *;
 
 .theme-selector {
   @include margin-bottom(lg);

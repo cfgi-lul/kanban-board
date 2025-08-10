@@ -1,4 +1,4 @@
-@import "../../theming/mixins";
+@use "../../theming/mixins" as *;
 
 :host {
   flex: 1;
@@ -67,8 +67,8 @@
     @include padding(md);
 
     &__grid {
-      grid-template-columns: repeat(2, 1fr);
       @include gap(md);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

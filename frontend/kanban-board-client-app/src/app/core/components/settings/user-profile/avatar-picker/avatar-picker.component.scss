@@ -1,4 +1,4 @@
-@import "../../../../../../theming/mixins";
+@use "../../../../../../theming/mixins" as *;
 
 .avatar-picker {
   container-type: inline-size;

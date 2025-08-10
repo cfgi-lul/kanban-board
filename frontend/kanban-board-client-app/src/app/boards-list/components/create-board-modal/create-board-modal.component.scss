@@ -1,4 +1,5 @@
-@import "../../../../theming/mixins";
+@use "sass:map";
+@use "../../../../theming/mixins" as *;
 
 :host {
   display: block;
@@ -29,7 +30,7 @@
     display: flex;
     align-items: center;
     @include gap(sm);
-    font: map-get(map-get($typography, title), desktop);
+    font: map.get(map.get($typography, title), desktop);
     font-weight: 500;
 
     &-icon {
@@ -58,19 +59,16 @@
     flex-direction: column;
     @include gap(lg);
 
-    // @include margin-x(xl);
-
     &-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       @include padding-y(sm);
-
       background-color: var(--mat-sys-surface-container);
     }
 
     &-title {
-      font: map-get(map-get($typography, subtitle), desktop);
+      font: map.get(map.get($typography, subtitle), desktop);
       font-weight: 500;
     }
 
@@ -96,14 +94,12 @@
 
   // Remove column button
   &__remove-column-btn {
-    // Default styles for desktop/tablet
-
     &--mobile {
-      display: none; // Hidden by default on desktop
+      display: none;
     }
 
     &--desktop {
-      display: flex; // Visible by default on desktop
+      display: flex;
     }
   }
 
@@ -145,7 +141,7 @@
     @include gap(lg);
 
     #{$self}__title {
-      font: map-get(map-get($typography, title), tablet);
+      font: map.get(map.get($typography, title), tablet);
     }
 
     #{$self}__form {
@@ -170,7 +166,7 @@
     @include gap(sm);
 
     #{$self}__title {
-      font: map-get(map-get($typography, title), mobile);
+      font: map.get(map.get($typography, title), mobile);
     }
 
     #{$self}__form {
@@ -202,7 +198,7 @@
 
     #{$self}__remove-column-btn {
       &--mobile {
-        display: flex; // Show mobile button
+        display: flex;
         width: 32px;
         min-width: 32px;
         height: 32px;
@@ -215,7 +211,7 @@
       }
 
       &--desktop {
-        display: none; // Hide desktop button
+        display: none;
       }
     }
   }

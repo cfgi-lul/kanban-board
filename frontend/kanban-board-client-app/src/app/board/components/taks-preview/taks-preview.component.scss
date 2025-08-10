@@ -1,4 +1,4 @@
-@import "../../../../theming/mixins";
+@use "../../../../theming/mixins" as *;
 
 .task-card {
   transition: all 0.2s ease;
@@ -50,7 +50,9 @@
   @include padding-bottom(sm);
 
   .task-description {
-    display: box;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     @include margin-bottom(sm);
     color: var(--mat-secondary-text-color);
