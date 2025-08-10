@@ -88,9 +88,10 @@ public class TaskController {
 
         // Save the task
         Task savedTask = taskRepository.save(task);
+        taskRepository.flush(); // Ensure task is persisted
 
         // Send the updated board state via WebSocket
-        sendBoardUpdate(boardId);
+        sendBoardUpdateDirect(boardId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(TaskMapper.toDTO(savedTask));
     }
@@ -126,7 +127,8 @@ public class TaskController {
                     }
                     
                     Task savedTask = taskRepository.save(task);
-                    sendBoardUpdate(savedTask.getId());
+                    taskRepository.flush(); // Ensure task is persisted
+                    sendBoardUpdateDirect(savedTask.getColumn().getBoard().getId());
                     return ResponseEntity.ok(TaskMapper.toDTO(savedTask));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -240,8 +242,13 @@ public class TaskController {
     }
 
     private void sendBoardUpdateDirect(Long boardId) {
-        boardRepository.findById(boardId)
+        boardRepository.findWithColumnsAndTasksById(boardId)
                 .ifPresent(board -> {
+                    // Manually load tasks for each column to avoid multiple bag fetch issue
+                    board.getColumns().forEach(col -> {
+                        col.getTasks().size(); // Force lazy loading of tasks
+                    });
+                    
                     BoardDTO dto = BoardMapper.toDTO(board);
                     messagingTemplate.convertAndSend(
                             "/topic/board/" + boardId,
@@ -253,8 +260,13 @@ public class TaskController {
         taskRepository.findByIdWithColumnAndBoard(taskId)
                 .ifPresent(task -> {
                     Long boardId = task.getColumn().getBoard().getId();
-                    boardRepository.findById(boardId)
+                    boardRepository.findWithColumnsAndTasksById(boardId)
                             .ifPresent(board -> {
+                                // Manually load tasks for each column to avoid multiple bag fetch issue
+                                board.getColumns().forEach(col -> {
+                                    col.getTasks().size(); // Force lazy loading of tasks
+                                });
+                                
                                 BoardDTO dto = BoardMapper.toDTO(board);
                                 messagingTemplate.convertAndSend(
                                         "/topic/board/" + boardId,

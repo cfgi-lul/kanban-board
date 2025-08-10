@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { filter, map, Observable, take } from 'rxjs';
+import { filter, map, Observable, take, catchError } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { AuthService } from './auth.service';
 import { Injectable, inject } from '@angular/core';
@@ -47,7 +47,25 @@ export class BoardSocketService {
       filter((message: string) => message.startsWith('MESSAGE')),
       map((message: string) => {
         const [, , body] = this.parseStompFrame(message);
-        return JSON.parse(body);
+        const parsedMessage = JSON.parse(body);
+        
+        // Handle new WebSocket response format
+        if (parsedMessage.type && parsedMessage.status) {
+          // This is a WebSocket response with status
+          if (parsedMessage.status === 'SUCCESS' && parsedMessage.board) {
+            return parsedMessage.board;
+          } else if (parsedMessage.status === 'ERROR') {
+            console.error('WebSocket error response:', parsedMessage.message);
+            throw new Error(parsedMessage.message || 'WebSocket operation failed');
+          }
+        }
+        
+        // Fallback to old format (direct board object)
+        return parsedMessage;
+      }),
+      catchError(error => {
+        console.error('WebSocket error in listenForUpdates:', error);
+        throw error;
       })
     );
   }
@@ -55,6 +73,26 @@ export class BoardSocketService {
   sendUpdate(boardId: string, update: any): void {
     const updateFrame = `SEND\ndestination:/app/board/${boardId}/update\ncontent-type:application/json\n\n${JSON.stringify(update)}\0`;
     this.socket$.next(updateFrame);
+  }
+
+  sendTaskMove(boardId: string, taskMoveData: any): void {
+    const taskMoveFrame = `SEND\ndestination:/app/board/${boardId}/task-move\ncontent-type:application/json\n\n${JSON.stringify(taskMoveData)}\0`;
+    this.socket$.next(taskMoveFrame);
+  }
+
+  sendTaskCreate(boardId: string, taskCreateData: any): void {
+    const taskCreateFrame = `SEND\ndestination:/app/board/${boardId}/task-create\ncontent-type:application/json\n\n${JSON.stringify(taskCreateData)}\0`;
+    this.socket$.next(taskCreateFrame);
+  }
+
+  sendTaskUpdate(boardId: string, taskUpdateData: any): void {
+    const taskUpdateFrame = `SEND\ndestination:/app/board/${boardId}/task-update\ncontent-type:application/json\n\n${JSON.stringify(taskUpdateData)}\0`;
+    this.socket$.next(taskUpdateFrame);
+  }
+
+  sendTaskDelete(boardId: string, taskDeleteData: any): void {
+    const taskDeleteFrame = `SEND\ndestination:/app/board/${boardId}/task-delete\ncontent-type:application/json\n\n${JSON.stringify(taskDeleteData)}\0`;
+    this.socket$.next(taskDeleteFrame);
   }
 
   private waitForConnection(): Observable<void> {

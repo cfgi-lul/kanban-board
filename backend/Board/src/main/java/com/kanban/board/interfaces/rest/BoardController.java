@@ -11,6 +11,10 @@ import com.kanban.board.domain.repository.BoardRepository;
 import com.kanban.user.domain.repository.UserRepository;
 import com.kanban.board.application.BoardRoleService;
 import com.kanban.board.application.BoardWebSocketService;
+import com.kanban.board.interfaces.websocket.TaskMoveMessage;
+import com.kanban.board.interfaces.websocket.TaskCreateMessage;
+import com.kanban.board.interfaces.websocket.TaskUpdateMessage;
+import com.kanban.board.interfaces.websocket.TaskDeleteMessage;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,6 +72,34 @@ public class BoardController {
             @DestinationVariable Long boardId,
             Message<BoardDTO> message) {
         return boardWebSocketService.handleBoardUpdate(boardId, message.getPayload());
+    }
+
+    @MessageMapping("/board/{boardId}/task-move")
+    public void handleTaskMove(
+            @DestinationVariable Long boardId,
+            Message<TaskMoveMessage> message) {
+        boardWebSocketService.handleTaskMove(message.getPayload());
+    }
+
+    @MessageMapping("/board/{boardId}/task-create")
+    public void handleTaskCreate(
+            @DestinationVariable Long boardId,
+            Message<TaskCreateMessage> message) {
+        boardWebSocketService.handleTaskCreate(message.getPayload());
+    }
+
+    @MessageMapping("/board/{boardId}/task-update")
+    public void handleTaskUpdate(
+            @DestinationVariable Long boardId,
+            Message<TaskUpdateMessage> message) {
+        boardWebSocketService.handleTaskUpdate(message.getPayload());
+    }
+
+    @MessageMapping("/board/{boardId}/task-delete")
+    public void handleTaskDelete(
+            @DestinationVariable Long boardId,
+            Message<TaskDeleteMessage> message) {
+        boardWebSocketService.handleTaskDelete(message.getPayload());
     }
 
     @PostMapping

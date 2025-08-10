@@ -20,6 +20,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @EntityGraph(attributePaths = "columns")
     Optional<Board> findWithColumnsById(Long id);
 
+    @Query("SELECT DISTINCT b FROM Board b LEFT JOIN FETCH b.columns WHERE b.id = :id")
+    Optional<Board> findWithColumnsAndTasksById(@Param("id") Long id);
+
     @Query("SELECT c.tasks FROM BoardColumn c WHERE c IN :columns")
     List<Task> findTasksByColumns(@Param("columns") List<BoardColumn> columns);
     
