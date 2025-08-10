@@ -1,0 +1,36 @@
+<div class="avatar-picker">
+  <div
+    class="avatar-picker__image"
+    [style.background-image]="'url(' + avatarUrl + ')'"
+  >
+    <div class="avatar-picker__image-overlay" (click)="onAvatarClick()">
+      <mat-icon class="avatar-picker__image-overlay-icon">camera_alt</mat-icon>
+      <span class="avatar-picker__image-overlay-text">{{ 'settings.changeAvatar' | translate }}</span>
+    </div>
+    @if (isUploading) {
+      <div class="avatar-picker__image-loading">
+        <mat-spinner class="avatar-picker__image-loading-spinner" diameter="30" />
+      </div>
+    }
+  </div>
+
+  <input
+    #fileInput
+    type="file"
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    class="avatar-picker__file-input"
+  />
+
+  <button
+    type="button"
+    mat-icon-button
+    color="warn"
+    (click)="onRemoveAvatar()"
+    [disabled]="!hasAvatar"
+    class="avatar-picker__remove-button"
+    matTooltip="{{ 'settings.removeAvatar' | translate }}"
+  >
+    <mat-icon class="avatar-picker__remove-button-icon">delete</mat-icon>
+  </button>
+</div>

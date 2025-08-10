@@ -15,5 +15,4 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './general-settings.component.html',
   styleUrls: ['./general-settings.component.scss'],
 })
-export class GeneralSettingsComponent {
-} 
+export class GeneralSettingsComponent {}

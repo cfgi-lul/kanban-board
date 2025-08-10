@@ -1,0 +1,40 @@
+<div class="account-info">
+  <h4 class="account-info__title">
+    {{ 'settings.accountInformation' | translate }}
+  </h4>
+  <div class="account-info__grid">
+    <div class="account-info__item">
+      <span class="account-info__label">{{
+        'settings.memberSince' | translate
+      }}</span>
+      <span class="account-info__value">{{
+        currentUser?.createdAt | date: 'mediumDate'
+      }}</span>
+    </div>
+    <div class="account-info__item">
+      <span class="account-info__label">{{
+        'settings.lastLogin' | translate
+      }}</span>
+      <span class="account-info__value">{{
+        currentUser?.lastLoginAt
+          ? (currentUser.lastLoginAt | date: 'medium')
+          : ('settings.never' | translate)
+      }}</span>
+    </div>
+    <div class="account-info__item">
+      <span class="account-info__label">{{
+        'settings.accountStatus' | translate
+      }}</span>
+      <span class="account-info__value">
+        <mat-chip-set>
+          <mat-chip [color]="currentUser?.enabled ? 'accent' : 'warn'" selected>
+            {{
+              (currentUser?.enabled ? 'settings.active' : 'settings.inactive')
+                | translate
+            }}
+          </mat-chip>
+        </mat-chip-set>
+      </span>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,9 @@
   >
     @for (scheme of availableColorSchemes; track scheme.value) {
       <mat-button-toggle [value]="scheme.value" class="theme-selector__option">
-        <mat-icon class="theme-selector__icon">{{ getThemeIcon(scheme.value) }}</mat-icon>
+        <mat-icon class="theme-selector__icon">{{
+          getThemeIcon(scheme.value)
+        }}</mat-icon>
         <span class="theme-selector__label">{{ scheme.label }}</span>
       </mat-button-toggle>
     }

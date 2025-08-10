@@ -5,17 +5,17 @@
 }
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  @include gap(xl);
   box-sizing: border-box;
   height: 64px;
   background: var(--mat-sys-surface-container);
   box-shadow: var(--mat-sys-level1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  @include gap(xl);
 
   &__container {
     display: flex;

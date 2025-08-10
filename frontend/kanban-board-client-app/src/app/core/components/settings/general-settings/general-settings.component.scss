@@ -1,13 +1,15 @@
 @import "../../../../../theaming/mixins";
 
-:host{
-  container-type: inline-size;
-}
 .general-settings {
+  container-type: inline-size;
 
   &__title {
     @include margin-bottom(md);
     font: var(--mat-sys-headline-large);
+  }
+
+  &__divider {
+    @include margin-bottom(md);
   }
 
   &__section {
@@ -25,8 +27,6 @@
   }
 
   @container (width <= 768px) {
-
-
     &__title {
       font: var(--mat-sys-headline-medium);
     }
@@ -41,7 +41,6 @@
   }
 
   @container (width <= 480px) {
-
     &__title {
       font: var(--mat-sys-headline-small);
     }

@@ -26,6 +26,9 @@ import { UserService, UserUpdateRequest } from '../../../api/user.service';
 import { AvatarService } from '../../../api/avatar.service';
 import { UserInstance } from '../../../models/classes/UserInstance';
 import { AuthStateService } from '../../../services/auth-state.service';
+import { AccountInfoComponent } from './account-info/account-info.component';
+import { AvatarPickerComponent } from './avatar-picker/avatar-picker.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'kn-user-profile',
@@ -42,6 +45,9 @@ import { AuthStateService } from '../../../services/auth-state.service';
     MatChipsModule,
     MatTooltipModule,
     TranslateModule,
+    AccountInfoComponent,
+    MatDividerModule,
+    AvatarPickerComponent,
   ],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
@@ -52,9 +58,6 @@ export class UserProfileComponent implements OnInit {
   private avatarService = inject(AvatarService);
   private snackBar = inject(MatSnackBar);
   private authStateService = inject(AuthStateService);
-
-  readonly fileInput =
-    viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
 
   profileForm: FormGroup;
   currentUser: UserInstance | null = null;
@@ -128,40 +131,29 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  onAvatarClick(): void {
-    this.fileInput().nativeElement.click();
-  }
-
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      // Validate file
-      const validation = this.avatarService.validateFile(file);
-      if (!validation.isValid) {
-        this.showMessage(validation.error || 'Invalid file', 'error');
-        return;
-      }
-
-      this.isUploadingAvatar = true;
-      this.avatarService.uploadAvatar(file).subscribe({
-        next: updatedUser => {
-          this.currentUser = updatedUser;
-          // Update the auth state service to reflect changes throughout the app
-          this.authStateService.updateUser(updatedUser);
-          this.isUploadingAvatar = false;
-          this.showMessage('settings.avatarUploadSuccess', 'success');
-          // Clear the file input
-          this.fileInput().nativeElement.value = '';
-        },
-        error: error => {
-          console.error('Error uploading avatar:', error);
-          this.isUploadingAvatar = false;
-          this.showMessage('settings.avatarUploadError', 'error');
-          // Clear the file input
-          this.fileInput().nativeElement.value = '';
-        },
-      });
+  onFileSelected(file: File): void {
+    // Validate file
+    const validation = this.avatarService.validateFile(file);
+    if (!validation.isValid) {
+      this.showMessage(validation.error || 'Invalid file', 'error');
+      return;
     }
+
+    this.isUploadingAvatar = true;
+    this.avatarService.uploadAvatar(file).subscribe({
+      next: updatedUser => {
+        this.currentUser = updatedUser;
+        // Update the auth state service to reflect changes throughout the app
+        this.authStateService.updateUser(updatedUser);
+        this.isUploadingAvatar = false;
+        this.showMessage('settings.avatarUploadSuccess', 'success');
+      },
+      error: error => {
+        console.error('Error uploading avatar:', error);
+        this.isUploadingAvatar = false;
+        this.showMessage('settings.avatarUploadError', 'error');
+      },
+    });
   }
 
   removeAvatar(): void {
@@ -185,7 +177,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getAvatarUrl(): string {
-    return this.avatarService.getAvatarUrl(this.currentUser?.avatar);
+    return this.avatarService.getAvatarUrl(this.currentUser?.avatar || null);
   }
 
   private showMessage(messageKey: string, type: 'success' | 'error'): void {

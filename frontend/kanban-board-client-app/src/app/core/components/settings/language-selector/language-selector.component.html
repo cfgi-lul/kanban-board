@@ -12,8 +12,12 @@
       @for (language of i18nService.getLanguages(); track language.code) {
         <mat-option [value]="language.code" class="language-selector__option">
           <div class="language-selector__option-content">
-            <span class="language-selector__option-content-name">{{ language.nativeName }}</span>
-            <span class="language-selector__option-content-code">({{ language.code }})</span>
+            <span class="language-selector__option-content-name">{{
+              language.nativeName
+            }}</span>
+            <span class="language-selector__option-content-code"
+              >({{ language.code }})</span
+            >
           </div>
         </mat-option>
       }

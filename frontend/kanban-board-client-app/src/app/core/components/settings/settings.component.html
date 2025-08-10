@@ -1,10 +1,10 @@
 <div class="settings-dialog">
   <div class="settings-dialog__header">
-    <div class="settings-dialog__title" mat-dialog-title>
+    <div class="settings-dialog__title">
       <!-- Hamburger menu for mobile -->
       @if (isMobileView) {
-        <button 
-          mat-icon-button 
+        <button
+          mat-icon-button
           class="settings-dialog__menu-button"
           (click)="toggleNavigation()"
         >
@@ -12,11 +12,13 @@
         </button>
       }
       <mat-icon class="settings-dialog__title-icon">settings</mat-icon>
-      <span class="settings-dialog__title-text">{{ 'settings.title' | translate }}</span>
+      <span class="settings-dialog__title-text">{{
+        'settings.title' | translate
+      }}</span>
     </div>
-    <button 
-      mat-icon-button 
-      class="settings-dialog__close-button" 
+    <button
+      mat-icon-button
+      class="settings-dialog__close-button"
       (click)="onClose()"
     >
       <mat-icon>close</mat-icon>
@@ -26,7 +28,7 @@
   <div class="settings-dialog__content">
     <!-- Navigation overlay for mobile -->
     @if (isMobileView) {
-      <div 
+      <div
         class="settings-dialog__nav-overlay"
         [class.settings-dialog__nav-overlay--visible]="isNavigationOpen"
         (click)="closeNavigation()"
@@ -34,7 +36,7 @@
     }
 
     <!-- Navigation sidebar -->
-    <mat-nav-list 
+    <mat-nav-list
       class="settings-dialog__nav"
       [class.settings-dialog__nav--mobile]="isMobileView"
       [class.settings-dialog__nav--open]="isMobileView && isNavigationOpen"
@@ -46,24 +48,22 @@
           [class.settings-dialog__nav-item--active]="selectedTab === tab.id"
           (click)="onTabChange(tab.id)"
         >
-          <mat-icon 
-            class="settings-dialog__nav-icon" 
-            matListItemIcon
-          >{{ tab.icon }}</mat-icon>
-          <span 
-            class="settings-dialog__nav-text" 
-            matListItemTitle
-          >{{ tab.label | translate }}</span>
+          <mat-icon class="settings-dialog__nav-icon" matListItemIcon>{{
+            tab.icon
+          }}</mat-icon>
+          <span class="settings-dialog__nav-text" matListItemTitle>{{
+            tab.label | translate
+          }}</span>
         </div>
       }
     </mat-nav-list>
 
     <div class="settings-dialog__main">
       @if (selectedTab === 0) {
-        <kn-general-settings class="settings-dialog__general-settings"/>
+        <kn-general-settings class="settings-dialog__general-settings" />
       }
       @if (selectedTab === 1) {
-        <kn-user-profile class="settings-dialog__user-profile"/>
+        <kn-user-profile class="settings-dialog__user-profile" />
       }
     </div>
   </div>

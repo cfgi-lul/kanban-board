@@ -1,189 +1,94 @@
-<div class="user-profile">
-  <!-- Header Section -->
-  <div class="profile-header">
-    <div class="header-content">
-      <mat-icon class="header-icon">account_circle</mat-icon>
-      <div class="header-text">
-        <h2 class="header-title">
-          {{ 'settings.profileInformation' | translate }}
-        </h2>
-        <p class="header-subtitle">
-          {{ 'settings.manageAccountDetails' | translate }}
-        </p>
+<div class="profile">
+  <div class="profile__header">
+    <div class="profile__header-content">
+      <div class="profile__title">
+        {{ 'settings.profileInformation' | translate }}
+      </div>
+      <div class="profile__subtitle">
+        {{ 'settings.manageAccountDetails' | translate }}
       </div>
     </div>
   </div>
+  <mat-divider class="profile__divider" />
+  @if (isLoading) {
+    <div class="profile__loading">
+      <mat-spinner diameter="40" />
+      <div>{{ 'settings.loadingProfile' | translate }}</div>
+    </div>
+  } @else {
+    <div [formGroup]="profileForm" class="profile__form">
+      <kn-avatar-picker
+        [avatarUrl]="getAvatarUrl()"
+        [hasAvatar]="!!currentUser?.avatar"
+        [isUploading]="isUploadingAvatar"
+        (fileSelected)="onFileSelected($event)"
+        (removeAvatar)="removeAvatar()"
+      />
 
-  <!-- Content Section -->
-  <div class="profile-content">
-    @if (isLoading) {
-      <div class="loading-container">
-        <mat-spinner diameter="40" />
-        <p>{{ 'settings.loadingProfile' | translate }}</p>
+      <mat-form-field appearance="outline" class="profile__field">
+        <mat-label>{{ 'settings.username' | translate }}</mat-label>
+        <input matInput [value]="currentUser?.username" readonly />
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-hint>{{ 'settings.usernameReadOnly' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="profile__field">
+        <mat-label>{{ 'settings.displayName' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="displayName"
+          placeholder="{{ 'settings.displayNamePlaceholder' | translate }}"
+        />
+        @if (profileForm.get('displayName')?.hasError('required')) {
+          <mat-error>
+            {{ getErrorMessage('displayName') | translate }}
+          </mat-error>
+        }
+        @if (profileForm.get('displayName')?.hasError('minlength')) {
+          <mat-error>
+            {{ getErrorMessage('displayName') | translate }}
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="profile__field">
+        <mat-label>{{ 'settings.email' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          placeholder="{{ 'settings.emailPlaceholder' | translate }}"
+        />
+        @if (profileForm.get('email')?.hasError('required')) {
+          <mat-error>
+            {{ getErrorMessage('email') | translate }}
+          </mat-error>
+        }
+        @if (profileForm.get('email')?.hasError('email')) {
+          <mat-error>
+            {{ 'settings.invalidEmail' | translate }}
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <kn-account-info [currentUser]="currentUser" />
+
+      <div class="profile__actions">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="onSubmit()"
+          [disabled]="profileForm.invalid || isSaving"
+          class="profile__submit"
+        >
+          @if (isSaving) {
+            <mat-spinner diameter="20" class="profile__submit-spinner" />
+            <span>{{ 'settings.saving' | translate }}</span>
+          } @else {
+            <span>{{ 'settings.saveChanges' | translate }}</span>
+          }
+        </button>
       </div>
-    } @else {
-      <form
-        [formGroup]="profileForm"
-        (ngSubmit)="onSubmit()"
-        class="profile-form"
-      >
-        <!-- Profile Picture Section -->
-        <div class="profile-picture-section">
-          <div class="avatar-container">
-            <div
-              class="avatar"
-              [style.background-image]="'url(' + getAvatarUrl() + ')'"
-            >
-              <div class="avatar-overlay" (click)="onAvatarClick()">
-                <mat-icon>camera_alt</mat-icon>
-                <span>{{ 'settings.changeAvatar' | translate }}</span>
-              </div>
-              @if (isUploadingAvatar) {
-                <div class="avatar-uploading">
-                  <mat-spinner diameter="30" />
-                </div>
-              }
-            </div>
-            <input
-              #fileInput
-              type="file"
-              accept="image/*"
-              (change)="onFileSelected($event)"
-              style="display: none"
-            />
-            <div class="avatar-actions">
-              <button
-                type="button"
-                mat-icon-button
-                color="warn"
-                (click)="removeAvatar()"
-                [disabled]="!currentUser?.avatar"
-                class="remove-avatar-btn"
-                matTooltip="{{ 'settings.removeAvatar' | translate }}"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Username (read-only) -->
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'settings.username' | translate }}</mat-label>
-            <input matInput [value]="currentUser?.username" readonly />
-            <mat-icon matSuffix>lock</mat-icon>
-            <mat-hint>{{ 'settings.usernameReadOnly' | translate }}</mat-hint>
-          </mat-form-field>
-        </div>
-
-        <!-- Display Name (editable) -->
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'settings.displayName' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="displayName"
-              placeholder="{{ 'settings.displayNamePlaceholder' | translate }}"
-            />
-            @if (profileForm.get('displayName')?.hasError('required')) {
-              <mat-error>
-                {{ getErrorMessage('displayName') | translate }}
-              </mat-error>
-            }
-            @if (profileForm.get('displayName')?.hasError('minlength')) {
-              <mat-error>
-                {{ getErrorMessage('displayName') | translate }}
-              </mat-error>
-            }
-          </mat-form-field>
-        </div>
-
-        <!-- Email (editable) -->
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'settings.email' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="email"
-              type="email"
-              placeholder="{{ 'settings.emailPlaceholder' | translate }}"
-            />
-            @if (profileForm.get('email')?.hasError('required')) {
-              <mat-error>
-                {{ getErrorMessage('email') | translate }}
-              </mat-error>
-            }
-            @if (profileForm.get('email')?.hasError('email')) {
-              <mat-error>
-                {{ 'settings.invalidEmail' | translate }}
-              </mat-error>
-            }
-          </mat-form-field>
-        </div>
-
-        <!-- Account Information -->
-        <div class="account-info-section">
-          <h4>{{ 'settings.accountInformation' | translate }}</h4>
-          <div class="info-grid">
-            <div class="info-item">
-              <span class="info-label">{{
-                'settings.memberSince' | translate
-              }}</span>
-              <span class="info-value">{{
-                currentUser?.createdAt | date: 'mediumDate'
-              }}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">{{
-                'settings.lastLogin' | translate
-              }}</span>
-              <span class="info-value">{{
-                currentUser?.lastLoginAt
-                  ? (currentUser.lastLoginAt | date: 'medium')
-                  : ('settings.never' | translate)
-              }}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">{{
-                'settings.accountStatus' | translate
-              }}</span>
-              <span class="info-value">
-                <mat-chip-set>
-                  <mat-chip
-                    [color]="currentUser?.enabled ? 'accent' : 'warn'"
-                    selected
-                  >
-                    {{
-                      (currentUser?.enabled
-                        ? 'settings.active'
-                        : 'settings.inactive'
-                      ) | translate
-                    }}
-                  </mat-chip>
-                </mat-chip-set>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="profileForm.invalid || isSaving"
-            class="save-button"
-          >
-            @if (isSaving) {
-              <mat-spinner diameter="20" class="button-spinner" />
-              <span>{{ 'settings.saving' | translate }}</span>
-            } @else {
-              <span>{{ 'settings.saveChanges' | translate }}</span>
-            }
-          </button>
-        </div>
-      </form>
-    }
-  </div>
+    </div>
+  }
 </div>

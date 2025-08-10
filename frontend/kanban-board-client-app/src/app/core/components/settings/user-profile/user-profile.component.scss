@@ -1,385 +1,105 @@
 @import "../../../../../theaming/mixins";
 
-.user-profile {
-  display: flex;
-  flex-direction: column;
-  @include gap(lg);
-}
+.profile {
+  container-type: inline-size;
 
-// Header Section
-.profile-header {
-  @include margin-bottom(lg);
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  @include gap(md);
-  @include padding-bottom(md);
-  border-bottom: 2px solid var(--mat-sys-outline-variant);
-}
-
-.header-icon {
-  width: 32px;
-  height: 32px;
-  color: var(--mat-sys-primary);
-  font-size: 32px;
-}
-
-.header-text {
-  flex: 1;
-}
-
-.header-title {
-  @include margin-bottom(xs);
-  color: var(--mat-sys-on-surface);
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.header-subtitle {
-  margin: 0;
-  color: var(--mat-sys-on-surface-variant);
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-// Content Section
-.profile-content {
-  display: flex;
-  flex-direction: column;
-  @include gap(lg);
-}
-
-// Profile Picture Section
-.profile-picture-section {
-  display: flex;
-  justify-content: center;
-  @include margin-bottom(xl);
-}
-
-.avatar-container {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  box-shadow: var(--mat-sys-shadow-light);
-
-  &:hover {
-    box-shadow: var(--mat-sys-shadow-medium);
+  &__title {
+    // @include margin-bottom(md);
+    font: var(--mat-sys-headline-large);
   }
 
-  .avatar {
-    transition: all 0.3s ease;
-    width: 100%;
-    height: 100%;
-    border: 4px solid var(--mat-sys-outline-variant);
-    border-radius: 50%;
-    background-color: var(--mat-sys-primary-container);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
-    &:hover {
-      border-color: var(--mat-sys-primary);
-    }
-  }
-
-  .avatar-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-    border-radius: 50%;
-    background: rgb(0 0 0 / 60%);
-    color: white;
-
-    mat-icon {
-      width: 24px;
-      height: 24px;
-      @include margin-bottom(xs);
-      font-size: 24px;
-    }
-
-    span {
-      font-size: 12px;
-      font-weight: 500;
-      text-align: center;
-    }
-  }
-
-  &:hover .avatar-overlay {
-    opacity: 1;
-  }
-
-  .avatar-uploading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 10;
+  &__header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    transform: translate(-50%, -50%);
-    @include padding(sm);
-    border-radius: 50%;
-    background: rgb(0 0 0 / 80%);
-  }
+    @include margin-bottom(xl);
 
-  .avatar-actions {
-    position: absolute;
-    right: -8px;
-    bottom: -8px;
-    display: flex;
-    @include gap(xs);
-  }
-
-  .remove-avatar-btn {
-    transition: all 0.2s ease;
-    width: 32px;
-    min-width: 32px;
-    height: 32px;
-    padding: 0;
-    border-radius: 50%;
-    background: var(--mat-sys-error-container);
-    box-shadow: var(--mat-sys-shadow-light);
-    color: var(--mat-sys-on-error-container);
-
-    &:hover {
-      background: var(--mat-sys-error);
-      box-shadow: var(--mat-sys-shadow-medium);
-      color: var(--mat-sys-on-error);
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
-    mat-icon {
-      width: 16px;
-      height: 16px;
-      font-size: 16px;
-    }
-  }
-}
-
-// Form Styling
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  @include gap(lg);
-}
-
-.form-row {
-  margin-bottom: 0;
-}
-
-.full-width {
-  width: 100%;
-}
-
-// Account Information Section - Clean Design
-.account-info-section {
-  @include margin-top(xl);
-  padding: 0;
-  border: none;
-  background: transparent;
-  box-shadow: none;
-
-  h4 {
-    display: flex;
-    align-items: center;
-    @include gap(sm);
-    @include margin-bottom(md);
-    @include padding-bottom(sm);
-    border-bottom: 2px solid var(--mat-sys-outline-variant);
-    color: var(--mat-sys-on-surface);
-    font-size: 16px;
-    font-weight: 600;
-
-    mat-icon {
-      width: 18px;
-      height: 18px;
+    &-icon {
+      width: 32px;
+      height: 32px;
       color: var(--mat-sys-primary);
-      font-size: 18px;
+      font-size: 32px;
+    }
+
+    &-content {
+      flex: 1;
     }
   }
-}
 
-.info-grid {
-  display: flex;
-  flex-direction: column;
-  @include gap(sm);
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.2s ease;
-  @include padding-y(sm);
-  @include padding-x(sm);
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: 8px;
-  background: var(--mat-sys-surface);
-
-  &:hover {
-    border-color: var(--mat-sys-outline);
-    background: var(--mat-sys-surface-container);
-  }
-}
-
-.info-label {
-  color: var(--mat-sys-on-surface-variant);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.info-value {
-  color: var(--mat-sys-on-surface);
-  font-size: 14px;
-  font-weight: 500;
-  text-align: right;
-}
-
-// Form Actions
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  @include gap(sm);
-  @include margin-top(xl);
-}
-
-.save-button {
-  transition: all 0.2s ease;
-  min-width: 140px;
-  height: 48px;
-  border-radius: 8px;
-  font-weight: 600;
-
-  &:hover {
-    box-shadow: var(--mat-sys-shadow-medium);
+  &__divider {
+    @include margin-bottom(md);
   }
 
-  .button-spinner {
-    @include margin-right(xs);
-  }
-}
-
-// Loading State
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  @include padding-y(xl);
-  @include padding-x(md);
-  text-align: center;
-
-  p {
-    @include margin-top(sm);
+  &__subtitle {
     color: var(--mat-sys-on-surface-variant);
-    font-size: 16px;
-  }
-}
-
-// Material Design adjustments
-::ng-deep {
-  .mat-mdc-form-field {
-    margin-bottom: 0;
-
-    .mat-mdc-form-field-focus-overlay {
-      background-color: transparent;
-    }
-
-    .mat-mdc-text-field-wrapper {
-      border-radius: 8px;
-    }
-
-    .mat-mdc-form-field-label {
-      color: var(--mat-sys-on-surface-variant);
-    }
-
-    .mat-mdc-input-element {
-      color: var(--mat-sys-on-surface);
-    }
-
-    .mat-mdc-form-field-icon-suffix {
-      color: var(--mat-sys-on-surface-variant);
-    }
+    font: var(--mat-sys-body-medium);
   }
 
-  .mat-mdc-chip-set {
-    .mat-mdc-chip {
-      height: 24px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-  }
-}
-
-// Responsive Design
-@media (width <= 768px) {
-  .header-content {
-    @include gap(sm);
-  }
-
-  .header-icon {
-    width: 28px;
-    height: 28px;
-    font-size: 28px;
-  }
-
-  .header-title {
-    font-size: 20px;
-  }
-
-  .avatar-container {
-    width: 100px;
-    height: 100px;
-
-    .avatar {
-      border-width: 3px;
-    }
-
-    .remove-avatar-btn {
-      width: 28px;
-      min-width: 28px;
-      height: 28px;
-
-      mat-icon {
-        width: 14px;
-        height: 14px;
-        font-size: 14px;
-      }
-    }
-  }
-
-  .account-info-section {
-    h4 {
-      font-size: 15px;
-    }
-  }
-
-  .info-item {
-    @include padding-y(sm);
-    @include padding-x(sm);
-  }
-
-  .form-actions {
+  &__loading {
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
-    .save-button {
-      width: 100%;
+    p {
+      @include margin-bottom(md);
+      font: var(--mat-sys-body-medium);
+    }
+  }
+
+  &__form {
+    display: flex;
+    @include gap(md);
+    flex-direction: column;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__submit {
+    min-width: 140px;
+    height: 48px;
+    border-radius: 8px;
+    font: var(--mat-sys-title-large);
+  }
+
+  @container (width <= 768px) {
+    &__title {
+      font: var(--mat-sys-headline-medium);
+    }
+
+    &__header {
+      @include margin-bottom(lg);
+    }
+
+
+    &__submit {
+      font: var(--mat-sys-title-medium);
+    }
+  }
+
+  @container (width <= 480px) {
+    &__title {
+      font: var(--mat-sys-headline-small);
+    }
+
+    &__header {
+      @include margin-bottom(md);
+    }
+
+
+    &__subtitle {
+      font: var(--mat-sys-body-small);
+    }
+
+    &__submit {
+      font: var(--mat-sys-title-small);
     }
   }
 }

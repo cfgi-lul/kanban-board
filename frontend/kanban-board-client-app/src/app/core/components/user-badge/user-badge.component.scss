@@ -8,9 +8,9 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
   border-radius: 24px;
   box-shadow: var(--mat-sys-level1);
-  transition: all 0.2s ease-in-out;
   @include padding-x(sm);
   @include padding-y(xs);
 
@@ -30,14 +30,14 @@
 
   .avatar {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
     width: 32px;
     height: 32px;
     border-radius: 50%;
     background: var(--mat-sys-level5-color);
-    overflow: hidden;
-    flex-shrink: 0;
 
     img {
       width: 100%;
@@ -49,18 +49,18 @@
     .avatar-icon {
       width: 20px;
       height: 20px;
-      font-size: 20px;
       color: var(--mat-sys-level0-color);
+      font-size: 20px;
     }
   }
 
   .name {
+    overflow: hidden;
+    max-width: 120px;
     font: var(--mat-sys-body-medium);
 
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 120px;
   }
 }
 
@@ -81,8 +81,8 @@
     }
 
     .name {
-      font: var(--mat-sys-body-small);
       max-width: 100px;
+      font: var(--mat-sys-body-small);
     }
   }
 }
@@ -108,14 +108,13 @@
 
 // Angular Material menu styling overrides
 ::ng-deep .mat-mdc-menu-panel {
-  background: var(--mat-sys-level2-color);
+  min-width: 180px;
   border: 1px solid var(--mat-sys-level4-color);
   border-radius: 8px;
+  background: var(--mat-sys-level2-color);
   box-shadow: var(--mat-sys-level2);
-  min-width: 180px;
 
   .mat-mdc-menu-item {
-
     font: var(--mat-sys-body-medium);
     @include padding-x(sm);
     @include padding-y(xs);
@@ -125,22 +124,21 @@
     }
 
     .mat-icon {
-      color: var(--mat-sys-level5-color);
       margin-right: 12px;
+      color: var(--mat-sys-level5-color);
     }
-
   }
 }
 
 // Login button styling (when user is not logged in)
 :host button[mat-raised-button] {
-  background: var(--mat-sys-level5-color);
+  transition: all 0.2s ease-in-out;
   border: none;
   border-radius: 8px;
+  background: var(--mat-sys-level5-color);
+  font: var(--mat-sys-body-medium);
   @include padding-x(sm);
   @include padding-y(xs);
-  font: var(--mat-sys-body-medium);
-  transition: all 0.2s ease-in-out;
 
   &:hover {
     background: var(--mat-sys-level4-color);

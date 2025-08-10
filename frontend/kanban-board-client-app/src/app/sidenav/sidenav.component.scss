@@ -37,7 +37,9 @@
 
       &-item {
         @include margin-x(xs);
-        @include margin-y(xs); // Fixed: Use margin-y instead of separate top/bottom
+        @include margin-y(
+          xs
+        ); // Fixed: Use margin-y instead of separate top/bottom
 
         mat-icon {
           width: 18px;
@@ -65,7 +67,9 @@
 
       &-item {
         @include margin-x(xs);
-        @include margin-y(xs); // Fixed: Use margin-y instead of separate top/bottom
+        @include margin-y(
+          xs
+        ); // Fixed: Use margin-y instead of separate top/bottom
 
         mat-icon {
           width: 16px;

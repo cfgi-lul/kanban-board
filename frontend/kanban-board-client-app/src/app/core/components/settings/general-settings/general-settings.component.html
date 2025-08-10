@@ -1,16 +1,26 @@
 <div class="general-settings">
-  <div class="general-settings__title">{{ 'settings.generalSettings' | translate }}</div>
-  <mat-divider />
+  <div class="general-settings__title">
+    {{ 'settings.generalSettings' | translate }}
+  </div>
+  <mat-divider class="general-settings__divider" />
 
   <div class="general-settings__section">
-    <div class="general-settings__section-title">{{ 'settings.theme' | translate }}</div>
-    <div class="general-settings__section-description">{{ 'settings.themeDescription' | translate }}</div>
+    <div class="general-settings__section-title">
+      {{ 'settings.theme' | translate }}
+    </div>
+    <div class="general-settings__section-description">
+      {{ 'settings.themeDescription' | translate }}
+    </div>
     <kn-theme-selector class="general-settings__section-control" />
   </div>
 
   <div class="general-settings__section">
-    <div class="general-settings__section-title">{{ 'settings.language' | translate }}</div>
-    <div class="general-settings__section-description">{{ 'settings.languageDescription' | translate }}</div>
+    <div class="general-settings__section-title">
+      {{ 'settings.language' | translate }}
+    </div>
+    <div class="general-settings__section-description">
+      {{ 'settings.languageDescription' | translate }}
+    </div>
     <kn-language-selector class="general-settings__section-control" />
   </div>
 </div>
