@@ -150,6 +150,10 @@
     "removeAvatar": "Удалить аватар"
   },
   "board": {
+    "defaultBoard": {
+      "name": "Новая доска",
+      "description": "Описание доски"
+    },
     "defaultColumn": {
       "name": "Название колонки",
       "description": "Описание колонки",

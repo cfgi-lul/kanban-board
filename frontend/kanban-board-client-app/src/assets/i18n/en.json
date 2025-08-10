@@ -150,6 +150,10 @@
     "removeAvatar": "Remove Avatar"
   },
   "board": {
+    "defaultBoard": {
+      "name": "New Board",
+      "description": "Board Description"
+    },
     "defaultColumn": {
       "todo": "To Do",
       "inProgress": "In Progress",

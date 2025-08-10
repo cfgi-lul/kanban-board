@@ -119,10 +119,10 @@ export class CreateBoardModalComponent {
     ];
 
     const defaultName =
-      data?.name || this.translate.instant('board.defaultColumn.name');
+      data?.name || this.translate.instant('board.defaultBoard.name');
     const defaultDescription =
       data?.description ||
-      this.translate.instant('board.defaultColumn.description');
+      this.translate.instant('board.defaultBoard.description');
 
     return this.fb.group({
       name: [
