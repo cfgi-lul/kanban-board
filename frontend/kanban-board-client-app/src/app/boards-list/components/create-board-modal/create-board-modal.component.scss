@@ -57,14 +57,14 @@
     display: flex;
     flex-direction: column;
     @include gap(lg);
-    @include margin-x(xl);
+    // @include margin-x(xl);
 
     &-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       @include padding-y(sm);
-      @include padding-x(xl);
+
       background-color: var(--mat-sys-surface-container);
     }
 
@@ -77,7 +77,7 @@
       display: flex;
       flex-direction: column;
       @include gap(lg);
-      @include padding-x(xl);
+
     }
   }
 
@@ -154,7 +154,6 @@
 
     #{$self}__columns {
       @include gap(md);
-      @include margin-x(lg);
 
       &-header {
         @include padding-y(sm);
@@ -163,7 +162,6 @@
 
       &-list {
         @include gap(md);
-        @include padding-x(lg);
       }
     }
   }
@@ -181,7 +179,6 @@
 
     #{$self}__columns {
       @include gap(xs);
-      @include margin-x(sm);
 
       &-header {
         @include padding-y(xs);
@@ -190,7 +187,6 @@
 
       &-list {
         @include gap(xs);
-        @include padding-x(sm);
       }
     }
 

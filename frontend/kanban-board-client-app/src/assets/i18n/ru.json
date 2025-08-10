@@ -168,7 +168,7 @@
     "boardId": "ID доски",
     "columns": "Колонки",
     "openBoard": "Открыть доску",
-    "createNewBoard": "Создать новую доску",
+    "createNewBoard": "Создать",
     "clickToCreateBoard": "Нажмите, чтобы создать новую канбан-доску",
     "loadingBoard": "Загрузка доски...",
     "errorLoadingBoard": "Ошибка загрузки доски",
