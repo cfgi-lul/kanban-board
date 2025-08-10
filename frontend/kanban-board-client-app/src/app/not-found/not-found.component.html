@@ -1,30 +1,22 @@
-<div class="not-found-container">
-  <mat-card class="not-found-card">
-    <mat-card-content class="not-found-content">
-      <!-- Error Code -->
-      <div class="error-code">
-        <span class="error-number">{{
-          'common.notFound.errorCode' | translate
-        }}</span>
-      </div>
-
-      <!-- Main Content -->
-      <div class="main-content">
-        <h1 class="error-title">{{ 'common.notFound.title' | translate }}</h1>
-        <p class="error-subtitle">
+<div class="not-found">
+  <mat-card class="not-found__card">
+    <mat-card-header></mat-card-header>
+    <mat-card-content class="not-found__content">
+      <div class="not-found__main">
+        <div class="not-found__main-title">{{ 'common.notFound.title' | translate }}</div>
+        <div class="not-found__main-subtitle">
           {{ 'common.notFound.subtitle' | translate }}
-        </p>
-        <p class="error-description">
+        </div>
+        <div class="not-found__main-description">
           {{ 'common.notFound.description' | translate }}
-        </p>
+        </div>
       </div>
 
-      <!-- Suggestions List -->
-      <div class="suggestions-section">
-        <h3 class="suggestions-title">
+      <div class="not-found__suggestions">
+        <div class="not-found__suggestions-title">
           {{ 'common.notFound.suggestions' | translate }}
-        </h3>
-        <mat-list class="suggestions-list">
+        </div>
+        <mat-list class="not-found__suggestions-list">
           <mat-list-item>
             <mat-icon matListItemIcon>search</mat-icon>
             <span matListItemTitle>{{
@@ -52,13 +44,12 @@
         </mat-list>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="action-buttons">
+      <div class="not-found__actions">
         <button
           mat-raised-button
           color="primary"
           (click)="goHome()"
-          class="home-button"
+          class="not-found__actions-home"
           type="button"
           [attr.aria-label]="'common.backHome' | translate"
         >
@@ -69,7 +60,7 @@
         <button
           mat-stroked-button
           (click)="goBack()"
-          class="back-button"
+          class="not-found__actions-back"
           type="button"
           [attr.aria-label]="'common.goBack' | translate"
         >

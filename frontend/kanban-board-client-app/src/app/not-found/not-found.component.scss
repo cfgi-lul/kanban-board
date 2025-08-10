@@ -1,279 +1,117 @@
-@use "../../theming/mixins" as *;
+@use '../../theming/mixins' as mixins;
+:host {
+  flex: 1;
+}
 
-.not-found-container {
+.not-found {
+  width: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
-  @include padding(sm);
-  background-color: var(--mat-sys-surface);
-}
+  @include mixins.padding('md');
 
-:host {
-  flex: 1;
-  width: 100%;
-}
-
-.not-found-card {
-  width: 100%;
-  max-width: 600px;
-  border-radius: 16px;
-  background-color: var(--mat-sys-surface-container);
-  box-shadow: 0 8px 32px var(--mat-sys-shadow);
-  color: var(--mat-sys-on-surface);
-  text-align: center;
-  animation: slideInUp 0.6s ease-out;
-}
-
-.not-found-content {
-  @include padding-y(xl);
-  @include padding-x(lg);
-}
-
-.error-code {
-  @include margin-bottom(lg);
-
-  .error-number {
-    display: block;
-    color: var(--mat-sys-primary);
-    font-size: 6rem;
-    font-weight: 700;
-    line-height: 1;
-    text-shadow: 2px 2px 4px var(--mat-sys-shadow);
-  }
-}
-
-.main-content {
-  @include margin-bottom(lg);
-
-  .error-title {
-    margin-top: 0;
-    @include margin-bottom(sm);
-    color: var(--mat-sys-on-surface);
-    font-size: 2rem;
-    font-weight: 600;
+  &__card {
+    width: 100%;
+    max-width: 800px;
   }
 
-  .error-subtitle {
-    opacity: 0.8;
-    @include margin-bottom(sm);
-    color: var(--mat-sys-on-surface);
-    font-size: 1.25rem;
-  }
-
-  .error-description {
-    opacity: 0.7;
-    margin-bottom: 0;
-    color: var(--mat-sys-on-surface);
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-}
-
-.suggestions-section {
-  @include margin-bottom(lg);
-
-  .suggestions-title {
-    margin-top: 0;
-    @include margin-bottom(sm);
-    color: var(--mat-sys-on-surface);
-    font-size: 1.125rem;
-    font-weight: 600;
-  }
-
-  .suggestions-list {
-    background: transparent;
-    text-align: left;
-
-    mat-list-item {
-      transition: background-color 0.2s ease;
-      min-height: 48px;
-      @include margin-bottom(xs);
-      border-radius: 8px;
-
-      &:hover {
-        background-color: var(--mat-sys-state-hover-surface);
-      }
-
-      mat-icon {
-        width: 20px;
-        height: 20px;
-        color: var(--mat-sys-primary);
-        font-size: 20px;
-      }
-
-      span {
-        color: var(--mat-sys-on-surface);
-        font-size: 0.95rem;
-        line-height: 1.4;
-      }
-    }
-  }
-}
-
-.action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  @include gap(sm);
-
-  .home-button {
-    min-width: 160px;
-    height: 48px;
-    font-weight: 500;
-
-    mat-icon {
-      @include margin-right(xs);
-    }
-  }
-
-  .back-button {
-    min-width: 160px;
-    height: 48px;
-    border-color: var(--mat-sys-outline);
-    color: var(--mat-sys-on-surface);
-    font-weight: 500;
-
-    mat-icon {
-      @include margin-right(xs);
-    }
-
-    &:hover {
-      background-color: var(--mat-sys-state-hover-surface);
-    }
-  }
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-// Responsive Design
-@media (width <= 768px) {
-  .not-found-container {
-    @include padding(xs);
-  }
-
-  .not-found-content {
-    @include padding-y(lg);
-    @include padding-x(md);
-  }
-
-  .error-code .error-number {
-    font-size: 4rem;
-  }
-
-  .main-content .error-title {
-    font-size: 1.75rem;
-  }
-
-  .main-content .error-subtitle {
-    font-size: 1.125rem;
-  }
-
-  .action-buttons {
+  &__content {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    @include mixins.gap('lg');
+  }
 
-    .home-button,
-    .back-button {
-      width: 100%;
-      max-width: 280px;
-      height: 52px;
-      font-size: 1rem;
+  &__error {
+    &-number {
+      font-size: 6rem;
+      font-weight: 700;
     }
   }
 
-  .suggestions-list mat-list-item {
-    min-height: 52px;
-    @include padding-y(sm);
+  &__main {
+    display: flex;
+    flex-direction: column;
+    @include mixins.gap('sm');
+
+    &-title {
+      font-size: 2rem;
+      font-weight: 500;
+    }
+
+    &-subtitle {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__suggestions {
+    width: 100%;
+    
+    &-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      @include mixins.margin-bottom('sm');
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
   }
 }
 
-@media (width <= 480px) {
-  .not-found-content {
-    @include padding-y(md);
-    @include padding-x(sm);
-  }
-
-  .error-code .error-number {
-    font-size: 3.5rem;
-  }
-
-  .main-content .error-title {
-    font-size: 1.5rem;
-  }
-
-  .main-content .error-subtitle {
-    font-size: 1rem;
-  }
-
-  .main-content .error-description {
-    font-size: 0.9rem;
-  }
-
-  .suggestions-section {
-    @include margin-bottom(md);
-
-    .suggestions-title {
-      @include margin-bottom(sm);
-      font-size: 1rem;
-    }
-
-    .suggestions-list mat-list-item {
-      min-height: 56px;
-      @include padding-y(xs);
-
-      mat-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 18px;
-      }
-
-      span {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
-  .action-buttons {
-    @include gap(xs);
-
-    .home-button,
-    .back-button {
-      width: 100%;
-      height: 56px;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
+@container (max-width: 1280px) {
+  .not-found {
+    &__error-number {
+      font-size: 5rem;
     }
   }
 }
 
-// Touch device optimizations
-@media (hover: none) and (pointer: coarse) {
-  .suggestions-list mat-list-item {
-    &:hover {
-      background-color: transparent;
+@container (max-width: 1024px) {
+  .not-found {
+    &__error-number {
+      font-size: 4rem;
     }
-    &:active {
-      background-color: var(--mat-sys-state-hover-surface);
+    
+    &__main-title {
+      font-size: 1.75rem;
     }
   }
+}
 
-  .action-buttons button {
-    &:hover {
-      transform: none;
+@container (max-width: 768px) {
+  .not-found {
+    &__error-number {
+      font-size: 3rem;
     }
-    &:active {
-      transform: scale(0.98);
+
+    &__main-title {
+      font-size: 1.5rem;
+    }
+
+    &__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+}
+
+@container (max-width: 480px) {
+  .not-found {
+    &__error-number {
+      font-size: 2.5rem;
+    }
+
+    &__main-title {
+      font-size: 1.25rem;
+    }
+
+    &__main-subtitle,
+    &__suggestions-title {
+      font-size: 1rem;
     }
   }
 }
