@@ -44,7 +44,6 @@ export class AvatarPickerComponent {
     const file = event.target.files[0];
     if (file) {
       this.fileSelected.emit(file);
-      // Clear the file input
       this.fileInput().nativeElement.value = '';
     }
   }

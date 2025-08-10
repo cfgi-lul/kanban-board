@@ -10,10 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserInstance } from '../../models/classes/UserInstance';
-import { SettingsComponent } from '../settings/settings.component';
+import { SettingsModalService } from '../../services/settings-modal.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -34,7 +33,7 @@ export class UserBadgeComponent {
   authService = inject(AuthService);
   avatarService = inject(AvatarService);
   router = inject(Router);
-  dialog = inject(MatDialog);
+  settingsModalService = inject(SettingsModalService);
 
   getUserDisplayName(): string {
     const user = this.user();
@@ -71,13 +70,7 @@ export class UserBadgeComponent {
   }
 
   onSettings(): void {
-    this.dialog.open(SettingsComponent, {
-      width: '900px',
-      maxWidth: '95vw',
-      maxHeight: '90vh',
-      panelClass: 'settings-dialog-container',
-      data: {},
-    });
+    this.settingsModalService.openSettingsModal();
   }
 
   getAvatarUrl(): string {

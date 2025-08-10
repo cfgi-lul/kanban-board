@@ -157,7 +157,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   removeAvatar(): void {
-    if (confirm('Are you sure you want to remove your avatar?')) {
+
       this.isUploadingAvatar = true;
       this.avatarService.removeAvatar().subscribe({
         next: updatedUser => {
@@ -173,7 +173,6 @@ export class UserProfileComponent implements OnInit {
           this.showMessage('settings.avatarRemovedError', 'error');
         },
       });
-    }
   }
 
   getAvatarUrl(): string {

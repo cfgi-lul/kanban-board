@@ -9,6 +9,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/api/auth.service';
 import { ThemeService } from './core/services/theme.service';
 import { I18nService } from './core/services/i18n.service';
+import { SettingsModalService } from './core/services/settings-modal.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatDrawerMode } from '@angular/material/sidenav';
 import { HeaderComponent } from './core/components/header/header.component';
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit {
   themeService = inject(ThemeService);
   i18nService = inject(I18nService);
   translateService = inject(TranslateService);
+  settingsModalService = inject(SettingsModalService);
 
   private readonly LARGE_SCREEN_BREAKPOINT = 1280;
 
