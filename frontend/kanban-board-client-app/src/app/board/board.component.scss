@@ -6,14 +6,14 @@
 }
 
 .board {
-  container-type: inline-size;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  container-type: inline-size;
 
   &__loading {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -25,18 +25,18 @@
   }
 
   &__error {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     @include gap(md);
 
     &-icon {
-      color: var(--mat-warn-color);
-      font-size: 48px;
       width: 48px;
       height: 48px;
+      color: var(--mat-warn-color);
+      font-size: 48px;
     }
 
     &-message {
@@ -44,9 +44,9 @@
     }
 
     &-details {
+      max-width: 600px;
       font: var(--mat-sys-body-medium);
       text-align: center;
-      max-width: 600px;
     }
 
     &-retry-button {
@@ -56,17 +56,19 @@
 
   &__columns {
     display: flex;
-    @include gap(md);
-    @include padding(md);
+    flex: 1;
     flex-wrap: nowrap;
     overflow-x: auto;
     min-height: 0;
-    flex: 1;
+    @include gap(md);
+    @include padding(md);
   }
 
   &__column {
     &-card {
-      min-height: 600px;
+      display: flex;
+      min-height: 450px;
+      @include gap(md);
     }
 
     &-title {
@@ -83,9 +85,6 @@
     &-content {
       flex: 1;
       width: 382px;
-      // min-height: 100px;
-      // min-height: 600px;
-      // @include padding-y(sm);
     }
   }
 
@@ -106,10 +105,7 @@
     }
 
     &-content {
-      // display: flex;
-      // align-items: center;
       @include gap(sm);
-      // @include padding-y(sm);
     }
 
     &-icon {
@@ -122,49 +118,37 @@
   }
 
   &__empty {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     @include gap(md);
 
     &-icon {
-      color: var(--mat-sys-color-on-surface-variant);
-      font-size: 48px;
       width: 48px;
       height: 48px;
+      color: var(--mat-sys-color-on-surface-variant);
+      font-size: 48px;
     }
 
     &-message {
       font: var(--mat-sys-title-large);
     }
-
-    &-details {
-      font: var(--mat-sys-body-medium);
-      text-align: center;
-      max-width: 600px;
-    }
-  }
-
-  @container (width <= 1280px) {
-    &__columns {
-      @include gap(sm);
-    }
   }
 
   @container (width <= 1024px) {
     &__columns {
-      @include padding(sm);
+      @include padding(md);
     }
   }
 
   @container (width <= 768px) {
-    &__columns {
-      @include gap(xs);
-    }
-
     &__column {
+      &-card {
+        @include gap(sm);
+      }
+
       &-content {
         width: 332px;
       }
@@ -173,6 +157,8 @@
 
   @container (width <= 480px) {
     &__column {
+      @include gap(xs);
+
       &-content {
         width: 232px;
       }

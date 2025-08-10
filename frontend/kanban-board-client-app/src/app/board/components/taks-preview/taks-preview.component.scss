@@ -1,16 +1,17 @@
 @use "../../../../theming/mixins" as *;
 
-:host{
+:host {
   overflow: hidden;
 }
+
 .task {
-  container-type: inline-size;
-  width: 350px;
   overflow: hidden;
   transition: all 0.2s ease;
-  @include margin-bottom(sm);
+  width: 350px;
   border-radius: 8px;
   box-shadow: var(--mat-elevation-z1);
+  container-type: inline-size;
+  @include margin-bottom(sm);
 
   &:hover {
     transform: translateY(-2px);
@@ -77,6 +78,7 @@
 
   @container (width <= 480px) {
     width: 200px;
+
     &__header {
       @include padding-x(sm);
       @include padding-top(sm);
@@ -109,9 +111,5 @@
         font-size: 14px;
       }
     }
-  }
-
-  @container (width <= 280px) {
-    width: 150px;
   }
 }

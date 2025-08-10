@@ -40,9 +40,6 @@
     @include gap(sm);
     margin: 0;
 
-    font-size: 24px;
-    font-weight: 600;
-
     &-icon {
       width: 24px;
       height: 24px;
@@ -151,8 +148,7 @@
 
     &-text {
       color: inherit;
-      font-size: 14px;
-      font-weight: 500;
+      font: var(--mat-sys-body-medium);
     }
   }
 
@@ -185,8 +181,6 @@
     }
 
     &__title {
-      font-size: 20px;
-
       &-icon {
         width: 20px;
         height: 20px;
@@ -222,8 +216,6 @@
     }
 
     &__title {
-      font-size: 18px;
-
       &-icon {
         width: 18px;
         height: 18px;

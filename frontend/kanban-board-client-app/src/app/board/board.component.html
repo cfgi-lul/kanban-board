@@ -27,40 +27,36 @@
       <div class="board__columns" cdkDropListGroup>
         @for (column of boardState.board.columns; track column.id) {
           <div class="board__column-container">
-            <div class="board__column">
-              <mat-card
-                class="board__column-card"
-                
-                appearance="outlined"
-              >
-                <mat-card-header>
-                  <mat-card-title class="board__column-title">
-                    <mat-icon class="board__column-icon">view_column</mat-icon>
-                    {{ column.name }}
-                    <span class="board__task-count"
-                      >({{ column.tasks?.length || 0 }})</span
-                    >
-                  </mat-card-title>
-                </mat-card-header>
+            <mat-card class="board__column-card" appearance="outlined">
+              <mat-card-header>
+                <mat-card-title class="board__column-title">
+                  <mat-icon class="board__column-icon">view_column</mat-icon>
+                  {{ column.name }}
+                  <span class="board__task-count"
+                    >({{ column.tasks?.length || 0 }})</span
+                  >
+                </mat-card-title>
+              </mat-card-header>
 
-                <mat-card-content class="board__column-content"
+              <mat-card-content
+                class="board__column-content"
                 cdkDropList
                 [cdkDropListData]="column.tasks"
                 [id]="column.id.toString()"
-                (cdkDropListDropped)="onDrop($event, boardState.board)">
-                  @for (task of column.tasks; track task.id) {
-                    <kn-taks-preview
-                      [taks]="task"
-                      (editTask)="editTask(task.id)"
-                      [name]="task.title"
-                      (deleteTask)="deleteTask(task.id)"
-                      class="board__task"
-                      cdkDrag
-                    />
-                  }
-                </mat-card-content>
-              </mat-card>
-            </div>
+                (cdkDropListDropped)="onDrop($event, boardState.board)"
+              >
+                @for (task of column.tasks; track task.id) {
+                  <kn-taks-preview
+                    [taks]="task"
+                    (editTask)="editTask(task.id)"
+                    [name]="task.title"
+                    (deleteTask)="deleteTask(task.id)"
+                    class="board__task"
+                    cdkDrag
+                  />
+                }
+              </mat-card-content>
+            </mat-card>
 
             <mat-card
               class="board__add-task"
