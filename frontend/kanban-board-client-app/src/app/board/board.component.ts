@@ -10,6 +10,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
   inject,
 } from '@angular/core';
 import {
@@ -72,6 +73,7 @@ interface BoardState {
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
+  // encapsulation: ViewEncapsulation.None,
 })
 export class BoardComponent implements OnInit, OnDestroy {
   private boardService = inject(BoardService);

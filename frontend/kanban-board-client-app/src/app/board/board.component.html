@@ -1,79 +1,98 @@
-<div class="board-container">
+<div class="board">
   @if (boardState$ | async; as boardState) {
     @if (boardState.loading) {
-      <div class="loading-container">
+      <div class="board__loading">
         <mat-spinner diameter="50" />
-        <p>{{ 'board.loadingBoard' | translate }}</p>
+        <div class="board__loading-text">
+          {{ 'board.loadingBoard' | translate }}
+        </div>
       </div>
     } @else if (boardState.error) {
-      <div class="error-container">
-        <mat-icon class="error-icon">error</mat-icon>
-        <h3>{{ 'board.errorLoadingBoard' | translate }}</h3>
-        <p>{{ boardState.error }}</p>
-        <button mat-raised-button color="primary" (click)="initializeBoard()">
+      <div class="board__error">
+        <mat-icon class="board__error-icon">error</mat-icon>
+        <div class="board__error-message">
+          {{ 'board.errorLoadingBoard' | translate }}
+        </div>
+        <div class="board__error-details">{{ boardState.error }}</div>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="initializeBoard()"
+          class="board__retry-button"
+        >
           {{ 'common.tryAgain' | translate }}
         </button>
       </div>
     } @else if (boardState.board) {
-      <div class="board" cdkDropListGroup>
+      <div class="board__columns" cdkDropListGroup>
         @for (column of boardState.board.columns; track column.id) {
-          <div class="column-wrapper">
-            <mat-card
-              class="column"
-              cdkDropList
-              [cdkDropListData]="column.tasks"
-              [id]="column.id.toString()"
-              (cdkDropListDropped)="onDrop($event, boardState.board)"
-              appearance="outlined"
-            >
-              <mat-card-header>
-                <mat-card-title class="column-title">
-                  <mat-icon class="column-icon">view_column</mat-icon>
-                  {{ column.name }}
-                  <span class="task-count"
-                    >({{ column.tasks?.length || 0 }})</span
-                  >
-                </mat-card-title>
-              </mat-card-header>
+          <div class="board__column-container">
+            <div class="board__column">
+              <mat-card
+                class="board__column-card"
+                cdkDropList
+                [cdkDropListData]="column.tasks"
+                [id]="column.id.toString()"
+                (cdkDropListDropped)="onDrop($event, boardState.board)"
+                appearance="outlined"
+              >
+                <mat-card-header>
+                  <mat-card-title class="board__column-title">
+                    <mat-icon class="board__column-icon">view_column</mat-icon>
+                    {{ column.name }}
+                    <span class="board__task-count"
+                      >({{ column.tasks?.length || 0 }})</span
+                    >
+                  </mat-card-title>
+                </mat-card-header>
 
-              <mat-card-content class="column-content">
-                @for (task of column.tasks; track task.id) {
-                  <kn-taks-preview
-                    [taks]="task"
-                    (editTask)="editTask(task.id)"
-                    [name]="task.title"
-                    (deleteTask)="deleteTask(task.id)"
-                    class="task"
-                    cdkDrag
-                  />
-                }
-              </mat-card-content>
-            </mat-card>
+                <mat-card-content class="board__column-content">
+                  @for (task of column.tasks; track task.id) {
+                    <kn-taks-preview
+                      [taks]="task"
+                      (editTask)="editTask(task.id)"
+                      [name]="task.title"
+                      (deleteTask)="deleteTask(task.id)"
+                      class="board__task"
+                      cdkDrag
+                    />
+                  }
+                </mat-card-content>
+              </mat-card>
+            </div>
 
             <mat-card
-              class="add-task-card"
+              class="board__add-task"
               appearance="outlined"
               (click)="createTask('' + boardState.board.id, '' + column.id)"
             >
-              <mat-card-content class="add-task-content">
-                <mat-icon class="add-icon">add</mat-icon>
-                <span class="add-text">{{ 'board.addTask' | translate }}</span>
+              <mat-card-content class="board__add-task-content">
+                <mat-icon class="board__add-task-icon">add</mat-icon>
+                <span class="board__add-task-text">{{
+                  'board.addTask' | translate
+                }}</span>
               </mat-card-content>
             </mat-card>
           </div>
         }
       </div>
     } @else {
-      <div class="empty-container">
-        <mat-icon class="empty-icon">dashboard</mat-icon>
-        <h3>{{ 'board.noBoardFound' | translate }}</h3>
-        <p>{{ 'board.boardCouldNotBeLoaded' | translate }}</p>
+      <div class="board__empty">
+        <mat-icon class="board__empty-icon">dashboard</mat-icon>
+        <div class="board__empty-message">
+          {{ 'board.noBoardFound' | translate }}
+        </div>
+        <div class="board__empty-details">
+          {{ 'board.boardCouldNotBeLoaded' | translate }}
+        </div>
       </div>
     }
   } @else {
-    <div class="loading-container">
+    <div class="board__loading">
       <mat-spinner diameter="50" />
-      <p>{{ 'common.initializing' | translate }}</p>
+      <div class="board__loading-text">
+        {{ 'common.initializing' | translate }}
+      </div>
     </div>
   }
 </div>

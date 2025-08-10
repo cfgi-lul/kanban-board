@@ -1,15 +1,16 @@
-@use '../../theming/mixins' as mixins;
+@use "../../theming/mixins" as mixins;
+
 :host {
   flex: 1;
 }
 
 .not-found {
-  width: 100%;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  @include mixins.padding('md');
+  width: 100%;
+  height: 100vh;
+  @include mixins.padding("md");
 
   &__card {
     width: 100%;
@@ -21,7 +22,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    @include mixins.gap('lg');
+    @include mixins.gap("lg");
   }
 
   &__error {
@@ -34,7 +35,7 @@
   &__main {
     display: flex;
     flex-direction: column;
-    @include mixins.gap('sm');
+    @include mixins.gap("sm");
 
     &-title {
       font-size: 2rem;
@@ -48,11 +49,11 @@
 
   &__suggestions {
     width: 100%;
-    
+
     &-title {
       font-size: 1.25rem;
       font-weight: 500;
-      @include mixins.margin-bottom('sm');
+      @include mixins.margin-bottom("sm");
     }
   }
 
@@ -75,7 +76,7 @@
     &__error-number {
       font-size: 4rem;
     }
-    
+
     &__main-title {
       font-size: 1.75rem;
     }

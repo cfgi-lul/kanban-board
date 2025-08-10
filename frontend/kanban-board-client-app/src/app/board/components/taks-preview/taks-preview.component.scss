@@ -1,6 +1,12 @@
 @use "../../../../theming/mixins" as *;
 
-.task-card {
+:host{
+  overflow: hidden;
+}
+.task {
+  container-type: inline-size;
+  width: 350px;
+  overflow: hidden;
   transition: all 0.2s ease;
   @include margin-bottom(sm);
   border-radius: 8px;
@@ -19,14 +25,14 @@
   &.cdk-drag-placeholder {
     opacity: 0.3;
   }
-}
 
-.task-header {
-  @include padding-x(md);
-  @include padding-top(sm);
-  @include padding-bottom(sm);
+  &__header {
+    @include padding-x(md);
+    @include padding-top(sm);
+    @include padding-bottom(sm);
+  }
 
-  .task-title {
+  &__title {
     display: flex;
     align-items: center;
     @include gap(sm);
@@ -34,61 +40,26 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
-
-    .task-icon {
-      flex-shrink: 0;
-      width: 16px;
-      height: 16px;
-      color: var(--mat-primary-color);
-      font-size: 16px;
-    }
-  }
-}
-
-.task-content {
-  @include padding-x(md);
-  @include padding-bottom(sm);
-
-  .task-description {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    @include margin-bottom(sm);
-    color: var(--mat-secondary-text-color);
-    font-size: 12px;
-    line-height: 1.4;
-    text-overflow: ellipsis;
   }
 
-  .task-meta {
+  &__icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--mat-primary-color);
+    font-size: 16px;
+  }
+
+  &__actions {
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
     @include gap(xs);
-    color: var(--mat-secondary-text-color);
-    font-size: 11px;
-
-    .comment-icon {
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
-    }
-
-    .comment-count {
-      font-weight: 500;
-    }
+    margin: 0;
+    @include padding-x(sm);
+    @include padding-y(sm);
   }
-}
 
-.task-actions {
-  display: flex;
-  justify-content: flex-end;
-  @include gap(xs);
-  margin: 0;
-  @include padding-x(sm);
-  @include padding-y(sm);
-
-  .action-button {
+  &__action {
     width: 32px;
     height: 32px;
     line-height: 32px;
@@ -99,50 +70,35 @@
       font-size: 16px;
     }
   }
-}
 
-// Responsive design
-@media (width <= 480px) {
-  .task-header {
-    @include padding-x(sm);
-    @include padding-top(sm);
-    @include padding-bottom(xs);
+  @container (width <= 768px) {
+    width: 300px;
+  }
 
-    .task-title {
+  @container (width <= 480px) {
+    width: 200px;
+    &__header {
+      @include padding-x(sm);
+      @include padding-top(sm);
+      @include padding-bottom(xs);
+    }
+
+    &__title {
       font-size: 13px;
-
-      .task-icon {
-        width: 14px;
-        height: 14px;
-        font-size: 14px;
-      }
-    }
-  }
-
-  .task-content {
-    @include padding-x(sm);
-    @include padding-bottom(xs);
-
-    .task-description {
-      font-size: 11px;
     }
 
-    .task-meta {
-      font-size: 10px;
-
-      .comment-icon {
-        width: 12px;
-        height: 12px;
-        font-size: 12px;
-      }
+    &__icon {
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
     }
-  }
 
-  .task-actions {
-    @include padding-x(sm);
-    @include padding-y(xs);
+    &__actions {
+      @include padding-x(sm);
+      @include padding-y(xs);
+    }
 
-    .action-button {
+    &__action {
       width: 28px;
       height: 28px;
       line-height: 28px;
@@ -153,5 +109,9 @@
         font-size: 14px;
       }
     }
+  }
+
+  @container (width <= 280px) {
+    width: 150px;
   }
 }
