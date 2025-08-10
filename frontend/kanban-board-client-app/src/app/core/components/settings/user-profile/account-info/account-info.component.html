@@ -27,7 +27,10 @@
       }}</span>
       <span class="account-info__value">
         <mat-chip-set>
-          <mat-chip [color]="currentUser()?.enabled ? 'accent' : 'warn'" selected>
+          <mat-chip
+            [color]="currentUser()?.enabled ? 'accent' : 'warn'"
+            selected
+          >
             {{
               (currentUser()?.enabled ? 'settings.active' : 'settings.inactive')
                 | translate
