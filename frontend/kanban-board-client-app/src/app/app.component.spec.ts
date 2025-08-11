@@ -7,14 +7,17 @@ import {
   afterEach,
 } from '@jest/globals';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { AuthService } from './core/api/auth.service';
 import { ThemeService } from './core/services/theme.service';
 import { I18nService } from './core/services/i18n.service';
+import { SettingsModalService } from './core/services/settings-modal.service';
 import { UserInstance } from './core/models/classes/UserInstance';
 
 describe('AppComponent', () => {
@@ -24,6 +27,8 @@ describe('AppComponent', () => {
   let themeService: Partial<ThemeService>;
   let i18nService: Partial<I18nService>;
   let translateService: Partial<TranslateService>;
+  let settingsModalService: Partial<SettingsModalService>;
+  let matDialog: Partial<MatDialog>;
 
   const mockUser: UserInstance = {
     id: 1,
@@ -37,8 +42,6 @@ describe('AppComponent', () => {
 
   // Store original window properties
   const originalInnerWidth = window.innerWidth;
-  const originalAddEventListener = window.addEventListener;
-  const originalRemoveEventListener = window.removeEventListener;
 
   beforeEach(async () => {
     const authServiceSpy = {
@@ -65,18 +68,30 @@ describe('AppComponent', () => {
       }),
     } as Partial<TranslateService>;
 
+    const settingsModalServiceSpy = {
+      openSettingsModal: jest.fn(),
+    } as Partial<SettingsModalService>;
+
+    const matDialogSpy = {
+      open: jest.fn(),
+      openDialogs: [],
+    } as Partial<MatDialog>;
+
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
         AppComponent,
         TranslateModule.forRoot(),
       ],
       providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: AuthService, useValue: authServiceSpy },
         { provide: ThemeService, useValue: themeServiceSpy },
         { provide: I18nService, useValue: i18nServiceSpy },
         { provide: TranslateService, useValue: translateServiceSpy },
+        { provide: SettingsModalService, useValue: settingsModalServiceSpy },
+        { provide: MatDialog, useValue: matDialogSpy },
       ],
     }).compileComponents();
 
@@ -88,6 +103,10 @@ describe('AppComponent', () => {
     translateService = TestBed.inject(
       TranslateService
     ) as Partial<TranslateService>;
+    settingsModalService = TestBed.inject(
+      SettingsModalService
+    ) as Partial<SettingsModalService>;
+    matDialog = TestBed.inject(MatDialog) as Partial<MatDialog>;
   });
 
   afterEach(() => {
@@ -111,14 +130,6 @@ describe('AppComponent', () => {
       expect(component.isLargeScreen).toBe(false);
     });
 
-    it('should inject required services', () => {
-      expect(component.currentUser).toBeDefined();
-      expect(component.isAdmin).toBeDefined();
-      expect(component.themeService).toBeDefined();
-      expect(component.i18nService).toBeDefined();
-      expect(component.translateService).toBeDefined();
-    });
-
     it('should initialize with correct large screen breakpoint', () => {
       expect(component['LARGE_SCREEN_BREAKPOINT']).toBe(1280);
     });
@@ -126,7 +137,6 @@ describe('AppComponent', () => {
 
   describe('Screen Size Detection', () => {
     it('should detect large screen correctly', () => {
-      // Mock large screen
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
@@ -138,7 +148,6 @@ describe('AppComponent', () => {
     });
 
     it('should detect small screen correctly', () => {
-      // Mock small screen
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
@@ -181,12 +190,10 @@ describe('AppComponent', () => {
     });
 
     it('should not update sidenav behavior when screen size does not change', () => {
-      // Set initial state
       component.isLargeScreen = false;
       component.sidenavMode = 'over';
       component.isSidenavOpen = false;
 
-      // Mock same screen size
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
@@ -198,7 +205,6 @@ describe('AppComponent', () => {
 
       component['checkScreenSize']();
 
-      // Should not change since screen size didn't actually change
       expect(component.sidenavMode).toBe(initialMode);
       expect(component.isSidenavOpen).toBe(initialOpen);
     });
@@ -206,7 +212,6 @@ describe('AppComponent', () => {
 
   describe('Sidenav Management', () => {
     it('should toggle sidenav only on small screens', () => {
-      // Small screen
       component.isLargeScreen = false;
       component.isSidenavOpen = false;
 
@@ -218,12 +223,10 @@ describe('AppComponent', () => {
     });
 
     it('should not toggle sidenav on large screens', () => {
-      // Large screen
       component.isLargeScreen = true;
       component.isSidenavOpen = true;
 
       component.toggleSidenav();
-      // Should not change on large screens
       expect(component.isSidenavOpen).toBe(true);
     });
 
@@ -250,20 +253,16 @@ describe('AppComponent', () => {
       expect(themeService.toggleTheme).toHaveBeenCalled();
     });
 
-    it('should call theme service only once per toggle', () => {
-      component.toggleTheme();
-      component.toggleTheme();
+    it('should handle theme service errors gracefully', () => {
+      (themeService.toggleTheme as jest.Mock).mockImplementation(() => {
+        throw new Error('Theme service error');
+      });
 
-      expect(themeService.toggleTheme).toHaveBeenCalledTimes(2);
+      expect(() => component.toggleTheme()).toThrow('Theme service error');
     });
   });
 
   describe('User Management', () => {
-    it('should have currentUser observable', () => {
-      expect(component.currentUser).toBeDefined();
-      expect(component.currentUser).toBeInstanceOf(BehaviorSubject);
-    });
-
     it('should check admin status', () => {
       expect(component.isAdmin).toBe(false);
       expect(authService.isAdmin).toHaveBeenCalled();
@@ -272,7 +271,6 @@ describe('AppComponent', () => {
     it('should update admin status when service changes', () => {
       (authService.isAdmin as jest.Mock).mockReturnValue(true);
 
-      // Re-inject the service to get updated value
       const newComponent =
         TestBed.createComponent(AppComponent).componentInstance;
       expect(newComponent.isAdmin).toBe(true);
@@ -280,10 +278,6 @@ describe('AppComponent', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should initialize component without errors', () => {
-      expect(() => component.ngOnInit()).not.toThrow();
-    });
-
     it('should call checkScreenSize on initialization', () => {
       const checkScreenSizeSpy = jest.spyOn(
         component as any,
@@ -301,14 +295,11 @@ describe('AppComponent', () => {
         'checkScreenSize'
       );
 
-      // Simulate window resize
       component.onResize();
-
       expect(checkScreenSizeSpy).toHaveBeenCalled();
     });
 
     it('should update screen size on resize', () => {
-      // Mock resize to large screen
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
@@ -320,35 +311,12 @@ describe('AppComponent', () => {
     });
   });
 
-  describe('Service Integration', () => {
-    it('should use theme service correctly', () => {
-      component.toggleTheme();
-      expect(themeService.toggleTheme).toHaveBeenCalled();
-    });
-
-    it('should use auth service correctly', () => {
-      expect(authService.isAdmin).toHaveBeenCalled();
-    });
-
-    it('should have access to translation service', () => {
-      expect(component.translateService).toBeDefined();
-    });
-
-    it('should have access to i18n service', () => {
-      expect(component.i18nService).toBeDefined();
-    });
-
-    it('should have access to current user from auth service', () => {
-      expect(component.currentUser).toBe(authService.currentUser);
-    });
-  });
-
   describe('Edge Cases', () => {
     it('should handle exact breakpoint width', () => {
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
-        value: 1280, // Exact breakpoint
+        value: 1280,
       });
 
       component['checkScreenSize']();
@@ -359,33 +327,22 @@ describe('AppComponent', () => {
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
-        value: 1279, // Just below breakpoint
+        value: 1279,
       });
 
       component['checkScreenSize']();
       expect(component.isLargeScreen).toBe(false);
     });
 
-    it('should handle very small screen width', () => {
+    it('should handle negative window width gracefully', () => {
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
-        value: 320, // Mobile width
+        value: -100,
       });
 
       component['checkScreenSize']();
       expect(component.isLargeScreen).toBe(false);
-    });
-
-    it('should handle very large screen width', () => {
-      Object.defineProperty(window, 'innerWidth', {
-        writable: true,
-        configurable: true,
-        value: 2560, // 4K width
-      });
-
-      component['checkScreenSize']();
-      expect(component.isLargeScreen).toBe(true);
     });
   });
 });

@@ -23,12 +23,10 @@ export class I18nService {
   ];
 
   constructor() {
-    // console.log('I18nService: Initializing...');
     this.initializeLanguage();
   }
 
-  private initializeLanguage(): void {
-    // console.log('I18nService: Setting default language to en');
+  private initializeLanguage(): void {  
     // Set default language
     this.translateService.setDefaultLang('en');
 
@@ -42,25 +40,14 @@ export class I18nService {
         ? browserLanguage
         : 'en');
 
-    // console.log('I18nService: Saved language:', savedLanguage);
-    // console.log('I18nService: Browser language:', browserLanguage);
-    // console.log('I18nService: Language to use:', languageToUse);
-
     // Use the language and ensure it's loaded
     this.translateService.use(languageToUse).subscribe({
       next: () => {
-        // console.log(
-        //   'I18nService: Language loaded successfully:',
-        //   languageToUse
-        // );
         this.currentLanguageSubject.next(languageToUse);
         localStorage.setItem('language', languageToUse);
       },
       error: _error => {
-        // console.error('I18nService: Failed to load language:', _error);
-        // Fallback to English
-        this.translateService.use('en').subscribe(() => {
-          // console.log('I18nService: Fallback to English');
+          this.translateService.use('en').subscribe(() => {
           this.currentLanguageSubject.next('en');
           localStorage.setItem('language', 'en');
         });
@@ -69,19 +56,13 @@ export class I18nService {
   }
 
   public setLanguage(languageCode: string): void {
-    // console.log('I18nService: Setting language to:', languageCode);
     if (this.languages.some(lang => lang.code === languageCode)) {
       this.translateService.use(languageCode).subscribe({
         next: () => {
-          // console.log(
-          //   'I18nService: Language changed successfully:',
-          //   languageCode
-          // );
           this.currentLanguageSubject.next(languageCode);
           localStorage.setItem('language', languageCode);
         },
         error: _error => {
-          // console.error('I18nService: Failed to change language:', _error);
         },
       });
     }

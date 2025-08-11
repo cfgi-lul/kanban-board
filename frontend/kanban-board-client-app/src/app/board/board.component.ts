@@ -118,10 +118,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     );
 
     const initialBoard$ = boardId$.pipe(
-      tap(boardId => console.log('Loading board with ID:', boardId)),
       switchMap(boardId =>
         this.boardService.getBoardById(boardId).pipe(
-          tap(board => console.log('Initial board loaded:', board)),
           map(board => {
             // Ensure tasks have proper positions
             const boardWithPositions = ensureTaskPositions(board);
@@ -144,21 +142,8 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.boardSocketService.connect(boardId);
         return this.boardSocketService.listenForUpdates().pipe(
           map(board => {
-            console.log('WebSocket received board:', board);
-            console.log('Board columns before processing:', board.columns?.map(col => ({
-              id: col.id,
-              name: col.name,
-              tasks: col.tasks?.map(t => ({ id: t.id, title: t.title, position: t.position }))
-            })));
-            
             // Ensure tasks have proper positions after WebSocket updates
             const boardWithPositions = ensureTaskPositions(board);
-            
-            console.log('Board columns after processing:', boardWithPositions.columns?.map(col => ({
-              id: col.id,
-              name: col.name,
-              tasks: col.tasks?.map(t => ({ id: t.id, title: t.title, position: t.position }))
-            })));
             
             return { board: boardWithPositions, loading: false, error: null };
           }),
@@ -186,8 +171,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       )
     ).pipe(
       tap(state => {
-        console.log('Board state updated:', state);
-        
         // Force sort tasks by position in all columns
         if (state.board?.columns) {
           state.board.columns.forEach(column => {
@@ -208,9 +191,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     currentBoard: BoardInstance
   ): Promise<void> {
     try {
-      console.log('Drop event:', event);
-      console.log('Current board:', currentBoard);
-      
       // Validate the drag and drop operation
       if (!isValidDragDrop(event)) {
         this.showErrorMessage('board.invalidDragDropOperation');
@@ -354,7 +334,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   private applyOptimisticUpdate(updatedBoard: BoardInstance): void {
     const currentState = this.boardStateSubject.value;
     if (currentState) {
-      console.log('Applying optimistic update:', updatedBoard);
       // Ensure tasks have proper positions in optimistic update
       const boardWithPositions = ensureTaskPositions(updatedBoard);
       
