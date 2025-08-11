@@ -144,18 +144,39 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTask(@PathVariable Long id) {
-        return taskRepository.findByIdWithColumnAndBoard(id)
-                .map(task -> {
-                    Long boardId = task.getColumn().getBoard().getId();
-                    // Remove task from column and reorder remaining tasks
-                    taskPositionService.removeTaskFromColumn(task);
-                    taskRepository.delete(task);
-                    taskRepository.flush(); // Critical for immediate sync
+        try {
+            return taskRepository.findByIdWithColumnAndBoard(id)
+                    .map(task -> {
+                        Long boardId = task.getColumn().getBoard().getId();
+                        Long columnId = task.getColumn().getId();
+                        Integer position = task.getPosition();
+                        
+                        // First, reorder remaining tasks in the column
+                        if (position != null) {
+                            List<Task> tasksToShift = taskRepository.findByColumnIdAndPositionGreaterThanEqualOrderByPositionAsc(
+                                    columnId, position + 1);
+                            
+                            for (Task taskToShift : tasksToShift) {
+                                taskToShift.setPosition(taskToShift.getPosition() - 1);
+                                taskRepository.save(taskToShift);
+                            }
+                        }
+                        
+                        // Then delete the task
+                        taskRepository.delete(task);
+                        taskRepository.flush(); // Critical for immediate sync
 
-                    sendBoardUpdateDirect(boardId);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                        sendBoardUpdateDirect(boardId);
+                        return ResponseEntity.noContent().build();
+                    })
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            // Log the error for debugging
+            System.err.println("Error deleting task with ID " + id + ": " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while deleting the task");
+        }
     }
 
     // Label management for tasks

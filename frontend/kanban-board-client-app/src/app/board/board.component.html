@@ -45,7 +45,7 @@
                 [id]="column.id.toString()"
                 (cdkDropListDropped)="onDrop($event, boardState.board)"
               >
-                @for (task of column.tasks; track task.position) {
+                @for (task of column.tasks; track task.id) {
                   <kn-taks-preview
                     [taks]="task"
                     (editTask)="editTask(task.id)"

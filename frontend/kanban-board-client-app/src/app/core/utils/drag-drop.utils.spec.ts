@@ -275,6 +275,34 @@ describe('Drag Drop Utils', () => {
 
       expect(() => handleDragDrop(mockEvent, boardWithoutId)).toThrow('Required data not found');
     });
+
+    it('should handle moving task down within same column correctly', () => {
+      const mockEvent: CdkDragDrop<TaskInstance[]> = {
+        previousContainer: { id: '1', data: [...mockBoard.columns![0].tasks] },
+        container: { id: '1', data: [...mockBoard.columns![0].tasks] },
+        previousIndex: 0, // Move from first position
+        currentIndex: 2,  // Move to third position (down)
+        isPointerOverContainer: true,
+        distance: { x: 0, y: 0 },
+        dropPoint: { x: 0, y: 0 },
+        event: new MouseEvent('drop')
+      } as CdkDragDrop<TaskInstance[]>;
+
+      const result = handleDragDrop(mockEvent, mockBoard);
+
+      expect(result.shouldSendEvent).toBe(true);
+      expect(result.updatedBoard).toBeDefined();
+      expect(result.dragEvent).toBeDefined();
+      
+      // Verify the task was moved correctly
+      const updatedColumn = result.updatedBoard.columns?.find(col => col.id === 1);
+      expect(updatedColumn?.tasks).toBeDefined();
+      expect(updatedColumn?.tasks?.length).toBe(3);
+      
+      // The task that was at index 0 should now be at index 2
+      const movedTask = updatedColumn?.tasks?.[2];
+      expect(movedTask?.id).toBe(mockBoard.columns![0].tasks[0].id);
+    });
   });
 
   describe('isValidDragDrop', () => {

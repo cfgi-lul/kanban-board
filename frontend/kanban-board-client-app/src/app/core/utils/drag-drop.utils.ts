@@ -35,6 +35,8 @@ export function handleDragDrop(
 ): { updatedBoard: BoardInstance; dragEvent: DragDropEvent; shouldSendEvent: boolean } {
   const { previousContainer, container, previousIndex, currentIndex } = event;
   
+
+  
   // Check if the task was dropped in the same position (no actual movement) - do this first!
   const isSameColumn = previousContainer === container;
   const isSamePosition = isSameColumn && previousIndex === currentIndex;
@@ -93,7 +95,10 @@ export function handleDragDrop(
   let newPosition: number;
   
   if (previousContainer === container) {
-    // Same column - calculate position based on surrounding tasks
+    // Same column - use Angular CDK's moveItemInArray for reliable array manipulation
+    moveItemInArray(currentColumn.tasks, previousIndex, currentIndex);
+    
+    // Calculate new position based on the new array order
     const sortedTasks = [...currentColumn.tasks].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
     
     if (sortedTasks.length === 0) {
@@ -118,10 +123,6 @@ export function handleDragDrop(
         newPosition = currentIndex * 10;
       }
     }
-    
-    // Remove task from old position and insert at new position
-    currentColumn.tasks.splice(previousIndex, 1);
-    currentColumn.tasks.splice(currentIndex, 0, movedTask);
   } else {
     // Different column - calculate position in new column
     const sortedTasks = [...currentColumn.tasks].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
@@ -149,9 +150,8 @@ export function handleDragDrop(
       }
     }
     
-    // Remove from old column and add to new column
-    previousColumn.tasks.splice(previousIndex, 1);
-    currentColumn.tasks.splice(currentIndex, 0, movedTask);
+    // Use Angular CDK's transferArrayItem for reliable cross-column movement
+    transferArrayItem(previousColumn.tasks, currentColumn.tasks, previousIndex, currentIndex);
   }
   
   // Update the moved task's position and column
