@@ -21,3 +21,4 @@ export { StatusDistributionInstance } from './StatusDistributionInstance';
 // Request/Response classes
 export { AuthenticationRequestInstance } from './AuthenticationRequestInstance';
 export { AuthenticationResponseInstance } from './AuthenticationResponseInstance';
+export { AuthResponseInstance } from './AuthResponseInstance';

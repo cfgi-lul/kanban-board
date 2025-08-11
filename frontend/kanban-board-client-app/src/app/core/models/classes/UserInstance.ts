@@ -5,7 +5,7 @@ export class UserInstance implements UserDTOInterface {
   id?: number;
   username: string;
   password: string;
-  displayName: string;
+  displayName?: string;
   email?: string;
   avatar?: string;
   lastLoginAt?: Date;
