@@ -36,7 +36,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Observable } from 'rxjs';
-import { TaksPreviewComponent } from './components/taks-preview/taks-preview.component';
+import { TaskPreviewComponent } from './components/task-preview/task-preview.component';
 import { TaskInstance } from '../core/models/classes/TaskInstance';
 import { TaskEditorComponent } from './components/task-editor/task-editor.component';
 import { TaskService } from './../core/api/task.service';
@@ -58,7 +58,7 @@ interface BoardState {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kn-board',
   imports: [
-    TaksPreviewComponent,
+    TaskPreviewComponent,
     CdkDropListGroup,
     CdkDropList,
     CdkDrag,

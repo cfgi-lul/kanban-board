@@ -2,7 +2,7 @@
   <mat-card-header class="task__header">
     <mat-card-title class="task__title">
       <mat-icon class="task__icon">assignment</mat-icon>
-      {{ taks().title }}
+      {{ task().title }}
     </mat-card-title>
   </mat-card-header>
 
@@ -10,7 +10,7 @@
     <button
       mat-icon-button
       color="primary"
-      (click)="editTask.emit('' + taks().id)"
+      (click)="editTask.emit('' + task().id)"
       [matTooltip]="'board.editTask' | translate"
       class="task__action"
     >
@@ -19,11 +19,11 @@
     <button
       mat-icon-button
       color="warn"
-      (click)="deleteTask.emit('' + taks().id)"
+      (click)="deleteTask.emit('' + task().id)"
       [matTooltip]="'board.deleteTask' | translate"
       class="task__action"
     >
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-actions>
-</mat-card>
+</mat-card> 
