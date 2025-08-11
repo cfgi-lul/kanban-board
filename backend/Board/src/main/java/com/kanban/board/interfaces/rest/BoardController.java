@@ -284,49 +284,6 @@ public class BoardController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/random")
-    public ResponseEntity<BoardDTO> createRandomBoard() {
-        try {
-            Random random = new Random();
-            Board board = new Board();
-            board.setName("Board-" + UUID.randomUUID().toString().substring(0, 8));
-
-            List<BoardColumn> columns = new ArrayList<>();
-            int columnCount = 2 + random.nextInt(4);
-
-            List<String> shuffledColumnNames = new ArrayList<>(COLUMN_NAMES);
-            Collections.shuffle(shuffledColumnNames);
-
-            for (int i = 0; i < columnCount; i++) {
-                BoardColumn column = new BoardColumn();
-                String columnName = i < shuffledColumnNames.size()
-                        ? shuffledColumnNames.get(i)
-                        : "Column " + (i + 1);
-                column.setName(columnName);
-                column.setBoard(board);
-
-                List<Task> tasks = new ArrayList<>();
-                int taskCount = 1 + random.nextInt(6);
-
-                for (int j = 0; j < taskCount; j++) {
-                    Task task = new Task();
-                    task.setTitle("Task " + (j + 1));
-                    task.setDescription("Sample description for " + columnName);
-                    task.setColumn(column);
-                    tasks.add(task);
-                }
-                column.setTasks(tasks);
-                columns.add(column);
-            }
-
-            board.setColumns(columns);
-            Board savedBoard = boardRepository.save(board);
-            return ResponseEntity.ok(BoardMapper.toDTO(savedBoard));
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
     // Analytics classes
     public static class BoardAnalytics {
         private int totalTasks;
