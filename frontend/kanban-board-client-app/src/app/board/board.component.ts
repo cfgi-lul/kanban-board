@@ -225,31 +225,34 @@ export class BoardComponent implements OnInit, OnDestroy {
       }
 
       // Handle the drag and drop operation using utility function
-      const { updatedBoard, dragEvent } = handleDragDrop(event, currentState.board);
-
-      // Create task move message with proper format
-      const taskMoveData: TaskMoveData = {
-        type: 'TASK_MOVE',
-        boardId: currentState.board.id!,
-        userId: 'current-user', // TODO: Get from auth service
-        taskId: dragEvent.taskId,
-        previousColumnId: dragEvent.previousColumnId,
-        currentColumnId: dragEvent.currentColumnId,
-        previousIndex: dragEvent.previousIndex,
-        currentIndex: dragEvent.currentIndex,
-        timestamp: Date.now()
-      };
+      const { updatedBoard, dragEvent, shouldSendEvent } = handleDragDrop(event, currentState.board);
 
       // Apply optimistic update immediately for better UX
       this.applyOptimisticUpdate(updatedBoard);
 
-      // Send the task move event via WebSocket
-      this.boardSocketService.sendTaskMove(
-        currentState.board.id!.toString(),
-        taskMoveData
-      );
+      // Only send WebSocket event if the task actually moved
+      if (shouldSendEvent) {
+        // Create task move message with proper format
+        const taskMoveData: TaskMoveData = {
+          type: 'TASK_MOVE',
+          boardId: currentState.board.id!,
+          userId: 'current-user', // TODO: Get from auth service
+          taskId: dragEvent.taskId,
+          previousColumnId: dragEvent.previousColumnId,
+          currentColumnId: dragEvent.currentColumnId,
+          previousIndex: dragEvent.previousIndex,
+          currentIndex: dragEvent.currentIndex,
+          timestamp: Date.now()
+        };
 
-      this.showSuccessMessage('board.taskMovedSuccessfully');
+        // Send the task move event via WebSocket
+        this.boardSocketService.sendTaskMove(
+          currentState.board.id!.toString(),
+          taskMoveData
+        );
+
+        this.showSuccessMessage('board.taskMovedSuccessfully');
+      }
     } catch (error) {
       console.error('Error moving task:', error);
       this.showErrorMessage('board.failedToMoveTask');

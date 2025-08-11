@@ -12,16 +12,11 @@ export function sortTasksByPosition(tasks: TaskInstance[]): TaskInstance[] {
     return tasks;
   }
   
-  console.log('Sorting tasks by position:', tasks.map(t => ({ id: t.id, title: t.title, position: t.position })));
-  
   const sorted = [...tasks].sort((a, b) => {
     const posA = a?.position ?? 0;
     const posB = b?.position ?? 0;
-    console.log(`Comparing ${a?.title} (${posA}) with ${b?.title} (${posB})`);
     return posA - posB;
   });
-  
-  console.log('Sorted result:', sorted.map(t => ({ id: t.id, title: t.title, position: t.position })));
   
   return sorted;
 }
@@ -44,10 +39,6 @@ export function ensureTaskPositions(board: BoardInstance): BoardInstance {
 
     const updatedColumn = { ...column };
     
-    console.log(`Processing column ${column.name} (${column.id}):`, {
-      tasksBefore: column.tasks.map(t => ({ id: t.id, title: t.title, position: t.position }))
-    });
-    
     // First, assign positions to tasks that don't have them
     updatedColumn.tasks = column.tasks.map((task, index) => {
       if (task.position === undefined || task.position === null) {
@@ -56,16 +47,8 @@ export function ensureTaskPositions(board: BoardInstance): BoardInstance {
       return task;
     });
 
-    console.log(`Tasks after position assignment:`, {
-      tasks: updatedColumn.tasks.map(t => ({ id: t.id, title: t.title, position: t.position }))
-    });
-
     // Sort tasks by position to ensure correct order
     updatedColumn.tasks = sortTasksByPosition(updatedColumn.tasks);
-    
-    console.log(`Tasks after sorting:`, {
-      tasks: updatedColumn.tasks.map(t => ({ id: t.id, title: t.title, position: t.position }))
-    });
     
     return updatedColumn;
   });

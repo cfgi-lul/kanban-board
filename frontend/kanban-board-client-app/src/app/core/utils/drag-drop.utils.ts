@@ -27,13 +27,45 @@ export interface TaskMoveData {
  * Handles the drag and drop operation and returns the updated board state
  * @param event - The CDK drag drop event
  * @param currentBoard - The current board instance
- * @returns The updated board instance and drag drop event data
+ * @returns The updated board instance, drag drop event data, and whether the event should be sent
  */
 export function handleDragDrop(
   event: CdkDragDrop<TaskInstance[]>,
   currentBoard: BoardInstance
-): { updatedBoard: BoardInstance; dragEvent: DragDropEvent } {
+): { updatedBoard: BoardInstance; dragEvent: DragDropEvent; shouldSendEvent: boolean } {
   const { previousContainer, container, previousIndex, currentIndex } = event;
+  
+  // Check if the task was dropped in the same position (no actual movement) - do this first!
+  const isSameColumn = previousContainer === container;
+  const isSamePosition = isSameColumn && previousIndex === currentIndex;
+  
+  // If it's the same column and same position, don't send the event and return early
+  if (isSamePosition) {
+    // Find the columns in the original board
+    const previousColumn = currentBoard.columns?.find(col => col.id?.toString() === previousContainer.id);
+    const currentColumn = currentBoard.columns?.find(col => col.id?.toString() === container.id);
+    
+    if (!previousColumn || !currentColumn) {
+      throw new Error('Column not found');
+    }
+    
+    // Get the task being moved
+    const movedTask = previousColumn.tasks?.[previousIndex];
+    if (!movedTask) {
+      throw new Error('Task not found');
+    }
+    
+    const dragEvent: DragDropEvent = {
+      taskId: movedTask.id!,
+      previousColumnId: previousColumn.id!,
+      currentColumnId: currentColumn.id!,
+      previousIndex,
+      currentIndex: movedTask.position ?? 0,
+      boardId: currentBoard.id!
+    };
+    
+    return { updatedBoard: currentBoard, dragEvent, shouldSendEvent: false };
+  }
   
   // Create a deep copy of the board to avoid mutating the original
   const updatedBoard = JSON.parse(JSON.stringify(currentBoard)) as BoardInstance;
@@ -130,6 +162,9 @@ export function handleDragDrop(
     throw new Error('Required data not found');
   }
   
+  // If it's the same column and same position, don't send the event
+  const shouldSendEvent = !isSamePosition;
+  
   const dragEvent: DragDropEvent = {
     taskId: movedTask.id,
     previousColumnId: previousColumn.id,
@@ -139,7 +174,7 @@ export function handleDragDrop(
     boardId: updatedBoard.id
   };
   
-  return { updatedBoard, dragEvent };
+  return { updatedBoard, dragEvent, shouldSendEvent };
 }
 
 /**
