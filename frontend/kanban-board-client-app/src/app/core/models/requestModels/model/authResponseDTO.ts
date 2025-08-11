@@ -7,10 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { UserDTO } from './userDTO';
 
 
-export interface AuthenticationRequest { 
-    username: string;
-    password: string;
+export interface AuthResponseDTO { 
+    token?: string;
+    user?: UserDTO;
 }
 

@@ -9,15 +9,17 @@
  */
 import { UserDTO } from './userDTO';
 
-export interface AttachmentDTO {
-  id?: number;
-  filename: string;
-  originalFilename: string;
-  fileUrl: string;
-  contentType: string;
-  fileSize: number;
-  taskId?: number;
-  uploadedBy?: UserDTO;
-  createdAt?: Date;
-  updatedAt?: Date;
+
+export interface AttachmentDTO { 
+    id?: number;
+    filename: string;
+    originalFilename: string;
+    fileUrl: string;
+    contentType: string;
+    fileSize: number;
+    taskId?: number;
+    uploadedBy?: UserDTO;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
+

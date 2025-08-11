@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { BoardInstance } from '../models/classes/BoardInstance';
-import { TaskPreviewInstance } from '../models/classes/TaskPreviewInstance';
+import { TaskInstance } from '../models/classes/TaskInstance';
 
 export interface DragDropEvent {
   taskId: number;
@@ -30,7 +30,7 @@ export interface TaskMoveData {
  * @returns The updated board instance and drag drop event data
  */
 export function handleDragDrop(
-  event: CdkDragDrop<TaskPreviewInstance[]>,
+  event: CdkDragDrop<TaskInstance[]>,
   currentBoard: BoardInstance
 ): { updatedBoard: BoardInstance; dragEvent: DragDropEvent } {
   const { previousContainer, container, previousIndex, currentIndex } = event;
@@ -51,16 +51,82 @@ export function handleDragDrop(
     throw new Error('Tasks array not found');
   }
   
-  // Perform the drag and drop operation on the copied data
-  if (previousContainer === container) {
-    moveItemInArray(currentColumn.tasks, previousIndex, currentIndex);
-  } else {
-    transferArrayItem(previousColumn.tasks, currentColumn.tasks, previousIndex, currentIndex);
+  // Get the task being moved
+  const movedTask = previousColumn.tasks[previousIndex];
+  if (!movedTask) {
+    throw new Error('Task not found');
   }
   
+  // Calculate the new position based on where the task is dropped
+  let newPosition: number;
+  
+  if (previousContainer === container) {
+    // Same column - calculate position based on surrounding tasks
+    const sortedTasks = [...currentColumn.tasks].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+    
+    if (sortedTasks.length === 0) {
+      // Empty column
+      newPosition = 0;
+    } else if (currentIndex === 0) {
+      // Dropped at the top
+      const firstTask = sortedTasks[0];
+      newPosition = (firstTask?.position ?? 0) - 10;
+    } else if (currentIndex >= sortedTasks.length) {
+      // Dropped at the bottom
+      const lastTask = sortedTasks[sortedTasks.length - 1];
+      newPosition = (lastTask?.position ?? 0) + 10;
+    } else {
+      // Dropped between two tasks
+      const beforeTask = sortedTasks[currentIndex - 1];
+      const afterTask = sortedTasks[currentIndex];
+      if (beforeTask && afterTask) {
+        newPosition = ((beforeTask.position ?? 0) + (afterTask.position ?? 0)) / 2;
+      } else {
+        // Fallback if tasks are undefined
+        newPosition = currentIndex * 10;
+      }
+    }
+    
+    // Remove task from old position and insert at new position
+    currentColumn.tasks.splice(previousIndex, 1);
+    currentColumn.tasks.splice(currentIndex, 0, movedTask);
+  } else {
+    // Different column - calculate position in new column
+    const sortedTasks = [...currentColumn.tasks].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+    
+    if (sortedTasks.length === 0) {
+      // Empty column
+      newPosition = 0;
+    } else if (currentIndex === 0) {
+      // Dropped at the top
+      const firstTask = sortedTasks[0];
+      newPosition = (firstTask?.position ?? 0) - 10;
+    } else if (currentIndex >= sortedTasks.length) {
+      // Dropped at the bottom
+      const lastTask = sortedTasks[sortedTasks.length - 1];
+      newPosition = (lastTask?.position ?? 0) + 10;
+    } else {
+      // Dropped between two tasks
+      const beforeTask = sortedTasks[currentIndex - 1];
+      const afterTask = sortedTasks[currentIndex];
+      if (beforeTask && afterTask) {
+        newPosition = ((beforeTask.position ?? 0) + (afterTask.position ?? 0)) / 2;
+      } else {
+        // Fallback if tasks are undefined
+        newPosition = currentIndex * 10;
+      }
+    }
+    
+    // Remove from old column and add to new column
+    previousColumn.tasks.splice(previousIndex, 1);
+    currentColumn.tasks.splice(currentIndex, 0, movedTask);
+  }
+  
+  // Update the moved task's position and column
+  movedTask.position = newPosition;
+  
   // Create the drag drop event data
-  const movedTask = currentColumn.tasks[currentIndex];
-  if (!movedTask?.id || !previousColumn.id || !currentColumn.id || !updatedBoard.id) {
+  if (!movedTask.id || !previousColumn.id || !currentColumn.id || !updatedBoard.id) {
     throw new Error('Required data not found');
   }
   
@@ -69,7 +135,7 @@ export function handleDragDrop(
     previousColumnId: previousColumn.id,
     currentColumnId: currentColumn.id,
     previousIndex,
-    currentIndex,
+    currentIndex: newPosition, // Use calculated position instead of array index
     boardId: updatedBoard.id
   };
   
@@ -81,7 +147,7 @@ export function handleDragDrop(
  * @param event - The CDK drag drop event
  * @returns True if the operation is valid
  */
-export function isValidDragDrop(event: CdkDragDrop<TaskPreviewInstance[]>): boolean {
+export function isValidDragDrop(event: CdkDragDrop<TaskInstance[]>): boolean {
   const { previousContainer, container, previousIndex, currentIndex } = event;
   
   // Check if containers exist

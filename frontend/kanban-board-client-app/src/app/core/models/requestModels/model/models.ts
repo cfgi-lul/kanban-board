@@ -1,6 +1,6 @@
 export * from './attachmentDTO';
+export * from './authResponseDTO';
 export * from './authenticationRequest';
-export * from './authenticationResponse';
 export * from './boardAnalytics';
 export * from './boardDTO';
 export * from './columnDTO';

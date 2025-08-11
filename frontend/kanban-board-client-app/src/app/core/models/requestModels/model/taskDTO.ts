@@ -12,18 +12,21 @@ import { UserDTO } from './userDTO';
 import { CommentDTO } from './commentDTO';
 import { LabelDTO } from './labelDTO';
 
-export interface TaskDTO {
-  id?: number;
-  title: string;
-  description?: string;
-  priority?: string;
-  status?: string;
-  dueDate?: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
-  comments?: Array<CommentDTO>;
-  attachments?: Array<AttachmentDTO>;
-  labels?: Array<LabelDTO>;
-  createdBy?: UserDTO;
-  assignee?: UserDTO;
+
+export interface TaskDTO { 
+    id?: number;
+    title: string;
+    description?: string;
+    priority?: string;
+    status?: string;
+    dueDate?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
+    position?: number;
+    comments?: Array<CommentDTO>;
+    attachments?: Array<AttachmentDTO>;
+    labels?: Array<LabelDTO>;
+    createdBy?: UserDTO;
+    assignee?: UserDTO;
 }
+

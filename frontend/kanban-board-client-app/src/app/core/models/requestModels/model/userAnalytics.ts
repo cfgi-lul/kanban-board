@@ -8,15 +8,17 @@
  * Do not edit the class manually.
  */
 
-export interface UserAnalytics {
-  userId?: number;
-  username?: string;
-  displayName?: string;
-  assignedTasks?: number;
-  createdTasks?: number;
-  completedTasks?: number;
-  overdueTasks?: number;
-  completionRate?: number;
-  statusDistribution?: { [key: string]: number };
-  priorityDistribution?: { [key: string]: number };
+
+export interface UserAnalytics { 
+    userId?: number;
+    username?: string;
+    displayName?: string;
+    assignedTasks?: number;
+    createdTasks?: number;
+    completedTasks?: number;
+    overdueTasks?: number;
+    completionRate?: number;
+    statusDistribution?: { [key: string]: number; };
+    priorityDistribution?: { [key: string]: number; };
 }
+

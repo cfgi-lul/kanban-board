@@ -1,6 +1,6 @@
 model/attachmentDTO.ts
+model/authResponseDTO.ts
 model/authenticationRequest.ts
-model/authenticationResponse.ts
 model/boardAnalytics.ts
 model/boardDTO.ts
 model/columnDTO.ts

@@ -77,9 +77,12 @@ public class BoardWebSocketService {
             Board board = boardRepository.findWithColumnsAndTasksById(message.getBoardId())
                     .orElseThrow(() -> new RuntimeException("Board not found with id: " + message.getBoardId()));
             
-            // Manually load tasks for each column to avoid multiple bag fetch issue
+            // Manually load tasks for each column with position ordering
             board.getColumns().forEach(col -> {
-                col.getTasks().size(); // Force lazy loading of tasks
+                List<Task> tasks = taskRepository.findByColumnIdOrderByPositionAsc(col.getId());
+                // Clear and add tasks to avoid orphan deletion issues
+                col.getTasks().clear();
+                col.getTasks().addAll(tasks);
             });
             
             BoardDTO boardDTO = BoardMapper.toDTO(board);
@@ -133,9 +136,12 @@ public class BoardWebSocketService {
             Board board = boardRepository.findWithColumnsAndTasksById(message.getBoardId())
                     .orElseThrow(() -> new RuntimeException("Board not found with id: " + message.getBoardId()));
             
-            // Manually load tasks for each column to avoid multiple bag fetch issue
+            // Manually load tasks for each column with position ordering
             board.getColumns().forEach(col -> {
-                col.getTasks().size(); // Force lazy loading of tasks
+                List<Task> tasks = taskRepository.findByColumnIdOrderByPositionAsc(col.getId());
+                // Clear and add tasks to avoid orphan deletion issues
+                col.getTasks().clear();
+                col.getTasks().addAll(tasks);
             });
             
             BoardDTO boardDTO = BoardMapper.toDTO(board);

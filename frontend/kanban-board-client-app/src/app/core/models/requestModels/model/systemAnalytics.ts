@@ -8,15 +8,17 @@
  * Do not edit the class manually.
  */
 
-export interface SystemAnalytics {
-  totalUsers?: number;
-  activeUsers?: number;
-  totalBoards?: number;
-  totalTasks?: number;
-  completedTasks?: number;
-  overdueTasks?: number;
-  totalComments?: number;
-  averageCompletionTime?: number;
-  statusDistribution?: { [key: string]: number };
-  priorityDistribution?: { [key: string]: number };
+
+export interface SystemAnalytics { 
+    totalUsers?: number;
+    activeUsers?: number;
+    totalBoards?: number;
+    totalTasks?: number;
+    completedTasks?: number;
+    overdueTasks?: number;
+    totalComments?: number;
+    averageCompletionTime?: number;
+    statusDistribution?: { [key: string]: number; };
+    priorityDistribution?: { [key: string]: number; };
 }
+

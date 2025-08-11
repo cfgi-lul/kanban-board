@@ -17,6 +17,7 @@ export class TaskInstance implements TaskDTOInterface {
   attachments?: Array<AttachmentInstance>;
   labels?: Array<LabelInstance>;
   createdBy?: UserInstance;
+  position?: number;
   assignee?: UserInstance;
 
   constructor(data: TaskDTOInterface) {
@@ -28,6 +29,7 @@ export class TaskInstance implements TaskDTOInterface {
     this.dueDate = data.dueDate;
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
+    this.position = data.position;
     this.comments = data.comments
       ? data.comments.map(comment => new CommentInstance(comment))
       : undefined;

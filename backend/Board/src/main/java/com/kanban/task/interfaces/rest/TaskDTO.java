@@ -56,6 +56,13 @@ public class TaskDTO {
         this.title = title;
     }
     
+    // Constructor for task preview with position
+    public TaskDTO(Long id, String title, Integer position) {
+        this.id = id;
+        this.title = title;
+        this.position = position;
+    }
+    
     // Constructor for task creation
     public TaskDTO(String title, String description, String priority, String status, LocalDateTime dueDate) {
         this.title = title;

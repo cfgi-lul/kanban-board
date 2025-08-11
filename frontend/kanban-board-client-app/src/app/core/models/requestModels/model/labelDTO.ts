@@ -8,12 +8,14 @@
  * Do not edit the class manually.
  */
 
-export interface LabelDTO {
-  id?: number;
-  name: string;
-  color: string;
-  description?: string;
-  boardId?: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+
+export interface LabelDTO { 
+    id?: number;
+    name: string;
+    color: string;
+    description?: string;
+    boardId?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
+

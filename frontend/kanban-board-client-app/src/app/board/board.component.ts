@@ -42,11 +42,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Observable } from 'rxjs';
 import { TaksPreviewComponent } from './components/taks-preview/taks-preview.component';
 import { TaskInstance } from '../core/models/classes/TaskInstance';
-import { TaskPreviewInstance } from '../core/models/classes/TaskPreviewInstance';
 import { TaskEditorComponent } from './components/task-editor/task-editor.component';
 import { TaskService } from './../core/api/task.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { handleDragDrop, isValidDragDrop, TaskMoveData } from '../core/utils/drag-drop.utils';
+import { ensureTaskPositions } from '../core/utils/task-position.utils';
 
 interface BoardState {
   board: BoardInstance | null;
@@ -122,7 +122,11 @@ export class BoardComponent implements OnInit, OnDestroy {
       switchMap(boardId =>
         this.boardService.getBoardById(boardId).pipe(
           tap(board => console.log('Initial board loaded:', board)),
-          map(board => ({ board, loading: false, error: null })),
+          map(board => {
+            // Ensure tasks have proper positions
+            const boardWithPositions = ensureTaskPositions(board);
+            return { board: boardWithPositions, loading: false, error: null };
+          }),
           catchError(_error => {
             console.error('Error loading board:', _error);
             return of({
@@ -139,7 +143,25 @@ export class BoardComponent implements OnInit, OnDestroy {
       switchMap(boardId => {
         this.boardSocketService.connect(boardId);
         return this.boardSocketService.listenForUpdates().pipe(
-          map(board => ({ board, loading: false, error: null })),
+          map(board => {
+            console.log('WebSocket received board:', board);
+            console.log('Board columns before processing:', board.columns?.map(col => ({
+              id: col.id,
+              name: col.name,
+              tasks: col.tasks?.map(t => ({ id: t.id, title: t.title, position: t.position }))
+            })));
+            
+            // Ensure tasks have proper positions after WebSocket updates
+            const boardWithPositions = ensureTaskPositions(board);
+            
+            console.log('Board columns after processing:', boardWithPositions.columns?.map(col => ({
+              id: col.id,
+              name: col.name,
+              tasks: col.tasks?.map(t => ({ id: t.id, title: t.title, position: t.position }))
+            })));
+            
+            return { board: boardWithPositions, loading: false, error: null };
+          }),
           catchError(error => {
             console.error('WebSocket error:', error);
             // Return error state instead of null to show connection issues
@@ -165,6 +187,16 @@ export class BoardComponent implements OnInit, OnDestroy {
     ).pipe(
       tap(state => {
         console.log('Board state updated:', state);
+        
+        // Force sort tasks by position in all columns
+        if (state.board?.columns) {
+          state.board.columns.forEach(column => {
+            if (column.tasks && column.tasks.length > 0) {
+              column.tasks.sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+            }
+          });
+        }
+        
         this.boardStateSubject.next(state);
       }),
       takeUntil(this.destroy$)
@@ -172,10 +204,13 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   async onDrop(
-    event: CdkDragDrop<TaskPreviewInstance[]>,
+    event: CdkDragDrop<TaskInstance[]>,
     currentBoard: BoardInstance
   ): Promise<void> {
     try {
+      console.log('Drop event:', event);
+      console.log('Current board:', currentBoard);
+      
       // Validate the drag and drop operation
       if (!isValidDragDrop(event)) {
         this.showErrorMessage('board.invalidDragDropOperation');
@@ -195,7 +230,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       // Create task move message with proper format
       const taskMoveData: TaskMoveData = {
         type: 'TASK_MOVE',
-        boardId: currentState.board.id,
+        boardId: currentState.board.id!,
         userId: 'current-user', // TODO: Get from auth service
         taskId: dragEvent.taskId,
         previousColumnId: dragEvent.previousColumnId,
@@ -210,7 +245,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       // Send the task move event via WebSocket
       this.boardSocketService.sendTaskMove(
-        currentState.board.id.toString(),
+        currentState.board.id!.toString(),
         taskMoveData
       );
 
@@ -317,10 +352,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     const currentState = this.boardStateSubject.value;
     if (currentState) {
       console.log('Applying optimistic update:', updatedBoard);
+      // Ensure tasks have proper positions in optimistic update
+      const boardWithPositions = ensureTaskPositions(updatedBoard);
+      
       // Create a new state object to trigger change detection
       const optimisticState: BoardState = {
         ...currentState,
-        board: updatedBoard
+        board: boardWithPositions
       };
       
       // Update the subject to trigger change detection

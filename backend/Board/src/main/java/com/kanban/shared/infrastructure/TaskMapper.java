@@ -65,7 +65,7 @@ public class TaskMapper {
         if (task == null) {
             return null;
         }
-        return new TaskDTO(task.getId(), task.getTitle());
+        return new TaskDTO(task.getId(), task.getTitle(), task.getPosition());
     }
 
     public static Task toEntity(TaskDTO taskDTO) {

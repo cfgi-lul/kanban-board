@@ -8,9 +8,11 @@
  * Do not edit the class manually.
  */
 
-export interface BoardAnalytics {
-  totalTasks?: number;
-  totalColumns?: number;
-  totalUsers?: number;
-  createdAt?: Date;
+
+export interface BoardAnalytics { 
+    totalTasks?: number;
+    totalColumns?: number;
+    totalUsers?: number;
+    createdAt?: Date;
 }
+
