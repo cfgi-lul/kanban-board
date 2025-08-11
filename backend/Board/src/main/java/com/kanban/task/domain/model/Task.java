@@ -47,6 +47,9 @@ public class Task {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "position", nullable = false)
+    private Integer position = 0; // Position within the column
+
     @ManyToOne
     @JoinColumn(name = "column_id")
     @JsonIgnore

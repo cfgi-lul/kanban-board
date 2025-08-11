@@ -22,6 +22,7 @@ import com.kanban.shared.domain.model.Label;
 import com.kanban.board.domain.repository.BoardRepository;
 import com.kanban.board.domain.repository.ColumnRepository;
 import com.kanban.task.domain.repository.TaskRepository;
+import com.kanban.task.application.TaskPositionService;
 import com.kanban.user.domain.repository.UserRepository;
 import com.kanban.shared.infrastructure.LabelRepository;
 
@@ -51,6 +52,9 @@ public class TaskController {
     @Autowired
     private LabelRepository labelRepository;
 
+    @Autowired
+    private TaskPositionService taskPositionService;
+
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
         return taskRepository.findById(id)
@@ -78,7 +82,6 @@ public class TaskController {
 
         // Convert DTO to entity
         Task task = TaskMapper.toEntity(taskDTO);
-        task.setColumn(column);
         task.setCreatedBy(creator);
 
         // Validate the task title
@@ -86,8 +89,8 @@ public class TaskController {
             return ResponseEntity.badRequest().build();
         }
 
-        // Save the task
-        Task savedTask = taskRepository.save(task);
+        // Add task to the end of the column with proper positioning
+        Task savedTask = taskPositionService.addTaskToEndOfColumn(task, column);
         taskRepository.flush(); // Ensure task is persisted
 
         // Send the updated board state via WebSocket
@@ -126,6 +129,11 @@ public class TaskController {
                         }
                     }
                     
+                    // Handle position update if provided
+                    if (updatedTaskDTO.getPosition() != null && !updatedTaskDTO.getPosition().equals(task.getPosition())) {
+                        taskPositionService.moveTaskToPosition(task, updatedTaskDTO.getPosition());
+                    }
+                    
                     Task savedTask = taskRepository.save(task);
                     taskRepository.flush(); // Ensure task is persisted
                     sendBoardUpdateDirect(savedTask.getColumn().getBoard().getId());
@@ -139,6 +147,8 @@ public class TaskController {
         return taskRepository.findByIdWithColumnAndBoard(id)
                 .map(task -> {
                     Long boardId = task.getColumn().getBoard().getId();
+                    // Remove task from column and reorder remaining tasks
+                    taskPositionService.removeTaskFromColumn(task);
                     taskRepository.delete(task);
                     taskRepository.flush(); // Critical for immediate sync
 
@@ -273,5 +283,81 @@ public class TaskController {
                                         dto);
                             });
                 });
+    }
+
+    // Position management endpoints
+    @PutMapping("/{taskId}/position")
+    public ResponseEntity<TaskDTO> moveTaskToPosition(@PathVariable Long taskId, 
+                                                     @RequestParam Integer position) {
+        try {
+            Task task = taskRepository.findById(taskId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+            
+            taskPositionService.moveTaskToPosition(task, position);
+            Task savedTask = taskRepository.save(task);
+            
+            Long boardId = savedTask.getColumn().getBoard().getId();
+            sendBoardUpdateDirect(boardId);
+            return ResponseEntity.ok(TaskMapper.toDTO(savedTask));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{taskId}/move")
+    public ResponseEntity<TaskDTO> moveTaskToColumn(@PathVariable Long taskId,
+                                                   @RequestParam Long columnId,
+                                                   @RequestParam Integer position) {
+        try {
+            Task task = taskRepository.findById(taskId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+            
+            BoardColumn newColumn = columnRepository.findById(columnId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Column not found"));
+            
+            taskPositionService.moveTaskToColumn(task, newColumn, position);
+            Task savedTask = taskRepository.save(task);
+            
+            Long boardId = savedTask.getColumn().getBoard().getId();
+            sendBoardUpdateDirect(boardId);
+            return ResponseEntity.ok(TaskMapper.toDTO(savedTask));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/column/{columnId}/ordered")
+    public ResponseEntity<List<TaskDTO>> getTasksInColumnOrdered(@PathVariable Long columnId) {
+        try {
+            List<Task> tasks = taskRepository.findByColumnIdOrderByPositionAsc(columnId);
+            List<TaskDTO> taskDTOs = tasks.stream()
+                    .map(TaskMapper::toDTO)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(taskDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/column/{columnId}/reorder")
+    public ResponseEntity<Void> reorderColumnTasks(@PathVariable Long columnId) {
+        try {
+            List<Task> tasks = taskRepository.findByColumnIdOrderByPositionAsc(columnId);
+            
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                if (!task.getPosition().equals(i)) {
+                    task.setPosition(i);
+                    taskRepository.save(task);
+                }
+            }
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

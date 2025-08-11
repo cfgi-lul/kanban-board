@@ -62,8 +62,14 @@ public class BoardWebSocketService {
             BoardColumn newColumn = columnRepository.findById(message.getCurrentColumnId())
                     .orElseThrow(() -> new RuntimeException("Column not found with id: " + message.getCurrentColumnId()));
             
-            // Update task column
+            // Update task column and position
             task.setColumn(newColumn);
+            
+            // Set the new position based on the current index from the drag and drop operation
+            if (message.getCurrentIndex() != null) {
+                task.setPosition(message.getCurrentIndex());
+            }
+            
             taskRepository.save(task);
             taskRepository.flush(); // Force flush to ensure changes are persisted
             
@@ -113,6 +119,13 @@ public class BoardWebSocketService {
             
             Task task = TaskMapper.toEntity(message.getTask());
             task.setColumn(column);
+            
+            // Set position to the end of the column if not specified
+            if (task.getPosition() == null) {
+                Integer maxPosition = taskRepository.findMaxPositionByColumnId(column.getId());
+                task.setPosition(maxPosition != null ? maxPosition + 1 : 0);
+            }
+            
             Task savedTask = taskRepository.save(task);
             taskRepository.flush(); // Force flush to ensure changes are persisted
             

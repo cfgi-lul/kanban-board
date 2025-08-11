@@ -52,6 +52,7 @@ public class TaskMapper {
             task.getDueDate(),
             task.getCreatedAt(),
             task.getUpdatedAt(),
+            task.getPosition(),
             commentDTOs,
             attachmentDTOs,
             labelDTOs,
@@ -79,6 +80,7 @@ public class TaskMapper {
         task.setDueDate(taskDTO.getDueDate());
         task.setCreatedAt(taskDTO.getCreatedAt());
         task.setUpdatedAt(taskDTO.getUpdatedAt());
+        task.setPosition(taskDTO.getPosition() != null ? taskDTO.getPosition() : 0);
         
         // Map priority
         if (taskDTO.getPriority() != null) {

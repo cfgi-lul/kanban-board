@@ -38,6 +38,8 @@ public class TaskDTO {
     
     private LocalDateTime updatedAt;
     
+    private Integer position; // Position within the column
+    
     private List<CommentDTO> comments;
     
     private List<AttachmentDTO> attachments;
@@ -61,12 +63,13 @@ public class TaskDTO {
         this.priority = priority;
         this.status = status;
         this.dueDate = dueDate;
+        this.position = 0; // Default position
     }
     
     // Constructor for full task response
     public TaskDTO(Long id, String title, String description, String priority, String status, 
                    LocalDateTime dueDate, LocalDateTime createdAt, LocalDateTime updatedAt,
-                   List<CommentDTO> comments, List<AttachmentDTO> attachments, List<LabelDTO> labels,
+                   Integer position, List<CommentDTO> comments, List<AttachmentDTO> attachments, List<LabelDTO> labels,
                    UserDTO createdBy, UserDTO assignee) {
         this.id = id;
         this.title = title;
@@ -76,6 +79,7 @@ public class TaskDTO {
         this.dueDate = dueDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.position = position;
         this.comments = comments;
         this.attachments = attachments;
         this.labels = labels;

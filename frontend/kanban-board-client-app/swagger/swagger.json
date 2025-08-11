@@ -166,6 +166,95 @@
         }
       }
     },
+    "/tasks/{taskId}/position": {
+      "put": {
+        "tags": [
+          "task-controller"
+        ],
+        "operationId": "moveTaskToPosition",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}/move": {
+      "put": {
+        "tags": [
+          "task-controller"
+        ],
+        "operationId": "moveTaskToColumn",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "columnId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tasks/{id}": {
       "get": {
         "tags": [
@@ -979,6 +1068,30 @@
         }
       }
     },
+    "/tasks/column/{columnId}/reorder": {
+      "post": {
+        "tags": [
+          "task-controller"
+        ],
+        "operationId": "reorderColumnTasks",
+        "parameters": [
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/tasks/bulk/update-status": {
       "post": {
         "tags": [
@@ -1701,6 +1814,44 @@
         ]
       }
     },
+    "/avatar/upload": {
+      "post": {
+        "tags": [
+          "avatar-controller"
+        ],
+        "operationId": "uploadAvatar",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/attachments": {
       "post": {
         "tags": [
@@ -1753,7 +1904,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/AuthResponseDTO"
                 }
               }
             }
@@ -1783,7 +1934,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthenticationResponse"
+                  "$ref": "#/components/schemas/AuthResponseDTO"
                 }
               }
             }
@@ -1867,6 +2018,40 @@
             "name": "assigneeId",
             "in": "query",
             "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/column/{columnId}/ordered": {
+      "get": {
+        "tags": [
+          "task-controller"
+        ],
+        "operationId": "getTasksInColumnOrdered",
+        "parameters": [
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -3110,6 +3295,37 @@
         ]
       }
     },
+    "/avatar/{filename}": {
+      "get": {
+        "tags": [
+          "avatar-controller"
+        ],
+        "operationId": "getAvatar",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/attachments/{id}": {
       "get": {
         "tags": [
@@ -3454,6 +3670,26 @@
           }
         }
       }
+    },
+    "/avatar/remove": {
+      "delete": {
+        "tags": [
+          "avatar-controller"
+        ],
+        "operationId": "removeAvatar",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3728,6 +3964,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
           "comments": {
             "type": "array",
             "items": {
@@ -3917,6 +4157,17 @@
           "name"
         ]
       },
+      "AuthResponseDTO": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserDTO"
+          }
+        }
+      },
       "AuthenticationRequest": {
         "type": "object",
         "properties": {
@@ -3933,14 +4184,6 @@
           "password",
           "username"
         ]
-      },
-      "AuthenticationResponse": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string"
-          }
-        }
       },
       "PerformanceMetrics": {
         "type": "object",
