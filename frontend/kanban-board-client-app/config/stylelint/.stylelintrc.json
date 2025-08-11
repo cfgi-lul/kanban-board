@@ -4,9 +4,7 @@
     "stylelint-config-standard-scss",
     "stylelint-config-prettier"
   ],
-  "plugins": [
-    "stylelint-order"
-  ],
+  "plugins": ["stylelint-order"],
   "rules": {
     "order/properties-order": [
       "position",
@@ -221,20 +219,13 @@
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoClasses": [
-          "deep",
-          "global"
-        ]
+        "ignorePseudoClasses": ["deep", "global"]
       }
     ],
     "selector-pseudo-element-no-unknown": [
       true,
       {
-        "ignorePseudoElements": [
-          "v-deep",
-          "v-global",
-          "v-slotted"
-        ]
+        "ignorePseudoElements": ["v-deep", "v-global", "v-slotted"]
       }
     ],
     "property-no-vendor-prefix": null,
@@ -268,12 +259,8 @@
     "comment-empty-line-before": [
       "always",
       {
-        "except": [
-          "first-nested"
-        ],
-        "ignore": [
-          "stylelint-commands"
-        ]
+        "except": ["first-nested"],
+        "ignore": ["stylelint-commands"]
       }
     ],
     "comment-no-empty": true,
@@ -327,12 +314,8 @@
     "rule-empty-line-before": [
       "always-multi-line",
       {
-        "except": [
-          "first-nested"
-        ],
-        "ignore": [
-          "after-comment"
-        ]
+        "except": ["first-nested"],
+        "ignore": ["after-comment"]
       }
     ],
     "selector-attribute-brackets-space-inside": "never",
@@ -379,4 +362,4 @@
     "value-list-max-empty-lines": 0,
     "value-no-vendor-prefix": true
   }
-} 
+}

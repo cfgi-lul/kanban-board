@@ -6,21 +6,17 @@ module.exports = {
     '^src/(.*)$': '<rootDir>/src/$1',
     '^ngx-markdown$': '<rootDir>/src/app/core/mocks/ngx-markdown.mock.ts',
   },
-  testMatch: [
-    '<rootDir>/src/**/?(*.)+(spec|test).ts'
-  ],
-  transformIgnorePatterns: [
-    'node_modules/(?!.*\\.mjs$)',
-  ],
+  testMatch: ['<rootDir>/src/**/?(*.)+(spec|test).ts'],
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   moduleFileExtensions: ['ts', 'js', 'html'],
-  testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/dist/',
-  ],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
   transform: {
-    '^.+\\.(ts|js|html)$': ['ts-jest', {
-      tsconfig: '<rootDir>/config/typescript/tsconfig.spec.json',
-      stringifyContentPathRegex: '\\.html$',
-    }],
+    '^.+\\.(ts|js|html)$': [
+      'ts-jest',
+      {
+        tsconfig: '<rootDir>/config/typescript/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.html$',
+      },
+    ],
   },
 };

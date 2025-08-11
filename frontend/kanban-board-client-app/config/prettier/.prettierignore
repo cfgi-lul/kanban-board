@@ -5,6 +5,7 @@ node_modules/
 dist/
 build/
 target/
+coverage/
 
 # Generated files
 *.min.js
@@ -33,6 +34,7 @@ Thumbs.db
 .env.production.local
 
 # Angular specific
+.angular/
 angular.json
 tsconfig.json
 config/typescript/tsconfig.app.json
@@ -40,5 +42,9 @@ config/typescript/tsconfig.spec.json
 karma.conf.js
 config/jest/jest.config.js
 
+# Configuration files
+../../README.md
+../../swagger/
+
 # API generated files
-src/app/core/models/requestModels/
+../../src/app/core/models/requestModels/
