@@ -15,12 +15,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-
 import { BoardsListComponent } from './boards-list.component';
 import { BoardService } from '../core/api/board.service';
 import { AuthService } from '../core/api/auth.service';
 import { BoardInstance } from '../core/models/classes/BoardInstance';
-import { CreateBoardModalComponent } from './components/create-board-modal/create-board-modal.component';
 
 describe('BoardsListComponent', () => {
   let component: BoardsListComponent;

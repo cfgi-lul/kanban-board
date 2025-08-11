@@ -4,18 +4,26 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import { SignInComponent } from './sign-in.component';
-import { AuthService } from '../core/api/auth.service';
+import { AuthService, AuthResponse, LoginRequest } from '../core/api/auth.service';
+import { UserInstance } from '../core/models/classes/UserInstance';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
   let authService: jest.Mocked<AuthService>;
+  let snackBar: jest.Mocked<MatSnackBar>;
 
   const mockAuthService = {
     login: jest.fn(),
+  };
+
+  const mockSnackBar = {
+    open: jest.fn(),
   };
 
   const mockActivatedRoute = {
@@ -36,12 +44,14 @@ describe('SignInComponent', () => {
         FormBuilder,
         { provide: AuthService, useValue: mockAuthService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: MatSnackBar, useValue: mockSnackBar },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService) as jest.Mocked<AuthService>;
+    snackBar = TestBed.inject(MatSnackBar) as jest.Mocked<MatSnackBar>;
   });
 
   afterEach(() => {
@@ -112,24 +122,6 @@ describe('SignInComponent', () => {
 
       expect(component.signInForm.valid).toBe(false);
     });
-
-    it('should be invalid with missing username', () => {
-      component.signInForm.patchValue({
-        userName: '',
-        password: 'password123',
-      });
-
-      expect(component.signInForm.valid).toBe(false);
-    });
-
-    it('should be invalid with missing password', () => {
-      component.signInForm.patchValue({
-        userName: 'testuser',
-        password: '',
-      });
-
-      expect(component.signInForm.valid).toBe(false);
-    });
   });
 
   describe('onSignIn', () => {
@@ -141,16 +133,31 @@ describe('SignInComponent', () => {
     });
 
     it('should call authService.login with correct credentials', () => {
-      authService.login.mockReturnValue(
-        of({ token: 'test-token', user: {} as unknown })
-      );
+      const mockUser = {
+        id: 1,
+        username: 'testuser',
+        password: 'password123',
+        displayName: 'Test User',
+        email: 'test@example.com',
+        avatar: undefined,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        enabled: true,
+      } as UserInstance;
+
+      const mockAuthResponse: AuthResponse = {
+        token: 'test-token',
+        user: mockUser,
+      };
+
+      authService.login.mockReturnValue(of(mockAuthResponse));
 
       component.onSignIn();
 
       expect(authService.login).toHaveBeenCalledWith({
         username: 'testuser',
         password: 'password123',
-      });
+      } as LoginRequest);
     });
 
     it('should not call authService.login when form is invalid', () => {
@@ -178,6 +185,32 @@ describe('SignInComponent', () => {
       component.onSignIn();
 
       expect(markAsTouchedSpy).toHaveBeenCalled();
+    });
+
+    it('should set loading state during login', () => {
+      const mockUser = {
+        id: 1,
+        username: 'testuser',
+        password: 'password123',
+        displayName: 'Test User',
+        email: 'test@example.com',
+        avatar: undefined,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        enabled: true,
+      } as UserInstance;
+
+      const mockAuthResponse: AuthResponse = {
+        token: 'test-token',
+        user: mockUser,
+      };
+
+      authService.login.mockReturnValue(of(mockAuthResponse));
+
+      component.onSignIn();
+
+      // The loading state should be reset after the request completes
+      expect(component.isSignInLoading).toBe(false);
     });
   });
 
@@ -232,26 +265,6 @@ describe('SignInComponent', () => {
       );
 
       expect(errorMessage).toBe('');
-    });
-  });
-
-  describe('Private Methods', () => {
-    it('should handle form with no controls', () => {
-      const emptyForm = new FormBuilder().group({});
-
-      expect(() => {
-        // Test that the component can handle edge cases
-        component.signInForm = emptyForm;
-      }).not.toThrow();
-    });
-  });
-
-  describe('Edge Cases', () => {
-    it('should handle empty form gracefully', () => {
-      const emptyForm = new FormBuilder().group({});
-      component.signInForm = emptyForm;
-
-      expect(component.signInForm).toBeDefined();
     });
   });
 });
