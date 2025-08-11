@@ -101,7 +101,7 @@ describe('BoardsListComponent', () => {
     it('should handle loading state correctly', () => {
       component.loadingState.set('loading');
       fixture.detectChanges();
-      
+
       expect(component.isLoading()).toBe(true);
       expect(component.hasError()).toBe(false);
       expect(component.isFulfilled()).toBe(false);
@@ -110,7 +110,7 @@ describe('BoardsListComponent', () => {
     it('should handle error state correctly', () => {
       component.loadingState.set('error');
       fixture.detectChanges();
-      
+
       expect(component.hasError()).toBe(true);
       expect(component.isLoading()).toBe(false);
       expect(component.isFulfilled()).toBe(false);
@@ -119,7 +119,7 @@ describe('BoardsListComponent', () => {
     it('should handle fulfilled state correctly', () => {
       component.loadingState.set('fulfilled');
       fixture.detectChanges();
-      
+
       expect(component.isFulfilled()).toBe(true);
       expect(component.isLoading()).toBe(false);
       expect(component.hasError()).toBe(false);
@@ -137,23 +137,30 @@ describe('BoardsListComponent', () => {
     });
 
     it('should handle delete board error', () => {
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
       const boardId = 1;
-      mockBoardService.deleteBoard.mockReturnValue(throwError(() => new Error('Delete failed')));
+      mockBoardService.deleteBoard.mockReturnValue(
+        throwError(() => new Error('Delete failed'))
+      );
 
       component.deleteBoard(boardId);
 
       expect(mockBoardService.deleteBoard).toHaveBeenCalledWith(boardId);
-      
+
       consoleSpy.mockRestore();
     });
 
     it('should open board when clicked', () => {
       const boardId = 1;
-      
+
       component.openBoard(boardId);
-      
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard/board', boardId]);
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith([
+        '/dashboard/board',
+        boardId,
+      ]);
     });
   });
 
@@ -162,7 +169,7 @@ describe('BoardsListComponent', () => {
       // Set search term
       component.searchTerm.set('Test');
       fixture.detectChanges();
-      
+
       expect(component.filteredBoards()).toEqual([
         { id: 1, name: 'Test Board 1', columns: [] } as BoardInstance,
         { id: 2, name: 'Test Board 2', columns: [] } as BoardInstance,
@@ -172,14 +179,14 @@ describe('BoardsListComponent', () => {
     it('should return all boards when search term is empty', () => {
       component.searchTerm.set('');
       fixture.detectChanges();
-      
+
       expect(component.filteredBoards()).toEqual(mockBoards);
     });
 
     it('should handle search with case insensitive matching', () => {
       component.searchTerm.set('test');
       fixture.detectChanges();
-      
+
       expect(component.filteredBoards()).toEqual([
         { id: 1, name: 'Test Board 1', columns: [] } as BoardInstance,
         { id: 2, name: 'Test Board 2', columns: [] } as BoardInstance,
@@ -189,16 +196,16 @@ describe('BoardsListComponent', () => {
     it('should clear search term', () => {
       component.searchTerm.set('Test');
       component.clearSearch();
-      
+
       expect(component.searchTerm()).toBe('');
       expect(component.filteredBoards()).toEqual(mockBoards);
     });
 
     it('should update search term on input change', () => {
       const mockEvent = { target: { value: 'New Search' } } as unknown as Event;
-      
+
       component.onSearchChange(mockEvent);
-      
+
       expect(component.searchTerm()).toBe('New Search');
     });
   });
@@ -227,10 +234,13 @@ describe('BoardsListComponent', () => {
 
   describe('Component Lifecycle', () => {
     it('should complete refreshBoards$ on destroy', () => {
-      const completeSpy = jest.spyOn((component as any).refreshBoards$, 'complete');
-      
+      const completeSpy = jest.spyOn(
+        (component as any).refreshBoards$,
+        'complete'
+      );
+
       component.ngOnDestroy();
-      
+
       expect(completeSpy).toHaveBeenCalled();
     });
   });
@@ -238,7 +248,7 @@ describe('BoardsListComponent', () => {
   describe('Error Handling', () => {
     it('should retry loading boards', () => {
       component.retryLoad();
-      
+
       expect(mockBoardService.getAllBoards).toHaveBeenCalled();
     });
   });

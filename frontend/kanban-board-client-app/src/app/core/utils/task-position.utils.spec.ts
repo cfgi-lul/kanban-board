@@ -3,7 +3,7 @@ import {
   ensureTaskPositions,
   assignSequentialPositions,
   getNextPosition,
-  normalizeTaskPositions
+  normalizeTaskPositions,
 } from './task-position.utils';
 import { TaskInstance } from '../models/classes/TaskInstance';
 import { BoardInstance } from '../models/classes/BoardInstance';
@@ -24,7 +24,7 @@ describe('Task Position Utils', () => {
       assignee: null,
       comments: [],
       attachments: [],
-      labels: []
+      labels: [],
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ describe('Task Position Utils', () => {
       assignee: null,
       comments: [],
       attachments: [],
-      labels: []
+      labels: [],
     },
     {
       id: 3,
@@ -56,8 +56,8 @@ describe('Task Position Utils', () => {
       assignee: null,
       comments: [],
       attachments: [],
-      labels: []
-    }
+      labels: [],
+    },
   ];
 
   const mockBoard: BoardInstance = {
@@ -76,7 +76,7 @@ describe('Task Position Utils', () => {
       updatedAt: new Date().toISOString(),
       enabled: true,
       name: 'Test User',
-      roles: [{ id: 1, name: 'USER' }]
+      roles: [{ id: 1, name: 'USER' }],
     },
     columns: [
       {
@@ -85,7 +85,7 @@ describe('Task Position Utils', () => {
         orderIndex: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        tasks: [...mockTasks]
+        tasks: [...mockTasks],
       },
       {
         id: 2,
@@ -93,10 +93,10 @@ describe('Task Position Utils', () => {
         orderIndex: 1,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        tasks: []
-      }
+        tasks: [],
+      },
     ],
-    labels: []
+    labels: [],
   };
 
   describe('sortTasksByPosition', () => {
@@ -112,7 +112,7 @@ describe('Task Position Utils', () => {
       const tasksWithUndefined = [
         { ...mockTasks[0], position: undefined },
         { ...mockTasks[1], position: 5 },
-        { ...mockTasks[2], position: undefined }
+        { ...mockTasks[2], position: undefined },
       ];
 
       const result = sortTasksByPosition(tasksWithUndefined);
@@ -137,7 +137,7 @@ describe('Task Position Utils', () => {
       const tasksWithNull = [
         { ...mockTasks[0], position: null },
         { ...mockTasks[1], position: 5 },
-        { ...mockTasks[2], position: null }
+        { ...mockTasks[2], position: null },
       ];
 
       const result = sortTasksByPosition(tasksWithNull);
@@ -151,13 +151,16 @@ describe('Task Position Utils', () => {
 
   describe('ensureTaskPositions', () => {
     it('should assign positions to tasks without positions', () => {
-      const tasksWithoutPositions = mockTasks.map(task => ({ ...task, position: undefined }));
+      const tasksWithoutPositions = mockTasks.map(task => ({
+        ...task,
+        position: undefined,
+      }));
       const boardWithoutPositions = {
         ...mockBoard,
         columns: [
           { ...mockBoard.columns![0], tasks: tasksWithoutPositions },
-          mockBoard.columns![1]
-        ]
+          mockBoard.columns![1],
+        ],
       };
 
       const result = ensureTaskPositions(boardWithoutPositions);
@@ -197,8 +200,8 @@ describe('Task Position Utils', () => {
         ...mockBoard,
         columns: [
           { ...mockBoard.columns![0], tasks: [] },
-          mockBoard.columns![1]
-        ]
+          mockBoard.columns![1],
+        ],
       };
 
       const result = ensureTaskPositions(boardWithEmptyColumns);
@@ -212,8 +215,8 @@ describe('Task Position Utils', () => {
         ...mockBoard,
         columns: [
           { ...mockBoard.columns![0], tasks: null as any },
-          mockBoard.columns![1]
-        ]
+          mockBoard.columns![1],
+        ],
       };
 
       const result = ensureTaskPositions(boardWithNullTasks);
@@ -264,7 +267,7 @@ describe('Task Position Utils', () => {
       const tasksWithUndefined = [
         { ...mockTasks[0], position: undefined },
         { ...mockTasks[1], position: 5 },
-        { ...mockTasks[2], position: undefined }
+        { ...mockTasks[2], position: undefined },
       ];
 
       const result = getNextPosition(tasksWithUndefined);
@@ -275,7 +278,7 @@ describe('Task Position Utils', () => {
       const tasksWithNull = [
         { ...mockTasks[0], position: null },
         { ...mockTasks[1], position: 5 },
-        { ...mockTasks[2], position: null }
+        { ...mockTasks[2], position: null },
       ];
 
       const result = getNextPosition(tasksWithNull);
@@ -286,7 +289,7 @@ describe('Task Position Utils', () => {
       const mixedTasks = [
         { ...mockTasks[0], position: undefined },
         { ...mockTasks[1], position: null },
-        { ...mockTasks[2], position: 15 }
+        { ...mockTasks[2], position: 15 },
       ];
 
       const result = getNextPosition(mixedTasks);
@@ -299,7 +302,7 @@ describe('Task Position Utils', () => {
       const tasksWithIrregularPositions = [
         { ...mockTasks[0], position: 5 },
         { ...mockTasks[1], position: 15 },
-        { ...mockTasks[2], position: 25 }
+        { ...mockTasks[2], position: 25 },
       ];
 
       const result = normalizeTaskPositions(tasksWithIrregularPositions);
@@ -313,7 +316,7 @@ describe('Task Position Utils', () => {
       const unsortedTasks = [
         { ...mockTasks[0], position: 20 },
         { ...mockTasks[1], position: 0 },
-        { ...mockTasks[2], position: 10 }
+        { ...mockTasks[2], position: 10 },
       ];
 
       const result = normalizeTaskPositions(unsortedTasks);
@@ -337,7 +340,7 @@ describe('Task Position Utils', () => {
       const tasksWithUndefined = [
         { ...mockTasks[0], position: undefined },
         { ...mockTasks[1], position: 5 },
-        { ...mockTasks[2], position: undefined }
+        { ...mockTasks[2], position: undefined },
       ];
 
       const result = normalizeTaskPositions(tasksWithUndefined);
@@ -351,7 +354,7 @@ describe('Task Position Utils', () => {
       const tasksWithEqualPositions = [
         { ...mockTasks[0], position: 10 },
         { ...mockTasks[1], position: 10 },
-        { ...mockTasks[2], position: 10 }
+        { ...mockTasks[2], position: 10 },
       ];
 
       const result = normalizeTaskPositions(tasksWithEqualPositions);
@@ -367,7 +370,7 @@ describe('Task Position Utils', () => {
       const tasksWithLargePositions = [
         { ...mockTasks[0], position: 1000000 },
         { ...mockTasks[1], position: 500000 },
-        { ...mockTasks[2], position: 750000 }
+        { ...mockTasks[2], position: 750000 },
       ];
 
       const result = sortTasksByPosition(tasksWithLargePositions);
@@ -381,7 +384,7 @@ describe('Task Position Utils', () => {
       const tasksWithNegativePositions = [
         { ...mockTasks[0], position: -10 },
         { ...mockTasks[1], position: 0 },
-        { ...mockTasks[2], position: -5 }
+        { ...mockTasks[2], position: -5 },
       ];
 
       const result = sortTasksByPosition(tasksWithNegativePositions);
@@ -395,7 +398,7 @@ describe('Task Position Utils', () => {
       const tasksWithDecimalPositions = [
         { ...mockTasks[0], position: 5.5 },
         { ...mockTasks[1], position: 2.3 },
-        { ...mockTasks[2], position: 8.7 }
+        { ...mockTasks[2], position: 8.7 },
       ];
 
       const result = sortTasksByPosition(tasksWithDecimalPositions);
@@ -405,4 +408,4 @@ describe('Task Position Utils', () => {
       expect(result[2].position).toBe(8.7);
     });
   });
-}); 
+});

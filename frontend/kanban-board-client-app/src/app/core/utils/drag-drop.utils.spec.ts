@@ -20,7 +20,7 @@ describe('Drag Drop Utils', () => {
       updatedAt: new Date().toISOString(),
       enabled: true,
       name: 'Test User',
-      roles: [{ id: 1, name: 'USER' }]
+      roles: [{ id: 1, name: 'USER' }],
     },
     columns: [
       {
@@ -44,7 +44,7 @@ describe('Drag Drop Utils', () => {
             assignee: null,
             comments: [],
             attachments: [],
-            labels: []
+            labels: [],
           },
           {
             id: 2,
@@ -60,7 +60,7 @@ describe('Drag Drop Utils', () => {
             assignee: null,
             comments: [],
             attachments: [],
-            labels: []
+            labels: [],
           },
           {
             id: 3,
@@ -76,9 +76,9 @@ describe('Drag Drop Utils', () => {
             assignee: null,
             comments: [],
             attachments: [],
-            labels: []
-          }
-        ]
+            labels: [],
+          },
+        ],
       },
       {
         id: 2,
@@ -86,10 +86,10 @@ describe('Drag Drop Utils', () => {
         orderIndex: 1,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        tasks: []
-      }
+        tasks: [],
+      },
     ],
-    labels: []
+    labels: [],
   };
 
   describe('handleDragDrop', () => {
@@ -102,7 +102,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -126,7 +126,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -145,7 +145,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -166,7 +166,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -184,7 +184,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -202,7 +202,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -220,7 +220,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -239,10 +239,12 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
-      expect(() => handleDragDrop(mockEvent, mockBoard)).toThrow('Column not found');
+      expect(() => handleDragDrop(mockEvent, mockBoard)).toThrow(
+        'Column not found'
+      );
     });
 
     it('should throw error when task not found', () => {
@@ -254,10 +256,12 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
-      expect(() => handleDragDrop(mockEvent, mockBoard)).toThrow('Task not found');
+      expect(() => handleDragDrop(mockEvent, mockBoard)).toThrow(
+        'Task not found'
+      );
     });
 
     it('should throw error when required data is missing', () => {
@@ -270,10 +274,12 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
-      expect(() => handleDragDrop(mockEvent, boardWithoutId)).toThrow('Required data not found');
+      expect(() => handleDragDrop(mockEvent, boardWithoutId)).toThrow(
+        'Required data not found'
+      );
     });
 
     it('should handle moving task down within same column correctly', () => {
@@ -281,11 +287,11 @@ describe('Drag Drop Utils', () => {
         previousContainer: { id: '1', data: [...mockBoard.columns![0].tasks] },
         container: { id: '1', data: [...mockBoard.columns![0].tasks] },
         previousIndex: 0, // Move from first position
-        currentIndex: 2,  // Move to third position (down)
+        currentIndex: 2, // Move to third position (down)
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       } as CdkDragDrop<TaskInstance[]>;
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -293,12 +299,14 @@ describe('Drag Drop Utils', () => {
       expect(result.shouldSendEvent).toBe(true);
       expect(result.updatedBoard).toBeDefined();
       expect(result.dragEvent).toBeDefined();
-      
+
       // Verify the task was moved correctly
-      const updatedColumn = result.updatedBoard.columns?.find(col => col.id === 1);
+      const updatedColumn = result.updatedBoard.columns?.find(
+        col => col.id === 1
+      );
       expect(updatedColumn?.tasks).toBeDefined();
       expect(updatedColumn?.tasks?.length).toBe(3);
-      
+
       // The task that was at index 0 should now be at index 2
       const movedTask = updatedColumn?.tasks?.[2];
       expect(movedTask?.id).toBe(mockBoard.columns![0].tasks[0].id);
@@ -315,7 +323,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       expect(isValidDragDrop(mockEvent)).toBe(true);
@@ -330,7 +338,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       expect(isValidDragDrop(mockEvent)).toBe(false);
@@ -345,7 +353,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       expect(isValidDragDrop(mockEvent)).toBe(false);
@@ -360,14 +368,17 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       expect(isValidDragDrop(mockEvent)).toBe(false);
     });
 
     it('should return false when task has no id', () => {
-      const taskWithoutId = { ...mockBoard.columns![0].tasks[0], id: undefined };
+      const taskWithoutId = {
+        ...mockBoard.columns![0].tasks[0],
+        id: undefined,
+      };
       const mockEvent: CdkDragDrop<TaskInstance[]> = {
         previousContainer: { id: '1', data: [taskWithoutId] },
         container: { id: '1', data: [taskWithoutId] },
@@ -376,7 +387,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       expect(isValidDragDrop(mockEvent)).toBe(false);
@@ -393,7 +404,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -409,7 +420,7 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
@@ -425,11 +436,11 @@ describe('Drag Drop Utils', () => {
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       };
 
       const result = handleDragDrop(mockEvent, mockBoard);
       expect(result.dragEvent.currentIndex).toBe(30); // 20 + 10
     });
   });
-}); 
+});

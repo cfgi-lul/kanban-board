@@ -78,10 +78,7 @@ describe('AppComponent', () => {
     } as Partial<MatDialog>;
 
     await TestBed.configureTestingModule({
-      imports: [
-        AppComponent,
-        TranslateModule.forRoot(),
-      ],
+      imports: [AppComponent, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
         provideHttpClient(),

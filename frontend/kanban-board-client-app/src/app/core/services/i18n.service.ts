@@ -26,7 +26,7 @@ export class I18nService {
     this.initializeLanguage();
   }
 
-  private initializeLanguage(): void {  
+  private initializeLanguage(): void {
     // Set default language
     this.translateService.setDefaultLang('en');
 
@@ -47,7 +47,7 @@ export class I18nService {
         localStorage.setItem('language', languageToUse);
       },
       error: _error => {
-          this.translateService.use('en').subscribe(() => {
+        this.translateService.use('en').subscribe(() => {
           this.currentLanguageSubject.next('en');
           localStorage.setItem('language', 'en');
         });
@@ -62,8 +62,7 @@ export class I18nService {
           this.currentLanguageSubject.next(languageCode);
           localStorage.setItem('language', languageCode);
         },
-        error: _error => {
-        },
+        error: _error => {},
       });
     }
   }

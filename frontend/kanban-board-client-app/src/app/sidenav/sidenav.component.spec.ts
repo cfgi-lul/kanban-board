@@ -20,7 +20,7 @@ class MockTranslateLoader {
     return of({
       'board.boardsList': 'Boards List',
       'auth.signIn': 'Sign In',
-      'admin.panel': 'Admin Panel'
+      'admin.panel': 'Admin Panel',
     });
   }
 }
@@ -59,13 +59,13 @@ describe('SidenavComponent', () => {
         MatListModule,
         MatDividerModule,
         TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useClass: MockTranslateLoader }
-        })
+          loader: { provide: TranslateLoader, useClass: MockTranslateLoader },
+        }),
       ],
       providers: [
         { provide: AuthService, useValue: authServiceMock },
-        { provide: AvatarService, useValue: avatarServiceMock }
-      ]
+        { provide: AvatarService, useValue: avatarServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SidenavComponent);
@@ -91,10 +91,10 @@ describe('SidenavComponent', () => {
 
   it('should render navigation menu items', () => {
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     const menuItems = compiled.querySelectorAll('a[mat-list-item]');
-    
+
     expect(menuItems.length).toBe(2); // Boards list and Sign in by default
   });
 
@@ -102,44 +102,46 @@ describe('SidenavComponent', () => {
     // Reset the mock and set it to return true before creating component
     authService.isAdmin.mockReset();
     authService.isAdmin.mockReturnValue(true);
-    
+
     // Recreate the component with the new mock value
     fixture = TestBed.createComponent(SidenavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     const menuItems = compiled.querySelectorAll('a[mat-list-item]');
-    
+
     expect(menuItems.length).toBe(3); // Boards list, Sign in, and Admin panel
   });
 
   it('should not show admin menu item when user is not admin', () => {
     authService.isAdmin.mockReturnValue(false);
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     const menuItems = compiled.querySelectorAll('a[mat-list-item]');
-    
+
     expect(menuItems.length).toBe(2); // Only Boards list and Sign in
   });
 
   it('should render user display component in footer', () => {
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     const userDisplay = compiled.querySelector('kn-user-display');
-    
+
     expect(userDisplay).toBeTruthy();
   });
 
   it('should have correct router links', () => {
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
-    const boardsLink = compiled.querySelector('a[routerLink="/dashboard/boards-list"]');
+    const boardsLink = compiled.querySelector(
+      'a[routerLink="/dashboard/boards-list"]'
+    );
     const signInLink = compiled.querySelector('a[routerLink="/auth/sign-in"]');
-    
+
     expect(boardsLink).toBeTruthy();
     expect(signInLink).toBeTruthy();
   });
@@ -148,15 +150,15 @@ describe('SidenavComponent', () => {
     // Reset the mock and set it to return true before creating component
     authService.isAdmin.mockReset();
     authService.isAdmin.mockReturnValue(true);
-    
+
     // Recreate the component with the new mock value
     fixture = TestBed.createComponent(SidenavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     const adminLink = compiled.querySelector('a[routerLink="/admin/admin"]');
-    
+
     expect(adminLink).toBeTruthy();
   });
-}); 
+});

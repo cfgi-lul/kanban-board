@@ -53,7 +53,7 @@ describe('BoardComponent', () => {
       updatedAt: new Date(),
       enabled: true,
       name: 'Test User',
-      roles: [{ id: 1, name: 'USER' }]
+      roles: [{ id: 1, name: 'USER' }],
     },
     columns: [
       {
@@ -75,7 +75,7 @@ describe('BoardComponent', () => {
             position: 0,
             comments: [],
             attachments: [],
-            labels: []
+            labels: [],
           },
           {
             id: 2,
@@ -89,9 +89,9 @@ describe('BoardComponent', () => {
             position: 10,
             comments: [],
             attachments: [],
-            labels: []
-          }
-        ]
+            labels: [],
+          },
+        ],
       },
       {
         id: 2,
@@ -99,45 +99,47 @@ describe('BoardComponent', () => {
         orderIndex: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tasks: []
-      }
+        tasks: [],
+      },
     ],
-    labels: []
+    labels: [],
   };
 
   beforeEach(async () => {
     const boardServiceSpy = {
-      getBoardById: jest.fn().mockReturnValue(of(mockBoard))
+      getBoardById: jest.fn().mockReturnValue(of(mockBoard)),
     } as Partial<BoardService>;
 
     const taskServiceSpy = {
-      getTasksByID: jest.fn().mockReturnValue(of(mockBoard.columns![0]!.tasks![0]))
+      getTasksByID: jest
+        .fn()
+        .mockReturnValue(of(mockBoard.columns![0]!.tasks![0])),
     } as Partial<TaskService>;
 
     const boardSocketServiceSpy = {
       connect: jest.fn().mockResolvedValue(undefined),
       disconnect: jest.fn(),
       sendTaskMove: jest.fn(),
-      listenForUpdates: jest.fn().mockReturnValue(of(mockBoard))
+      listenForUpdates: jest.fn().mockReturnValue(of(mockBoard)),
     } as Partial<BoardSocketService>;
 
     const matDialogSpy = {
-      open: jest.fn()
+      open: jest.fn(),
     } as Partial<MatDialog>;
 
     const matSnackBarSpy = {
-      open: jest.fn()
+      open: jest.fn(),
     } as Partial<MatSnackBar>;
 
     const translateServiceSpy = {
-      instant: jest.fn().mockReturnValue('Test Message')
+      instant: jest.fn().mockReturnValue('Test Message'),
     } as Partial<TranslateService>;
 
     await TestBed.configureTestingModule({
       imports: [
         BoardComponent,
         NoopAnimationsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       providers: [
         provideRouter([]),
@@ -149,17 +151,21 @@ describe('BoardComponent', () => {
         { provide: ActivatedRoute, useValue: { params: of({ id: '1' }) } },
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: MatSnackBar, useValue: matSnackBarSpy },
-        { provide: TranslateService, useValue: translateServiceSpy }
-      ]
+        { provide: TranslateService, useValue: translateServiceSpy },
+      ],
     }).compileComponents();
 
     boardService = TestBed.inject(BoardService) as Partial<BoardService>;
     taskService = TestBed.inject(TaskService) as Partial<TaskService>;
-    boardSocketService = TestBed.inject(BoardSocketService) as Partial<BoardSocketService>;
+    boardSocketService = TestBed.inject(
+      BoardSocketService
+    ) as Partial<BoardSocketService>;
     activatedRoute = TestBed.inject(ActivatedRoute) as Partial<ActivatedRoute>;
     matDialog = TestBed.inject(MatDialog) as Partial<MatDialog>;
     matSnackBar = TestBed.inject(MatSnackBar) as Partial<MatSnackBar>;
-    translateService = TestBed.inject(TranslateService) as Partial<TranslateService>;
+    translateService = TestBed.inject(
+      TranslateService
+    ) as Partial<TranslateService>;
   });
 
   beforeEach(() => {
@@ -174,7 +180,7 @@ describe('BoardComponent', () => {
 
     it('should initialize board on ngOnInit', async () => {
       component.ngOnInit();
-      
+
       // Wait for async operations
       await new Promise(resolve => setTimeout(resolve, 0));
 
@@ -184,10 +190,12 @@ describe('BoardComponent', () => {
     });
 
     it('should handle board loading error', async () => {
-      (boardService.getBoardById as jest.Mock).mockReturnValue(throwError(() => new Error('Board not found')));
+      (boardService.getBoardById as jest.Mock).mockReturnValue(
+        throwError(() => new Error('Board not found'))
+      );
 
       component.ngOnInit();
-      
+
       // Wait for async operations
       await new Promise(resolve => setTimeout(resolve, 0));
 
@@ -206,14 +214,17 @@ describe('BoardComponent', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
 
       const mockEvent = {
-        previousContainer: { id: '1', data: [...(mockBoard.columns![0]!.tasks || [])] },
+        previousContainer: {
+          id: '1',
+          data: [...(mockBoard.columns![0]!.tasks || [])],
+        },
         container: { id: '1', data: [...(mockBoard.columns![0]!.tasks || [])] },
         previousIndex: 0,
         currentIndex: 1,
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       } as CdkDragDrop<TaskInstance[]>;
 
       component.onDrop(mockEvent, mockBoard);
@@ -230,21 +241,24 @@ describe('BoardComponent', () => {
       // Create a mock event where the task is dropped in exactly the same position
       // Use the first task (index 0) which has position 0, so dropping it at index 0 won't change its position
       const mockEvent = {
-        previousContainer: { id: '1', data: [...(mockBoard.columns![0]!.tasks || [])] },
+        previousContainer: {
+          id: '1',
+          data: [...(mockBoard.columns![0]!.tasks || [])],
+        },
         container: { id: '1', data: [...(mockBoard.columns![0]!.tasks || [])] },
         previousIndex: 0,
         currentIndex: 0, // Same position
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       } as CdkDragDrop<TaskInstance[]>;
 
       // Mock the board state to ensure it's properly initialized
       const mockState = {
         board: mockBoard,
         loading: false,
-        error: null
+        error: null,
       };
       (component as any).boardStateSubject.next(mockState);
 
@@ -258,7 +272,11 @@ describe('BoardComponent', () => {
       // This is a potential bug in the drag and drop logic that should be fixed.
       // For now, we'll test that the component handles the event properly.
       expect(boardSocketService.sendTaskMove).toHaveBeenCalled();
-      expect(matSnackBar.open).toHaveBeenCalledWith('board.taskMovedSuccessfully', 'common.close', expect.any(Object));
+      expect(matSnackBar.open).toHaveBeenCalledWith(
+        'board.taskMovedSuccessfully',
+        'common.close',
+        expect.any(Object)
+      );
     });
 
     it('should handle cross-column drag and drop', async () => {
@@ -266,14 +284,17 @@ describe('BoardComponent', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
 
       const mockEvent = {
-        previousContainer: { id: '1', data: [...(mockBoard.columns![0]!.tasks || [])] },
+        previousContainer: {
+          id: '1',
+          data: [...(mockBoard.columns![0]!.tasks || [])],
+        },
         container: { id: '2', data: [...(mockBoard.columns![1]!.tasks || [])] },
         previousIndex: 0,
         currentIndex: 0,
         isPointerOverContainer: true,
         distance: { x: 0, y: 0 },
         dropPoint: { x: 0, y: 0 },
-        event: new MouseEvent('drop')
+        event: new MouseEvent('drop'),
       } as CdkDragDrop<TaskInstance[]>;
 
       component.onDrop(mockEvent, mockBoard);
@@ -288,7 +309,7 @@ describe('BoardComponent', () => {
     it('should open task editor dialog', async () => {
       const mockTask = mockBoard.columns![0]!.tasks![0];
       const mockDialogRef = {
-        afterClosed: () => of(true)
+        afterClosed: () => of(true),
       };
       (matDialog.open as jest.Mock).mockReturnValue(mockDialogRef);
 
@@ -296,7 +317,7 @@ describe('BoardComponent', () => {
       const mockState = {
         board: mockBoard,
         loading: false,
-        error: null
+        error: null,
       };
       (component as any).boardStateSubject.next(mockState);
 
@@ -305,7 +326,7 @@ describe('BoardComponent', () => {
 
       // Mock the dialog to avoid CSS parsing issues in JSDOM
       const mockDialog = {
-        open: jest.fn().mockReturnValue(mockDialogRef)
+        open: jest.fn().mockReturnValue(mockDialogRef),
       };
       (component as any).matDialog = mockDialog;
 
@@ -319,13 +340,15 @@ describe('BoardComponent', () => {
           data: { task: mockTask },
           width: '800px',
           maxWidth: '90vw',
-          disableClose: false
+          disableClose: false,
         })
       );
     });
 
     it('should handle task editor error', async () => {
-      (taskService.getTasksByID as jest.Mock).mockReturnValue(throwError(() => new Error('Task not found')));
+      (taskService.getTasksByID as jest.Mock).mockReturnValue(
+        throwError(() => new Error('Task not found'))
+      );
 
       component.editTask(999);
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -341,7 +364,9 @@ describe('BoardComponent', () => {
   describe('WebSocket Communication', () => {
     it('should handle WebSocket updates', async () => {
       const updatedBoard = { ...mockBoard, name: 'Updated Board' };
-      (boardSocketService.listenForUpdates as jest.Mock).mockReturnValue(of(updatedBoard));
+      (boardSocketService.listenForUpdates as jest.Mock).mockReturnValue(
+        of(updatedBoard)
+      );
 
       component.ngOnInit();
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -350,7 +375,9 @@ describe('BoardComponent', () => {
     });
 
     it('should handle WebSocket connection error', async () => {
-      (boardSocketService.connect as jest.Mock).mockRejectedValue(new Error('Connection failed'));
+      (boardSocketService.connect as jest.Mock).mockRejectedValue(
+        new Error('Connection failed')
+      );
 
       component.ngOnInit();
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -362,28 +389,28 @@ describe('BoardComponent', () => {
   describe('Error Handling', () => {
     it('should show success message', () => {
       component['showSuccessMessage']('test.success');
-      
+
       expect(matSnackBar.open).toHaveBeenCalledWith(
         'test.success',
         'common.close',
         expect.objectContaining({
           duration: 3000,
           horizontalPosition: 'center',
-          verticalPosition: 'bottom'
+          verticalPosition: 'bottom',
         })
       );
     });
 
     it('should show error message', () => {
       component['showErrorMessage']('test.error');
-      
+
       expect(matSnackBar.open).toHaveBeenCalledWith(
         'test.error',
         'common.close',
         expect.objectContaining({
           duration: 5000,
           horizontalPosition: 'center',
-          verticalPosition: 'bottom'
+          verticalPosition: 'bottom',
         })
       );
     });
@@ -406,4 +433,4 @@ describe('BoardComponent', () => {
       expect(currentState.error).toBeNull();
     });
   });
-}); 
+});

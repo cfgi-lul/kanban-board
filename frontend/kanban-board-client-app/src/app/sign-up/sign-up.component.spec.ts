@@ -15,7 +15,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, throwError, delay } from 'rxjs';
-import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  jest,
+} from '@jest/globals';
 import { SignUpComponent } from './sign-up.component';
 import { AuthService } from '../core/api/auth.service';
 
@@ -142,15 +149,15 @@ describe('SignUpComponent', () => {
   });
 
   it('should call register service method on successful sign up', () => {
-    const mockResponse = { 
+    const mockResponse = {
       token: 'mock-token',
       user: {
         id: 1,
         username: 'testuser',
         password: 'password123',
         displayName: 'Test User',
-        enabled: true
-      }
+        enabled: true,
+      },
     };
     authService.register.mockReturnValue(of(mockResponse));
 
@@ -169,16 +176,18 @@ describe('SignUpComponent', () => {
 
   it('should set loading state to true when sign up starts', () => {
     // Use a delayed observable to keep loading state true
-    authService.register.mockReturnValue(of({
-      token: 'mock-token',
-      user: {
-        id: 1,
-        username: 'testuser',
-        password: 'password123',
-        displayName: 'Test User',
-        enabled: true
-      }
-    }).pipe(delay(100)));
+    authService.register.mockReturnValue(
+      of({
+        token: 'mock-token',
+        user: {
+          id: 1,
+          username: 'testuser',
+          password: 'password123',
+          displayName: 'Test User',
+          enabled: true,
+        },
+      }).pipe(delay(100))
+    );
 
     component.signUpForm.patchValue({
       userName: 'testuser',
@@ -192,15 +201,15 @@ describe('SignUpComponent', () => {
   });
 
   it('should navigate to return URL on successful sign up', () => {
-    const mockResponse = { 
+    const mockResponse = {
       token: 'mock-token',
       user: {
         id: 1,
         username: 'testuser',
         password: 'password123',
         displayName: 'Test User',
-        enabled: true
-      }
+        enabled: true,
+      },
     };
     authService.register.mockReturnValue(of(mockResponse));
 
@@ -215,15 +224,15 @@ describe('SignUpComponent', () => {
   });
 
   it('should handle successful sign up', () => {
-    const mockResponse = { 
+    const mockResponse = {
       token: 'mock-token',
       user: {
         id: 1,
         username: 'testuser',
         password: 'password123',
         displayName: 'Test User',
-        enabled: true
-      }
+        enabled: true,
+      },
     };
     authService.register.mockReturnValue(of(mockResponse));
 
@@ -291,7 +300,7 @@ describe('SignUpComponent', () => {
 
   it('should mark form as touched when form is invalid', () => {
     const markAsTouchedSpy = jest.spyOn(component.signUpForm, 'markAsTouched');
-    
+
     component.signUpForm.patchValue({
       userName: '',
       password: '',
@@ -307,7 +316,10 @@ describe('SignUpComponent', () => {
     usernameControl?.markAsTouched();
     usernameControl?.setErrors({ required: true });
 
-    const errorMessage = component.getErrorMessage('userName', component.signUpForm);
+    const errorMessage = component.getErrorMessage(
+      'userName',
+      component.signUpForm
+    );
     expect(errorMessage).toBe('userName is required');
   });
 
@@ -316,7 +328,10 @@ describe('SignUpComponent', () => {
     usernameControl?.markAsTouched();
     usernameControl?.setErrors({ minlength: { requiredLength: 3 } });
 
-    const errorMessage = component.getErrorMessage('userName', component.signUpForm);
+    const errorMessage = component.getErrorMessage(
+      'userName',
+      component.signUpForm
+    );
     expect(errorMessage).toBe('userName must be at least 3 characters');
   });
 
@@ -324,7 +339,10 @@ describe('SignUpComponent', () => {
     const usernameControl = component.signUpForm.get('userName');
     usernameControl?.setErrors({ required: true });
 
-    const errorMessage = component.getErrorMessage('userName', component.signUpForm);
+    const errorMessage = component.getErrorMessage(
+      'userName',
+      component.signUpForm
+    );
     expect(errorMessage).toBe('');
   });
 
@@ -333,7 +351,10 @@ describe('SignUpComponent', () => {
     usernameControl?.markAsTouched();
     usernameControl?.setErrors(null);
 
-    const errorMessage = component.getErrorMessage('userName', component.signUpForm);
+    const errorMessage = component.getErrorMessage(
+      'userName',
+      component.signUpForm
+    );
     expect(errorMessage).toBe('');
   });
 });

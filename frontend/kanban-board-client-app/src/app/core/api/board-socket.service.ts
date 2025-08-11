@@ -48,7 +48,7 @@ export class BoardSocketService {
       map((message: string) => {
         const [, , body] = this.parseStompFrame(message);
         const parsedMessage = JSON.parse(body);
-        
+
         // Handle new WebSocket response format
         if (parsedMessage.type && parsedMessage.status) {
           // This is a WebSocket response with status
@@ -56,10 +56,12 @@ export class BoardSocketService {
             return parsedMessage.board;
           } else if (parsedMessage.status === 'ERROR') {
             console.error('WebSocket error response:', parsedMessage.message);
-            throw new Error(parsedMessage.message || 'WebSocket operation failed');
+            throw new Error(
+              parsedMessage.message || 'WebSocket operation failed'
+            );
           }
         }
-        
+
         // Fallback to old format (direct board object)
         return parsedMessage;
       }),

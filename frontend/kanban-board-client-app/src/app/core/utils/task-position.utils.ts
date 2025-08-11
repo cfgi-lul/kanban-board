@@ -11,13 +11,13 @@ export function sortTasksByPosition(tasks: TaskInstance[]): TaskInstance[] {
   if (!tasks || tasks.length === 0) {
     return tasks;
   }
-  
+
   const sorted = [...tasks].sort((a, b) => {
     const posA = a?.position ?? 0;
     const posB = b?.position ?? 0;
     return posA - posB;
   });
-  
+
   return sorted;
 }
 
@@ -38,7 +38,7 @@ export function ensureTaskPositions(board: BoardInstance): BoardInstance {
     }
 
     const updatedColumn = { ...column };
-    
+
     // First, assign positions to tasks that don't have them
     updatedColumn.tasks = column.tasks.map((task, index) => {
       if (task.position === undefined || task.position === null) {
@@ -49,7 +49,7 @@ export function ensureTaskPositions(board: BoardInstance): BoardInstance {
 
     // Sort tasks by position to ensure correct order
     updatedColumn.tasks = sortTasksByPosition(updatedColumn.tasks);
-    
+
     return updatedColumn;
   });
 
@@ -61,10 +61,12 @@ export function ensureTaskPositions(board: BoardInstance): BoardInstance {
  * @param tasks - Array of tasks to reorder
  * @returns Array of tasks with sequential positions
  */
-export function assignSequentialPositions(tasks: TaskInstance[]): TaskInstance[] {
+export function assignSequentialPositions(
+  tasks: TaskInstance[]
+): TaskInstance[] {
   return tasks.map((task, index) => ({
     ...task,
-    position: index
+    position: index,
   }));
 }
 
@@ -77,7 +79,7 @@ export function getNextPosition(tasks: TaskInstance[]): number {
   if (!tasks || tasks.length === 0) {
     return 0;
   }
-  
+
   const maxPosition = Math.max(...tasks.map(task => task.position ?? 0));
   return maxPosition + 10; // Use increments of 10 for better spacing
 }
@@ -91,10 +93,10 @@ export function normalizeTaskPositions(tasks: TaskInstance[]): TaskInstance[] {
   if (!tasks || tasks.length === 0) {
     return tasks;
   }
-  
+
   const sortedTasks = sortTasksByPosition(tasks);
   return sortedTasks.map((task, index) => ({
     ...task,
-    position: index * 10
+    position: index * 10,
   }));
-} 
+}

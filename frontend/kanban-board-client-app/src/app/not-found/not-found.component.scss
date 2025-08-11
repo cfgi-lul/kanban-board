@@ -1,4 +1,4 @@
-@use "../../theming/mixins" as mixins;
+@use '../../theming/mixins' as mixins;
 
 :host {
   flex: 1;
@@ -10,7 +10,7 @@
   justify-content: center;
   width: 100%;
   height: 100vh;
-  @include mixins.padding("md");
+  @include mixins.padding('md');
 
   &__card {
     width: 100%;
@@ -22,7 +22,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    @include mixins.gap("lg");
+    @include mixins.gap('lg');
   }
 
   &__error {
@@ -35,7 +35,7 @@
   &__main {
     display: flex;
     flex-direction: column;
-    @include mixins.gap("sm");
+    @include mixins.gap('sm');
 
     &-title {
       font-size: 2rem;
@@ -53,7 +53,7 @@
     &-title {
       font-size: 1.25rem;
       font-weight: 500;
-      @include mixins.margin-bottom("sm");
+      @include mixins.margin-bottom('sm');
     }
   }
 

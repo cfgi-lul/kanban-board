@@ -43,9 +43,9 @@ export interface WebSocketResponse {
   timestamp: number;
 }
 
-export type WebSocketMessageType = 
-  | TaskMoveMessage 
-  | TaskCreateMessage 
-  | TaskUpdateMessage 
-  | TaskDeleteMessage 
-  | BoardUpdateMessage; 
+export type WebSocketMessageType =
+  | TaskMoveMessage
+  | TaskCreateMessage
+  | TaskUpdateMessage
+  | TaskDeleteMessage
+  | BoardUpdateMessage;

@@ -1,8 +1,4 @@
-import {
-  CdkDrag,
-  CdkDropList,
-  CdkDropListGroup,
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -45,7 +41,11 @@ import { TaskInstance } from '../core/models/classes/TaskInstance';
 import { TaskEditorComponent } from './components/task-editor/task-editor.component';
 import { TaskService } from './../core/api/task.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { handleDragDrop, isValidDragDrop, TaskMoveData } from '../core/utils/drag-drop.utils';
+import {
+  handleDragDrop,
+  isValidDragDrop,
+  TaskMoveData,
+} from '../core/utils/drag-drop.utils';
 import { ensureTaskPositions } from '../core/utils/task-position.utils';
 
 interface BoardState {
@@ -93,7 +93,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       filter((state): state is BoardState => state !== null),
       takeUntil(this.destroy$)
     );
-    
+
     // Initialize the board data
     this.initializeBoard();
   }
@@ -109,7 +109,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardStateSubject.next({
       board: null,
       loading: true,
-      error: null
+      error: null,
     });
 
     const boardId$ = this.activatedRoute.params.pipe(
@@ -144,7 +144,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           map(board => {
             // Ensure tasks have proper positions after WebSocket updates
             const boardWithPositions = ensureTaskPositions(board);
-            
+
             return { board: boardWithPositions, loading: false, error: null };
           }),
           catchError(error => {
@@ -153,7 +153,8 @@ export class BoardComponent implements OnInit, OnDestroy {
             return of({
               board: null as any,
               loading: false,
-              error: 'WebSocket connection failed. Board updates may not be real-time.',
+              error:
+                'WebSocket connection failed. Board updates may not be real-time.',
             });
           })
         );
@@ -169,21 +170,25 @@ export class BoardComponent implements OnInit, OnDestroy {
           // Board updated via WebSocket
         })
       )
-    ).pipe(
-      tap(state => {
-        // Force sort tasks by position in all columns
-        if (state.board?.columns) {
-          state.board.columns.forEach(column => {
-            if (column.tasks && column.tasks.length > 0) {
-              column.tasks.sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
-            }
-          });
-        }
-        
-        this.boardStateSubject.next(state);
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe();
+    )
+      .pipe(
+        tap(state => {
+          // Force sort tasks by position in all columns
+          if (state.board?.columns) {
+            state.board.columns.forEach(column => {
+              if (column.tasks && column.tasks.length > 0) {
+                column.tasks.sort(
+                  (a, b) => (a.position ?? 0) - (b.position ?? 0)
+                );
+              }
+            });
+          }
+
+          this.boardStateSubject.next(state);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   async onDrop(
@@ -205,7 +210,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       }
 
       // Handle the drag and drop operation using utility function
-      const { updatedBoard, dragEvent, shouldSendEvent } = handleDragDrop(event, currentState.board);
+      const { updatedBoard, dragEvent, shouldSendEvent } = handleDragDrop(
+        event,
+        currentState.board
+      );
 
       // Apply optimistic update immediately for better UX
       this.applyOptimisticUpdate(updatedBoard);
@@ -222,7 +230,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           currentColumnId: dragEvent.currentColumnId,
           previousIndex: dragEvent.previousIndex,
           currentIndex: dragEvent.currentIndex,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         };
 
         // Send the task move event via WebSocket
@@ -336,25 +344,25 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (currentState) {
       // Ensure tasks have proper positions in optimistic update
       const boardWithPositions = ensureTaskPositions(updatedBoard);
-      
+
       // Create a new state object to trigger change detection
       const optimisticState: BoardState = {
         ...currentState,
-        board: boardWithPositions
+        board: boardWithPositions,
       };
-      
+
       // Update the subject to trigger change detection
       this.boardStateSubject.next(optimisticState);
-      
+
       // Force change detection with multiple updates to ensure it's applied
       setTimeout(() => {
         this.boardStateSubject.next(optimisticState);
       }, 0);
-      
+
       setTimeout(() => {
         this.boardStateSubject.next(optimisticState);
       }, 50);
-      
+
       // Additional update to ensure it sticks
       setTimeout(() => {
         this.boardStateSubject.next(optimisticState);

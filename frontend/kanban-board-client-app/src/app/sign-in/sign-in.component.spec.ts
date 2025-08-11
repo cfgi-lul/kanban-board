@@ -6,9 +6,20 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  jest,
+} from '@jest/globals';
 import { SignInComponent } from './sign-in.component';
-import { AuthService, AuthResponse, LoginRequest } from '../core/api/auth.service';
+import {
+  AuthService,
+  AuthResponse,
+  LoginRequest,
+} from '../core/api/auth.service';
 import { UserInstance } from '../core/models/classes/UserInstance';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
