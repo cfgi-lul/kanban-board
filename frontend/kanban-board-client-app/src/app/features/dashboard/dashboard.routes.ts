@@ -4,6 +4,7 @@ import { MainPageComponent } from '../../main-page/main-page.component';
 import { SettingsComponent } from '../../core/components/settings/settings.component';
 import { BoardComponent } from '../../board/board.component';
 import { BoardsListComponent } from '../../boards-list/boards-list.component';
+import { TaskEditorPageComponent } from '../../board/pages/task-editor-page/task-editor-page.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -28,6 +29,12 @@ export const DASHBOARD_ROUTES: Routes = [
     path: 'boards-list',
     title: 'list',
     loadComponent: () => BoardsListComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'task/:id',
+    title: 'Task Editor',
+    loadComponent: () => TaskEditorPageComponent,
     canActivate: [authGuard],
   },
 ];

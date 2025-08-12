@@ -1,0 +1,74 @@
+@use "../../../../theming/mixins.scss" as *;
+
+.attachment-picker {
+  display: flex;
+  flex-direction: column;
+  @include gap(md);
+
+  &__upload-button {
+    display: inline-flex;
+    align-items: center;
+    @include gap(xs);
+  }
+
+  &__grid {
+    width: 100%;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    @include gap(xs);
+  }
+
+  &__preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+
+    img,
+    video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 120px;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    @include gap(xs);
+  }
+
+  &__name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__size {
+    font: var(--mat-sys-body-small);
+  }
+
+  &__actions {
+    display: inline-flex;
+    @include gap(xs);
+    align-self: flex-end;
+  }
+}
+

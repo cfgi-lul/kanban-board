@@ -1,0 +1,47 @@
+<div class="attachment-picker">
+  <div class="attachment-picker__upload">
+    <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none;" />
+    <button mat-button class="attachment-picker__upload-button" (click)="onTriggerFileInput(fileInput)">
+      <mat-icon>attach_file</mat-icon>
+      {{ 'board.addAttachment' | translate }}
+    </button>
+  </div>
+
+  @if (attachments().length > 0) {
+    <div class="attachment-picker__grid">
+      <mat-grid-list cols="3" rowHeight="fit" gutterSize="12px">
+        @for (attachment of attachments(); track attachment.id) {
+          <mat-grid-tile class="attachment-picker__tile">
+            <mat-card class="attachment-picker__card">
+              <div class="attachment-picker__preview" (click)="openInNewTab(attachment)" tabindex="0">
+                @if (isImage(attachment)) {
+                  <img [src]="attachment.fileUrl" [alt]="attachment.originalFilename" />
+                } @else if (isVideo(attachment)) {
+                  <video [src]="attachment.fileUrl" controls></video>
+                } @else {
+                  <div class="attachment-picker__icon">
+                    <mat-icon>insert_drive_file</mat-icon>
+                  </div>
+                }
+              </div>
+              <div class="attachment-picker__meta">
+                <div class="attachment-picker__name" [matTooltip]="attachment.originalFilename">
+                  {{ attachment.originalFilename }}
+                </div>
+                <div class="attachment-picker__size">{{ attachment.fileSize | fileSize }}</div>
+              </div>
+              <div class="attachment-picker__actions">
+                <button mat-icon-button [matTooltip]="'board.downloadAttachment' | translate" (click)="downloadAttachment(attachment)">
+                  <mat-icon>download</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" [matTooltip]="'common.delete' | translate" (click)="deleteAttachment(attachment)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-card>
+          </mat-grid-tile>
+        }
+      </mat-grid-list>
+    </div>
+  }
+</div>
