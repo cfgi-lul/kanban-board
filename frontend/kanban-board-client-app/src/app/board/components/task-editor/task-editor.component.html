@@ -37,15 +37,6 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="edit-task-dialog__field">
-      <mat-label>{{ 'board.taskStatus' | translate }}</mat-label>
-      <mat-select formControlName="status">
-        @for (option of statusOptions; track option.value) {
-          <mat-option [value]="option.value">{{ option.label }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="edit-task-dialog__field">
       <mat-label>{{ 'board.taskDueDate' | translate }}</mat-label>
       <input
         matInput

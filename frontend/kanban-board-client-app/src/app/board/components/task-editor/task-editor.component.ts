@@ -106,14 +106,6 @@ export class TaskEditorComponent {
     { value: 'URGENT', label: 'Urgent' },
   ];
 
-  // Status options
-  statusOptions = [
-    { value: 'TODO', label: 'To Do' },
-    { value: 'IN_PROGRESS', label: 'In Progress' },
-    { value: 'REVIEW', label: 'Review' },
-    { value: 'DONE', label: 'Done' },
-  ];
-
   // Filtered labels for autocomplete
   filteredLabels: LabelInstance[] = [];
 
@@ -124,7 +116,6 @@ export class TaskEditorComponent {
       title: [data.task.title, Validators.required],
       description: [data.task.description],
       priority: [data.task.priority || 'MEDIUM'],
-      status: [data.task.status || 'TODO'],
       dueDate: [data.task.dueDate ? new Date(data.task.dueDate) : null],
       assignee: [data.task.assignee?.id || null],
       labels: [data.task.labels || []],
@@ -250,7 +241,6 @@ export class TaskEditorComponent {
         title: formValue.title,
         description: formValue.description,
         priority: formValue.priority,
-        status: formValue.status,
         dueDate: formValue.dueDate,
         assignee: formValue.assignee
           ? ({ id: formValue.assignee } as UserInstance)
