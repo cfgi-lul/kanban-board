@@ -49,6 +49,7 @@
                   <kn-task-preview
                     [task]="task"
                     (editTask)="editTask(task.id)"
+                    (openTaskPage)="openTaskPage(task.id)"
                     [name]="task.title"
                     (deleteTask)="deleteTask(task.id)"
                     class="board__task"

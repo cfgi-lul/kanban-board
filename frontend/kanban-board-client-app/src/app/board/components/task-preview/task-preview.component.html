@@ -9,21 +9,41 @@
   <mat-card-actions class="task__actions">
     <button
       mat-icon-button
+      [matMenuTriggerFor]="taskMenu"
       color="primary"
-      (click)="editTask.emit('' + task().id)"
-      [matTooltip]="'board.editTask' | translate"
+      [matTooltip]="'board.taskActions' | translate"
       class="task__action"
     >
-      <mat-icon>edit</mat-icon>
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      color="warn"
-      (click)="deleteTask.emit('' + task().id)"
-      [matTooltip]="'board.deleteTask' | translate"
-      class="task__action"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+    
+    <mat-menu #taskMenu="matMenu">
+      <button
+        mat-menu-item
+        (click)="editTask.emit('' + task().id)"
+        [matTooltip]="'board.editTask' | translate"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'board.editTask' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        (click)="openTaskPage.emit('' + task().id)"
+        [matTooltip]="'board.openTaskPage' | translate"
+      >
+        <mat-icon>open_in_new</mat-icon>
+        <span>{{ 'board.openTaskPage' | translate }}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button
+        mat-menu-item
+        (click)="deleteTask.emit('' + task().id)"
+        [matTooltip]="'board.deleteTask' | translate"
+        color="warn"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'board.deleteTask' | translate }}</span>
+      </button>
+    </mat-menu>
   </mat-card-actions>
 </mat-card>

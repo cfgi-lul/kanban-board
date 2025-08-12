@@ -254,6 +254,8 @@
     "failedToDeleteTask": "Не удалось удалить задачу.",
     "taskCreatedSuccessfully": "Задача успешно создана",
     "failedToCreateTask": "Не удалось создать задачу.",
+    "taskActions": "Действия с задачей",
+    "openTaskPage": "Открыть страницу задачи",
     "defaultColumnTodo": "К выполнению",
     "defaultColumnInProgress": "В процессе",
     "defaultColumnDone": "Выполнено",

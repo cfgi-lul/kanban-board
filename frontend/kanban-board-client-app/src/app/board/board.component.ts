@@ -289,6 +289,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
   }
 
+  async openTaskPage(taskId: number): Promise<void> {
+    // Navigate to the task editor page
+    await this.router.navigate(['/dashboard/task', taskId]);
+  }
+
   private async openTaskEditor(taskId: number): Promise<void> {
     try {
       const task = await firstValueFrom(

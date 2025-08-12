@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -16,6 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatButtonModule,
     MatTooltipModule,
     MatCardModule,
+    MatMenuModule,
+    MatDividerModule,
     TranslateModule,
   ],
   templateUrl: './task-preview.component.html',
@@ -27,4 +31,5 @@ export class TaskPreviewComponent {
 
   editTask = output<string>();
   deleteTask = output<string>();
+  openTaskPage = output<string>();
 }

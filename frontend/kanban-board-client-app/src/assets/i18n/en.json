@@ -254,6 +254,8 @@
     "failedToDeleteTask": "Failed to delete task.",
     "taskCreatedSuccessfully": "Task created successfully",
     "failedToCreateTask": "Failed to create task.",
+    "taskActions": "Task Actions",
+    "openTaskPage": "Open Task Page",
     "defaultColumnTodo": "To Do",
     "defaultColumnInProgress": "In Progress",
     "defaultColumnDone": "Done",
