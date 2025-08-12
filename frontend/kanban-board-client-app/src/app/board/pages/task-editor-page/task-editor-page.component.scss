@@ -1,204 +1,205 @@
 @use "../../../../theming/mixins" as *;
 
 :host {
-    flex: 1;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 .task-editor-page {
-    container-type: inline-size;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background: var(--mat-sys-surface);
+  container-type: inline-size;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    @include gap-x(sm);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+    @include padding(md);
+  }
+
+  &__title {
+    @include margin-bottom(md);
+  }
+
+  &-header__title {
+    // @include margin-bottom(md);
+    font: var(--mat-sys-headline-small);
+  }
+
+  &__spacer {
+    flex: 1;
+  }
+
+  &__content {
+    overflow: visible;
+    @include padding(md);
+  }
+
+  &__body {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 340px;
+    overflow: visible;
+    @include gap(md);
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__right {
+    position: sticky;
+    top: 16px;
+    bottom: 16px;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    height: fit-content;
+    align-self: start;
+    @include gap(sm);
+  }
 
-    &__header {
-        display: flex;
-        align-items: center;
-        @include gap-x(sm);
-        border-bottom: 1px solid var(--mat-sys-outline-variant);
-        background: var(--mat-sys-surface);
-        @include padding(md);
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    @include gap-y(xs);
+  }
+
+  &__meta-row {
+    display: flex;
+    align-items: center;
+    @include gap-x(sm);
+  }
+
+  &__meta-label {
+    min-width: 100px;
+    font: var(--mat-sys-label-medium);
+  }
+
+  &__meta-value {
+    flex: 1;
+    font: var(--mat-sys-body-medium);
+  }
+
+  &__attachments-title {
+    font: var(--mat-sys-title-small);
+    @include margin-bottom(sm);
+  }
+
+  &__label-chip {
+    min-width: 60px;
+    border-radius: 12px;
+    font: var(--mat-sys-label-small);
+    text-align: center;
+    @include padding-x(sm);
+    @include padding-y(xs);
+  }
+
+  &__label-option {
+    min-width: 60px;
+    border-radius: 12px;
+    font: var(--mat-sys-body-medium);
+    text-align: center;
+    @include padding-x(sm);
+    @include padding-y(xs);
+  }
+
+  /* Breakpoints */
+  @container (max-width: 1280px) {
+    &__body {
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
     }
+  }
 
+  @container (max-width: 1024px) {
     &__title {
-        @include margin-bottom(md);
-    }
-
-    &-header__title {
-        // @include margin-bottom(md);
-        font: var(--mat-sys-headline-small);
-    }
-
-    &__spacer {
-        flex: 1;
-    }
-
-    &__content {
-        overflow: visible;
-        background: var(--mat-sys-surface);
-        @include padding(md);
+      margin: 0;
     }
 
     &__body {
-        display: grid;
-        grid-template-columns: 1fr 340px;
-        align-items: start;
-        @include gap(md);
-        overflow: visible;
+      grid-template-areas: "title"
+        "description"
+        "attachments"
+        "right"
+        "comments";
+      grid-template-columns: 1fr;
+      @include gap(sm);
     }
 
-    &__field {
-        width: 100%;
+    /* Flatten left column so its direct children can participate in the grid */
+    &__left {
+      display: contents;
     }
 
+    /* Title field and first section (description) occupy the full-width top row */
+    &-header__title {
+      grid-area: title;
+    }
+
+    &__description {
+      grid-area: description;
+    }
+
+    &__attachments {
+      grid-area: attachments;
+    }
+
+    &__comments {
+      grid-area: comments;
+    }
+
+    /* Right panel sits to the right of attachments/comments; disable sticky here */
     &__right {
-        display: flex;
-        flex-direction: column;
-        @include gap(sm);
-        position: sticky;
-        top: 16px;
-        bottom: 16px;
-        align-self: start;
-        height: fit-content;
+      position: static;
+      top: auto;
+      bottom: auto;
+      grid-area: right;
+    }
+  }
+
+  @container (max-width: 768px) {
+    &__content {
+      @include padding(sm);
     }
 
-    &__meta {
-        display: flex;
-        flex-direction: column;
-        @include gap-y(xs);
+    &__header {
+      @include padding(sm);
     }
 
-    &__meta-row {
-        display: flex;
-        align-items: center;
-        @include gap-x(sm);
+    &__body {
+      grid-template-columns: 1fr;
     }
 
-    &__meta-label {
-        min-width: 100px;
-        font: var(--mat-sys-label-medium);
+    /* Header becomes icon-only */
+    &__header {
+      .task-editor-page-header__title {
+        display: none;
+      }
+
+      button span {
+        display: none;
+      }
+
+      /* Compact the text button to look good when icon-only */
+      .mat-mdc-button.mat-mdc-button-base {
+        min-width: 0;
+        padding: 0 8px;
+      }
+    }
+  }
+
+  @container (max-width: 480px) {
+    &__content {
+      @include padding(xs);
     }
 
-    &__meta-value {
-        flex: 1;
-        font: var(--mat-sys-body-medium);
+    &__header {
+      @include padding(xs);
     }
-
-    &__attachments-title {
-        font: var(--mat-sys-title-small);
-        @include margin-bottom(sm);
-    }
-
-    &__label-chip {
-        min-width: 60px;
-        border-radius: 12px;
-        font: var(--mat-sys-label-small);
-        text-align: center;
-        @include padding-x(sm);
-        @include padding-y(xs);
-    }
-
-    &__label-option {
-        min-width: 60px;
-        border-radius: 12px;
-        font: var(--mat-sys-body-medium);
-        text-align: center;
-        @include padding-x(sm);
-        @include padding-y(xs);
-    }
-
-    /* Breakpoints */
-    @container (max-width: 1280px) {
-        &__body {
-            grid-template-columns: 1fr 320px;
-            gap: 20px;
-        }
-    }
-
-    @container (max-width: 1024px) {
-        &__title {
-            margin: 0;
-        }
-
-        &__body {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-                "title"
-                "description"
-                "attachments"
-                "right"
-                "comments";
-            @include gap(sm);
-        }
-
-        /* Flatten left column so its direct children can participate in the grid */
-        &__left {
-            display: contents;
-        }
-
-        /* Title field and first section (description) occupy the full-width top row */
-        &-header__title {
-            grid-area: title;
-        }
-
-        &__description {
-            grid-area: description;
-        }
-
-        &__attachments {
-            grid-area: attachments;
-        }
-
-        &__comments {
-            grid-area: comments;
-        }
-
-        /* Right panel sits to the right of attachments/comments; disable sticky here */
-        &__right {
-            grid-area: right;
-            position: static;
-            top: auto;
-            bottom: auto;
-        }
-    }
-
-    @container (max-width: 768px) {
-        &__content {
-            @include padding(sm);
-        }
-
-        &__header {
-            @include padding(sm);
-        }
-
-        &__body {
-            grid-template-columns: 1fr;
-        }
-
-        /* Header becomes icon-only */
-        &__header {
-            .task-editor-page-header__title {
-                display: none;
-            }
-
-            button span {
-                display: none;
-            }
-
-            /* Compact the text button to look good when icon-only */
-            .mat-mdc-button.mat-mdc-button-base {
-                min-width: 0;
-                padding: 0 8px;
-            }
-        }
-    }
-
-    @container (max-width: 480px) {
-        &__content {
-            @include padding(xs);
-        }
-
-        &__header {
-            @include padding(xs);
-        }
-    }
+  }
 }

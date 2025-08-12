@@ -22,7 +22,15 @@ import { AttachmentInstance } from '../../models/classes/AttachmentInstance';
   selector: 'kn-attachment-picker',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule, MatTooltipModule, MatGridListModule, MatCardModule, TranslateModule, FileSizePipe],
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatGridListModule,
+    MatCardModule,
+    TranslateModule,
+    FileSizePipe,
+  ],
   templateUrl: './attachment-picker.component.html',
   styleUrl: './attachment-picker.component.scss',
 })
@@ -128,4 +136,3 @@ export class AttachmentPickerComponent {
     return (attachment.contentType || '').startsWith('text/');
   }
 }
-

@@ -4,9 +4,16 @@
       <button mat-icon-button aria-label="Back" (click)="onCancel()">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <div class="task-editor-page-header__title">{{ 'board.editTask' | translate }}</div>
+      <div class="task-editor-page-header__title">
+        {{ 'board.editTask' | translate }}
+      </div>
       <div class="task-editor-page__spacer"></div>
-      <button mat-button (click)="onSave()" [disabled]="taskForm?.invalid" [attr.aria-label]="'common.save' | translate">
+      <button
+        mat-button
+        (click)="onSave()"
+        [disabled]="taskForm?.invalid"
+        [attr.aria-label]="'common.save' | translate"
+      >
         <mat-icon>save</mat-icon>
         <span>{{ 'common.save' | translate }}</span>
       </button>
@@ -21,132 +28,169 @@
 
     @if (!isLoading() && !loadError()) {
       <div class="task-editor-page__content" [formGroup]="taskForm">
-      <div class="task-editor-page__body">
-        <div class="task-editor-page__left">
-          <mat-form-field appearance="fill" class="task-editor-page__field task-editor-page__title">
-            <mat-label>{{ 'board.taskTitle' | translate }}</mat-label>
-            <input matInput formControlName="title" required />
-            @if (taskForm.get('title')?.value) {
-              <button
-                matSuffix
-                mat-icon-button
-                [attr.aria-label]="'common.clear' | translate"
-                (click)="onClearTitle()"
-              >
-                <mat-icon>clear</mat-icon>
-              </button>
-            }
-            @if (taskForm.get('title')?.hasError('required')) {
-              <mat-error>
-                {{ 'validation.required' | translate }}
-              </mat-error>
-            }
-          </mat-form-field>
+        <div class="task-editor-page__body">
+          <div class="task-editor-page__left">
+            <mat-form-field
+              appearance="fill"
+              class="task-editor-page__field task-editor-page__title"
+            >
+              <mat-label>{{ 'board.taskTitle' | translate }}</mat-label>
+              <input matInput formControlName="title" required />
+              @if (taskForm.get('title')?.value) {
+                <button
+                  matSuffix
+                  mat-icon-button
+                  [attr.aria-label]="'common.clear' | translate"
+                  (click)="onClearTitle()"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+              }
+              @if (taskForm.get('title')?.hasError('required')) {
+                <mat-error>
+                  {{ 'validation.required' | translate }}
+                </mat-error>
+              }
+            </mat-form-field>
 
-          <div class="task-editor-page__section task-editor-page__description">
-            <kn-task-description
-              formControlName="description"
-              [isEdit]="isEditDescription"
-              (toggle)="toggleEditDescription()"
-            ></kn-task-description>
-          </div>
-
-          @let id = task?.id;
-          @if (id) {
-            <div class="task-editor-page__section task-editor-page__attachments">
-              <kn-attachment-picker [taskId]="id" />
+            <div
+              class="task-editor-page__section task-editor-page__description"
+            >
+              <kn-task-description
+                formControlName="description"
+                [isEdit]="isEditDescription"
+                (toggle)="toggleEditDescription()"
+              ></kn-task-description>
             </div>
-          }
 
-          <div class="task-editor-page__section task-editor-page__comments">
-            <kn-task-comments [taskId]="task?.id"></kn-task-comments>
+            @let id = task?.id;
+            @if (id) {
+              <div
+                class="task-editor-page__section task-editor-page__attachments"
+              >
+                <kn-attachment-picker [taskId]="id" />
+              </div>
+            }
+
+            <div class="task-editor-page__section task-editor-page__comments">
+              <kn-task-comments [taskId]="task?.id"></kn-task-comments>
+            </div>
           </div>
-        </div>
 
-        <div class="task-editor-page__right">
-          <mat-form-field appearance="fill" class="task-editor-page__field">
-            <mat-label>{{ 'board.taskPriority' | translate }}</mat-label>
-            <mat-select formControlName="priority">
-              @for (option of priorityOptions; track option.value) {
-                <mat-option [value]="option.value">{{ option.label }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
+          <div class="task-editor-page__right">
+            <mat-form-field appearance="fill" class="task-editor-page__field">
+              <mat-label>{{ 'board.taskPriority' | translate }}</mat-label>
+              <mat-select formControlName="priority">
+                @for (option of priorityOptions; track option.value) {
+                  <mat-option [value]="option.value">{{
+                    option.label
+                  }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field appearance="fill" class="task-editor-page__field">
-            <mat-label>{{ 'board.taskDueDate' | translate }}</mat-label>
-            <input matInput [matDatepicker]="dueDatePicker" formControlName="dueDate" />
-            <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #dueDatePicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill" class="task-editor-page__field">
-            <mat-label>{{ 'board.taskAssignee' | translate }}</mat-label>
-            <mat-select formControlName="assignee">
-              <mat-option [value]="null">{{ 'common.none' | translate }}</mat-option>
-              @for (user of users$ | async; track user.id) {
-                <mat-option [value]="user.id">{{ user.displayName || user.username }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill" class="task-editor-page__field">
-            <mat-label>{{ 'board.labels' | translate }}</mat-label>
-            <mat-chip-grid #chipGrid>
-              @for (label of taskForm.get('labels')?.value; track label.id) {
-                <mat-chip-row (removed)="removeLabel(label)">
-                  <div class="task-editor-page__label-chip" [style.background-color]="label.color">
-                    {{ label.name }}
-                  </div>
-                  <button matChipRemove>
-                    <mat-icon>cancel</mat-icon>
-                  </button>
-                </mat-chip-row>
-              }
+            <mat-form-field appearance="fill" class="task-editor-page__field">
+              <mat-label>{{ 'board.taskDueDate' | translate }}</mat-label>
               <input
-                placeholder="{{ 'board.addLabel' | translate }}..."
-                [matChipInputFor]="chipGrid"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="addLabel($event)"
+                matInput
+                [matDatepicker]="dueDatePicker"
+                formControlName="dueDate"
               />
-            </mat-chip-grid>
-            <mat-autocomplete #auto="matAutocomplete">
-              @for (label of filteredLabels; track label.id) {
-                <mat-option [value]="label.name">
-                  <div class="task-editor-page__label-option" [style.background-color]="label.color">
-                    {{ label.name }}
-                  </div>
-                </mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dueDatePicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dueDatePicker></mat-datepicker>
+            </mat-form-field>
 
-          <div class="task-editor-page__meta">
-            @if (task?.createdBy) {
-              <div class="task-editor-page__meta-row">
-                <span class="task-editor-page__meta-label">{{ 'board.createdBy' | translate }}:</span>
-                <span class="task-editor-page__meta-value">{{ task.createdBy.displayName || task.createdBy.username }}</span>
-              </div>
-            }
-            @if (task?.createdAt) {
-              <div class="task-editor-page__meta-row">
-                <span class="task-editor-page__meta-label">{{ 'board.createdAt' | translate }}:</span>
-                <span class="task-editor-page__meta-value">{{ task.createdAt | date: 'medium' }}</span>
-              </div>
-            }
-            @if (task?.updatedAt) {
-              <div class="task-editor-page__meta-row">
-                <span class="task-editor-page__meta-label">{{ 'board.updatedAt' | translate }}:</span>
-                <span class="task-editor-page__meta-value">{{ task.updatedAt | date: 'medium' }}</span>
-              </div>
-            }
+            <mat-form-field appearance="fill" class="task-editor-page__field">
+              <mat-label>{{ 'board.taskAssignee' | translate }}</mat-label>
+              <mat-select formControlName="assignee">
+                <mat-option [value]="null">{{
+                  'common.none' | translate
+                }}</mat-option>
+                @for (user of users$ | async; track user.id) {
+                  <mat-option [value]="user.id">{{
+                    user.displayName || user.username
+                  }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="task-editor-page__field">
+              <mat-label>{{ 'board.labels' | translate }}</mat-label>
+              <mat-chip-grid #chipGrid>
+                @for (label of taskForm.get('labels')?.value; track label.id) {
+                  <mat-chip-row (removed)="removeLabel(label)">
+                    <div
+                      class="task-editor-page__label-chip"
+                      [style.background-color]="label.color"
+                    >
+                      {{ label.name }}
+                    </div>
+                    <button matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                }
+                <input
+                  placeholder="{{ 'board.addLabel' | translate }}..."
+                  [matChipInputFor]="chipGrid"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="addLabel($event)"
+                />
+              </mat-chip-grid>
+              <mat-autocomplete #auto="matAutocomplete">
+                @for (label of filteredLabels; track label.id) {
+                  <mat-option [value]="label.name">
+                    <div
+                      class="task-editor-page__label-option"
+                      [style.background-color]="label.color"
+                    >
+                      {{ label.name }}
+                    </div>
+                  </mat-option>
+                }
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <div class="task-editor-page__meta">
+              @if (task?.createdBy) {
+                <div class="task-editor-page__meta-row">
+                  <span class="task-editor-page__meta-label"
+                    >{{ 'board.createdBy' | translate }}:</span
+                  >
+                  <span class="task-editor-page__meta-value">{{
+                    task.createdBy.displayName || task.createdBy.username
+                  }}</span>
+                </div>
+              }
+              @if (task?.createdAt) {
+                <div class="task-editor-page__meta-row">
+                  <span class="task-editor-page__meta-label"
+                    >{{ 'board.createdAt' | translate }}:</span
+                  >
+                  <span class="task-editor-page__meta-value">{{
+                    task.createdAt | date: 'medium'
+                  }}</span>
+                </div>
+              }
+              @if (task?.updatedAt) {
+                <div class="task-editor-page__meta-row">
+                  <span class="task-editor-page__meta-label"
+                    >{{ 'board.updatedAt' | translate }}:</span
+                  >
+                  <span class="task-editor-page__meta-value">{{
+                    task.updatedAt | date: 'medium'
+                  }}</span>
+                </div>
+              }
+            </div>
           </div>
         </div>
       </div>
-    </div>
     }
   } @else {
     <kn-not-found></kn-not-found>
   }
 </div>
-

@@ -1,8 +1,31 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, of, take, firstValueFrom, tap, switchMap, catchError, map, Subscription } from 'rxjs';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  Observable,
+  of,
+  take,
+  firstValueFrom,
+  tap,
+  switchMap,
+  catchError,
+  map,
+  Subscription,
+} from 'rxjs';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -198,7 +221,9 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
 
   removeLabel(label: LabelInstance): void {
     const currentLabels = this.taskForm.get('labels')?.value || [];
-    const index = currentLabels.findIndex((l: LabelInstance) => l.id === label.id);
+    const index = currentLabels.findIndex(
+      (l: LabelInstance) => l.id === label.id
+    );
     if (index >= 0) {
       currentLabels.splice(index, 1);
       this.taskForm.get('labels')?.setValue([...currentLabels]);
@@ -214,9 +239,13 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
 
       if (existingLabel) {
         const currentLabels = this.taskForm.get('labels')?.value || [];
-        const exists = currentLabels.find((l: LabelInstance) => l.id === existingLabel.id);
+        const exists = currentLabels.find(
+          (l: LabelInstance) => l.id === existingLabel.id
+        );
         if (!exists) {
-          this.taskForm.get('labels')?.setValue([...currentLabels, existingLabel]);
+          this.taskForm
+            .get('labels')
+            ?.setValue([...currentLabels, existingLabel]);
         }
       }
     }
@@ -237,7 +266,9 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
           : undefined,
         labels: formValue.labels,
       };
-      await firstValueFrom(this.taskService.updateTask(updatedTask).pipe(take(1)));
+      await firstValueFrom(
+        this.taskService.updateTask(updatedTask).pipe(take(1))
+      );
     }
   }
 
@@ -245,4 +276,3 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['/dashboard/main']);
   }
 }
-

@@ -107,7 +107,10 @@ export class BoardComponent implements OnInit, OnDestroy {
         const issueParam = params.get('issue');
         const issueId = issueParam ? parseInt(issueParam, 10) : null;
 
-        if (issueId && (!this.isTaskEditorOpen || this.currentlyOpenedIssueId !== issueId)) {
+        if (
+          issueId &&
+          (!this.isTaskEditorOpen || this.currentlyOpenedIssueId !== issueId)
+        ) {
           // Ensure board is initialized before opening to keep context
           const currentState = this.boardStateSubject.value;
           if (currentState && currentState.loading === false) {

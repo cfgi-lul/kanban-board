@@ -1,7 +1,17 @@
 <div class="attachment-picker">
   <div class="attachment-picker__upload">
-    <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none;" />
-    <button mat-button class="attachment-picker__upload-button" (click)="onTriggerFileInput(fileInput)">
+    <input
+      type="file"
+      #fileInput
+      (change)="onFileSelected($event)"
+      multiple
+      style="display: none"
+    />
+    <button
+      mat-button
+      class="attachment-picker__upload-button"
+      (click)="onTriggerFileInput(fileInput)"
+    >
       <mat-icon>attach_file</mat-icon>
       {{ 'board.addAttachment' | translate }}
     </button>
@@ -13,9 +23,16 @@
         @for (attachment of attachments(); track attachment.id) {
           <mat-grid-tile class="attachment-picker__tile">
             <mat-card class="attachment-picker__card">
-              <div class="attachment-picker__preview" (click)="openInNewTab(attachment)" tabindex="0">
+              <div
+                class="attachment-picker__preview"
+                (click)="openInNewTab(attachment)"
+                tabindex="0"
+              >
                 @if (isImage(attachment)) {
-                  <img [src]="attachment.fileUrl" [alt]="attachment.originalFilename" />
+                  <img
+                    [src]="attachment.fileUrl"
+                    [alt]="attachment.originalFilename"
+                  />
                 } @else if (isVideo(attachment)) {
                   <video [src]="attachment.fileUrl" controls></video>
                 } @else {
@@ -25,16 +42,30 @@
                 }
               </div>
               <div class="attachment-picker__meta">
-                <div class="attachment-picker__name" [matTooltip]="attachment.originalFilename">
+                <div
+                  class="attachment-picker__name"
+                  [matTooltip]="attachment.originalFilename"
+                >
                   {{ attachment.originalFilename }}
                 </div>
-                <div class="attachment-picker__size">{{ attachment.fileSize | fileSize }}</div>
+                <div class="attachment-picker__size">
+                  {{ attachment.fileSize | fileSize }}
+                </div>
               </div>
               <div class="attachment-picker__actions">
-                <button mat-icon-button [matTooltip]="'board.downloadAttachment' | translate" (click)="downloadAttachment(attachment)">
+                <button
+                  mat-icon-button
+                  [matTooltip]="'board.downloadAttachment' | translate"
+                  (click)="downloadAttachment(attachment)"
+                >
                   <mat-icon>download</mat-icon>
                 </button>
-                <button mat-icon-button color="warn" [matTooltip]="'common.delete' | translate" (click)="deleteAttachment(attachment)">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  [matTooltip]="'common.delete' | translate"
+                  (click)="deleteAttachment(attachment)"
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
