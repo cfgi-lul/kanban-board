@@ -21,7 +21,7 @@ import {
   filter,
   BehaviorSubject,
 } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { BoardInstance } from '../core/models/classes/BoardInstance';
 import { BoardService } from '../core/api/board.service';
@@ -78,6 +78,7 @@ interface BoardState {
 export class BoardComponent implements OnInit, OnDestroy {
   private boardService = inject(BoardService);
   private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
   private matDialog = inject(MatDialog);
   private taskService = inject(TaskService);
   private boardSocketService = inject(BoardSocketService);
@@ -86,6 +87,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   boardState$: Observable<BoardState>;
   private boardStateSubject = new BehaviorSubject<BoardState | null>(null);
   private destroy$ = new Subject<void>();
+  private isTaskEditorOpen = false;
+  private currentlyOpenedIssueId: number | null = null;
 
   ngOnInit(): void {
     // Set up the boardState$ to use the BehaviorSubject
@@ -96,6 +99,31 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     // Initialize the board data
     this.initializeBoard();
+
+    // Open task editor from query param if present (only within board route)
+    this.activatedRoute.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const issueParam = params.get('issue');
+        const issueId = issueParam ? parseInt(issueParam, 10) : null;
+
+        if (issueId && (!this.isTaskEditorOpen || this.currentlyOpenedIssueId !== issueId)) {
+          // Ensure board is initialized before opening to keep context
+          const currentState = this.boardStateSubject.value;
+          if (currentState && currentState.loading === false) {
+            void this.openTaskEditor(issueId);
+          } else {
+            // Wait until initial load completes once
+            this.boardState$
+              .pipe(
+                filter(state => state.loading === false),
+                take(1),
+                takeUntil(this.destroy$)
+              )
+              .subscribe(() => void this.openTaskEditor(issueId));
+          }
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -250,24 +278,34 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   async editTask(taskId: number): Promise<void> {
+    // Navigate to set the query param; subscription will open the dialog
+    await this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { issue: taskId },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  private async openTaskEditor(taskId: number): Promise<void> {
     try {
       const task = await firstValueFrom(
         this.taskService.getTasksByID(taskId).pipe(
           catchError(error => {
-            // console.error('Error loading task:', error);
             this.showErrorMessage('board.failedToLoadTaskDetails');
             throw error;
           })
         )
       );
 
-      // Get the current board ID from the route
       const boardId = await firstValueFrom(
         this.activatedRoute.params.pipe(map(params => params['id']))
       );
 
+      this.isTaskEditorOpen = true;
+      this.currentlyOpenedIssueId = taskId;
+
       const dialogRef = this.matDialog.open(TaskEditorComponent, {
-        data: { task, boardId: parseInt(boardId) },
+        data: { task, boardId: parseInt(boardId, 10) },
         width: '800px',
         maxWidth: '90vw',
         disableClose: false,
@@ -276,13 +314,27 @@ export class BoardComponent implements OnInit, OnDestroy {
       dialogRef
         .afterClosed()
         .pipe(take(1))
-        .subscribe(result => {
+        .subscribe(async result => {
+          this.isTaskEditorOpen = false;
+          this.currentlyOpenedIssueId = null;
+          // Remove issue param on close
+          await this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { issue: null },
+            queryParamsHandling: 'merge',
+          });
+
           if (result) {
             this.showSuccessMessage('board.taskUpdatedSuccessfully');
           }
         });
     } catch {
-      // console.error('Error opening task editor:', error);
+      // If failed to load/open, ensure URL is cleaned up
+      await this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        queryParams: { issue: null },
+        queryParamsHandling: 'merge',
+      });
     }
   }
 
