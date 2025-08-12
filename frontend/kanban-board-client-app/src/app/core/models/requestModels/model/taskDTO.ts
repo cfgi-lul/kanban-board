@@ -28,5 +28,7 @@ export interface TaskDTO {
     labels?: Array<LabelDTO>;
     createdBy?: UserDTO;
     assignee?: UserDTO;
+    boardId?: number;
+    columnId?: number;
 }
 

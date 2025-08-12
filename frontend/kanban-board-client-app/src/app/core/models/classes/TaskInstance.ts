@@ -19,6 +19,8 @@ export class TaskInstance implements TaskDTOInterface {
   createdBy?: UserInstance;
   position?: number;
   assignee?: UserInstance;
+  boardId?: number;
+  columnId?: number;
 
   constructor(data: TaskDTOInterface) {
     this.id = data.id;
@@ -30,6 +32,8 @@ export class TaskInstance implements TaskDTOInterface {
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
     this.position = data.position;
+    this.boardId = (data as any).boardId;
+    this.columnId = (data as any).columnId;
     this.comments = data.comments
       ? data.comments.map(comment => new CommentInstance(comment))
       : undefined;

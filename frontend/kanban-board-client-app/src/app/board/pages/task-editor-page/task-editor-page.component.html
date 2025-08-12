@@ -90,6 +90,15 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="task-editor-page__field">
+              <mat-label>{{ 'board.taskStatus' | translate }}</mat-label>
+              <mat-select formControlName="status">
+                @for (col of columns$ | async; track col.id) {
+                  <mat-option [value]="col.id">{{ col.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="task-editor-page__field">
               <mat-label>{{ 'board.taskDueDate' | translate }}</mat-label>
               <input
                 matInput

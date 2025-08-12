@@ -4,6 +4,7 @@ import {
   inject,
   OnInit,
   HostListener,
+  signal,
 } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/api/auth.service';
@@ -35,9 +36,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
   title = 'kanban-board-client-app';
-  isSidenavOpen = false;
-  sidenavMode: MatDrawerMode = 'side';
-  isLargeScreen = false;
+  isSidenavOpen = signal<boolean>(false);
+  sidenavMode = signal<MatDrawerMode>('side');
+  isLargeScreen = signal<boolean>(false);
   currentUser = inject(AuthService).currentUser;
   isAdmin = inject(AuthService).isAdmin();
   themeService = inject(ThemeService);
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkScreenSize();
+    this.updateSidenavBehavior()
   }
 
   @HostListener('window:resize', ['$event'])
@@ -59,27 +61,28 @@ export class AppComponent implements OnInit {
   }
 
   private checkScreenSize(): void {
-    const wasLargeScreen = this.isLargeScreen;
-    this.isLargeScreen = window.innerWidth >= this.LARGE_SCREEN_BREAKPOINT;
+    const wasLargeScreen = this.isLargeScreen();
+    this.isLargeScreen.set(window.innerWidth >= this.LARGE_SCREEN_BREAKPOINT);
 
-    if (this.isLargeScreen !== wasLargeScreen) {
+    if (this.isLargeScreen() !== wasLargeScreen) {
       this.updateSidenavBehavior();
     }
   }
 
   private updateSidenavBehavior(): void {
-    if (this.isLargeScreen) {
-      this.sidenavMode = 'side';
-      this.isSidenavOpen = true;
+    console.log('updateSidenavBehavior', this.isLargeScreen());
+    if (this.isLargeScreen()) {
+      this.sidenavMode.set('side');
+      this.isSidenavOpen.set(true);
     } else {
-      this.sidenavMode = 'over';
-      this.isSidenavOpen = false;
+      this.sidenavMode.set('over');
+      this.isSidenavOpen.set(false);
     }
   }
 
   toggleSidenav(): void {
-    if (!this.isLargeScreen) {
-      this.isSidenavOpen = !this.isSidenavOpen;
+    if (!this.isLargeScreen()) {
+      this.isSidenavOpen.set(!this.isSidenavOpen());
     }
   }
 

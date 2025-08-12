@@ -206,55 +206,6 @@
         }
       }
     },
-    "/tasks/{taskId}/move": {
-      "put": {
-        "tags": [
-          "task-controller"
-        ],
-        "operationId": "moveTaskToColumn",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "columnId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "position",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskDTO"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/tasks/{id}": {
       "get": {
         "tags": [
@@ -1754,31 +1705,6 @@
         ]
       }
     },
-    "/boards/random": {
-      "post": {
-        "tags": [
-          "board-controller"
-        ],
-        "operationId": "createRandomBoard",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/BoardDTO"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
     "/boards/join/{invitationCode}": {
       "post": {
         "tags": [
@@ -1882,6 +1808,55 @@
         }
       }
     },
+    "/attachments/upload": {
+      "post": {
+        "tags": [
+          "attachment-controller"
+        ],
+        "operationId": "uploadAttachment",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "tags": [
@@ -1935,6 +1910,40 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}/columns": {
+      "get": {
+        "tags": [
+          "task-controller"
+        ],
+        "operationId": "getColumnsForTask",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ColumnDTO"
+                  }
                 }
               }
             }
@@ -3379,6 +3388,38 @@
         }
       }
     },
+    "/attachments/{id}/download": {
+      "get": {
+        "tags": [
+          "attachment-controller"
+        ],
+        "operationId": "downloadAttachment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/attachments/user/{userId}": {
       "get": {
         "tags": [
@@ -3991,6 +4032,14 @@
           },
           "assignee": {
             "$ref": "#/components/schemas/UserDTO"
+          },
+          "boardId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "columnId": {
+            "type": "integer",
+            "format": "int64"
           }
         },
         "required": [

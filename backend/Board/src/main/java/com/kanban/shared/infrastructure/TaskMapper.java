@@ -43,7 +43,7 @@ public class TaskMapper {
                     .collect(Collectors.toList());
         }
         
-        return new TaskDTO(
+        TaskDTO dto = new TaskDTO(
             task.getId(),
             task.getTitle(),
             task.getDescription(),
@@ -59,6 +59,15 @@ public class TaskMapper {
             UserMapper.toDTO(task.getCreatedBy()),
             UserMapper.toDTO(task.getAssignee())
         );
+
+        if (task.getColumn() != null) {
+            dto.setColumnId(task.getColumn().getId());
+            if (task.getColumn().getBoard() != null) {
+                dto.setBoardId(task.getColumn().getBoard().getId());
+            }
+        }
+
+        return dto;
     }
 
     public static TaskDTO toPreviewDTO(Task task) {

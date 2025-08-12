@@ -49,6 +49,10 @@ public class TaskDTO {
     private UserDTO createdBy;
     
     private UserDTO assignee;
+
+    // Minimal board context for client logic
+    private Long boardId;
+    private Long columnId;
     
     // Constructor for task preview (minimal data)
     public TaskDTO(Long id, String title) {

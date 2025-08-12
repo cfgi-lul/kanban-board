@@ -1,3 +1,5 @@
+import { ColumnInstance } from './../models/classes/ColumnInstance';
+import { ColumnDTO } from './../models/requestModels/model/columnDTO';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { map, Observable } from 'rxjs';
@@ -36,8 +38,14 @@ export class TaskService {
 
   updateTask(updatedTask: TaskInstance): Observable<TaskInstance> {
     return this.http
-      .put<TaskDTO>(`${this.baseUrl}/${updatedTask.id.toString()}`, updatedTask)
+      .put<TaskDTO>(`${this.baseUrl}/${updatedTask.id}`, updatedTask)
       .pipe(map(e => new TaskInstance(e)));
+  }
+
+  getColumnsForTask(taskId: number): Observable<ColumnInstance[]> {
+    return this.http.get<ColumnDTO[]>(
+      `${this.baseUrl}/${taskId}/columns`
+    ).pipe(map(e => e.map(el => new ColumnInstance(el))));
   }
 
   deleteTask(id: string | number): Observable<void> {

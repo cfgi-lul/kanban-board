@@ -9,7 +9,9 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -107,6 +109,7 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private taskService = inject(TaskService);
   private userService = inject(UserService);
+  // Columns are now loaded via taskService.getColumnsForTask
   // private labelService = inject(LabelService);
   private attachmentService = inject(AttachmentService);
 
@@ -128,6 +131,8 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
   users$!: Observable<UserInstance[]>;
   labels$: Observable<LabelInstance[]> = of([]);
   attachments$: Observable<AttachmentInstance[]> = of([]);
+  columns$: Observable<{ id: number; name: string }[]> = of([]);
+  private currentColumnId?: number;
 
   task!: TaskInstance;
   // boardId?: number; // Board context was optional; removed as not provided via URL
@@ -200,14 +205,22 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
   }
 
   private buildForm(task: TaskInstance): void {
-    this.taskForm = this.fb.group({
-      title: [task.title, Validators.required],
-      description: [task.description],
-      priority: [task.priority || 'MEDIUM'],
-      dueDate: [task.dueDate ? new Date(task.dueDate) : null],
-      assignee: [task.assignee?.id || null],
-      labels: [task.labels || []],
+    this.taskForm = new FormGroup({
+      title: new FormControl(task.title || '', Validators.required),
+      description: new FormControl(task.description),
+      priority: new FormControl(task.priority || 'MEDIUM'),
+      dueDate: new FormControl(task.dueDate ? new Date(task.dueDate) : null),
+      assignee: new FormControl(task.assignee?.id || null),
+      labels: new FormControl(task.labels || []),
+      status: new FormControl(null),
     });
+
+    this.columns$ = this.taskService.getColumnsForTask(task.id as number).pipe(
+      map(e => {
+        this.taskForm.get('status')?.setValue(task.columnId);
+        return e.map(el => ({ id: el.id as number, name: el.name }));
+      })
+    );
   }
 
   onClearTitle(): void {
@@ -265,9 +278,16 @@ export class TaskEditorPageComponent implements OnInit, OnDestroy {
           : undefined,
         labels: formValue.labels,
       };
-      await firstValueFrom(
-        this.taskService.updateTask(updatedTask).pipe(take(1))
-      );
+      // Send column change via update
+      const selectedColumnId: number | null = formValue.status ?? null;
+      const payload: TaskInstance = {
+        ...updatedTask,
+        columnId: selectedColumnId ?? undefined,
+        position: updatedTask.position,
+      } as any;
+
+      await firstValueFrom(this.taskService.updateTask(payload).pipe(take(1)));
+      this.currentColumnId = selectedColumnId ?? this.currentColumnId;
     }
   }
 

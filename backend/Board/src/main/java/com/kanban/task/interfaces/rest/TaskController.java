@@ -25,6 +25,8 @@ import com.kanban.task.domain.repository.TaskRepository;
 import com.kanban.task.application.TaskPositionService;
 import com.kanban.user.domain.repository.UserRepository;
 import com.kanban.shared.infrastructure.LabelRepository;
+import com.kanban.board.domain.model.Board;
+import com.kanban.shared.infrastructure.ColumnMapper;
 
 
 
@@ -60,6 +62,24 @@ public class TaskController {
         return taskRepository.findById(id)
                 .map(TaskMapper::toDTO)
                 .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Get all columns of the board that the given task belongs to.
+     */
+    @GetMapping("/{taskId}/columns")
+    public ResponseEntity<List<com.kanban.board.interfaces.rest.ColumnDTO>> getColumnsForTask(@PathVariable Long taskId) {
+        return taskRepository.findByIdWithColumnAndBoard(taskId)
+                .map(task -> {
+                    Board board = task.getColumn().getBoard();
+                    // Map and sort columns by orderIndex for consistent display
+                    List<com.kanban.board.interfaces.rest.ColumnDTO> columns = board.getColumns().stream()
+                            .sorted((a, b) -> Integer.compare(a.getOrderIndex(), b.getOrderIndex()))
+                            .map(ColumnMapper::toPreviewDTO)
+                            .toList();
+                    return ResponseEntity.ok(columns);
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -129,10 +149,28 @@ public class TaskController {
                         }
                     }
                     
-                    // Handle position update if provided
-                    if (updatedTaskDTO.getPosition() != null && !updatedTaskDTO.getPosition().equals(task.getPosition())) {
+                    // Handle column change if provided
+                    if (updatedTaskDTO.getColumnId() != null) {
+                        Long newColumnId = updatedTaskDTO.getColumnId();
+                        Long currentColumnId = task.getColumn() != null ? task.getColumn().getId() : null;
+                        if (currentColumnId == null || !currentColumnId.equals(newColumnId)) {
+                            BoardColumn newColumn = columnRepository.findById(newColumnId)
+                                    .orElseThrow(() -> new ResourceNotFoundException("Column not found"));
+                            Integer targetPosition = updatedTaskDTO.getPosition();
+                            if (targetPosition == null) {
+                                Integer maxPosition = taskRepository.findMaxPositionByColumnId(newColumn.getId());
+                                targetPosition = maxPosition + 1; // default to end of column
+                            }
+                            taskPositionService.moveTaskToColumn(task, newColumn, targetPosition);
+                        }
+                    } else if (updatedTaskDTO.getPosition() != null && task.getPosition() != null
+                            && updatedTaskDTO.getPosition().intValue() != task.getPosition().intValue()) {
+                        // Handle position update within the same column if provided and changed
                         taskPositionService.moveTaskToPosition(task, updatedTaskDTO.getPosition());
                     }
+                    
+                    // Handle position update if provided
+                    // (handled above to avoid double-moving when columnId is present)
                     
                     Task savedTask = taskRepository.save(task);
                     taskRepository.flush(); // Ensure task is persisted
@@ -327,29 +365,6 @@ public class TaskController {
         }
     }
 
-    @PutMapping("/{taskId}/move")
-    public ResponseEntity<TaskDTO> moveTaskToColumn(@PathVariable Long taskId,
-                                                   @RequestParam Long columnId,
-                                                   @RequestParam Integer position) {
-        try {
-            Task task = taskRepository.findById(taskId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
-            
-            BoardColumn newColumn = columnRepository.findById(columnId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Column not found"));
-            
-            taskPositionService.moveTaskToColumn(task, newColumn, position);
-            Task savedTask = taskRepository.save(task);
-            
-            Long boardId = savedTask.getColumn().getBoard().getId();
-            sendBoardUpdateDirect(boardId);
-            return ResponseEntity.ok(TaskMapper.toDTO(savedTask));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     @GetMapping("/column/{columnId}/ordered")
     public ResponseEntity<List<TaskDTO>> getTasksInColumnOrdered(@PathVariable Long columnId) {
