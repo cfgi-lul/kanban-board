@@ -27,4 +27,8 @@ export class AttachmentInstance implements AttachmentDTOInterface {
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
   }
+
+  getFileUrl(): string {
+    return `${window.location.origin}/api/attachment/${this.fileUrl}`;
+  }
 }

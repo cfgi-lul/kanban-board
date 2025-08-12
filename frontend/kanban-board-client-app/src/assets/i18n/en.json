@@ -200,6 +200,8 @@
     "addLabel": "Add Label",
     "addAttachment": "Add Attachment",
     "downloadAttachment": "Download Attachment",
+    "existingAttachments": "Existing Attachments",
+    "noAttachments": "No attachments yet",
     "editTask": "Edit Task",
     "deleteTask": "Delete Task",
     "moveTask": "Move Task",

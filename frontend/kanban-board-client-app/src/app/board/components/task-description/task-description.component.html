@@ -1,6 +1,7 @@
 <div class="task-description">
   <div class="task-description__container">
-    <ng-container *ngIf="isEdit(); else previewMode">
+    @if (isEdit()) {
+
       <div
         class="task-description__toolbar"
         role="toolbar"
@@ -114,12 +115,13 @@
           }}</mat-hint>
         </mat-form-field>
       </div>
-    </ng-container>
-    <ng-template #previewMode>
+
+  } @else {
       <mat-card class="task-description__preview" appearance="outlined">
         <markdown [data]="value || ''"></markdown>
       </mat-card>
-    </ng-template>
+
+  }
   </div>
   <button
     mat-stroked-button

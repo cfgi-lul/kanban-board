@@ -1,4 +1,5 @@
 <div class="attachment-picker">
+  <!-- Upload Section -->
   <div class="attachment-picker__upload">
     <input
       type="file"
@@ -17,46 +18,63 @@
     </button>
   </div>
 
-  @if (attachments().length > 0) {
-    <div class="attachment-picker__grid">
-      <mat-grid-list cols="3" rowHeight="fit" gutterSize="12px">
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="attachment-picker__loading">
+      <mat-spinner diameter="24"></mat-spinner>
+      <span>{{ 'common.loading' | translate }}</span>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <div class="attachment-picker__error">
+      <mat-icon class="attachment-picker__error-icon">error</mat-icon>
+      <div class="attachment-picker__error-text">{{ error() }}</div>
+      <!-- <button mat-button (click)="refresh()">
+        {{ 'common.retry' | translate }}
+      </button> -->
+    </div>
+  }
+
+  <!-- Existing Attachments Section -->
+  @if (!isLoading() && !error() && attachments().length > 0) {
+    <div class="attachment-picker__section">
+      <div class="attachment-picker__section-header">
+        <h3 class="attachment-picker__section-title">
+          {{ 'board.existingAttachments' | translate }} ({{ attachments().length }})
+        </h3>
+      </div>
+      
+      <div class="attachment-picker__list">
         @for (attachment of attachments(); track attachment.id) {
-          <mat-grid-tile class="attachment-picker__tile">
-            <mat-card class="attachment-picker__card">
-              <div
-                class="attachment-picker__preview"
-                (click)="openInNewTab(attachment)"
-                tabindex="0"
-              >
-                @if (isImage(attachment)) {
-                  <img
-                    [src]="attachment.fileUrl"
-                    [alt]="attachment.originalFilename"
-                  />
-                } @else if (isVideo(attachment)) {
-                  <video [src]="attachment.fileUrl" controls></video>
-                } @else {
-                  <div class="attachment-picker__icon">
-                    <mat-icon>insert_drive_file</mat-icon>
-                  </div>
-                }
-              </div>
-              <div class="attachment-picker__meta">
-                <div
-                  class="attachment-picker__name"
-                  [matTooltip]="attachment.originalFilename"
-                >
+          <mat-card class="attachment-picker__item">
+            <div class="attachment-picker__item-content">
+
+              <!-- File Info -->
+              <div class="attachment-picker__info">
+                <div class="attachment-picker__name" [matTooltip]="attachment.originalFilename">
                   {{ attachment.originalFilename }}
                 </div>
-                <div class="attachment-picker__size">
-                  {{ attachment.fileSize | fileSize }}
+                <div class="attachment-picker__meta">
+                  <span class="attachment-picker__size">
+                    {{ attachment.fileSize | fileSize }}
+                  </span>
+                  @if (attachment.contentType) {
+                    <span class="attachment-picker__type">
+                      {{ attachment.contentType }}
+                    </span>
+                  }
                 </div>
               </div>
+
+              <!-- Actions -->
               <div class="attachment-picker__actions">
                 <button
                   mat-icon-button
                   [matTooltip]="'board.downloadAttachment' | translate"
                   (click)="downloadAttachment(attachment)"
+                  aria-label="Download attachment"
                 >
                   <mat-icon>download</mat-icon>
                 </button>
@@ -65,14 +83,25 @@
                   color="warn"
                   [matTooltip]="'common.delete' | translate"
                   (click)="deleteAttachment(attachment)"
+                  aria-label="Delete attachment"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
-            </mat-card>
-          </mat-grid-tile>
+            </div>
+          </mat-card>
         }
-      </mat-grid-list>
+      </div>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && !error() && attachments().length === 0) {
+    <div class="attachment-picker__empty">
+      <mat-icon class="attachment-picker__empty-icon">attach_file</mat-icon>
+      <div class="attachment-picker__empty-text">
+        {{ 'board.noAttachments' | translate }}
+      </div>
     </div>
   }
 </div>

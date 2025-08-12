@@ -1,9 +1,15 @@
 @use "../../../../theming/mixins.scss" as *;
 
 .attachment-picker {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   @include gap(md);
+
+  &__upload {
+    display: flex;
+    justify-content: flex-start;
+  }
 
   &__upload-button {
     display: inline-flex;
@@ -11,32 +17,40 @@
     @include gap(xs);
   }
 
-  &__grid {
-    width: 100%;
-  }
-
-  &__card {
+  &__section {
     display: flex;
     flex-direction: column;
-    @include gap(xs);
+    @include gap(sm);
   }
 
-  &__preview {
+  &__section-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
-    width: 100%;
-    max-height: 200px;
-    border-radius: 8px;
+    @include gap(sm);
+  }
 
-    img,
-    video {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
+  &__section-title {
+    margin: 0;
+    font: var(--mat-sys-headline-small);
+    color: var(--mat-sys-color-on-surface);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    @include gap(sm);
+  }
+
+  &__item {
+    width: 100%;
+    @include padding(sm);
+  }
+
+  &__item-content {
+    display: flex;
+    align-items: center;
+    @include gap(md);
+    padding: var(--mat-sys-spacing-sm);
   }
 
   &__icon {
@@ -44,30 +58,206 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 120px;
+    height: 100%;
+    color: var(--mat-sys-color-on-surface-variant);
+
+    mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+    }
   }
 
-  &__meta {
+  &__info {
+    flex: 1;
+    min-width: 0;
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    flex-direction: column;
     @include gap(xs);
   }
 
   &__name {
-    flex: 1;
+    font: var(--mat-sys-body-large);
+    font-weight: 500;
+    color: var(--mat-sys-color-on-surface);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    @include gap(sm);
+    flex-wrap: wrap;
+    overflow: hidden;
   }
 
   &__size {
     font: var(--mat-sys-body-small);
+    color: var(--mat-sys-color-on-surface-variant);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  &__type {
+    font: var(--mat-sys-body-small);
+    color: var(--mat-sys-color-on-surface-variant);
+    background-color: var(--mat-sys-color-surface-container);
+    padding: 2px 8px;
+    border-radius: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   &__actions {
     display: inline-flex;
     @include gap(xs);
-    align-self: flex-end;
+    flex-shrink: 0;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mat-sys-spacing-xl);
+    text-align: center;
+    @include gap(sm);
+  }
+
+  &__empty-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    color: var(--mat-sys-color-on-surface-variant);
+  }
+
+  &__empty-text {
+    margin: 0;
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-color-on-surface-variant);
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include gap(sm);
+    padding: var(--mat-sys-spacing-lg);
+    color: var(--mat-sys-color-on-surface-variant);
+  }
+
+  &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mat-sys-spacing-lg);
+    text-align: center;
+    @include gap(sm);
+  }
+
+  &__error-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    color: var(--mat-sys-color-error);
+  }
+
+  &__error-text {
+    margin: 0;
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-color-error);
   }
 }
+
+
+
+@container (max-width: 1280px) {
+  .attachment-picker {
+    &__upload-button {
+      min-width: 160px;
+    }
+
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      @include gap(md);
+    }
+
+    &__item {
+      height: fit-content;
+    }
+  }
+
+
+
+@container (max-width: 1024px) {
+  .attachment-picker {
+    &__upload-button {
+      min-width: 180px;
+    }
+
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      @include gap(md);
+    }
+
+    &__item {
+      height: fit-content;
+    }
+  }
+}
+
+  
+  
+  @container (max-width: 768px) {
+    .attachment-picker {
+      &__upload-button {
+        min-width: 180px;
+      }
+  
+      &__item-content {
+        @include gap(sm);
+      }
+  
+      &__meta {
+        flex-wrap: wrap;
+        @include gap(xs);
+      }
+    }
+  }
+
+
+  @container (max-width: 480px) {
+    .attachment-picker {  
+    &__list {
+      display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        @include gap(sm);
+      }
+    }
+  }
+
+    // Container Queries
+    @container (max-width: 280px) {
+      .attachment-picker {
+        &__list {
+          display: grid;
+
+          @include gap(sm);
+        }
+    
+      }
+    }
+    
+}
+

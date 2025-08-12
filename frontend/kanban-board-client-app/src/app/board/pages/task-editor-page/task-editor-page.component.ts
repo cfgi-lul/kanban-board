@@ -67,7 +67,6 @@ import { AttachmentPickerComponent } from '../../../core/components/attachment-p
   standalone: true,
   imports: [
     // Angular
-    NgIf,
     AsyncPipe,
     DatePipe,
     FormsModule,

@@ -10,8 +10,8 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FileSizePipe } from '../../pipes/file-size.pipe';
@@ -26,8 +26,8 @@ import { AttachmentInstance } from '../../models/classes/AttachmentInstance';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatGridListModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     TranslateModule,
     FileSizePipe,
   ],
@@ -43,12 +43,16 @@ export class AttachmentPickerComponent {
   readonly deleted = new EventEmitter<number>();
 
   readonly attachments = signal<AttachmentInstance[]>([]);
+  readonly isLoading = signal<boolean>(false);
+  readonly error = signal<string | null>(null);
 
   private readonly onTaskIdChange = effect(() => {
     const id = this.taskId();
-    console.log('onTaskIdChange', id);
     if (id !== null && id !== undefined) {
       this.loadAttachments(id);
+    } else {
+      this.attachments.set([]);
+      this.error.set(null);
     }
   });
 
@@ -88,8 +92,19 @@ export class AttachmentPickerComponent {
   }
 
   private loadAttachments(taskId: number): void {
-    this.attachmentService.getAttachmentsByTask(taskId).subscribe(list => {
-      this.attachments.set(Array.isArray(list) ? list : []);
+    this.isLoading.set(true);
+    this.error.set(null);
+    
+    this.attachmentService.getAttachmentsByTask(taskId).subscribe({
+      next: (list) => {
+        this.attachments.set(Array.isArray(list) ? list : []);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        this.error.set('Failed to load attachments');
+        this.isLoading.set(false);
+        console.error('Error loading attachments:', err);
+      }
     });
   }
 

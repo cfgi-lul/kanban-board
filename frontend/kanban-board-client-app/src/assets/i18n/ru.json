@@ -200,6 +200,8 @@
     "addLabel": "Добавить метку",
     "addAttachment": "Добавить вложение",
     "downloadAttachment": "Скачать вложение",
+    "existingAttachments": "Существующие вложения",
+    "noAttachments": "Вложений пока нет",
     "editTask": "Редактировать задачу",
     "deleteTask": "Удалить задачу",
     "moveTask": "Переместить задачу",
