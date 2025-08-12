@@ -23,11 +23,14 @@ export class LabelService {
     return this.http.post<LabelInstance>(this.baseUrl, label);
   }
 
-  updateLabel(id: number, label: Partial<LabelInstance>): Observable<LabelInstance> {
+  updateLabel(
+    id: number,
+    label: Partial<LabelInstance>
+  ): Observable<LabelInstance> {
     return this.http.put<LabelInstance>(`${this.baseUrl}/${id}`, label);
   }
 
   deleteLabel(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-} 
+}

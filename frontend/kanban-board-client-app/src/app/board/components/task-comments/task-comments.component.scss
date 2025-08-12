@@ -1,87 +1,162 @@
-@use '../../../../theming/mixins' as *;
+@use "../../../../theming/mixins" as *;
 
 .task-comments {
   @include margin-top(xl);
 
-  &__title {
+  /* Enable container queries */
+  container-type: inline-size;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     @include margin-bottom(md);
-    font-size: 19px;
-    font-weight: 500;
-    color: var(--mat-sys-on-surface);
   }
 
-  &__list {
+  &__title {
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__messages {
+    /* Allow natural growth, rely on page scroll */
+    overflow: visible;
+    scrollbar-gutter: stable;
+    padding-block: 4px;
+  }
+
+  &__message {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding-block: 4px;
+  }
+
+  &__bubble {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+    transition: background-color 120ms ease,
+      border-color 120ms ease,
+      box-shadow 120ms ease;
+    margin: 6px 0;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: 12px;
+    background: var(--mat-sys-surface-container-low);
+    @include padding(md);
+
+    &:hover {
+      border-color: var(--mat-sys-outline);
+      background-color: var(--mat-sys-surface-container-highest);
+      box-shadow: var(--mat-sys-level2);
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  &__author {
+    color: var(--mat-sys-on-surface);
+    font-weight: 600;
+  }
+
+  &__timestamp {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 12px;
+  }
+
+  &__content {
+    color: var(--mat-sys-on-surface);
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  &__delete {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 32px;
+    height: 32px;
+    color: var(--mat-sys-on-surface-variant);
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+    }
+
+    &:hover {
+      color: var(--mat-sys-error);
+    }
+  }
+
+  &__composer {
+    @include margin-top(md);
     display: flex;
     flex-direction: column;
-    @include gap(md);
-    @include margin-bottom(xl);
-  }
-
-  &__item {
-    @include padding(md);
-    border-radius: 8px;
-    background-color: var(--mat-sys-surface-container-low);
-    border: 1px solid var(--mat-sys-outline-variant);
-
-    &-header {
-      display: flex;
-      justify-content: space-between;
-      @include margin-bottom(sm);
-    }
-
-    &-author {
-      font-weight: 500;
-      color: var(--mat-sys-on-surface);
-    }
-
-    &-timestamp {
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 14px;
-    }
-
-    &-text {
-      white-space: pre-wrap;
-      color: var(--mat-sys-on-surface);
-      line-height: 1.5;
-    }
-  }
-
-  &__new {
-    @include margin-top(lg);
-
-    &-button {
-      float: right;
-      @include margin-top(md);
-    }
   }
 
   &__form {
-    display: flex;
-    flex-direction: column;
-    @include gap(md);
+    display: grid;
+    align-items: end;
+    grid-template-columns: 1fr auto;
+    @include gap(sm);
   }
 
-  &__field {
+  &__input {
     width: 100%;
+    margin: 0;
+  }
+
+  &__send {
+    height: 48px;
   }
 }
 
-@media (width <= 600px) {
+@container (width <= 480px) {
   .task-comments {
-    &__item {
+    &__bubble {
       @include padding(sm);
-
-      &-header {
-        flex-direction: column;
-        @include gap(xs);
-      }
     }
 
-    &__new {
-      &-button {
-        width: 100%;
-        float: none;
-      }
+    &__meta {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    &__send {
+      height: 44px;
     }
   }
-} 
+}
+
+@container (width <= 280px) {
+  .task-comments {
+    &__messages {
+      max-height: 300px;
+    }
+
+    &__bubble {
+      @include padding(xs);
+    }
+
+    &__timestamp {
+      font-size: 11px;
+    }
+
+    &__form {
+      grid-template-columns: 1fr;
+    }
+
+    &__send {
+      width: 100%;
+    }
+  }
+}

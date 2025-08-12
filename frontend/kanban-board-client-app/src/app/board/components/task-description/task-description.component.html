@@ -1,39 +1,98 @@
 <div class="task-description">
   <div class="task-description__container">
     <ng-container *ngIf="isEdit(); else previewMode">
-      <div class="task-description__toolbar" role="toolbar" aria-label="Markdown toolbar">
+      <div
+        class="task-description__toolbar"
+        role="toolbar"
+        aria-label="Markdown toolbar"
+      >
         <div class="task-description__toolbar__buttons">
-          <button mat-icon-button type="button" (click)="bold()" [matTooltip]="'board.md.bold' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="bold()"
+            [matTooltip]="'board.md.bold' | translate"
+          >
             <mat-icon>format_bold</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="italic()" [matTooltip]="'board.md.italic' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="italic()"
+            [matTooltip]="'board.md.italic' | translate"
+          >
             <mat-icon>format_italic</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="strikethrough()" [matTooltip]="'board.md.strike' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="strikethrough()"
+            [matTooltip]="'board.md.strike' | translate"
+          >
             <mat-icon>strikethrough_s</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="inlineCode()" [matTooltip]="'board.md.inlineCode' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="inlineCode()"
+            [matTooltip]="'board.md.inlineCode' | translate"
+          >
             <mat-icon>code</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="heading()" [matTooltip]="'board.md.heading' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="heading()"
+            [matTooltip]="'board.md.heading' | translate"
+          >
             <mat-icon>title</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="blockquote()" [matTooltip]="'board.md.blockquote' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="blockquote()"
+            [matTooltip]="'board.md.blockquote' | translate"
+          >
             <mat-icon>format_quote</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="unorderedList()" [matTooltip]="'board.md.bulletList' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="unorderedList()"
+            [matTooltip]="'board.md.bulletList' | translate"
+          >
             <mat-icon>format_list_bulleted</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="orderedList()" [matTooltip]="'board.md.orderedList' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="orderedList()"
+            [matTooltip]="'board.md.orderedList' | translate"
+          >
             <mat-icon>format_list_numbered</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="codeBlock()" [matTooltip]="'board.md.codeBlock' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="codeBlock()"
+            [matTooltip]="'board.md.codeBlock' | translate"
+          >
             <mat-icon>data_object</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="link()" [matTooltip]="'board.md.link' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="link()"
+            [matTooltip]="'board.md.link' | translate"
+          >
             <mat-icon>link</mat-icon>
           </button>
-          <button mat-icon-button type="button" (click)="image()" [matTooltip]="'board.md.image' | translate">
+          <button
+            mat-icon-button
+            type="button"
+            (click)="image()"
+            [matTooltip]="'board.md.image' | translate"
+          >
             <mat-icon>image</mat-icon>
           </button>
         </div>
@@ -50,7 +109,9 @@
             (input)="handleInput($event)"
             (blur)="markTouched()"
           ></textarea>
-          <mat-hint align="start">{{ 'board.descriptionMarkdownHint' | translate }}</mat-hint>
+          <mat-hint align="start">{{
+            'board.descriptionMarkdownHint' | translate
+          }}</mat-hint>
         </mat-form-field>
       </div>
     </ng-container>
@@ -60,7 +121,15 @@
       </mat-card>
     </ng-template>
   </div>
-  <button mat-stroked-button (click)="onToggle()" class="task-description__button">
-    {{ isEdit() ? ('board.previewDescription' | translate) : ('board.editDescription' | translate) }}
+  <button
+    mat-stroked-button
+    (click)="onToggle()"
+    class="task-description__button"
+  >
+    {{
+      isEdit()
+        ? ('board.previewDescription' | translate)
+        : ('board.editDescription' | translate)
+    }}
   </button>
 </div>

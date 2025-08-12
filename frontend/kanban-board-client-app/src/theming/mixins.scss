@@ -1,4 +1,4 @@
-@use 'sass:map';
+@use "sass:map";
 
 $spacing-scale: (
   xs: 8px,
@@ -26,7 +26,8 @@ $responsive-factors: (
 @mixin padding($size) {
   @if map.has-key($spacing-scale, $size) {
     padding: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -35,7 +36,8 @@ $responsive-factors: (
   @if map.has-key($spacing-scale, $size) {
     padding-left: map.get($spacing-scale, $size);
     padding-right: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -44,7 +46,8 @@ $responsive-factors: (
   @if map.has-key($spacing-scale, $size) {
     padding-top: map.get($spacing-scale, $size);
     padding-bottom: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -52,7 +55,8 @@ $responsive-factors: (
 @mixin padding-top($size) {
   @if map.has-key($spacing-scale, $size) {
     padding-top: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -60,7 +64,8 @@ $responsive-factors: (
 @mixin padding-right($size) {
   @if map.has-key($spacing-scale, $size) {
     padding-right: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -68,7 +73,8 @@ $responsive-factors: (
 @mixin padding-bottom($size) {
   @if map.has-key($spacing-scale, $size) {
     padding-bottom: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -76,7 +82,8 @@ $responsive-factors: (
 @mixin padding-left($size) {
   @if map.has-key($spacing-scale, $size) {
     padding-left: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -84,7 +91,8 @@ $responsive-factors: (
 @mixin margin($size) {
   @if map.has-key($spacing-scale, $size) {
     margin: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -93,7 +101,8 @@ $responsive-factors: (
   @if map.has-key($spacing-scale, $size) {
     margin-left: map.get($spacing-scale, $size);
     margin-right: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -102,7 +111,8 @@ $responsive-factors: (
   @if map.has-key($spacing-scale, $size) {
     margin-top: map.get($spacing-scale, $size);
     margin-bottom: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -110,7 +120,8 @@ $responsive-factors: (
 @mixin margin-top($size) {
   @if map.has-key($spacing-scale, $size) {
     margin-top: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -118,7 +129,8 @@ $responsive-factors: (
 @mixin margin-right($size) {
   @if map.has-key($spacing-scale, $size) {
     margin-right: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -126,7 +138,8 @@ $responsive-factors: (
 @mixin margin-bottom($size) {
   @if map.has-key($spacing-scale, $size) {
     margin-bottom: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -134,7 +147,8 @@ $responsive-factors: (
 @mixin margin-left($size) {
   @if map.has-key($spacing-scale, $size) {
     margin-left: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -142,7 +156,8 @@ $responsive-factors: (
 @mixin gap($size) {
   @if map.has-key($spacing-scale, $size) {
     gap: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -150,7 +165,8 @@ $responsive-factors: (
 @mixin gap-x($size) {
   @if map.has-key($spacing-scale, $size) {
     column-gap: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -158,7 +174,8 @@ $responsive-factors: (
 @mixin gap-y($size) {
   @if map.has-key($spacing-scale, $size) {
     row-gap: map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }
@@ -166,7 +183,8 @@ $responsive-factors: (
 @function spacing($size) {
   @if map.has-key($spacing-scale, $size) {
     @return map.get($spacing-scale, $size);
-  } @else {
+  }
+  @else {
     @error "Invalid spacing size: #{$size}. Available sizes: #{map.keys($spacing-scale)}";
   }
 }

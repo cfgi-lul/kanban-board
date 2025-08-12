@@ -1,45 +1,51 @@
 <div class="task-comments">
-  <div class="task-comments__title">
-    {{ 'board.taskComments' | translate }}
+  <div class="task-comments__header">
+    <h3 class="task-comments__title">{{ 'board.taskComments' | translate }}</h3>
   </div>
-  
-  <div class="task-comments__list">
-    @for (comment of comments$ | async; track $index) {
-      <div class="task-comments__item">
-        <div class="task-comments__item-header">
-          <span class="task-comments__item-author">{{
-            comment.author.username
-          }}</span>
-          <span class="task-comments__item-timestamp">{{
-            comment.createdAt | date: 'yyyy.MM.dd, HH:mm'
-          }}</span>
-        </div>
-        <div class="task-comments__item-text">
-          {{ comment.content }}
-        </div>
-              </div>
-      }
-  </div>
-  
-  <div class="task-comments__new">
-    <form [formGroup]="commentForm" class="task-comments__form">
-      <mat-form-field appearance="fill" class="task-comments__field">
-        <mat-label>{{ 'board.addComment' | translate }}</mat-label>
-        <textarea
-          matInput
-          formControlName="newComment"
-          [placeholder]="'board.writeComment' | translate"
-          rows="3"
-        ></textarea>
-      </mat-form-field>
+
+  <div class="task-comments__composer">
+    <mat-form-field appearance="fill" class="task-comments__input">
+      <mat-label>{{ 'board.writeComment' | translate }}</mat-label>
+      <input matInput [formControl]="commentControl" type="text" />
       <button
-        mat-button
+        mat-icon-button
+        matSuffix
+        type="button"
+        color="primary"
         (click)="addComment()"
-        [disabled]="!commentForm.get('newComment')?.value"
-        class="task-comments__new-button"
+        [disabled]="!commentControl.value?.trim()"
+        aria-label="Send message"
       >
-        {{ 'board.addComment' | translate }}
+        <mat-icon>send</mat-icon>
       </button>
-    </form>
+    </mat-form-field>
   </div>
-</div> 
+
+  <div class="task-comments__messages" role="log" aria-live="polite">
+    @for (comment of comments$ | async; track comment.id ?? $index) {
+      <div class="task-comments__message">
+        <div class="task-comments__bubble">
+          <button
+            mat-icon-button
+            class="task-comments__delete"
+            (click)="removeComment(comment)"
+            aria-label="Delete comment"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <div class="task-comments__meta">
+            <span class="task-comments__author">{{
+              comment.author?.displayName ||
+                comment.author?.name ||
+                comment.author?.username
+            }}</span>
+            <span class="task-comments__timestamp">{{
+              comment.createdAt | date: 'yyyy.MM.dd, HH:mm'
+            }}</span>
+          </div>
+          <div class="task-comments__content">{{ comment.content }}</div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

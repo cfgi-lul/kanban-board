@@ -1,4 +1,4 @@
-@use '../../../../theming/mixins' as *;
+@use "../../../../theming/mixins" as *;
 
 .edit-task-dialog {
   width: 100%;
@@ -6,20 +6,20 @@
   container-type: inline-size;
 
   &__title {
-    font: var(--mat-sys-headline-small);
     border-bottom: 1px solid var(--mat-sys-outline-variant);
+    font: var(--mat-sys-headline-small);
     @include padding-x(md);
     @include padding-y(sm);
   }
 
   &__content {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     overflow-y: auto;
+    background: var(--mat-sys-surface);
     @include padding(md);
     @include gap-y(md);
-    background: var(--mat-sys-surface);
   }
 
   &__field {
@@ -34,42 +34,42 @@
   }
 
   &__info-label {
-    font: var(--mat-sys-label-medium);
-    color: var(--mat-sys-color-on-surface-variant);
     min-width: 100px;
+    color: var(--mat-sys-color-on-surface-variant);
+    font: var(--mat-sys-label-medium);
   }
 
   &__info-value {
-    font: var(--mat-sys-body-medium);
     flex: 1;
+    font: var(--mat-sys-body-medium);
   }
 
   &__label-chip {
+    min-width: 60px;
+    border-radius: 12px;
+    color: var(--mat-sys-color-on-primary-container);
     font: var(--mat-sys-label-small);
+    text-align: center;
     @include padding-x(sm);
     @include padding-y(xs);
-    border-radius: 12px;
-    text-align: center;
-    min-width: 60px;
-    color: var(--mat-sys-color-on-primary-container);
   }
 
   &__label-option {
+    min-width: 60px;
+    border-radius: 12px;
+    color: var(--mat-sys-color-on-primary-container);
     font: var(--mat-sys-body-medium);
+    text-align: center;
     @include padding-x(sm);
     @include padding-y(xs);
-    border-radius: 12px;
-    text-align: center;
-    min-width: 60px;
-    color: var(--mat-sys-color-on-primary-container);
   }
 
   &__attachments {
     @include padding-y(sm);
 
     &__title {
-      font: var(--mat-sys-title-small);
       color: var(--mat-sys-color-on-surface-variant);
+      font: var(--mat-sys-title-small);
       @include margin-bottom(sm);
     }
 
@@ -77,21 +77,22 @@
       @include margin-bottom(sm);
 
       &-button {
-        font: var(--mat-sys-body-medium);
         display: flex;
         align-items: center;
         gap: 8px;
+        transition: background-color 0.15s ease,
+          border-color 0.15s ease;
         width: 100%;
-        text-align: left;
         border: 1px dashed var(--mat-sys-outline);
-        background: var(--mat-sys-surface);
         border-radius: 12px;
+        background: var(--mat-sys-surface);
+        font: var(--mat-sys-body-medium);
+        text-align: left;
         @include padding(sm);
-        transition: background-color .15s ease, border-color .15s ease;
 
         &:hover {
-          background: var(--mat-sys-surface-container-lowest);
           border-color: var(--mat-sys-outline-variant);
+          background: var(--mat-sys-surface-container-lowest);
         }
 
         mat-icon {
@@ -108,34 +109,35 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      @include padding(sm);
+      transition: background-color 0.15s ease,
+        border-color 0.15s ease;
+      border: 1px solid var(--mat-sys-outline-variant);
       border-radius: 12px;
       background: var(--mat-sys-surface-container-low);
-      border: 1px solid var(--mat-sys-outline-variant);
-      transition: background-color .15s ease, border-color .15s ease;
+      @include padding(sm);
 
       &:hover {
-        background: var(--mat-sys-surface-container);
         border-color: var(--mat-sys-outline);
+        background: var(--mat-sys-surface-container);
       }
 
       &-info {
         display: flex;
-        align-items: center;
         flex: 1;
+        align-items: center;
         @include gap-x(sm);
 
         mat-icon {
-          color: var(--mat-sys-color-on-surface-variant);
-          font-size: 20px;
           width: 20px;
           height: 20px;
+          color: var(--mat-sys-color-on-surface-variant);
+          font-size: 20px;
         }
       }
 
       &-name {
-        font: var(--mat-sys-body-medium);
         flex: 1;
+        font: var(--mat-sys-body-medium);
       }
 
       &-size {
@@ -149,9 +151,9 @@
 
         button {
           mat-icon {
-            font-size: 18px;
             width: 18px;
             height: 18px;
+            font-size: 18px;
           }
         }
       }
@@ -209,8 +211,8 @@
         @include gap-y(xs);
 
         &-actions {
-          width: 100%;
           justify-content: flex-end;
+          width: 100%;
         }
       }
     }

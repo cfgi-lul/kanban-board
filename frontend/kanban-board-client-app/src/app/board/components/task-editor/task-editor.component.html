@@ -1,30 +1,37 @@
 <div class="edit-task-dialog">
-  <div mat-dialog-title class="edit-task-dialog__title"> {{ 'board.editTask' | translate }}</div>
+  <div mat-dialog-title class="edit-task-dialog__title">
+    {{ 'board.editTask' | translate }}
+  </div>
   <mat-dialog-content [formGroup]="taskForm" class="edit-task-dialog__content">
     <mat-form-field appearance="fill" class="edit-task-dialog__field">
       <mat-label>{{ 'board.taskTitle' | translate }}</mat-label>
       <input matInput formControlName="title" required />
       @if (taskForm.get('title')?.value) {
-      <button matSuffix mat-icon-button [attr.aria-label]="'common.clear' | translate" (click)="onClearTitle()">
-        <mat-icon>clear</mat-icon>
-      </button>
+        <button
+          matSuffix
+          mat-icon-button
+          [attr.aria-label]="'common.clear' | translate"
+          (click)="onClearTitle()"
+        >
+          <mat-icon>clear</mat-icon>
+        </button>
       }
       @if (taskForm.get('title')?.hasError('required')) {
-      <mat-error>{{ 'validation.required' | translate }}</mat-error>
+        <mat-error>{{ 'validation.required' | translate }}</mat-error>
       }
     </mat-form-field>
 
     <kn-task-description
-    formControlName="description"
-    [isEdit]="isEditDescription"
-    (toggle)="toggleEditDescription()"
-  />
+      formControlName="description"
+      [isEdit]="isEditDescription"
+      (toggle)="toggleEditDescription()"
+    />
 
     <mat-form-field appearance="fill" class="edit-task-dialog__field">
       <mat-label>{{ 'board.taskPriority' | translate }}</mat-label>
       <mat-select formControlName="priority">
         @for (option of priorityOptions; track option.value) {
-        <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -33,15 +40,22 @@
       <mat-label>{{ 'board.taskStatus' | translate }}</mat-label>
       <mat-select formControlName="status">
         @for (option of statusOptions; track option.value) {
-        <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="edit-task-dialog__field">
       <mat-label>{{ 'board.taskDueDate' | translate }}</mat-label>
-      <input matInput [matDatepicker]="dueDatePicker" formControlName="dueDate" />
-      <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <input
+        matInput
+        [matDatepicker]="dueDatePicker"
+        formControlName="dueDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dueDatePicker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>
     </mat-form-field>
 
@@ -50,56 +64,79 @@
       <mat-select formControlName="assignee">
         <mat-option [value]="null">{{ 'common.none' | translate }}</mat-option>
         @for (user of users$ | async; track user.id) {
-        <mat-option [value]="user.id">{{ user.displayName || user.username }}</mat-option>
+          <mat-option [value]="user.id">{{
+            user.displayName || user.username
+          }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
     @if (data.task.createdBy) {
-    <div class="edit-task-dialog__info-field">
-      <span class="edit-task-dialog__info-label">{{ 'board.createdBy' | translate }}:</span>
-      <span class="edit-task-dialog__info-value">{{ data.task.createdBy.displayName || data.task.createdBy.username
+      <div class="edit-task-dialog__info-field">
+        <span class="edit-task-dialog__info-label"
+          >{{ 'board.createdBy' | translate }}:</span
+        >
+        <span class="edit-task-dialog__info-value">{{
+          data.task.createdBy.displayName || data.task.createdBy.username
         }}</span>
-    </div>
+      </div>
     }
 
     @if (data.task.createdAt) {
-    <div class="edit-task-dialog__info-field">
-      <span class="edit-task-dialog__info-label">{{ 'board.createdAt' | translate }}:</span>
-      <span class="edit-task-dialog__info-value">{{ data.task.createdAt | date:'medium' }}</span>
-    </div>
+      <div class="edit-task-dialog__info-field">
+        <span class="edit-task-dialog__info-label"
+          >{{ 'board.createdAt' | translate }}:</span
+        >
+        <span class="edit-task-dialog__info-value">{{
+          data.task.createdAt | date: 'medium'
+        }}</span>
+      </div>
     }
 
     @if (data.task.updatedAt) {
-    <div class="edit-task-dialog__info-field">
-      <span class="edit-task-dialog__info-label">{{ 'board.updatedAt' | translate }}:</span>
-      <span class="edit-task-dialog__info-value">{{ data.task.updatedAt | date:'medium' }}</span>
-    </div>
+      <div class="edit-task-dialog__info-field">
+        <span class="edit-task-dialog__info-label"
+          >{{ 'board.updatedAt' | translate }}:</span
+        >
+        <span class="edit-task-dialog__info-value">{{
+          data.task.updatedAt | date: 'medium'
+        }}</span>
+      </div>
     }
 
     <mat-form-field appearance="fill" class="edit-task-dialog__field">
       <mat-label>{{ 'board.labels' | translate }}</mat-label>
       <mat-chip-grid #chipGrid>
         @for (label of taskForm.get('labels')?.value; track label.id) {
-        <mat-chip-row (removed)="removeLabel(label)">
-          <div class="edit-task-dialog__label-chip" [style.background-color]="label.color">
-            {{ label.name }}
-          </div>
-          <button matChipRemove>
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip-row>
+          <mat-chip-row (removed)="removeLabel(label)">
+            <div
+              class="edit-task-dialog__label-chip"
+              [style.background-color]="label.color"
+            >
+              {{ label.name }}
+            </div>
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
         }
-        <input placeholder="{{ 'board.addLabel' | translate }}..." [matChipInputFor]="chipGrid"
-          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addLabel($event)" />
+        <input
+          placeholder="{{ 'board.addLabel' | translate }}..."
+          [matChipInputFor]="chipGrid"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="addLabel($event)"
+        />
       </mat-chip-grid>
       <mat-autocomplete #auto="matAutocomplete">
         @for (label of filteredLabels; track label.id) {
-        <mat-option [value]="label.name">
-          <div class="edit-task-dialog__label-option" [style.background-color]="label.color">
-            {{ label.name }}
-          </div>
-        </mat-option>
+          <mat-option [value]="label.name">
+            <div
+              class="edit-task-dialog__label-option"
+              [style.background-color]="label.color"
+            >
+              {{ label.name }}
+            </div>
+          </mat-option>
         }
       </mat-autocomplete>
     </mat-form-field>
@@ -110,8 +147,18 @@
       </div>
 
       <div class="edit-task-dialog__attachments__upload">
-        <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" multiple />
-        <button mat-button (click)="fileInput.click()" class="edit-task-dialog__attachments__upload-button">
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onFileSelected($event)"
+          multiple
+        />
+        <button
+          mat-button
+          (click)="fileInput.click()"
+          class="edit-task-dialog__attachments__upload-button"
+        >
           <mat-icon>attach_file</mat-icon>
           {{ 'board.addAttachment' | translate }}
         </button>
@@ -119,38 +166,53 @@
 
       <div class="edit-task-dialog__attachments__list">
         @for (attachment of attachments$ | async; track attachment.id) {
-        <div class="edit-task-dialog__attachments__item">
-          <div class="edit-task-dialog__attachments__item-info">
-            <mat-icon>insert_drive_file</mat-icon>
-            <span class="edit-task-dialog__attachments__item-name">{{ attachment.originalFilename }}</span>
-            <span class="edit-task-dialog__attachments__item-size">({{ attachment.fileSize | fileSize }})</span>
+          <div class="edit-task-dialog__attachments__item">
+            <div class="edit-task-dialog__attachments__item-info">
+              <mat-icon>insert_drive_file</mat-icon>
+              <span class="edit-task-dialog__attachments__item-name">{{
+                attachment.originalFilename
+              }}</span>
+              <span class="edit-task-dialog__attachments__item-size"
+                >({{ attachment.fileSize | fileSize }})</span
+              >
+            </div>
+            <div class="edit-task-dialog__attachments__item-actions">
+              <button
+                mat-icon-button
+                (click)="downloadAttachment(attachment)"
+                [matTooltip]="'board.downloadAttachment' | translate"
+              >
+                <mat-icon>download</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                (click)="deleteAttachment(attachment)"
+                [matTooltip]="'common.delete' | translate"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </div>
-          <div class="edit-task-dialog__attachments__item-actions">
-            <button mat-icon-button (click)="downloadAttachment(attachment)"
-              [matTooltip]="'board.downloadAttachment' | translate">
-              <mat-icon>download</mat-icon>
-            </button>
-            <button mat-icon-button (click)="deleteAttachment(attachment)" [matTooltip]="'common.delete' | translate">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-        </div>
         }
       </div>
     </div>
 
-
-
     <kn-task-comments [taskId]="data.task.id" />
-
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="edit-task-dialog__actions">
-    <button mat-button (click)="onCancel()"
-      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--cancel">
+    <button
+      mat-button
+      (click)="onCancel()"
+      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--cancel"
+    >
       {{ 'common.cancel' | translate }}
     </button>
-    <button mat-button (click)="onSave()" [disabled]="taskForm.invalid"
-      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--save">
+    <button
+      mat-button
+      (click)="onSave()"
+      [disabled]="taskForm.invalid"
+      class="edit-task-dialog__actions__button edit-task-dialog__actions__button--save"
+    >
       {{ 'common.save' | translate }}
     </button>
   </mat-dialog-actions>

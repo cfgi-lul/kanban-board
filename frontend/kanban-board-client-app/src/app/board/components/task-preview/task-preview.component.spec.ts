@@ -8,13 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  jest,
-} from '@jest/globals';
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 describe('TaskPreviewComponent', () => {
   let component: TaskPreviewComponent;
@@ -45,9 +39,7 @@ describe('TaskPreviewComponent', () => {
         MatButtonModule,
         MatTooltipModule,
       ],
-      providers: [
-        { provide: TranslateService, useValue: translateService },
-      ],
+      providers: [{ provide: TranslateService, useValue: translateService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
@@ -86,7 +78,7 @@ describe('TaskPreviewComponent', () => {
         id: 2,
         title: 'Minimal Task',
       });
-      
+
       expect(minimalTask).toBeDefined();
       expect(minimalTask.title).toBe('Minimal Task');
     });
@@ -96,18 +88,18 @@ describe('TaskPreviewComponent', () => {
     it('should emit edit task event', () => {
       const spy = jest.spyOn(component.editTask, 'emit');
       const taskId = '1';
-      
+
       component.editTask.emit(taskId);
-      
+
       expect(spy).toHaveBeenCalledWith(taskId);
     });
 
     it('should emit delete task event', () => {
       const spy = jest.spyOn(component.deleteTask, 'emit');
       const taskId = '1';
-      
+
       component.deleteTask.emit(taskId);
-      
+
       expect(spy).toHaveBeenCalledWith(taskId);
     });
   });
@@ -159,4 +151,4 @@ describe('TaskPreviewComponent', () => {
       expect(component.deleteTask).toBeDefined();
     });
   });
-}); 
+});

@@ -27,7 +27,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import {
+  DateAdapter,
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { TaskInstance } from '../../../core/models/classes/TaskInstance';
 import { TaskService } from '../../../core/api/task.service';
@@ -42,8 +46,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FileSizePipe } from '../../../core/pipes/file-size.pipe';
 import { TaskCommentsComponent } from '../task-comments/task-comments.component';
 import { TaskDescriptionComponent } from '../task-description/task-description.component';
-
-
 
 @Component({
   selector: 'kn-task-editor',
@@ -72,7 +74,6 @@ import { TaskDescriptionComponent } from '../task-description/task-description.c
     FileSizePipe,
     TaskCommentsComponent,
     TaskDescriptionComponent,
-
   ],
   templateUrl: './task-editor.component.html',
   styleUrl: './task-editor.component.scss',
@@ -83,7 +84,7 @@ export class TaskEditorComponent {
   private userService = inject(UserService);
   private labelService = inject(LabelService);
   private attachmentService = inject(AttachmentService);
-  
+
   dialogRef = inject<MatDialogRef<TaskEditorComponent>>(MatDialogRef);
   data = inject<{
     task: TaskInstance;
@@ -96,13 +97,13 @@ export class TaskEditorComponent {
   users$: Observable<UserInstance[]>;
   labels$: Observable<LabelInstance[]> = of([]);
   attachments$: Observable<AttachmentInstance[]> = of([]);
-  
+
   // Priority options
   priorityOptions = [
     { value: 'LOW', label: 'Low' },
     { value: 'MEDIUM', label: 'Medium' },
     { value: 'HIGH', label: 'High' },
-    { value: 'URGENT', label: 'Urgent' }
+    { value: 'URGENT', label: 'Urgent' },
   ];
 
   // Status options
@@ -110,7 +111,7 @@ export class TaskEditorComponent {
     { value: 'TODO', label: 'To Do' },
     { value: 'IN_PROGRESS', label: 'In Progress' },
     { value: 'REVIEW', label: 'Review' },
-    { value: 'DONE', label: 'Done' }
+    { value: 'DONE', label: 'Done' },
   ];
 
   // Filtered labels for autocomplete
@@ -130,13 +131,15 @@ export class TaskEditorComponent {
     });
 
     this.users$ = this.userService.getAllUsers();
-    
+
     if (this.data.boardId !== undefined && this.data.boardId !== null) {
       this.labels$ = this.labelService.getLabelsByBoard(this.data.boardId);
     }
-    
+
     if (this.data.task.id !== undefined && this.data.task.id !== null) {
-      this.attachments$ = this.attachmentService.getAttachmentsByTask(this.data.task.id);
+      this.attachments$ = this.attachmentService.getAttachmentsByTask(
+        this.data.task.id
+      );
     }
 
     // Initialize filtered labels
@@ -153,21 +156,23 @@ export class TaskEditorComponent {
     this.isEditDescription = !this.isEditDescription;
   }
 
-
-
   // Label handling
   addLabel(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value) {
       // Find existing label or create new one
-      const existingLabel = this.filteredLabels.find(label => 
-        label.name.toLowerCase() === value.toLowerCase()
+      const existingLabel = this.filteredLabels.find(
+        label => label.name.toLowerCase() === value.toLowerCase()
       );
-      
+
       if (existingLabel) {
         const currentLabels = this.taskForm.get('labels')?.value || [];
-        if (!currentLabels.find((l: LabelInstance) => l.id === existingLabel.id)) {
-          this.taskForm.get('labels')?.setValue([...currentLabels, existingLabel]);
+        if (
+          !currentLabels.find((l: LabelInstance) => l.id === existingLabel.id)
+        ) {
+          this.taskForm
+            .get('labels')
+            ?.setValue([...currentLabels, existingLabel]);
         }
       }
     }
@@ -176,7 +181,9 @@ export class TaskEditorComponent {
 
   removeLabel(label: LabelInstance): void {
     const currentLabels = this.taskForm.get('labels')?.value || [];
-    const index = currentLabels.findIndex((l: LabelInstance) => l.id === label.id);
+    const index = currentLabels.findIndex(
+      (l: LabelInstance) => l.id === label.id
+    );
     if (index >= 0) {
       currentLabels.splice(index, 1);
       this.taskForm.get('labels')?.setValue([...currentLabels]);
@@ -190,7 +197,8 @@ export class TaskEditorComponent {
     if (!file || taskId === undefined || taskId === null) {
       return;
     }
-    this.attachmentService.uploadAttachment(taskId, file)
+    this.attachmentService
+      .uploadAttachment(taskId, file)
       .pipe(take(1))
       .subscribe(() => {
         // Refresh attachments list
@@ -200,10 +208,16 @@ export class TaskEditorComponent {
 
   deleteAttachment(attachment: AttachmentInstance): void {
     const taskId = this.data.task.id;
-    if (taskId === undefined || taskId === null || attachment.id === undefined || attachment.id === null) {
+    if (
+      taskId === undefined ||
+      taskId === null ||
+      attachment.id === undefined ||
+      attachment.id === null
+    ) {
       return;
     }
-    this.attachmentService.deleteAttachment(attachment.id)
+    this.attachmentService
+      .deleteAttachment(attachment.id)
       .pipe(take(1))
       .subscribe(() => {
         // Refresh attachments list
@@ -215,7 +229,8 @@ export class TaskEditorComponent {
     if (attachment.id === undefined || attachment.id === null) {
       return;
     }
-    this.attachmentService.downloadAttachment(attachment.id)
+    this.attachmentService
+      .downloadAttachment(attachment.id)
       .pipe(take(1))
       .subscribe(blob => {
         const url = window.URL.createObjectURL(blob);
@@ -237,7 +252,9 @@ export class TaskEditorComponent {
         priority: formValue.priority,
         status: formValue.status,
         dueDate: formValue.dueDate,
-        assignee: formValue.assignee ? { id: formValue.assignee } as UserInstance : undefined,
+        assignee: formValue.assignee
+          ? ({ id: formValue.assignee } as UserInstance)
+          : undefined,
         labels: formValue.labels,
       };
       await firstValueFrom(this.taskService.updateTask(updatedTask));

@@ -1,6 +1,17 @@
-import { Component, ElementRef, ViewChild, forwardRef, input, output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  forwardRef,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -134,7 +145,11 @@ export class TaskDescriptionComponent implements ControlValueAccessor {
     return this.textareaRef?.nativeElement;
   }
 
-  private updateValue(newValue: string, newSelectionStart?: number, newSelectionEnd?: number): void {
+  private updateValue(
+    newValue: string,
+    newSelectionStart?: number,
+    newSelectionEnd?: number
+  ): void {
     this.value = newValue;
     this.onChange(this.value);
     const ta = this.getTextarea();
@@ -191,7 +206,7 @@ export class TaskDescriptionComponent implements ControlValueAccessor {
 
     const selection = selected || this.currentLineAt(start);
     const lines = selection.split(/\r?\n/);
-    const prefixed = lines.map((l) => (l.length ? prefix + l : l)).join('\n');
+    const prefixed = lines.map(l => (l.length ? prefix + l : l)).join('\n');
     const newValue = `${before}${prefixed}${after}`;
     const caretStart = before.length;
     const caretEnd = caretStart + prefixed.length;

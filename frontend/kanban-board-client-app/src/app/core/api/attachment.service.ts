@@ -12,7 +12,9 @@ export class AttachmentService {
   private readonly baseUrl = '/api/attachments';
 
   getAttachmentsByTask(taskId: number): Observable<AttachmentInstance[]> {
-    return this.http.get<AttachmentInstance[]>(`${this.baseUrl}/task/${taskId}`);
+    return this.http.get<AttachmentInstance[]>(
+      `${this.baseUrl}/task/${taskId}`
+    );
   }
 
   getAttachmentById(id: number): Observable<AttachmentInstance> {
@@ -23,8 +25,11 @@ export class AttachmentService {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('taskId', taskId.toString());
-    
-    return this.http.post<AttachmentInstance>(`${this.baseUrl}/upload`, formData);
+
+    return this.http.post<AttachmentInstance>(
+      `${this.baseUrl}/upload`,
+      formData
+    );
   }
 
   deleteAttachment(id: number): Observable<void> {
@@ -32,6 +37,8 @@ export class AttachmentService {
   }
 
   downloadAttachment(id: number): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/${id}/download`, { responseType: 'blob' });
+    return this.http.get(`${this.baseUrl}/${id}/download`, {
+      responseType: 'blob',
+    });
   }
-} 
+}

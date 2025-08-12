@@ -1,4 +1,4 @@
-@use '../../../../theming/mixins' as *;
+@use "../../../../theming/mixins" as *;
 
 .task-description {
   display: flex;
@@ -12,9 +12,9 @@
 
   &__preview {
     @include padding(sm);
+    height: 476px;
     border-radius: 12px;
     @include margin-bottom(sm);
-    height: 476px;
   }
 
   &__edit {

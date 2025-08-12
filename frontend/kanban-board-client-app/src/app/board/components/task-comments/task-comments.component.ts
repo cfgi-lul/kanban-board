@@ -1,7 +1,6 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Observable, repeat, take } from 'rxjs';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { CommentInstance } from '../../../core/models/classes/CommentInstance';
 import { CommentService } from '../../../core/api/comment.service';
@@ -9,7 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+// Removed MatList/Divider in favor of custom layout
 import { TranslateModule } from '@ngx-translate/core';
+// Removed user display and mentions parsing for streamlined chat UI
 
 const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
 
@@ -30,19 +31,14 @@ const COMMENTS_UPDATE_TIMEOUT_S = 5 * 1_000;
   styleUrl: './task-comments.component.scss',
 })
 export class TaskCommentsComponent implements OnInit {
-  private fb = inject(FormBuilder);
   private commentService = inject(CommentService);
 
   taskId = input.required<number>();
 
-  commentForm: FormGroup;
+  commentControl = new FormControl('', { nonNullable: true });
   comments$!: Observable<CommentInstance[]>;
 
-  constructor() {
-    this.commentForm = this.fb.group({
-      newComment: ['', Validators.required],
-    });
-  }
+  constructor() {}
 
   ngOnInit(): void {
     const taskId = this.taskId();
@@ -54,9 +50,10 @@ export class TaskCommentsComponent implements OnInit {
   }
 
   addComment(): void {
-    const value = this.commentForm.value.newComment.trim();
+    const raw = this.commentControl.value;
+    const value = (raw ?? '').trim();
     const taskId = this.taskId();
-    if (value && this.commentForm.valid && taskId) {
+    if (value && taskId) {
       this.commentService
         .createComment({
           content: value,
@@ -64,7 +61,7 @@ export class TaskCommentsComponent implements OnInit {
         })
         .pipe(take(1))
         .subscribe(() => {
-          this.commentForm.get('newComment')?.setValue('');
+          this.commentControl.setValue('');
         });
     }
   }
@@ -72,4 +69,4 @@ export class TaskCommentsComponent implements OnInit {
   removeComment(comment: CommentInstance): void {
     console.log('Remove comment:', comment.id);
   }
-} 
+}

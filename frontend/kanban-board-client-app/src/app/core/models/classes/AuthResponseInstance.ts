@@ -9,4 +9,4 @@ export class AuthResponseInstance implements AuthResponseDTOInterface {
     this.token = data.token;
     this.user = data.user ? new UserInstance(data.user) : undefined;
   }
-} 
+}
