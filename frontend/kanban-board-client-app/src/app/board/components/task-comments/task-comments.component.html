@@ -1,0 +1,45 @@
+<div class="task-comments">
+  <div class="task-comments__title">
+    {{ 'board.taskComments' | translate }}
+  </div>
+  
+  <div class="task-comments__list">
+    @for (comment of comments$ | async; track $index) {
+      <div class="task-comments__item">
+        <div class="task-comments__item-header">
+          <span class="task-comments__item-author">{{
+            comment.author.username
+          }}</span>
+          <span class="task-comments__item-timestamp">{{
+            comment.createdAt | date: 'yyyy.MM.dd, HH:mm'
+          }}</span>
+        </div>
+        <div class="task-comments__item-text">
+          {{ comment.content }}
+        </div>
+              </div>
+      }
+  </div>
+  
+  <div class="task-comments__new">
+    <form [formGroup]="commentForm" class="task-comments__form">
+      <mat-form-field appearance="fill" class="task-comments__field">
+        <mat-label>{{ 'board.addComment' | translate }}</mat-label>
+        <textarea
+          matInput
+          formControlName="newComment"
+          [placeholder]="'board.writeComment' | translate"
+          rows="3"
+        ></textarea>
+      </mat-form-field>
+      <button
+        mat-button
+        (click)="addComment()"
+        [disabled]="!commentForm.get('newComment')?.value"
+        class="task-comments__new-button"
+      >
+        {{ 'board.addComment' | translate }}
+      </button>
+    </form>
+  </div>
+</div> 

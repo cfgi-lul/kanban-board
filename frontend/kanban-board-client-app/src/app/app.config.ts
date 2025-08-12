@@ -19,6 +19,7 @@ import { authInterceptor } from './core/intersceptors/auth.interceptor';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -57,6 +58,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideMarkdown(),
     provideAnimations(),
+    provideNativeDateAdapter(),
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {

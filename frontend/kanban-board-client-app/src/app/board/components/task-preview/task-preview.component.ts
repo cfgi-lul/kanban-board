@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -14,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatCardModule,
     TranslateModule,
   ],
   templateUrl: './task-preview.component.html',

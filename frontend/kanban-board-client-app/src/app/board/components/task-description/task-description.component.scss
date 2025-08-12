@@ -1,0 +1,49 @@
+@use '../../../../theming/mixins' as *;
+
+.task-description {
+  display: flex;
+  flex-direction: column;
+  @include gap-y(sm);
+
+  &__container {
+    height: auto;
+    @include margin-bottom(md);
+  }
+
+  &__preview {
+    @include padding(sm);
+    border-radius: 12px;
+    @include margin-bottom(sm);
+    height: 476px;
+  }
+
+  &__edit {
+    @include gap-y(sm);
+  }
+
+  &__toolbar {
+    display: flex;
+    flex-direction: column;
+    @include gap-y(xs);
+    @include margin-bottom(xs);
+  }
+
+  &__toolbar__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__textarea {
+    resize: none;
+  }
+
+  &__button {
+    @include padding-x(sm);
+    @include padding-y(xs);
+  }
+}

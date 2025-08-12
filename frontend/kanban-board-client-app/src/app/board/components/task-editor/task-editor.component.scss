@@ -1,116 +1,218 @@
 @use '../../../../theming/mixins' as *;
 
 .edit-task-dialog {
-  @include padding(lg);
+  width: 100%;
+  max-height: 90vh;
+  container-type: inline-size;
 
-  // width: ;
   &__title {
-    @include margin-bottom(lg);
-    font-size: 24px;
-    font-weight: 500;
-    text-align: center;
+    font: var(--mat-sys-headline-small);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    @include padding-x(md);
+    @include padding-y(sm);
   }
 
   &__content {
-    max-width: 800px;
-    margin: 0 auto;
-    @include padding(md);
-  }
-
-  &__form {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    @include gap(lg);
+    overflow-y: auto;
+    @include padding(md);
+    @include gap-y(md);
+    background: var(--mat-sys-surface);
   }
 
   &__field {
     width: 100%;
-    @include margin-bottom(md);
   }
 
-  &__description {
-    &--preview {
-      overflow: auto;
-      height: 400px;
-      min-height: 100px;
-      @include margin-y(md);
-      @include padding(md);
-      border: 1px solid var(--color-border-secondary);
-      border-radius: 4px;
-    }
-
-    &--edit {
-      display: flex;
-      flex-direction: column;
-      @include gap(md);
-    }
-
-    &__button {
-      @include margin-top(sm);
-    }
+  &__info-field {
+    display: flex;
+    align-items: center;
+    @include padding-y(xs);
+    @include gap-x(sm);
   }
 
-  &__comments {
-    @include margin-top(xl);
+  &__info-label {
+    font: var(--mat-sys-label-medium);
+    color: var(--mat-sys-color-on-surface-variant);
+    min-width: 100px;
+  }
+
+  &__info-value {
+    font: var(--mat-sys-body-medium);
+    flex: 1;
+  }
+
+  &__label-chip {
+    font: var(--mat-sys-label-small);
+    @include padding-x(sm);
+    @include padding-y(xs);
+    border-radius: 12px;
+    text-align: center;
+    min-width: 60px;
+    color: var(--mat-sys-color-on-primary-container);
+  }
+
+  &__label-option {
+    font: var(--mat-sys-body-medium);
+    @include padding-x(sm);
+    @include padding-y(xs);
+    border-radius: 12px;
+    text-align: center;
+    min-width: 60px;
+    color: var(--mat-sys-color-on-primary-container);
+  }
+
+  &__attachments {
+    @include padding-y(sm);
 
     &__title {
-      @include margin-bottom(md);
-      font-size: 19px;
-      font-weight: 500;
+      font: var(--mat-sys-title-small);
+      color: var(--mat-sys-color-on-surface-variant);
+      @include margin-bottom(sm);
+    }
+
+    &__upload {
+      @include margin-bottom(sm);
+
+      &-button {
+        font: var(--mat-sys-body-medium);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        text-align: left;
+        border: 1px dashed var(--mat-sys-outline);
+        background: var(--mat-sys-surface);
+        border-radius: 12px;
+        @include padding(sm);
+        transition: background-color .15s ease, border-color .15s ease;
+
+        &:hover {
+          background: var(--mat-sys-surface-container-lowest);
+          border-color: var(--mat-sys-outline-variant);
+        }
+
+        mat-icon {
+          color: var(--mat-sys-color-primary);
+        }
+      }
     }
 
     &__list {
-      display: flex;
-      flex-direction: column;
-      @include gap(md);
-      @include margin-bottom(xl);
+      @include gap-y(xs);
     }
 
     &__item {
-      @include padding(md);
-      border-radius: 4px;
-      background-color: var(--color-gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @include padding(sm);
+      border-radius: 12px;
+      background: var(--mat-sys-surface-container-low);
+      border: 1px solid var(--mat-sys-outline-variant);
+      transition: background-color .15s ease, border-color .15s ease;
 
-      &-header {
+      &:hover {
+        background: var(--mat-sys-surface-container);
+        border-color: var(--mat-sys-outline);
+      }
+
+      &-info {
         display: flex;
-        justify-content: space-between;
-        @include margin-bottom(sm);
+        align-items: center;
+        flex: 1;
+        @include gap-x(sm);
+
+        mat-icon {
+          color: var(--mat-sys-color-on-surface-variant);
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
       }
 
-      &-timestamp {
-        color: var(--color-text-muted);
-        font-size: 14px;
+      &-name {
+        font: var(--mat-sys-body-medium);
+        flex: 1;
       }
 
-      &-text {
-        white-space: pre-wrap;
+      &-size {
+        font: var(--mat-sys-body-small);
       }
-    }
 
-    &__new {
-      @include margin-top(lg);
+      &-actions {
+        display: flex;
+        align-items: center;
+        @include gap-x(xs);
 
-      &-button {
-        float: right;
-        @include margin-top(md);
+        button {
+          mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+          }
+        }
       }
     }
   }
 
   &__actions {
-    display: flex;
-    justify-content: flex-end;
-    @include gap(md);
-    @include margin-top(xl);
-    @include padding-y(lg);
-    border-top: 1px solid var(--color-gray-200);
+    @include padding(md);
+    margin: 0;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    background: var(--mat-sys-surface);
   }
-}
 
-@media (width <= 600px) {
-  .edit-task-dialog {
+  @container (max-width: 768px) {
+    max-width: 100%;
+    max-height: 100vh;
+
     &__content {
       @include padding(sm);
+    }
+
+    &__actions {
+      @include padding(sm);
+    }
+
+    &__info-field {
+      flex-direction: column;
+      align-items: flex-start;
+      @include gap-y(xs);
+
+      &__label {
+        min-width: auto;
+      }
+    }
+  }
+
+  @container (max-width: 480px) {
+    &__content {
+      @include padding(xs);
+    }
+
+    &__actions {
+      @include padding(xs);
+    }
+
+    &__title {
+      @include padding(xs);
+      font-size: 18px;
+    }
+
+    &__attachments {
+      &__item {
+        flex-direction: column;
+        align-items: flex-start;
+        @include gap-y(xs);
+
+        &-actions {
+          width: 100%;
+          justify-content: flex-end;
+        }
+      }
     }
   }
 }

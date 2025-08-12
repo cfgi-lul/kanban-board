@@ -261,8 +261,13 @@ export class BoardComponent implements OnInit, OnDestroy {
         )
       );
 
+      // Get the current board ID from the route
+      const boardId = await firstValueFrom(
+        this.activatedRoute.params.pipe(map(params => params['id']))
+      );
+
       const dialogRef = this.matDialog.open(TaskEditorComponent, {
-        data: { task },
+        data: { task, boardId: parseInt(boardId) },
         width: '800px',
         maxWidth: '90vw',
         disableClose: false,
