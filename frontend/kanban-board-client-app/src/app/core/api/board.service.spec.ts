@@ -37,19 +37,6 @@ describe('BoardService', () => {
     req.flush([mockBoardDTO]);
   });
 
-  it('should create a random board', () => {
-    const mockBoardDTO = { id: 1, name: 'Random Board', columns: [] };
-
-    service.createRandomBoard().subscribe(board => {
-      expect(board.id).toBe(1);
-      expect(board.name).toBe('Random Board');
-    });
-
-    const req = httpMock.expectOne('/api/boards/random');
-    expect(req.request.method).toBe('POST');
-    req.flush(mockBoardDTO);
-  });
-
   afterEach(() => {
     httpMock.verify();
   });

@@ -1,3 +1,4 @@
+import { AttachmentPickerComponent } from './../../../core/components/attachment-picker/attachment-picker.component';
 import { Component, inject } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { firstValueFrom, Observable, repeat, take, of } from 'rxjs';
@@ -74,6 +75,7 @@ import { TaskDescriptionComponent } from '../task-description/task-description.c
     FileSizePipe,
     TaskCommentsComponent,
     TaskDescriptionComponent,
+    AttachmentPickerComponent,
   ],
   templateUrl: './task-editor.component.html',
   styleUrl: './task-editor.component.scss',

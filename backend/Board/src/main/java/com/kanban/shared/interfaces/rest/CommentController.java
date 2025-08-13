@@ -16,6 +16,8 @@ import com.kanban.user.domain.model.User;
 import com.kanban.shared.infrastructure.CommentRepository;
 import com.kanban.task.domain.repository.TaskRepository;
 import com.kanban.user.domain.repository.UserRepository;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import com.kanban.shared.interfaces.websocket.CommentWebSocketMessage;
 
 
 
@@ -27,14 +29,17 @@ public class CommentController {
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     public CommentController(CommentRepository commentRepository,
                              TaskRepository taskRepository,
-                             UserRepository userRepository) {
+                             UserRepository userRepository,
+                             SimpMessagingTemplate messagingTemplate) {
         this.commentRepository = commentRepository;
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @GetMapping("/task/{taskId}")
@@ -68,8 +73,16 @@ public class CommentController {
         comment.setMentions(commentDTO.getMentions());
 
         Comment savedComment = commentRepository.save(comment);
+        CommentDTO dto = CommentMapper.toDTO(savedComment);
+
+        // Notify subscribers on this task channel
+        messagingTemplate.convertAndSend(
+                "/topic/task/" + dto.getTaskId() + "/comments",
+                new CommentWebSocketMessage("CREATED", dto.getTaskId(), dto, dto.getId())
+        );
+
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CommentMapper.toDTO(savedComment));
+                .body(dto);
     }
 
     @PutMapping("/{id}")
@@ -94,7 +107,15 @@ public class CommentController {
                     comment.setMentions(commentDTO.getMentions());
                     
                     Comment savedComment = commentRepository.save(comment);
-                    return ResponseEntity.ok(CommentMapper.toDTO(savedComment));
+                    CommentDTO dto = CommentMapper.toDTO(savedComment);
+
+                    // Notify subscribers
+                    messagingTemplate.convertAndSend(
+                            "/topic/task/" + dto.getTaskId() + "/comments",
+                            new CommentWebSocketMessage("UPDATED", dto.getTaskId(), dto, dto.getId())
+                    );
+
+                    return ResponseEntity.ok(dto);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -111,7 +132,16 @@ public class CommentController {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN).<Void>build();
                     }
 
+                    Long taskId = comment.getTask().getId();
+                    Long commentId = comment.getId();
                     commentRepository.delete(comment);
+
+                    // Notify subscribers about deletion
+                    messagingTemplate.convertAndSend(
+                            "/topic/task/" + taskId + "/comments",
+                            new CommentWebSocketMessage("DELETED", taskId, null, commentId)
+                    );
+
                     return ResponseEntity.noContent().<Void>build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());

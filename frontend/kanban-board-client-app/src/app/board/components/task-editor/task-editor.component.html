@@ -132,63 +132,10 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <div class="edit-task-dialog__attachments">
-      <div class="edit-task-dialog__attachments__title">
-        {{ 'board.attachments' | translate }}
-      </div>
-
-      <div class="edit-task-dialog__attachments__upload">
-        <input
-          type="file"
-          #fileInput
-          style="display: none"
-          (change)="onFileSelected($event)"
-          multiple
-        />
-        <button
-          mat-button
-          (click)="fileInput.click()"
-          class="edit-task-dialog__attachments__upload-button"
-        >
-          <mat-icon>attach_file</mat-icon>
-          {{ 'board.addAttachment' | translate }}
-        </button>
-      </div>
-
-      <div class="edit-task-dialog__attachments__list">
-        @for (attachment of attachments$ | async; track attachment.id) {
-          <div class="edit-task-dialog__attachments__item">
-            <div class="edit-task-dialog__attachments__item-info">
-              <mat-icon>insert_drive_file</mat-icon>
-              <span class="edit-task-dialog__attachments__item-name">{{
-                attachment.originalFilename
-              }}</span>
-              <span class="edit-task-dialog__attachments__item-size"
-                >({{ attachment.fileSize | fileSize }})</span
-              >
-            </div>
-            <div class="edit-task-dialog__attachments__item-actions">
-              <button
-                mat-icon-button
-                (click)="downloadAttachment(attachment)"
-                [matTooltip]="'board.downloadAttachment' | translate"
-              >
-                <mat-icon>download</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                (click)="deleteAttachment(attachment)"
-                [matTooltip]="'common.delete' | translate"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        }
-      </div>
-    </div>
+    <kn-attachment-picker [taskId]="data.task.id" />
 
     <kn-task-comments [taskId]="data.task.id" />
+
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="edit-task-dialog__actions">
     <button

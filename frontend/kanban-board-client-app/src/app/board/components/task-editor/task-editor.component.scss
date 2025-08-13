@@ -64,102 +64,6 @@
     @include padding-y(xs);
   }
 
-  &__attachments {
-    @include padding-y(sm);
-
-    &__title {
-      color: var(--mat-sys-color-on-surface-variant);
-      font: var(--mat-sys-title-small);
-      @include margin-bottom(sm);
-    }
-
-    &__upload {
-      @include margin-bottom(sm);
-
-      &-button {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: background-color 0.15s ease,
-          border-color 0.15s ease;
-        width: 100%;
-        border: 1px dashed var(--mat-sys-outline);
-        border-radius: 12px;
-        background: var(--mat-sys-surface);
-        font: var(--mat-sys-body-medium);
-        text-align: left;
-        @include padding(sm);
-
-        &:hover {
-          border-color: var(--mat-sys-outline-variant);
-          background: var(--mat-sys-surface-container-lowest);
-        }
-
-        mat-icon {
-          color: var(--mat-sys-color-primary);
-        }
-      }
-    }
-
-    &__list {
-      @include gap-y(xs);
-    }
-
-    &__item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background-color 0.15s ease,
-        border-color 0.15s ease;
-      border: 1px solid var(--mat-sys-outline-variant);
-      border-radius: 12px;
-      background: var(--mat-sys-surface-container-low);
-      @include padding(sm);
-
-      &:hover {
-        border-color: var(--mat-sys-outline);
-        background: var(--mat-sys-surface-container);
-      }
-
-      &-info {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        @include gap-x(sm);
-
-        mat-icon {
-          width: 20px;
-          height: 20px;
-          color: var(--mat-sys-color-on-surface-variant);
-          font-size: 20px;
-        }
-      }
-
-      &-name {
-        flex: 1;
-        font: var(--mat-sys-body-medium);
-      }
-
-      &-size {
-        font: var(--mat-sys-body-small);
-      }
-
-      &-actions {
-        display: flex;
-        align-items: center;
-        @include gap-x(xs);
-
-        button {
-          mat-icon {
-            width: 18px;
-            height: 18px;
-            font-size: 18px;
-          }
-        }
-      }
-    }
-  }
-
   &__actions {
     @include padding(md);
     margin: 0;
@@ -202,19 +106,6 @@
     &__title {
       @include padding(xs);
       font-size: 18px;
-    }
-
-    &__attachments {
-      &__item {
-        flex-direction: column;
-        align-items: flex-start;
-        @include gap-y(xs);
-
-        &-actions {
-          justify-content: flex-end;
-          width: 100%;
-        }
-      }
     }
   }
 }
