@@ -46,13 +46,13 @@ export class AppComponent implements OnInit {
   translateService = inject(TranslateService);
   settingsModalService = inject(SettingsModalService);
 
-  private readonly LARGE_SCREEN_BREAKPOINT = 1280;
+  private readonly LARGE_SCREEN_BREAKPOINT = 1024;
 
   constructor() {}
 
   ngOnInit(): void {
     this.checkScreenSize();
-    this.updateSidenavBehavior()
+    this.updateSidenavBehavior();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -70,7 +70,6 @@ export class AppComponent implements OnInit {
   }
 
   private updateSidenavBehavior(): void {
-    console.log('updateSidenavBehavior', this.isLargeScreen());
     if (this.isLargeScreen()) {
       this.sidenavMode.set('side');
       this.isSidenavOpen.set(true);

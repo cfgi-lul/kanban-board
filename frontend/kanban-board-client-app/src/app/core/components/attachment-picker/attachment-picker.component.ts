@@ -94,17 +94,17 @@ export class AttachmentPickerComponent {
   private loadAttachments(taskId: number): void {
     this.isLoading.set(true);
     this.error.set(null);
-    
+
     this.attachmentService.getAttachmentsByTask(taskId).subscribe({
-      next: (list) => {
+      next: list => {
         this.attachments.set(Array.isArray(list) ? list : []);
         this.isLoading.set(false);
       },
-      error: (err) => {
+      error: err => {
         this.error.set('Failed to load attachments');
         this.isLoading.set(false);
         console.error('Error loading attachments:', err);
-      }
+      },
     });
   }
 

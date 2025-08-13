@@ -31,8 +31,8 @@
 
   &__section-title {
     margin: 0;
-    font: var(--mat-sys-headline-small);
     color: var(--mat-sys-color-on-surface);
+    font: var(--mat-sys-headline-small);
   }
 
   &__list {
@@ -62,58 +62,58 @@
     color: var(--mat-sys-color-on-surface-variant);
 
     mat-icon {
-      font-size: 2rem;
       width: 2rem;
       height: 2rem;
+      font-size: 2rem;
     }
   }
 
   &__info {
-    flex: 1;
-    min-width: 0;
     display: flex;
+    flex: 1;
     flex-direction: column;
+    min-width: 0;
     @include gap(xs);
   }
 
   &__name {
+    display: block;
+    overflow: hidden;
+    max-width: 100%;
+    color: var(--mat-sys-color-on-surface);
     font: var(--mat-sys-body-large);
     font-weight: 500;
-    color: var(--mat-sys-color-on-surface);
-    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 100%;
-    display: block;
   }
 
   &__meta {
     display: flex;
-    align-items: center;
-    @include gap(sm);
     flex-wrap: wrap;
+    align-items: center;
     overflow: hidden;
+    @include gap(sm);
   }
 
   &__size {
-    font: var(--mat-sys-body-small);
-    color: var(--mat-sys-color-on-surface-variant);
     overflow: hidden;
+    max-width: 100%;
+    color: var(--mat-sys-color-on-surface-variant);
+    font: var(--mat-sys-body-small);
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 100%;
   }
 
   &__type {
-    font: var(--mat-sys-body-small);
-    color: var(--mat-sys-color-on-surface-variant);
-    background-color: var(--mat-sys-color-surface-container);
+    overflow: hidden;
+    max-width: 100%;
     padding: 2px 8px;
     border-radius: 12px;
-    overflow: hidden;
+    background-color: var(--mat-sys-color-surface-container);
+    color: var(--mat-sys-color-on-surface-variant);
+    font: var(--mat-sys-body-small);
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 100%;
   }
 
   &__actions {
@@ -133,16 +133,16 @@
   }
 
   &__empty-icon {
-    font-size: 3rem;
     width: 3rem;
     height: 3rem;
     color: var(--mat-sys-color-on-surface-variant);
+    font-size: 3rem;
   }
 
   &__empty-text {
     margin: 0;
-    font: var(--mat-sys-body-medium);
     color: var(--mat-sys-color-on-surface-variant);
+    font: var(--mat-sys-body-medium);
   }
 
   &__loading {
@@ -165,20 +165,18 @@
   }
 
   &__error-icon {
-    font-size: 2rem;
     width: 2rem;
     height: 2rem;
     color: var(--mat-sys-color-error);
+    font-size: 2rem;
   }
 
   &__error-text {
     margin: 0;
-    font: var(--mat-sys-body-medium);
     color: var(--mat-sys-color-error);
+    font: var(--mat-sys-body-medium);
   }
 }
-
-
 
 @container (max-width: 1280px) {
   .attachment-picker {
@@ -197,38 +195,34 @@
     }
   }
 
+  @container (max-width: 1024px) {
+    .attachment-picker {
+      &__upload-button {
+        min-width: 180px;
+      }
 
+      &__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        @include gap(md);
+      }
 
-@container (max-width: 1024px) {
-  .attachment-picker {
-    &__upload-button {
-      min-width: 180px;
-    }
-
-    &__list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      @include gap(md);
-    }
-
-    &__item {
-      height: fit-content;
+      &__item {
+        height: fit-content;
+      }
     }
   }
-}
 
-  
-  
   @container (max-width: 768px) {
     .attachment-picker {
       &__upload-button {
         min-width: 180px;
       }
-  
+
       &__item-content {
         @include gap(sm);
       }
-  
+
       &__meta {
         flex-wrap: wrap;
         @include gap(xs);
@@ -236,28 +230,24 @@
     }
   }
 
-
   @container (max-width: 480px) {
-    .attachment-picker {  
-    &__list {
-      display: grid;
+    .attachment-picker {
+      &__list {
+        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         @include gap(sm);
       }
     }
   }
 
-    // Container Queries
-    @container (max-width: 280px) {
-      .attachment-picker {
-        &__list {
-          display: grid;
+  // Container Queries
+  @container (max-width: 280px) {
+    .attachment-picker {
+      &__list {
+        display: grid;
 
-          @include gap(sm);
-        }
-    
+        @include gap(sm);
       }
     }
-    
+  }
 }
-

@@ -13,17 +13,19 @@ export class AttachmentService {
   private readonly baseUrl = '/api/attachments';
 
   getAttachmentsByTask(taskId: number): Observable<AttachmentInstance[]> {
-    return this.http.get<AttachmentDTO[]>(
-      `${this.baseUrl}/task/${taskId}`
-    ).pipe(
-      map(attachments => attachments.map(attachment => new AttachmentInstance(attachment)))
-    );
+    return this.http
+      .get<AttachmentDTO[]>(`${this.baseUrl}/task/${taskId}`)
+      .pipe(
+        map(attachments =>
+          attachments.map(attachment => new AttachmentInstance(attachment))
+        )
+      );
   }
 
   getAttachmentById(id: number): Observable<AttachmentInstance> {
-    return this.http.get<AttachmentDTO>(`${this.baseUrl}/${id}`).pipe(
-      map(attachment => new AttachmentInstance(attachment))
-    );
+    return this.http
+      .get<AttachmentDTO>(`${this.baseUrl}/${id}`)
+      .pipe(map(attachment => new AttachmentInstance(attachment)));
   }
 
   uploadAttachment(taskId: number, file: File): Observable<AttachmentInstance> {
@@ -31,12 +33,9 @@ export class AttachmentService {
     formData.append('file', file);
     formData.append('taskId', taskId.toString());
 
-    return this.http.post<AttachmentDTO>(
-      `${this.baseUrl}/upload`,
-      formData
-    ).pipe(
-      map(attachment => new AttachmentInstance(attachment))
-    );
+    return this.http
+      .post<AttachmentDTO>(`${this.baseUrl}/upload`, formData)
+      .pipe(map(attachment => new AttachmentInstance(attachment)));
   }
 
   deleteAttachment(id: number): Observable<void> {

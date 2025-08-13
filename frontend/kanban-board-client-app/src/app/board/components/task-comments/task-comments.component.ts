@@ -1,5 +1,13 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-import { Observable, take, switchMap, map, scan, startWith, shareReplay } from 'rxjs';
+import {
+  Observable,
+  take,
+  switchMap,
+  map,
+  scan,
+  startWith,
+  shareReplay,
+} from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { CommentInstance } from '../../../core/models/classes/CommentInstance';

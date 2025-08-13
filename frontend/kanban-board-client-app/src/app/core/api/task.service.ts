@@ -43,9 +43,9 @@ export class TaskService {
   }
 
   getColumnsForTask(taskId: number): Observable<ColumnInstance[]> {
-    return this.http.get<ColumnDTO[]>(
-      `${this.baseUrl}/${taskId}/columns`
-    ).pipe(map(e => e.map(el => new ColumnInstance(el))));
+    return this.http
+      .get<ColumnDTO[]>(`${this.baseUrl}/${taskId}/columns`)
+      .pipe(map(e => e.map(el => new ColumnInstance(el))));
   }
 
   deleteTask(id: string | number): Observable<void> {

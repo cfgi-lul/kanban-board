@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, filter, map, shareReplay } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-type StompCommand = 'CONNECT' | 'CONNECTED' | 'SUBSCRIBE' | 'MESSAGE' | 'SEND' | 'ERROR' | 'DISCONNECT' | string;
+type StompCommand =
+  | 'CONNECT'
+  | 'CONNECTED'
+  | 'SUBSCRIBE'
+  | 'MESSAGE'
+  | 'SEND'
+  | 'ERROR'
+  | 'DISCONNECT'
+  | string;
 
 interface SubscriptionEntry {
   destination: string;
@@ -34,7 +42,10 @@ export class StompService {
     });
 
     // CONNECT
-    const headers = this.objectToStompHeaders({ 'accept-version': '1.2', host: window.location.hostname });
+    const headers = this.objectToStompHeaders({
+      'accept-version': '1.2',
+      host: window.location.hostname,
+    });
     this.socket$.next(`CONNECT\n${headers}\n\n\0`);
 
     // Handle frames
@@ -94,22 +105,29 @@ export class StompService {
   }
 
   // Utilities
-  private parseStompFrame(rawFrame: string): [StompCommand, Record<string, string>, string] {
+  private parseStompFrame(
+    rawFrame: string
+  ): [StompCommand, Record<string, string>, string] {
     const divider = rawFrame.indexOf('\n\n');
-    const headerSection = divider >= 0 ? rawFrame.substring(0, divider) : rawFrame;
-    const body = divider >= 0 ? rawFrame.substring(divider + 2).replace(/\0$/, '') : '';
+    const headerSection =
+      divider >= 0 ? rawFrame.substring(0, divider) : rawFrame;
+    const body =
+      divider >= 0 ? rawFrame.substring(divider + 2).replace(/\0$/, '') : '';
 
     const headers = headerSection.split('\n');
     const command = headers.shift() as StompCommand;
-    const headerObj = headers.reduce((acc, line) => {
-      const idx = line.indexOf(':');
-      if (idx > -1) {
-        const key = line.substring(0, idx).trim();
-        const value = line.substring(idx + 1).trim();
-        acc[key] = value;
-      }
-      return acc;
-    }, {} as Record<string, string>);
+    const headerObj = headers.reduce(
+      (acc, line) => {
+        const idx = line.indexOf(':');
+        if (idx > -1) {
+          const key = line.substring(0, idx).trim();
+          const value = line.substring(idx + 1).trim();
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {} as Record<string, string>
+    );
 
     return [command, headerObj, body];
   }
@@ -120,4 +138,3 @@ export class StompService {
       .join('\n');
   }
 }
-

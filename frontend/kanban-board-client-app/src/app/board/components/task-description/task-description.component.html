@@ -1,7 +1,6 @@
 <div class="task-description">
   <div class="task-description__container">
     @if (isEdit()) {
-
       <div
         class="task-description__toolbar"
         role="toolbar"
@@ -115,13 +114,11 @@
           }}</mat-hint>
         </mat-form-field>
       </div>
-
-  } @else {
+    } @else {
       <mat-card class="task-description__preview" appearance="outlined">
         <markdown [data]="value || ''"></markdown>
       </mat-card>
-
-  }
+    }
   </div>
   <button
     mat-stroked-button

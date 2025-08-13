@@ -42,18 +42,22 @@
     <div class="attachment-picker__section">
       <div class="attachment-picker__section-header">
         <h3 class="attachment-picker__section-title">
-          {{ 'board.existingAttachments' | translate }} ({{ attachments().length }})
+          {{ 'board.existingAttachments' | translate }} ({{
+            attachments().length
+          }})
         </h3>
       </div>
-      
+
       <div class="attachment-picker__list">
         @for (attachment of attachments(); track attachment.id) {
           <mat-card class="attachment-picker__item">
             <div class="attachment-picker__item-content">
-
               <!-- File Info -->
               <div class="attachment-picker__info">
-                <div class="attachment-picker__name" [matTooltip]="attachment.originalFilename">
+                <div
+                  class="attachment-picker__name"
+                  [matTooltip]="attachment.originalFilename"
+                >
                   {{ attachment.originalFilename }}
                 </div>
                 <div class="attachment-picker__meta">
