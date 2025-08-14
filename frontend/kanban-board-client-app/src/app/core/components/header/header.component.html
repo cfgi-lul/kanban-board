@@ -1,7 +1,7 @@
 <mat-toolbar class="header">
   <div class="header__container">
     <div class="header__left">
-      @if (isSmallScreen) {
+      @if (sidenav.drawerMode() === 'over' || !sidenav.isSidenavOpen()) {
         <button
           mat-icon-button
           class="header__menu-button"

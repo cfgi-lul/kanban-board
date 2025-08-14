@@ -1,24 +1,46 @@
 <div class="sidenav">
   <mat-nav-list class="sidenav__menu">
-    <a
-      mat-list-item
-      routerLink="/dashboard/boards-list"
-      routerLinkActive="sidenav__menu-item--active"
-      class="sidenav__menu-item"
-    >
-      <mat-icon matListItemIcon>view_list</mat-icon>
-      <span matListItemTitle>{{ 'board.boardsList' | translate }}</span>
-    </a>
+    @if (currentUser | async) {
+      <a
+        mat-list-item
+        routerLink="/dashboard/boards-list"
+        routerLinkActive="sidenav__menu-item--active"
+        class="sidenav__menu-item"
+      >
+        <mat-icon matListItemIcon>view_list</mat-icon>
+        <span matListItemTitle>{{ 'board.boardsList' | translate }}</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/auth/sign-in"
-      routerLinkActive="sidenav__menu-item--active"
-      class="sidenav__menu-item"
-    >
-      <mat-icon matListItemIcon>login</mat-icon>
-      <span matListItemTitle>{{ 'auth.signIn' | translate }}</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/news"
+        routerLinkActive="sidenav__menu-item--active"
+        class="sidenav__menu-item"
+      >
+        <mat-icon matListItemIcon>news</mat-icon>
+        <span matListItemTitle>{{ 'news.title' | translate }}</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/analytics"
+        routerLinkActive="sidenav__menu-item--active"
+        class="sidenav__menu-item"
+      >
+        <mat-icon matListItemIcon>analytics</mat-icon>
+        <span matListItemTitle>{{ 'analytics.title' | translate }}</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/help"
+        routerLinkActive="sidenav__menu-item--active"
+        class="sidenav__menu-item"
+      >
+        <mat-icon matListItemIcon>help</mat-icon>
+        <span matListItemTitle>{{ 'help.title' | translate }}</span>
+      </a>
+    }
 
     @if (isAdmin) {
       <a
@@ -29,6 +51,28 @@
       >
         <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
         <span matListItemTitle>{{ 'admin.panel' | translate }}</span>
+      </a>
+    }
+
+    @if (!(currentUser | async)) {
+      <a
+        mat-list-item
+        routerLink="/auth/sign-in"
+        routerLinkActive="sidenav__menu-item--active"
+        class="sidenav__menu-item"
+      >
+        <mat-icon matListItemIcon>login</mat-icon>
+        <span matListItemTitle>{{ 'auth.signIn' | translate }}</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/auth/sign-up"
+        routerLinkActive="sidenav__menu-item--active"
+        class="sidenav__menu-item"
+      >
+        <mat-icon matListItemIcon>person_add</mat-icon>
+        <span matListItemTitle>{{ 'auth.signUp' | translate }}</span>
       </a>
     }
   </mat-nav-list>

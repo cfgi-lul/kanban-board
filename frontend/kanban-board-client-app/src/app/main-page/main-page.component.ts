@@ -28,7 +28,7 @@ const TILES: {
     description: 'main.news.description',
     icon: 'newspaper',
     color: 'accent',
-    route: '/news/news',
+    route: '/news',
     size: 'small',
   },
   {
@@ -36,7 +36,7 @@ const TILES: {
     description: 'main.analytics.description',
     icon: 'analytics',
     color: 'primary',
-    route: '/analytics/analytics',
+    route: '/analytics',
     size: 'small',
   },
   {
@@ -52,7 +52,7 @@ const TILES: {
     description: 'main.admin.description',
     icon: 'admin_panel_settings',
     color: 'warn',
-    route: '/admin/admin',
+    route: '/admin',
     size: 'small',
   },
   {
@@ -60,7 +60,7 @@ const TILES: {
     description: 'main.help.description',
     icon: 'help',
     color: 'primary',
-    route: '/help/help',
+    route: '/help',
     size: 'small',
   },
 ];

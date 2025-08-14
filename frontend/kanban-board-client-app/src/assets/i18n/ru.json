@@ -151,6 +151,30 @@
     "removeAvatar": "Удалить аватар"
   },
   "board": {
+    "settings": {
+      "title": "Настройки доски — {{id}}",
+      "tabs": {
+        "common": "Общие",
+        "tags": "Теги",
+        "usersRoles": "Пользователи и роли",
+        "columns": "Колонки",
+        "tasks": "Задачи"
+      },
+      "sections": {
+        "common": "Общие",
+        "tags": "Теги",
+        "usersRoles": "Пользователи и роли",
+        "columns": "Колонки",
+        "tasks": "Задачи"
+      },
+      "placeholder": {
+        "noImplementation": "Этот раздел пока не реализован.",
+        "example": "Пример"
+      },
+      "fields": {
+        "name": "Название доски"
+      }
+    },
     "defaultBoard": {
       "name": "Новая доска",
       "description": "Описание доски"

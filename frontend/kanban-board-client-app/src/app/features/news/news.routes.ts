@@ -4,9 +4,10 @@ import { NewsComponent } from '../../news/news.component';
 
 export const NEWS_ROUTES: Routes = [
   {
-    path: 'news',
-    title: 'News',
+    path: '',
+    title: 'news.title',
     loadComponent: () => NewsComponent,
     canActivate: [authGuard],
   },
+  { path: '**', redirectTo: '' },
 ];

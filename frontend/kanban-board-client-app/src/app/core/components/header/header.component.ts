@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  OnInit,
-  output,
-  HostListener,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, output, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonToggleChange,
@@ -20,6 +12,7 @@ import { UserInstance } from '../../models/classes/UserInstance';
 import { UserBadgeComponent } from '../user-badge/user-badge.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { SidenavService } from '../../services/sidenav.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,29 +32,17 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
   private theme = inject(ThemeService);
+  sidenav = inject(SidenavService);
 
   themeControl = new FormControl<ColorScheme>('system');
   isLoggedIn = input.required<boolean>();
   user = input.required<UserInstance>();
 
-  isSmallScreen = false;
-  private readonly LARGE_SCREEN_BREAKPOINT = 1024;
-
   ngOnInit(): void {
-    this.checkScreenSize();
     this.themeControl.valueChanges.subscribe(e => {
       if (e) this.theme.setColorScheme(e);
     });
     this.themeControl.setValue(this.theme.getCurrentColorScheme());
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(): void {
-    this.checkScreenSize();
-  }
-
-  private checkScreenSize(): void {
-    this.isSmallScreen = window.innerWidth < this.LARGE_SCREEN_BREAKPOINT;
   }
 
   themeChange(event: MatButtonToggleChange): void {

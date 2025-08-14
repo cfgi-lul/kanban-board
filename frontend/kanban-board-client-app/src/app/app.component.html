@@ -7,9 +7,8 @@
 
 <mat-sidenav-container class="sidenav__container">
   <mat-sidenav
-    #sidenav
-    [mode]="sidenavMode()"
-    [opened]="isSidenavOpen()"
+    [mode]="sidenav.drawerMode()"
+    [opened]="sidenav.isSidenavOpen()"
     class="sidenav"
   >
     <kn-sidenav />

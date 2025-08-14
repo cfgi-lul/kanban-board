@@ -4,9 +4,10 @@ import { AnalyticsComponent } from '../../analytics/analytics.component';
 
 export const ANALYTICS_ROUTES: Routes = [
   {
-    path: 'analytics',
-    title: 'Analytics',
+    path: '',
+    title: 'analytics.title',
     loadComponent: () => AnalyticsComponent,
     canActivate: [authGuard],
   },
+  { path: '**', redirectTo: '' },
 ];

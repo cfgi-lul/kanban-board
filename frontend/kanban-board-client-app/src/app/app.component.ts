@@ -1,22 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-  HostListener,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/api/auth.service';
 import { ThemeService } from './core/services/theme.service';
 import { I18nService } from './core/services/i18n.service';
 import { SettingsModalService } from './core/services/settings-modal.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule, MatDrawerMode } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from './core/components/header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SidenavService } from './core/services/sidenav.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,11 +28,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'kanban-board-client-app';
-  isSidenavOpen = signal<boolean>(false);
-  sidenavMode = signal<MatDrawerMode>('side');
-  isLargeScreen = signal<boolean>(false);
+  sidenav = inject(SidenavService);
   currentUser = inject(AuthService).currentUser;
   isAdmin = inject(AuthService).isAdmin();
   themeService = inject(ThemeService);
@@ -46,46 +38,14 @@ export class AppComponent implements OnInit {
   translateService = inject(TranslateService);
   settingsModalService = inject(SettingsModalService);
 
-  private readonly LARGE_SCREEN_BREAKPOINT = 1024;
-
   constructor() {}
 
-  ngOnInit(): void {
-    this.checkScreenSize();
-    this.updateSidenavBehavior();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(): void {
-    this.checkScreenSize();
-  }
-
-  private checkScreenSize(): void {
-    const wasLargeScreen = this.isLargeScreen();
-    this.isLargeScreen.set(window.innerWidth >= this.LARGE_SCREEN_BREAKPOINT);
-
-    if (this.isLargeScreen() !== wasLargeScreen) {
-      this.updateSidenavBehavior();
-    }
-  }
-
-  private updateSidenavBehavior(): void {
-    if (this.isLargeScreen()) {
-      this.sidenavMode.set('side');
-      this.isSidenavOpen.set(true);
-    } else {
-      this.sidenavMode.set('over');
-      this.isSidenavOpen.set(false);
-    }
-  }
-
   toggleSidenav(): void {
-    if (!this.isLargeScreen()) {
-      this.isSidenavOpen.set(!this.isSidenavOpen());
-    }
+    this.sidenav.toggle();
   }
 
   toggleTheme(): void {
     this.themeService.toggleTheme();
   }
+
 }

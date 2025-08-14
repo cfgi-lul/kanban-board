@@ -4,9 +4,10 @@ import { AdminComponentComponent } from '../../admin-component/admin-component.c
 
 export const ADMIN_ROUTES: Routes = [
   {
-    path: 'admin',
-    title: 'Admin Panel',
+    path: '',
+    title: 'admin.title',
     loadComponent: () => AdminComponentComponent,
     canActivate: [adminGuard],
   },
+  { path: '**', redirectTo: '' },
 ];

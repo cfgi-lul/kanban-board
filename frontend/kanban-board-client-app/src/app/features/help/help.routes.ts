@@ -4,9 +4,10 @@ import { HelpComponent } from '../../help/help.component';
 
 export const HELP_ROUTES: Routes = [
   {
-    path: 'help',
-    title: 'Help',
+    path: '',
+    title: 'help.title',
     loadComponent: () => HelpComponent,
     canActivate: [authGuard],
   },
+  { path: '**', redirectTo: '' },
 ];

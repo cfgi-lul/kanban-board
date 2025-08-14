@@ -151,6 +151,30 @@
     "removeAvatar": "Remove Avatar"
   },
   "board": {
+    "settings": {
+      "title": "Board Settings — {{id}}",
+      "tabs": {
+        "common": "Common",
+        "tags": "Tags",
+        "usersRoles": "Users & Roles",
+        "columns": "Columns",
+        "tasks": "Tasks"
+      },
+      "sections": {
+        "common": "Common",
+        "tags": "Tags",
+        "usersRoles": "Users & Roles",
+        "columns": "Columns",
+        "tasks": "Tasks"
+      },
+      "placeholder": {
+        "noImplementation": "This section is not implemented yet.",
+        "example": "Example"
+      },
+      "fields": {
+        "name": "Board name"
+      }
+    },
     "defaultBoard": {
       "name": "New Board",
       "description": "Board Description"

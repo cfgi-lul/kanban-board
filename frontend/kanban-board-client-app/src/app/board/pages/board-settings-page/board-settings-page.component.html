@@ -1,0 +1,131 @@
+<div class="settings-container">
+  <mat-card appearance="outlined" class="page-header">
+    <div class="header-content">
+      <div class="title-group">
+        <mat-icon aria-hidden="true">settings</mat-icon>
+        <h2>{{ 'board.settings.title' | translate : { id: (boardId$ | async) } }}</h2>
+      </div>
+      <div class="actions">
+        <a [routerLink]="['/dashboard/board', (boardId$ | async)]" mat-stroked-button color="primary">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'common.back' | translate }}
+        </a>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="tabs-wrapper">
+    <mat-tab-group>
+    <mat-tab label="{{ 'board.settings.tabs.common' | translate }}">
+      <div class="tab-content">
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ 'board.settings.sections.common' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'board.settings.placeholder.noImplementation' | translate }}</p>
+            <mat-divider></mat-divider>
+            <div class="field-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ 'board.settings.fields.name' | translate }}</mat-label>
+                <input matInput disabled placeholder="{{ 'board.settings.placeholder.example' | translate }}" />
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="{{ 'board.settings.tabs.tags' | translate }}">
+      <div class="tab-content">
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ 'board.settings.sections.tags' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'board.settings.placeholder.noImplementation' | translate }}</p>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon>label</mat-icon>
+                <div matListItemTitle>Tag 1</div>
+                <div matListItemLine>Example placeholder</div>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon>label</mat-icon>
+                <div matListItemTitle>Tag 2</div>
+                <div matListItemLine>Example placeholder</div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="{{ 'board.settings.tabs.usersRoles' | translate }}">
+      <div class="tab-content">
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ 'board.settings.sections.usersRoles' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'board.settings.placeholder.noImplementation' | translate }}</p>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <div matListItemTitle>John Doe</div>
+                <div matListItemLine>Admin</div>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <div matListItemTitle>Jane Smith</div>
+                <div matListItemLine>Member</div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="{{ 'board.settings.tabs.columns' | translate }}">
+      <div class="tab-content">
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ 'board.settings.sections.columns' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'board.settings.placeholder.noImplementation' | translate }}</p>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon>view_column</mat-icon>
+                <div matListItemTitle>To Do</div>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon>view_column</mat-icon>
+                <div matListItemTitle>In Progress</div>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon>view_column</mat-icon>
+                <div matListItemTitle>Done</div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="{{ 'board.settings.tabs.tasks' | translate }}">
+      <div class="tab-content">
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ 'board.settings.sections.tasks' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'board.settings.placeholder.noImplementation' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
+
