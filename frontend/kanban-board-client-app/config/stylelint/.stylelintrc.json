@@ -5,6 +5,7 @@
     "stylelint-config-prettier"
   ],
   "plugins": ["stylelint-order"],
+  "customSyntax": "postcss-scss",
   "rules": {
     "order/properties-order": [
       "position",
@@ -189,19 +190,7 @@
       "stroke-dasharray",
       "stroke-dashoffset"
     ],
-    "at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": [
-          "tailwind",
-          "apply",
-          "variants",
-          "responsive",
-          "screen",
-          "layer"
-        ]
-      }
-    ],
+    "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": [
       true,
       {
@@ -225,11 +214,10 @@
     "selector-pseudo-element-no-unknown": [
       true,
       {
-        "ignorePseudoElements": ["v-deep", "v-global", "v-slotted"]
+        "ignorePseudoElements": ["ng-deep", "v-deep", "v-global", "v-slotted"]
       }
     ],
-    "property-no-vendor-prefix": null,
-    "value-no-vendor-prefix": null,
+
     "declaration-block-no-duplicate-properties": true,
     "declaration-block-no-redundant-longhand-properties": true,
     "declaration-block-no-shorthand-property-overrides": true,
@@ -273,12 +261,12 @@
     "function-linear-gradient-no-nonstandard-direction": true,
     "function-max-empty-lines": 0,
     "function-name-case": "lower",
-    "function-name-quotes": "always-unless-keyword",
+
     "function-parentheses-newline-inside": "always-multi-line",
     "function-parentheses-space-inside": "never-single-line",
     "function-url-no-scheme-relative": true,
     "function-url-quotes": "always",
-    "function-url-scheme-whitelist": null,
+    "function-url-scheme-allowed-list": null,
     "function-whitespace-after": "always",
     "indentation": 2,
     "keyframe-declaration-no-important": true,
@@ -319,12 +307,10 @@
       }
     ],
     "selector-attribute-brackets-space-inside": "never",
-    "selector-attribute-colon-space-after": "never",
-    "selector-attribute-colon-space-before": "never",
     "selector-attribute-operator-space-after": "never",
     "selector-attribute-operator-space-before": "never",
     "selector-attribute-quotes": "always",
-    "selector-class-pattern": null,
+
     "selector-combinator-space-after": "always",
     "selector-combinator-space-before": "always",
     "selector-descendant-combinator-no-non-space": true,
@@ -338,7 +324,7 @@
     "selector-max-empty-lines": 0,
     "selector-max-id": null,
     "selector-max-pseudo-class": null,
-    "selector-max-qualifying-identifier": null,
+
     "selector-max-specificity": null,
     "selector-max-type": null,
     "selector-max-universal": null,
@@ -346,9 +332,14 @@
     "selector-no-qualifying-type": null,
     "selector-no-vendor-prefix": true,
     "selector-pseudo-element-colon-notation": "double",
-    "selector-pseudo-element-no-unknown": true,
+
     "selector-type-case": "lower",
-    "selector-type-no-unknown": true,
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignoreTypes": ["/^mat-/"]
+      }
+    ],
     "shorthand-property-no-redundant-values": true,
     "string-no-newline": true,
     "string-quotes": "double",
